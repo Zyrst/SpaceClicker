@@ -1,17 +1,17 @@
 # SpaceClicker
 
-class KlassNamn
-{
-	public int _variabelNamn
-	
-	public int skojSak
+	class KlassNamn
 	{
-		get { return _variabelNamn + 100;}
-	}
+		public int _variabelNamn
+		
+		public int skojSak
+		{
+			get { return _variabelNamn + 100;}
+		}
+		
+		public void FunktionsNamn(int parameterNamn_)
+		{
+		}
+		
 	
-	public void FunktionsNamn(int parameterNamn_)
-	{
 	}
-	
-
-}
