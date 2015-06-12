@@ -3,14 +3,13 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
 
-public class Player : MonoBehaviour {
+public class Character : MonoBehaviour {
 
     public CharacterStats _stats = new CharacterStats();
 
 	// Use this for initialization
 	void Start () {
-        _stats._health = _stats._maxHealth;
-	    
+	
 	}
 	
 	// Update is called once per frame
@@ -18,25 +17,21 @@ public class Player : MonoBehaviour {
 	
 	}
 
-    public void TakeDamage(DamageStats ds_)
+    public virtual void TakeDamage(DamageStats ds_)
+    {
+        TakeDamage(ds_, transform.position);
+    }
+    public virtual void TakeDamage(DamageStats ds_, Vector3 hitPoint_)
     {
 
-        float normal = ds_._normal * (1f - _stats._normal.resistance);
-        float tech = ds_._tech * (1f - _stats._tech.resistance);
-        float psychic = ds_._psychic * (1f - _stats._psychic.resistance);
-        float kinetic = ds_._kinetic * (1f - _stats._kinetic.resistance);
+    }
 
-        float totalDamage = normal + tech + psychic + kinetic;
-
-        _stats._health -= totalDamage;
-
-        SpawnText(normal, tech, psychic, kinetic, (transform.position + new Vector3(0,4,0)));
+    public virtual void Die()
+    {
     }
 
     public void SpawnText(float normal_, float tech_, float psychic_, float kinetic_, Vector3 hitPoint_)
     {
-
-
         if (normal_ > 0)
         {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);

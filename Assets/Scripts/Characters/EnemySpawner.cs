@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour {
 
                 if (_enemyCounter == 0)
                 {
+                    Global.Instance.AllEnemiesDied();
                     Spawn();
                 }
             }
@@ -60,5 +61,15 @@ public class EnemySpawner : MonoBehaviour {
         _enemy.transform.position = transform.position;
         _enemy.transform.parent = transform;
         _enemy.afterSpawn();
+    }
+
+    public void ResetWave()
+    {
+        if (!_enemy.gameObject.activeInHierarchy)
+        {
+            triggers.enemyCounter++;
+        }
+        _enemy.gameObject.SetActive(true);
+        _enemy._stats._health = _enemy._stats._maxHealth;
     }
 }

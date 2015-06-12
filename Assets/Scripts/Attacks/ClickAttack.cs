@@ -13,10 +13,10 @@ public class ClickAttack : BaseAttack {
 	// Update is called once per frame
 	void Update () {
         // LMB
-        if (Input.GetMouseButton(0))
+        if (MouseController.Instance.clickButtonDown)
         {
             // mouseon the ground
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit))
             {

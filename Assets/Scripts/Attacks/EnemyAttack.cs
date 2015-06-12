@@ -24,7 +24,7 @@ public class EnemyAttack : MonoBehaviour {
 
     public void Attack()
     {
-
-        Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats));
+        if(Global.Instance.PlayerAlive())
+            Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats));
     }
 }
