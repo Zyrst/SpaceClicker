@@ -15,6 +15,7 @@ public class Global : MonoBehaviour {
         public Color techAttackColor;
         public Color kineticAttackColor;
         public Color psychicAttackColor;
+        public Color healColor;
     }
 
     public enum GameType : int { Farm = 0, Quest = 1 };

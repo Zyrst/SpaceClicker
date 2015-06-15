@@ -8,8 +8,11 @@ public class SpellAttack : BaseAttack {
     public SpellStats _stats = new SpellStats();
     public Sprite _spellImage;
     public GameObject _slot;
+    public Image _slotImage;
 
     private bool _clicked = false;
+    private bool _cd = false;
+    private float _coolDown = 0f;
     public Vector3 _startGUIPos;
     public Vector3 _followerDiff = Vector3.zero;
 
@@ -24,7 +27,8 @@ public class SpellAttack : BaseAttack {
        {
            Debug.Log("_spellImage är null");
        }
-       _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image").sprite = _spellImage;
+       _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
+      _slotImage.sprite = _spellImage;
 
        _startGUIPos = _slot.transform.position;
 	}
@@ -36,11 +40,12 @@ public class SpellAttack : BaseAttack {
         {
             FollowMouse();
         }
+        Cooldown();
 	}
 
     public void Clicked()
     {
-        if (!_clicked)
+        if (!_clicked && !_cd)
         {
             _startGUIPos = _slot.transform.position;
             _followerDiff = MouseController.Instance.position - _slot.transform.position;
@@ -74,11 +79,12 @@ public class SpellAttack : BaseAttack {
                 try
                 {
                     // hit enemy
-                    if (hit.collider.transform.parent.parent.tag == "Enemy" || hit.collider.transform.parent.parent.tag == "Player")
+                    if (hit.collider.transform.parent.parent.tag == "Enemy" || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         Debug.Log("collide");
                         hit.collider.transform.parent.parent.gameObject.GetComponent<Character>().TakeDamage(DamageStats.GenerateFromSpellStats(_stats), hit.point);
-                        
+                        _cd = true; 
+                        _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
                     }
                     ResetGUI();
                 }
@@ -91,5 +97,20 @@ public class SpellAttack : BaseAttack {
         _clicked = false;
         MouseController.Instance.locked = false;
         _slot.transform.position = _startGUIPos;
+    }
+
+    public void Cooldown()
+    {
+        if (_cd)
+        {
+            _coolDown += Time.deltaTime;
+            if (_coolDown >= _stats._cooldown)
+            {
+                _cd = false;
+                _coolDown = 0f;
+                _slotImage.color = new Color(1f, 1f, 1f);
+            }
+        }
+       
     }
 }

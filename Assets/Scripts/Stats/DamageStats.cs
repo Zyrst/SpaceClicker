@@ -36,7 +36,6 @@ public class DamageStats {
             ds._kinetic = stats_._kinetic.critDamage;
         }
 
-
         return ds;
     }
 
@@ -74,6 +73,7 @@ public class DamageStats {
             ds._kinetic = stats_._kinetic.critDamage;
         }
 
+        ds._heal = stats_._heal;
         return ds;
     }
 
@@ -81,4 +81,5 @@ public class DamageStats {
     public float _tech;
     public float _kinetic;
     public float _psychic;
+    public float _heal;
 }
