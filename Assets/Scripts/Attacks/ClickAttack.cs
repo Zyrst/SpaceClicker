@@ -28,7 +28,7 @@ public class ClickAttack : BaseAttack {
                         _canDealDamage = false;
                         _lastTarget = hit.collider.gameObject;
                         CharacterStats cs = gameObject.GetComponent<Player>()._stats;
-                        hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs), hit.point);
+                        hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs), hit.point, Global.Instance._player);
                     }
                 }
                 catch (System.NullReferenceException e) { }

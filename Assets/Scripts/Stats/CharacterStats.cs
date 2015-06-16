@@ -27,4 +27,11 @@ public class CharacterStats {
     public Element _kinetic;
     public Element _psychic;
 
+    public void LevelUp()
+    {
+        _maxHealth *= 1.2f;
+        _health = _maxHealth;
+        _normal.damage *= 1.3f;
+    }
+
 }

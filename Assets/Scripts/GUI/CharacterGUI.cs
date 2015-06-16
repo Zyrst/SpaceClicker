@@ -5,6 +5,7 @@ using System.Linq;
 
 public class CharacterGUI : MonoBehaviour {
     public GameObject HealthBar;
+    public GameObject LevelText;
     public Character character;
 
     
@@ -19,5 +20,10 @@ public class CharacterGUI : MonoBehaviour {
         GameObject lifebar = HealthBar.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Life").gameObject;
 
         lifebar.transform.localScale = new Vector3(scale, lifebar.transform.localScale.y, lifebar.transform.localScale.z);
+
+        if (character is Enemy)
+        {
+            LevelText.GetComponent<Text>().text = character._level.ToString();
+        }
 	}
 }

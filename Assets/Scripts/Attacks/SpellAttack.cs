@@ -82,7 +82,7 @@ public class SpellAttack : BaseAttack {
                     if (hit.collider.transform.parent.parent.tag == "Enemy" || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         Debug.Log("collide");
-                        hit.collider.transform.parent.parent.gameObject.GetComponent<Character>().TakeDamage(DamageStats.GenerateFromSpellStats(_stats), hit.point);
+                        hit.collider.transform.parent.parent.gameObject.GetComponent<Character>().TakeDamage(DamageStats.GenerateFromSpellStats(_stats), hit.point, Global.Instance._player);
                         _cd = true; 
                         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
                     }

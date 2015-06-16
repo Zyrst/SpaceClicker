@@ -7,7 +7,10 @@ public class Character : MonoBehaviour {
     
     public CharacterStats _stats = new CharacterStats();
     public bool _isAlive = true;
-
+    public uint _level = 1;
+    public uint _experience = 1;
+    public uint _experianceToNext = 100;
+    
 	// Use this for initialization
 	void Start () {
 	
@@ -18,11 +21,11 @@ public class Character : MonoBehaviour {
 	
 	}
 
-    public virtual void TakeDamage(DamageStats ds_)
-    {
-        TakeDamage(ds_, transform.position);
-    }
-    public virtual void TakeDamage(DamageStats ds_, Vector3 hitPoint_)
+    public virtual void TakeDamage(DamageStats ds_)                     {   TakeDamage(ds_, transform.position, null);  }
+    public virtual void TakeDamage(DamageStats ds_, Vector3 hitPoint_)  {   TakeDamage(ds_, hitPoint_, null);   }
+
+    public virtual void TakeDamage(DamageStats ds_, Character hitter_) { TakeDamage(ds_, transform.position, hitter_); }
+    public virtual void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
     {
         //Calculate damage with resistance from the characters stats
         float normal = ds_._normal * (1f - _stats._normal.resistance);
@@ -44,13 +47,43 @@ public class Character : MonoBehaviour {
         if (_stats._health <= 0f)
         {
             _stats._health = 0f;
-            Die();
+            Die(hitter_);
         }
+    }
+
+    public virtual void Die(Character killer_)
+    {
+        if (killer_ != null)
+        {
+            killer_.SetExperience(_level);
+        }
+        Die();
     }
 
     public virtual void Die()
     {
         _isAlive = false;
+    }
+
+    public virtual void SetExperience(uint level_)
+    {
+        uint exp = 0;
+        Debug.Log("Level_ " + level_ + "_Level " + _level);
+        exp = (uint)(level_ / _level * Global.Instance._expVariable) + level_;
+        _experience += exp;
+        if (_experience >= _experianceToNext)
+        {
+            LevelUp();
+        }
+    }
+
+    public void LevelUp()
+    {
+        _experience = 1;
+        _experianceToNext += (uint)((float)(_experianceToNext) * 1.5f);
+        _level++;
+        _stats.LevelUp();
+        Global.Instance.UpdateLevel();
     }
 
     public void SpawnText(float normal_, float tech_, float psychic_, float kinetic_, float heal_, Vector3 hitPoint_)

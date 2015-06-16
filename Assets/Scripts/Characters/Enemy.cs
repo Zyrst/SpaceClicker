@@ -9,6 +9,7 @@ public class Enemy : Character
     void Start()
     {
         _stats._health = _stats._maxHealth;
+        _level = Global.Instance.GetEnemyLevel();
 	}
 	
 	// Update is called once per frame

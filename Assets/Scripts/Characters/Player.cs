@@ -8,7 +8,6 @@ public class Player : Character {
     
     public SpellAttack[] _spellsArray = new SpellAttack[4];
     public GameObject[] _spellSlotArray = new GameObject[4];
-
 	// Use this for initialization
 	void Start () {
         _stats._health = _stats._maxHealth;
@@ -62,4 +61,10 @@ public class Player : Character {
         }
         return null;
     }
+    public override void SetExperience(uint level_)
+    {
+        base.SetExperience(level_);
+        Global.Instance.UpdateExpBar();
+    }
+
 }
