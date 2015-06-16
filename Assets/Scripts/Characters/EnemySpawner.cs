@@ -72,4 +72,11 @@ public class EnemySpawner : MonoBehaviour {
         _enemy.gameObject.SetActive(true);
         _enemy._stats._health = _enemy._stats._maxHealth;
     }
+
+    public static void Reset()
+    {
+        triggers.enemyCounter = 0;
+        triggers.spawns.Clear();
+        triggers.spawns = new ArrayList();
+    }
 }

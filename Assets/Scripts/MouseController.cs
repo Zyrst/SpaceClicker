@@ -32,6 +32,14 @@ public class MouseController {
         }
     }
 
+    public Vector3 worldPosition
+    {
+        get
+        {
+            return Camera.main.ScreenToWorldPoint(position);
+        }
+    }
+
     public bool buttonDown
     {
         get

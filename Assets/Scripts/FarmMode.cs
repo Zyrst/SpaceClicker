@@ -6,11 +6,6 @@ public class FarmMode : MonoBehaviour {
     public GameObject arenaPrefab;
     public GameObject _arena;
 
-    void Start()
-    {
-        startFarmMode();
-    }
-
     private static FarmMode _instance = null;
     public static FarmMode Instance
     {
@@ -47,5 +42,11 @@ public class FarmMode : MonoBehaviour {
 
         // reset player
         Global.Instance._player.Reset(2f);
+    }
+
+    public void backToShip()
+    {
+        Global.Instance.SwitchScene(Global.GameType.Ship);
+        Destroy(_arena);
     }
 }

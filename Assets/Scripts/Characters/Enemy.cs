@@ -10,13 +10,14 @@ public class Enemy : Character
     {
         _stats._health = _stats._maxHealth;
         _level = Global.Instance.GetEnemyLevel();
+        _stats.LevelUp(_level);
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Vector3 rot = Vector3.up;
 
-        transform.Rotate(rot * 10f * Time.deltaTime);
+        transform.Rotate(rot * 0f * Time.deltaTime);
 	}
 
     public void afterSpawn()

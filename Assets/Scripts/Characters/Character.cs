@@ -7,13 +7,12 @@ public class Character : MonoBehaviour {
     
     public CharacterStats _stats = new CharacterStats();
     public bool _isAlive = true;
-    public uint _level = 1;
+    public uint _level = 0;
     public uint _experience = 1;
     public uint _experianceToNext = 100;
     
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -44,7 +43,7 @@ public class Character : MonoBehaviour {
 
         SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
 
-        if (_stats._health <= 0f)
+        if (_stats._health < 1f)
         {
             _stats._health = 0f;
             Die(hitter_);
@@ -80,7 +79,7 @@ public class Character : MonoBehaviour {
     public void LevelUp()
     {
         _experience = 1;
-        _experianceToNext += (uint)((float)(_experianceToNext) * 1.5f);
+        _experianceToNext += (uint)((float)(_experianceToNext) * Global.Instance._expScale);
         _level++;
         _stats.LevelUp();
         Global.Instance.UpdateLevel();
@@ -91,7 +90,7 @@ public class Character : MonoBehaviour {
         if (normal_ > 0)
         {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
-            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = normal_.ToString();
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = ((int)(normal_)).ToString();
             _numbers.transform.position = hitPoint_;
             Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             direction.Normalize();
@@ -102,7 +101,7 @@ public class Character : MonoBehaviour {
         if (tech_ > 0)
         {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
-            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = tech_.ToString();
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = ((int)(tech_)).ToString();
             _numbers.transform.position = hitPoint_;
             Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             direction.Normalize();
@@ -113,7 +112,7 @@ public class Character : MonoBehaviour {
         if (psychic_ > 0)
         {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
-            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = psychic_.ToString();
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = ((int)(psychic_)).ToString();
             _numbers.transform.position = hitPoint_;
             Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             direction.Normalize();
@@ -124,7 +123,7 @@ public class Character : MonoBehaviour {
         if (kinetic_ > 0)
         {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
-            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = kinetic_.ToString();
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = ((int)(kinetic_)).ToString();
             _numbers.transform.position = hitPoint_;
             Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             direction.Normalize();
@@ -135,7 +134,7 @@ public class Character : MonoBehaviour {
         if (heal_ > 0)
         {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
-            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = heal_.ToString();
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = ((int)(heal_)).ToString();
             _numbers.transform.position = hitPoint_;
             Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             direction.Normalize();

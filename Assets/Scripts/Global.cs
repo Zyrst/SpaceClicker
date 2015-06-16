@@ -8,6 +8,7 @@ public class Global : MonoBehaviour {
     public class Prefabs
     {
         public GameObject Number;
+        public GameObject InventorySlot;
     }
 
     [System.Serializable]
@@ -20,16 +21,20 @@ public class Global : MonoBehaviour {
         public Color healColor;
     }
 
-    public enum GameType : int { Farm = 0, Quest = 1 };
+
+    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3};
     public GameType _gameType = GameType.Farm;
 
+    public uint _gold = 0;
     public Player _player;
     public Prefabs _prefabs = new Prefabs();
     public Colors _colors = new Colors();
     public float _expVariable = 10f;
+    public float _expScale = 1.5f;
     public GameObject _playerGUI;
     public Planet _planet;
-  
+    public float _damageScale = 1.2f;
+    public float _healthScale = 1.5f;
 
     private static Global _instance = null;
     public static Global Instance
@@ -48,12 +53,13 @@ public class Global : MonoBehaviour {
     {
         UpdateLevel();
         UpdateExpBar();
+        SwitchScene(GameType.Ship);
     }
     void Update()
     {
         MouseController.Instance.Update();
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKey(KeyCode.G))
         {
             _player.SetExperience(10);
         }
@@ -62,6 +68,28 @@ public class Global : MonoBehaviour {
     void LateUpdate()
     {
         MouseController.Instance.LateUpdate();
+    }
+    public void SwitchScene(GameType gt_)
+    {
+        EnemySpawner.Reset();
+        switch (gt_)
+        {
+            case GameType.Farm:
+                _player.gameObject.SetActive(true);
+                FarmMode.Instance.gameObject.SetActive(true);
+                Ship.Instance.gameObject.SetActive(false);
+                FarmMode.Instance.startFarmMode();
+                break;
+            case GameType.Quest:
+                break;
+            case GameType.Ship:
+                _player.gameObject.SetActive(false);
+                FarmMode.Instance.gameObject.SetActive(false);
+                Ship.Instance.gameObject.SetActive(true);
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
@@ -113,7 +141,7 @@ public class Global : MonoBehaviour {
     {
         if (_gameType == GameType.Farm)
         {
-            int level = Random.Range((int)_player._level - 1, (int)_player._level+1);
+            int level = Random.Range((int)_player._level - 1, (int)_player._level+2);
             if (level <= _planet._minLevel)
             {
                 return (uint)_planet._minLevel;
@@ -132,6 +160,7 @@ public class Global : MonoBehaviour {
         float value = (float)(_player._experience) /(float)( _player._experianceToNext);
         Debug.Log("Value for exp bar : " + value);
         _playerGUI.transform.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Exp").transform.localScale = new Vector3(value, 1f, 1f);
+        _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "ExpText").text = _player._experience.ToString() + "/" + _player._experianceToNext.ToString();
     }
 
     public void UpdateLevel()

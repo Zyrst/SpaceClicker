@@ -27,11 +27,13 @@ public class CharacterStats {
     public Element _kinetic;
     public Element _psychic;
 
-    public void LevelUp()
+    public void LevelUp()   {   LevelUp(1);     }
+
+    public void LevelUp(uint level_)
     {
-        _maxHealth *= 1.2f;
+        _maxHealth *= Mathf.Pow(Global.Instance._healthScale, level_);
         _health = _maxHealth;
-        _normal.damage *= 1.3f;
+        _normal.damage *= Mathf.Pow(Global.Instance._damageScale, level_);
     }
 
 }

@@ -6,6 +6,7 @@ using System.Linq;
 public class CharacterGUI : MonoBehaviour {
     public GameObject HealthBar;
     public GameObject LevelText;
+    public GameObject HealthText;
     public Character character;
 
     
@@ -24,6 +25,7 @@ public class CharacterGUI : MonoBehaviour {
         if (character is Enemy)
         {
             LevelText.GetComponent<Text>().text = character._level.ToString();
+            HealthText.GetComponent<Text>().text = ((int)(character._stats._health)).ToString();
         }
 	}
 }
