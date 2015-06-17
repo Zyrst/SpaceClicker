@@ -8,6 +8,7 @@ public class Player : Character {
     
     public SpellAttack[] _spellsArray = new SpellAttack[4];
     public GameObject[] _spellSlotArray = new GameObject[4];
+    public GameObject[] _inventoryArray = new GameObject[32];
 	// Use this for initialization
 	void Start () {
         _stats._health = _stats._maxHealth;

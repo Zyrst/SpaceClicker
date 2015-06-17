@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
 public class CharacterScreen : MonoBehaviour {
 
@@ -7,8 +9,8 @@ public class CharacterScreen : MonoBehaviour {
     public GameObject CharacterBackground;
     public GameObject CharacterStatsBackground;
 
-    public float _offSet;
-    public int _numInventorySlot = 5;
+    public Vector2 _offSet;
+    public Vector2 _numInventorySlot;
     public Vector3 _invStartPos = new Vector3();
     public ArrayList _inventory = new ArrayList();
 
@@ -37,19 +39,37 @@ public class CharacterScreen : MonoBehaviour {
     public void GenerateInventorySlots()
     {
         Vector3 currentPos = _invStartPos;
-        for (int j = 0; j < _numInventorySlot; j++)
+        int counter = 0;
+        for (int j = 0; j < _numInventorySlot.y; j++)
         {
-            for (int i = 0; i < _numInventorySlot; i++)
+            for (int i = 0; i < _numInventorySlot.x; i++)
             {
+                
                 GameObject tmpInv = GameObject.Instantiate(Global.Instance._prefabs.InventorySlot);
                 tmpInv.gameObject.GetComponent<RectTransform>().position = currentPos;
-                currentPos.x += _offSet;
+                currentPos.x += _offSet.x;
                 tmpInv.gameObject.GetComponent<RectTransform>().parent = transform.GetComponentInChildren<Canvas>().GetComponent<RectTransform>();
                 tmpInv.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+                try
+                {
+                    tmpInv.gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "EquipSprite").sprite = Global.Instance._player._inventoryArray[counter].gameObject.GetComponent<Equipment>()._sprite;
+                }
+                catch (System.NullReferenceException) {}
+  
                 _inventory.Add(tmpInv);
+                counter++;
             }
             currentPos.x = _invStartPos.x;
-            currentPos.y -= _offSet;
+            currentPos.y -= _offSet.y;
         }
+    }
+
+    public void RemoveInventorySlots()
+    {
+        foreach (var item in _inventory)
+        {
+            Destroy((GameObject)item);
+        }
+        _inventory.Clear();
     }
 }
