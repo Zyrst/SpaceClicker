@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class Ship : MonoBehaviour {
-    public GameObject _EquipPopup;
-
+   
     private static Ship _instance = null;
+   
     public static Ship Instance
     {
         get
@@ -27,12 +27,6 @@ public class Ship : MonoBehaviour {
 	void Update () {
 	
 	}
-
-    public void PopItUp(Equipment equi_)
-    {
-        _EquipPopup.gameObject.SetActive(true);
-        _EquipPopup.transform.position = equi_.transform.position;
-    }
 
     public void Farm()
     {

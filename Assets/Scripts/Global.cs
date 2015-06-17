@@ -9,6 +9,7 @@ public class Global : MonoBehaviour {
     {
         public GameObject Number;
         public GameObject InventorySlot;
+        public GameObject[] _enemyPrefab;
     }
 
     [System.Serializable]

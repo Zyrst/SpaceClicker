@@ -51,6 +51,7 @@ public class SpellAttack : BaseAttack {
             _followerDiff = MouseController.Instance.position - _slot.transform.position;
             _clicked = true;
             MouseController.Instance.locked = true;
+            Invoke("ResetCanDealDamage", 0.1f);
         }
     }
 
@@ -88,7 +89,7 @@ public class SpellAttack : BaseAttack {
                     }
                     ResetGUI();
                 }
-                catch (System.NullReferenceException e) { }
+                catch (System.NullReferenceException) { }
             }
     }
 
@@ -112,5 +113,10 @@ public class SpellAttack : BaseAttack {
             }
         }
        
+    }
+
+    public void ResetCanDealDamage()
+    {
+        MouseController.Instance._locked = false;
     }
 }

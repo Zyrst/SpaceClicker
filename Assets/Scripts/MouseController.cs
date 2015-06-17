@@ -6,8 +6,8 @@ public class MouseController {
     /// <summary>
     /// lock the clicks
     /// </summary>
-    private bool _setLocked = false;
-    private bool _locked = false;
+    public bool _setLocked = false;
+    public bool _locked = false;
     public bool locked
     {
         get { return _locked; }

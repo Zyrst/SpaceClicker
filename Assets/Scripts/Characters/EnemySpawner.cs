@@ -32,17 +32,12 @@ public class EnemySpawner : MonoBehaviour {
 
     public static Triggers triggers = new Triggers();
 
-    public GameObject _enemyPrefab;
     public Enemy _enemy = null;
 
 	// Use this for initialization
 	void Start () {
         triggers.spawns.Add(this);
-
-        _enemy = (GameObject.Instantiate(_enemyPrefab) as GameObject).GetComponent<Enemy>();
-        _enemy.transform.position = transform.position;
-        _enemy.transform.parent = transform;
-        _enemy.afterSpawn();
+        spawner();
 	}
 	
 	// Update is called once per frame
@@ -57,7 +52,8 @@ public class EnemySpawner : MonoBehaviour {
     private void spawner()
     {
         _enemy = null;
-        _enemy = (GameObject.Instantiate(_enemyPrefab) as GameObject).GetComponent<Enemy>();
+        int rnd = Random.Range(0, Global.Instance._prefabs._enemyPrefab.Length);
+        _enemy = (GameObject.Instantiate(Global.Instance._prefabs._enemyPrefab[rnd]) as GameObject).GetComponent<Enemy>();
         _enemy.transform.position = transform.position;
         _enemy.transform.parent = transform;
         _enemy.afterSpawn();
