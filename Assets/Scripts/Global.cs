@@ -23,7 +23,7 @@ public class Global : MonoBehaviour {
     }
 
 
-    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3};
+    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 };
     public GameType _gameType = GameType.Farm;
 
     public uint _gold = 0;
@@ -55,6 +55,7 @@ public class Global : MonoBehaviour {
         UpdateLevel();
         UpdateExpBar();
         SwitchScene(GameType.Ship);
+        Starmap.Instance.Generate(0, 100);
     }
     void Update()
     {
@@ -79,6 +80,7 @@ public class Global : MonoBehaviour {
                 _player.gameObject.SetActive(true);
                 FarmMode.Instance.gameObject.SetActive(true);
                 Ship.Instance.gameObject.SetActive(false);
+                Starmap.Instance.gameObject.SetActive(false);
                 FarmMode.Instance.startFarmMode();
                 break;
             case GameType.Quest:
@@ -87,6 +89,13 @@ public class Global : MonoBehaviour {
                 _player.gameObject.SetActive(false);
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(true);
+                Starmap.Instance.gameObject.SetActive(false);
+                break;
+            case GameType.Star:
+                _player.gameObject.SetActive(false);
+                FarmMode.Instance.gameObject.SetActive(false);
+                Ship.Instance.gameObject.SetActive(false);
+                Starmap.Instance.gameObject.SetActive(true);
                 break;
             default:
                 break;

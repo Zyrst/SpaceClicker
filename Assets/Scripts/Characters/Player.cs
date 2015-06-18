@@ -154,5 +154,23 @@ public class Player : Character {
         Global.Instance.UpdateExpBar();
     }
 
-   
+    public void SortInventory()
+    {        
+        for (int i = 0; i < _inventoryArray.Length; i++)
+        {
+            if (_inventoryArray[i] == null)
+            {
+                for (int j = i; j < _inventoryArray.Length; j++)
+                {
+                    if (_inventoryArray[j] != null)
+                    {
+                        _inventoryArray[i] = _inventoryArray[j];
+                        _inventoryArray[j] = null;
+                    }
+                }
+            }
+            
+        }
+  
+    }
 }

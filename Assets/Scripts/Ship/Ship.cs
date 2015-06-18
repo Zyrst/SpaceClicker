@@ -36,7 +36,13 @@ public class Ship : MonoBehaviour {
     public void Character()
     {
         CharacterScreen.Instance.gameObject.SetActive(true);
+        Global.Instance._player.SortInventory();
         CharacterScreen.Instance.GenerateInventorySlots();
+    }
+
+    public void Star()
+    {
+        Global.Instance.SwitchScene(Global.GameType.Star);
     }
 
     public void ExitCharacter()
