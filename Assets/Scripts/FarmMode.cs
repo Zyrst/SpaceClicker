@@ -27,7 +27,6 @@ public class FarmMode : MonoBehaviour {
 
     public void allEnemiesDied()
     {
-        Debug.Log("All enemies died, plz giff health");
         Global.Instance._player._stats._health = Global.Instance._player._stats._maxHealth;
 
     }

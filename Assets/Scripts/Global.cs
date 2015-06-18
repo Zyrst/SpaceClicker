@@ -55,7 +55,7 @@ public class Global : MonoBehaviour {
         UpdateLevel();
         UpdateExpBar();
         SwitchScene(GameType.Ship);
-        Starmap.Instance.Generate(0, 100);
+        Starmap.Instance.Generate(0, 100, 9001);
     }
     void Update()
     {
@@ -116,13 +116,12 @@ public class Global : MonoBehaviour {
     /// </summary>
     public void AllEnemiesDied()
     {
-        Debug.Log("Enter AllEnemiesDied in Global");
         switch (_gameType)
         {
             case GameType.Farm:
                 FarmMode.Instance.allEnemiesDied();
-                Debug.Log("Calling allenemiesdied in global");
                 break;
+
             case GameType.Quest:
                 break;
             default:
