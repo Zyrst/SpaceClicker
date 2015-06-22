@@ -96,7 +96,6 @@ public class Player : Character {
    
 	// Use this for initialization
 	void Start () {
-        _stats._health = _stats._maxHealth;
         LevelUp();
 	}
 	
@@ -171,6 +170,5 @@ public class Player : Character {
             }
             
         }
-  
     }
 }

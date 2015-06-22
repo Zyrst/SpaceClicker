@@ -17,5 +17,7 @@ public class MouseTrailScript : MonoBehaviour {
         }
         else
             gameObject.GetComponent<TrailRenderer>().enabled = false;
+
+        gameObject.transform.forward = Camera.main.transform.forward;
 	}
 }

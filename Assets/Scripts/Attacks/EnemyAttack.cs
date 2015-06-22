@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class EnemyAttack : MonoBehaviour {
-
+    [HideInInspector]
     public float _attackTimer;
+
     public float _cooldownTimer;
 
 	// Use this for initialization

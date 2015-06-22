@@ -27,6 +27,6 @@ public class Galaxy : MonoBehaviour {
 
     public void Generate()
     {
-        Starmap.Instance.Generate(0, 100, 9001);
+        Starmap.Instance.Generate(1, 100, 9001);
     }
 }

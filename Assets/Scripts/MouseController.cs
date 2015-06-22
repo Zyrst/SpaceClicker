@@ -28,7 +28,11 @@ public class MouseController {
     {
         get
         {
-            return Input.mousePosition;
+            
+            if (Input.touchSupported && Input.GetTouch(0).phase == TouchPhase.Moved)
+                return Input.GetTouch(0).position;
+            else
+                return Input.mousePosition;
         }
     }
 
@@ -44,7 +48,10 @@ public class MouseController {
     {
         get
         {
-            return Input.GetMouseButton(0);
+            if (Input.touchSupported)
+                return Input.GetTouch(0).phase == TouchPhase.Began;
+            else
+                return Input.GetMouseButton(0);
         }
     }
 
@@ -55,6 +62,7 @@ public class MouseController {
             return buttonDown && !_locked;
         }
     }
+
 
     public void Update()
     {

@@ -22,13 +22,22 @@ public class ClickAttack : BaseAttack {
             {
                 try
                 {
+                    Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue,10f);
                     // hit enemy
-                    if ((hit.collider.transform.parent.parent.tag == "Enemy" && _canDealDamage) || (_lastTarget != null && _lastTarget != hit.collider.gameObject))
+                    if (hit.collider.transform.parent.parent.tag == "Enemy")
                     {
-                        _canDealDamage = false;
-                        _lastTarget = hit.collider.gameObject;
-                        CharacterStats cs = gameObject.GetComponent<Player>()._stats;
-                        hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs), hit.point, Global.Instance._player);
+                        if (_canDealDamage || (_lastTarget != null && _lastTarget != hit.collider.gameObject.transform.parent.parent.gameObject))
+                        {
+                            _canDealDamage = false;
+                            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red, 10f);
+                            _lastTarget = hit.collider.transform.parent.parent.gameObject;
+                            CharacterStats cs = gameObject.GetComponent<Player>()._stats;
+                            hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs), hit.point, Global.Instance._player);
+                        }
+                    }
+                    else
+                    {
+                        _canDealDamage = true;
                     }
                 }
                 catch (System.NullReferenceException) { }

@@ -63,6 +63,17 @@ public class Starmap : MonoBehaviour {
         _planetInfoBox.gameObject.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Name").text = planet_._name;
 
         Global.Instance._planet = _selectedPlanet;
+        switch (_selectedPlanet._type)
+	    {
+            case Planet.PlanetType.PostApc :
+                Global.Instance._enemies._currentEnemies = Global.Instance._enemies._postApc;
+                break;
+            case Planet.PlanetType.Mech :
+                Global.Instance._enemies._currentEnemies = Global.Instance._enemies._mech;
+                break;
+		    default:
+                break;
+	    }
     }
 
     public void Generate(int min_, int max_, int seed_)
@@ -72,20 +83,27 @@ public class Starmap : MonoBehaviour {
         Random.seed = seed_;
 
         _numberOfPlanets = Random.Range(3, 9);
-        int level = (max_ - min_) / _numberOfPlanets + min_;
+        int level = ((max_ - min_) / _numberOfPlanets) + min_;
         int levelForPlanet = level;
         for (int i = 0; i < _numberOfPlanets; i++)
         {
             Planet _plan = new Planet();
+
+            int planetTypes = System.Enum.GetNames(typeof(Planet.PlanetType)).Length;
+            _plan._type = (Planet.PlanetType)Random.Range(0, planetTypes);
+
             _plan._sprite = _planetSprites[Random.Range(0, _planetSprites.Length)];
+
             _plan._name = (Random.value.ToString());
-            _plan._minLevel = levelForPlanet - level;
+
+            _plan._minLevel = levelForPlanet - level + 1;
             _plan._maxLevel = levelForPlanet;
             levelForPlanet += level;
 
             PlanetButton planBut = GameObject.Instantiate(_planetButtonPrefab as GameObject).GetComponent<PlanetButton>();
-            planBut.gameObject.GetComponent<RectTransform>().SetParent(_planets.GetComponent<RectTransform>());
-            planBut.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+            RectTransform planRect = planBut.gameObject.GetComponent<RectTransform>();
+            planRect.SetParent(_planets.GetComponent<RectTransform>());
+            planRect.localScale = new Vector3(1f, 1f, 1f);
             planBut.gameObject.GetComponent<Image>().sprite = _plan._sprite;
             planBut._planet = _plan;
             bool looping = false;
@@ -93,22 +111,20 @@ public class Starmap : MonoBehaviour {
             {
                 looping = false;
                 float x = Random.Range(0f, 1340f);
-                Debug.Log(x);
                 planBut.gameObject.GetComponent<RectTransform>().position = new Vector3(x, Random.Range(0f, 650f), 0f);
                 Vector4 rect = new Vector4();
-                rect.x = planBut.gameObject.GetComponent<RectTransform>().position.x - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x/2);
-                rect.y = planBut.gameObject.GetComponent<RectTransform>().position.y - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2);
-                rect.z = planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x;
-                rect.w = planBut.gameObject.GetComponent<RectTransform>().sizeDelta.y;
-                Debug.Log(rect);
+                rect.x = planRect.position.x - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x / 2);
+                rect.y = planRect.position.y - (planRect.sizeDelta.y / 2);
+                rect.z = planRect.sizeDelta.x;
+                rect.w = planRect.sizeDelta.y;
                 looping = CheckOverlap(rect);
 
             } while (looping);
             Vector4 _rect = new Vector4();
-            _rect.x = planBut.gameObject.GetComponent<RectTransform>().position.x - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x / 2);
-            _rect.y = planBut.gameObject.GetComponent<RectTransform>().position.y - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2);
-            _rect.z = planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x;
-            _rect.w = planBut.gameObject.GetComponent<RectTransform>().sizeDelta.y;
+            _rect.x = planRect.position.x - (planRect.sizeDelta.x / 2);
+            _rect.y = planRect.position.y - (planRect.sizeDelta.y / 2);
+            _rect.z = planRect.sizeDelta.x;
+            _rect.w = planRect.sizeDelta.y;
             _planetBounds.Add(_rect);
         }
     }
@@ -133,7 +149,6 @@ public class Starmap : MonoBehaviour {
         bool c2 = (a.x + a.z) > b.x;
         bool c3 = a.y < (b.y + b.w);
         bool c4 = (a.y + a.w) > b.y;
-        Debug.Log(c1 + " " +  c2 + " " + c3 + " " + c4);
         return c1 && c2 && c3 && c4;
     }
 }

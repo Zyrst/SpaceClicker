@@ -4,28 +4,31 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
     public class Triggers
     {
-        private uint _enemyCounter = 0;
-        public uint enemyCounter
+        public void newWave()
         {
-            get { return _enemyCounter; }
-            set
-            {
-                _enemyCounter = value;
-
-                if (_enemyCounter == 0)
-                {
-                    Global.Instance.AllEnemiesDied();
-                    Spawn();
-                }
-            }
+            Global.Instance.AllEnemiesDied();
+            int rnd = Random.Range(1, spawns.Count+1);
+            EnemySpawner._enemiesSpawn = rnd;
+            Spawn(rnd);
         }
         public ArrayList spawns = new ArrayList();
 
-        public void Spawn()
+        /// <summary>
+        /// Spawns new enemies
+        /// </summary>
+        /// <param name="number_">Number of enemies</param>
+        public void Spawn(int number_)
         {
+            int count = -1;
             foreach (var item in spawns)
 	        {
-                ((EnemySpawner)item).Spawn();
+                count++;
+                if (count == number_)
+                {
+                    ((EnemySpawner)item)._enemy = null;
+                }
+                else
+                    ((EnemySpawner)item).Spawn();
 	        }
         }
     }
@@ -33,11 +36,17 @@ public class EnemySpawner : MonoBehaviour {
     public static Triggers triggers = new Triggers();
 
     public Enemy _enemy = null;
+    public static int _enemiesSpawn = 3;
+
+    public bool EnemyIsActive()
+    {
+        return _enemy != null && _enemy._isAlive;
+    }
 
 	// Use this for initialization
 	void Start () {
         triggers.spawns.Add(this);
-        spawner();
+        triggers.newWave();
 	}
 	
 	// Update is called once per frame
@@ -51,27 +60,31 @@ public class EnemySpawner : MonoBehaviour {
 
     private void spawner()
     {
-        _enemy = null;
-        int rnd = Random.Range(0, Global.Instance._prefabs._enemyPrefab.Length);
-        _enemy = (GameObject.Instantiate(Global.Instance._prefabs._enemyPrefab[rnd]) as GameObject).GetComponent<Enemy>();
+        if (_enemy != null)
+        {
+            GameObject.Destroy(_enemy.gameObject);
+        }
+        int rnd = Random.Range(0, Global.Instance._enemies._currentEnemies.Length);
+        _enemy = (GameObject.Instantiate(Global.Instance._enemies._currentEnemies[rnd]) as GameObject).GetComponent<Enemy>();
         _enemy.transform.position = transform.position;
         _enemy.transform.parent = transform;
-        _enemy.afterSpawn();
     }
 
     public void ResetWave()
     {
-        if (!_enemy.gameObject.activeInHierarchy)
+        try
         {
-            triggers.enemyCounter++;
+            if (_enemy != null)
+            {
+                _enemy.gameObject.SetActive(true);
+                _enemy._stats._health = _enemy._stats._maxHealth;
+            }
         }
-        _enemy.gameObject.SetActive(true);
-        _enemy._stats._health = _enemy._stats._maxHealth;
+        catch (System.NullReferenceException) { }
     }
 
     public static void Reset()
     {
-        triggers.enemyCounter = 0;
         triggers.spawns.Clear();
         triggers.spawns = new ArrayList();
     }

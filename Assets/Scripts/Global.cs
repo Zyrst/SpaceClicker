@@ -10,6 +10,7 @@ public class Global : MonoBehaviour {
         public GameObject Number;
         public GameObject InventorySlot;
         public GameObject[] _enemyPrefab;
+        public GameObject GoldCoin;
     }
 
     [System.Serializable]
@@ -21,14 +22,32 @@ public class Global : MonoBehaviour {
         public Color psychicAttackColor;
         public Color healColor;
     }
+    [System.Serializable]
+    public class Enemies
+    {
+        public GameObject[] _postApc;
+        public GameObject[] _mech;
+        public GameObject[] _currentEnemies;
+    }
 
-
-    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 };
+    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }
     public GameType _gameType = GameType.Farm;
 
+
+
     public uint _gold = 0;
+    public uint Gold
+    {
+        get { return _gold; }
+        set
+        {
+            _gold = value;
+            _playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").text = _gold.ToString();
+        }
+    }
     public Player _player;
     public Prefabs _prefabs = new Prefabs();
+    public Enemies _enemies = new Enemies();
     public Colors _colors = new Colors();
     public float _expVariable = 10f;
     public float _expScale = 1.5f;
@@ -55,7 +74,7 @@ public class Global : MonoBehaviour {
         UpdateLevel();
         UpdateExpBar();
         SwitchScene(GameType.Ship);
-        Starmap.Instance.Generate(0, 100, 9001);
+        Starmap.Instance.Generate(1, 100, 9001);
     }
     void Update()
     {
@@ -129,6 +148,19 @@ public class Global : MonoBehaviour {
         }
     }
 
+    public int EnemiesAlive()
+    {
+        int count = 0;
+        foreach (var item in EnemySpawner.triggers.spawns)
+        {
+            if (((EnemySpawner)item).EnemyIsActive())
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
     /// <summary>
     /// call this when player dies
     /// </summary>
@@ -167,7 +199,6 @@ public class Global : MonoBehaviour {
     public void UpdateExpBar()
     {
         float value = (float)(_player._experience) /(float)( _player._experianceToNext);
-        Debug.Log("Value for exp bar : " + value);
         _playerGUI.transform.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Exp").transform.localScale = new Vector3(value, 1f, 1f);
         _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "ExpText").text = _player._experience.ToString() + "/" + _player._experianceToNext.ToString();
     }

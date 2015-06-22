@@ -20,7 +20,6 @@ public class SpellSlotButton : Button
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("trycket på grejen");
         int index = 0;
         switch (transform.parent.name)
         {

@@ -10,6 +10,14 @@ public class Planet {
     public string _name = "Plenteru";
     public Sprite _sprite;
 
+    public enum PlanetType : int
+    {
+        PostApc = 0,
+        Mech =  1
+    }
+
+    public PlanetType _type = PlanetType.PostApc;
+
 	// Use this for initialization
 	void Start () {
 	

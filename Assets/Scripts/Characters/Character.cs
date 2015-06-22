@@ -67,7 +67,6 @@ public class Character : MonoBehaviour {
     public virtual void SetExperience(uint level_)
     {
         uint exp = 0;
-        Debug.Log("Level_ " + level_ + "_Level " + _level);
         exp = (uint)(level_ / _level * Global.Instance._expVariable) + level_;
         _experience += exp;
         if (_experience >= _experianceToNext)
@@ -79,9 +78,10 @@ public class Character : MonoBehaviour {
     public void LevelUp()
     {
         _experience = 1;
-        _experianceToNext += (uint)((float)(_experianceToNext) * Global.Instance._expScale);
+       // _experianceToNext += (uint)((float)(_experianceToNext) * Global.Instance._expScale);
         _level++;
-        _stats.LevelUp();
+        _stats.LevelUp(_level);
+        _experianceToNext = (uint)(50 + (_level * (5 * _level)));
         Global.Instance.UpdateLevel();
     }
 

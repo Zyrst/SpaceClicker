@@ -19,6 +19,10 @@ public class FarmMode : MonoBehaviour {
         }
     }
 
+    void Update()
+    {
+    }
+
     public void startFarmMode()
     {
         _arena = (GameObject.Instantiate(arenaPrefab) as GameObject);
