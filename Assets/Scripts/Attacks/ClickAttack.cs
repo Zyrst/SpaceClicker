@@ -40,7 +40,7 @@ public class ClickAttack : BaseAttack {
                         _canDealDamage = true;
                     }
                 }
-                catch (System.NullReferenceException) { }
+                catch (System.NullReferenceException) { _canDealDamage = true; }
             }
             else
             {
