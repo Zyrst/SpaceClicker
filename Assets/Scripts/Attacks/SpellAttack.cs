@@ -6,6 +6,7 @@ using System.Linq;
 public class SpellAttack : BaseAttack {
 
     public SpellStats _stats = new SpellStats();
+    public SpellStats _combinedStats = new SpellStats();
     public Sprite _spellImage;
     public GameObject _slot;
     public Image _slotImage;
@@ -83,7 +84,7 @@ public class SpellAttack : BaseAttack {
                     if (hit.collider.transform.parent.parent.tag == "Enemy" || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         Debug.Log("collide");
-                        hit.collider.transform.parent.parent.gameObject.GetComponent<Character>().TakeDamage(DamageStats.GenerateFromSpellStats(_stats), hit.point, Global.Instance._player);
+                        hit.collider.transform.parent.parent.gameObject.GetComponent<Character>().TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit.point, Global.Instance._player);
                         _cd = true; 
                         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
                     }
@@ -105,7 +106,7 @@ public class SpellAttack : BaseAttack {
         if (_cd)
         {
             _coolDown += Time.deltaTime;
-            if (_coolDown >= _stats._cooldown)
+            if (_coolDown >= _combinedStats._cooldown)
             {
                 _cd = false;
                 _coolDown = 0f;
@@ -118,5 +119,11 @@ public class SpellAttack : BaseAttack {
     public void ResetCanDealDamage()
     {
         MouseController.Instance._locked = false;
+    }
+
+    public void CombineSpellStats()
+    {
+        _combinedStats = new SpellStats(_stats);
+        _combinedStats.AddStats(Global.Instance._player._combinedStats);
     }
 }

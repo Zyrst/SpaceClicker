@@ -59,7 +59,9 @@ public class CharacterScreen : MonoBehaviour {
     public void GenerateInventorySlots()
     {
         EquipmentPopup.Reset();
-        Vector3 currentPos = _invStartPos;
+        Vector3 currentPos = Vector3.zero;
+        currentPos.x = _invStartPos.x;
+        currentPos.y = _invStartPos.y;
         int counter = 0;
         for (int j = 0; j < _numInventorySlot.y; j++)
         {
@@ -67,9 +69,9 @@ public class CharacterScreen : MonoBehaviour {
             {
                 
                 GameObject tmpInv = GameObject.Instantiate(Global.Instance._prefabs.InventorySlot);
-                tmpInv.gameObject.GetComponent<RectTransform>().position = currentPos;
-                currentPos.x += _offSet.x;
                 tmpInv.gameObject.GetComponent<RectTransform>().SetParent(transform.GetComponentInChildren<Canvas>().GetComponent<RectTransform>());
+                tmpInv.gameObject.GetComponent<RectTransform>().localPosition = currentPos;
+                currentPos.x += _offSet.x;
                 tmpInv.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
                 try
                 {

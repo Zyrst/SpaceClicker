@@ -20,6 +20,10 @@ public class Enemy : Character
         _stats._maxHealth = (_stats._baseStat * _stats._multiplierHealth) * _stats._healthStatDist;
         _stats._health = _stats._maxHealth;
         _stats._normal.damage = (_stats._baseStat * _stats._multiplierDamage) * _stats._damageStatDist;
+
+        transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").LookAt(Global.Instance._player.transform);
+        Quaternion rot = transform.rotation;
+        //rot.z = 0f;
 	}
 	
 	// Update is called once per frame

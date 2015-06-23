@@ -10,6 +10,8 @@ public class CharacterStats {
         public float crit;
         public float critMultiplier;
         public float resistance;
+        public float cooldownReduction; //Abilities
+
 
         public float critDamage
         {
@@ -18,6 +20,18 @@ public class CharacterStats {
                 return (damage * critMultiplier);
             }
         }
+
+        public Element(Element element_)
+        {
+            this.damage = element_.damage;
+            this.crit = element_.crit;
+            this.critMultiplier = element_.critMultiplier;
+            this.resistance = element_.resistance;
+            this.cooldownReduction = element_.cooldownReduction;
+        }
+
+        public Element()
+        { }
     }
 
     public float _baseStat;
@@ -54,7 +68,53 @@ public class CharacterStats {
         _baseStat = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
         _health = _maxHealth;
-        _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist + 1;
-        
+        _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
+    }
+
+    public CharacterStats(CharacterStats stats_)
+    {
+        this._normal = new Element(stats_._normal);
+        this._kinetic = new Element(stats_._kinetic);
+        this._tech = new Element(stats_._tech);
+        this._psychic = new Element(stats_._psychic);
+        this._maxHealth = stats_._maxHealth;
+    }
+
+    public CharacterStats()
+    {
+
+    }
+
+    /// <summary>
+    /// Add equipment to stats with base stats
+    /// </summary>
+    /// <param name="stats_">Equipment stats</param>
+    public void AddStats(EquipmentStats stats_)
+    {
+        _normal.damage += stats_._normal.damage;
+        _normal.crit += stats_._normal.crit;
+        _normal.cooldownReduction += stats_._normal.cooldownReduction;
+        _normal.resistance += stats_._normal.resistance;
+        _normal.critMultiplier += stats_._normal.critMultiplier;
+
+        _tech.damage += stats_._tech.damage;
+        _tech.crit += stats_._tech.crit;
+        _tech.cooldownReduction += stats_._tech.cooldownReduction;
+        _tech.resistance += stats_._tech.resistance;
+        _tech.critMultiplier += stats_._tech.critMultiplier;
+
+        _kinetic.damage += stats_._kinetic.damage;
+        _kinetic.crit += stats_._kinetic.crit;
+        _kinetic.cooldownReduction += stats_._kinetic.cooldownReduction;
+        _kinetic.resistance += stats_._kinetic.resistance;
+        _kinetic.critMultiplier += stats_._kinetic.critMultiplier;
+
+        _psychic.damage += stats_._psychic.damage;
+        _psychic.crit += stats_._psychic.crit;
+        _psychic.cooldownReduction += stats_._psychic.cooldownReduction;
+        _psychic.resistance += stats_._psychic.resistance;
+        _psychic.critMultiplier += stats_._psychic.critMultiplier;
+
+        _maxHealth += stats_._health;
     }
 }

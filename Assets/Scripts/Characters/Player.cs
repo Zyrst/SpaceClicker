@@ -83,6 +83,7 @@ public class Player : Character {
             }
             CharacterScreen.Instance.RemoveInventorySlots();
             CharacterScreen.Instance.GenerateInventorySlots();
+            Global.Instance._player.UpdateCombinedStats();
         }
 
     }
@@ -93,10 +94,12 @@ public class Player : Character {
     public EquipmentOnPlayer _equipped = new EquipmentOnPlayer();
     public GameObject _equipmentObject;
     public GameObject _inventoryObject;
-   
+    public CharacterStats _combinedStats = new CharacterStats();
+
 	// Use this for initialization
 	void Start () {
         LevelUp();
+        UpdateCombinedStats();
 	}
 	
 	// Update is called once per frame
@@ -115,13 +118,45 @@ public class Player : Character {
         
     }
 
+    public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
+    {
+        //Calculate damage with resistance from the characters stats
+        float normal = ds_._normal * (1f - _combinedStats._normal.resistance);
+        float tech = ds_._tech * (1f - _combinedStats._tech.resistance);
+        float psychic = ds_._psychic * (1f - _combinedStats._psychic.resistance);
+        float kinetic = ds_._kinetic * (1f - _combinedStats._kinetic.resistance);
+
+        float totalDamage = normal + tech + psychic + kinetic;
+
+        _stats._health -= totalDamage;
+        _stats._health += ds_._heal;
+
+        //If heal make sure we don't go over maxhealth
+        if (_stats._health > _combinedStats._maxHealth)
+            _stats._health = _combinedStats._maxHealth;
+
+        SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
+
+        if (_stats._health < 1f)
+        {
+            _stats._health = 0f;
+            Die(hitter_);
+        }
+    }
+
+
     public override void Die()
     {
         base.Die();
         Global.Instance.PlayerDied();
-        gameObject.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Cylinder").gameObject.SetActive(false);
+        gameObject.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").gameObject.SetActive(false);
     }
 
+    public override void LevelUp()
+    {
+        base.LevelUp();
+        UpdateCombinedStats();
+    }
     public void Reset(float time_)
     {
         Invoke("ResetNow", time_);
@@ -129,7 +164,7 @@ public class Player : Character {
 
     public void ResetNow()
     {
-        gameObject.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Cylinder").gameObject.SetActive(true);
+        gameObject.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Model").gameObject.SetActive(true);
         _stats._health = _stats._maxHealth;
 
         _isAlive = true;
@@ -169,6 +204,28 @@ public class Player : Character {
                 }
             }
             
+        }
+    }
+
+    /// <summary>
+    /// Update stats of character with gear and base stats
+    /// </summary>
+    public void UpdateCombinedStats()
+    {
+        _combinedStats = new CharacterStats(_stats);
+        if (_equipped._chest != null)
+            _combinedStats.AddStats(_equipped._chest._stats);
+        if (_equipped._head != null)
+            _combinedStats.AddStats(_equipped._head._stats);
+        if (_equipped._legs != null)
+            _combinedStats.AddStats(_equipped._legs._stats);
+        if (_equipped._weapon != null)
+            _combinedStats.AddStats(_equipped._weapon._stats);
+
+        for (int i = 0; i < _spellsArray.Length; i++)
+        {
+            if(_spellsArray[i] != null)
+                _spellsArray[i].CombineSpellStats();
         }
     }
 }

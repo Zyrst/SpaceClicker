@@ -1,0 +1,147 @@
+fileFormatVersion: 2
+guid: a129d6e6f260fdd4598c5c46a393c25a
+timeCreated: 1435064813
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: ArmeLeafLeft
+    100002: ArmeLeafRight
+    100004: ChestPetal1
+    100006: ChestPetal2
+    100008: ChestPetal3
+    100010: ChestPetal4
+    100012: ChestPetal5
+    100014: ChestPetal6
+    100016: HeadGrass1
+    100018: HipLeaf1
+    100020: HipLeaf2
+    100022: //RootNode
+    100024: pCube3
+    100026: polySurface3
+    100028: pPyramid1
+    100030: pPyramid2
+    400000: ArmeLeafLeft
+    400002: ArmeLeafRight
+    400004: ChestPetal1
+    400006: ChestPetal2
+    400008: ChestPetal3
+    400010: ChestPetal4
+    400012: ChestPetal5
+    400014: ChestPetal6
+    400016: HeadGrass1
+    400018: HipLeaf1
+    400020: HipLeaf2
+    400022: //RootNode
+    400024: pCube3
+    400026: polySurface3
+    400028: pPyramid1
+    400030: pPyramid2
+    2300000: ArmeLeafLeft
+    2300002: ArmeLeafRight
+    2300004: ChestPetal1
+    2300006: ChestPetal2
+    2300008: ChestPetal3
+    2300010: ChestPetal4
+    2300012: ChestPetal5
+    2300014: ChestPetal6
+    2300016: HeadGrass1
+    2300018: HipLeaf1
+    2300020: HipLeaf2
+    2300022: pCube3
+    2300024: polySurface3
+    2300026: pPyramid1
+    2300028: pPyramid2
+    3300000: ArmeLeafLeft
+    3300002: ArmeLeafRight
+    3300004: ChestPetal1
+    3300006: ChestPetal2
+    3300008: ChestPetal3
+    3300010: ChestPetal4
+    3300012: ChestPetal5
+    3300014: ChestPetal6
+    3300016: HeadGrass1
+    3300018: HipLeaf1
+    3300020: HipLeaf2
+    3300022: pCube3
+    3300024: polySurface3
+    3300026: pPyramid1
+    3300028: pPyramid2
+    4300000: ArmeLeafLeft
+    4300002: ArmeLeafRight
+    4300004: ChestPetal1
+    4300006: polySurface3
+    4300008: ChestPetal2
+    4300010: ChestPetal3
+    4300012: ChestPetal4
+    4300014: ChestPetal5
+    4300016: ChestPetal6
+    4300018: pCube3
+    4300020: HeadGrass1
+    4300022: HipLeaf2
+    4300024: HipLeaf1
+    4300026: pPyramid1
+    4300028: pPyramid2
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

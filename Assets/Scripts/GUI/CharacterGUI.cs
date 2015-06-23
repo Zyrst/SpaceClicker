@@ -25,7 +25,7 @@ public class CharacterGUI : MonoBehaviour {
         if (character is Enemy)
         {
             LevelText.GetComponent<Text>().text = character._level.ToString();
-            HealthText.GetComponent<Text>().text = ((int)(character._stats._health)).ToString();
+            HealthText.GetComponent<Text>().text = ((int)(System.Math.Floor(character._stats._health+0.5f))).ToString();
         }
 	}
 }

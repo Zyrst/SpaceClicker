@@ -5,6 +5,7 @@ public class ClickAttack : BaseAttack {
     public bool _canDealDamage = true;
     public GameObject _lastTarget = null;
 
+
 	// Use this for initialization
 	void Start () {
 	
@@ -31,7 +32,7 @@ public class ClickAttack : BaseAttack {
                             _canDealDamage = false;
                             Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red, 10f);
                             _lastTarget = hit.collider.transform.parent.parent.gameObject;
-                            CharacterStats cs = gameObject.GetComponent<Player>()._stats;
+                            CharacterStats cs = gameObject.GetComponent<Player>()._combinedStats;
                             hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs), hit.point, Global.Instance._player);
                         }
                     }

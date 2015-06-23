@@ -3,26 +3,11 @@ using System.Collections;
 
 [System.Serializable]
 public class SpellStats {
-    [System.Serializable]
-    public class Element
-    {
-        public float damage;
-        public float crit;
-        public float critMultiplier;
 
-        public float critDamage
-        {
-            get
-            {
-                return (damage * critMultiplier);
-            }
-        }
-    }
-
-    public Element _normal;
-    public Element _tech;
-    public Element _kinetic;
-    public Element _psychic;
+    public CharacterStats.Element _normal;
+    public CharacterStats.Element _tech;
+    public CharacterStats.Element _kinetic;
+    public CharacterStats.Element _psychic;
     public float _heal;
     public float _lifeSteal;
     public float _stunTime;
@@ -43,5 +28,59 @@ public class SpellStats {
     public bool hasStun
     {
         get { return _stunTime > 0f; }
+    }
+
+    public SpellStats() { }
+
+    public SpellStats(SpellStats stats_)
+    {
+        this._normal = new CharacterStats.Element(stats_._normal);
+        this._kinetic = new CharacterStats.Element(stats_._kinetic);
+        this._tech = new CharacterStats.Element(stats_._tech);
+        this._psychic = new CharacterStats.Element(stats_._psychic);
+
+        this._heal = stats_._heal;
+        this._lifeSteal = stats_._lifeSteal;
+        this._stunTime = stats_._stunTime;
+        this._cooldown = stats_._cooldown;
+    }
+
+    /// <summary>
+    /// Add characters base stats to the spell
+    /// </summary>
+    /// <param name="stats_">Character combine stats</param>
+    public void AddStats(CharacterStats stats_)
+    {
+        if (_normal.damage > 0)
+        {
+            _normal.damage += stats_._normal.damage;
+            _cooldown -= stats_._normal.cooldownReduction;
+            _normal.crit += stats_._normal.crit;
+            _normal.critMultiplier += stats_._normal.critMultiplier;
+        }
+
+        if (_tech.damage > 0)
+        {
+            _tech.damage += stats_._tech.damage;
+            _cooldown -= stats_._tech.cooldownReduction;
+            _tech.crit += stats_._tech.crit;
+            _tech.critMultiplier += stats_._tech.critMultiplier;
+        }
+        
+        if (_kinetic.damage > 0)
+        {
+            _kinetic.damage += stats_._kinetic.damage;
+            _cooldown -= stats_._kinetic.cooldownReduction;
+            _kinetic.crit += stats_._kinetic.crit;
+            _kinetic.critMultiplier += stats_._kinetic.critMultiplier;
+        }
+       
+        if (_psychic.damage > 0)
+        {
+            _psychic.damage += stats_._psychic.damage;
+            _cooldown -= stats_._psychic.cooldownReduction;
+            _psychic.crit += stats_._psychic.crit;
+            _psychic.critMultiplier += stats_._psychic.critMultiplier;
+        }
     }
 }

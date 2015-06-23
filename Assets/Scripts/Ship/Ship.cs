@@ -50,4 +50,9 @@ public class Ship : MonoBehaviour {
         CharacterScreen.Instance.gameObject.SetActive(false);
         CharacterScreen.Instance.RemoveInventorySlots();
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

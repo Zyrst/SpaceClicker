@@ -110,8 +110,8 @@ public class Starmap : MonoBehaviour {
             do
             {
                 looping = false;
-                float x = Random.Range(0f, 1340f);
-                planBut.gameObject.GetComponent<RectTransform>().position = new Vector3(x, Random.Range(0f, 650f), 0f);
+                float x = Random.Range(0f, 1040f);
+                planBut.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(x, Random.Range(0f, 350f), 0f);
                 Vector4 rect = new Vector4();
                 rect.x = planRect.position.x - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x / 2);
                 rect.y = planRect.position.y - (planRect.sizeDelta.y / 2);

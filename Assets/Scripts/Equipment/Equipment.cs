@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Equipment : MonoBehaviour {
 
-    public CharacterStats _stats = new CharacterStats();
+    public EquipmentStats _stats = new EquipmentStats();
     public Sprite _sprite = new Sprite();
 
     public enum EquipmentType
