@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class DamageStats {
-    public static DamageStats GenerateFromCharacterStats(CharacterStats stats_)
+    public static DamageStats GenerateFromCharacterStats(CharacterStats stats_, bool alwaysCrit_)
     {
         DamageStats ds = new DamageStats();
 
@@ -11,30 +11,41 @@ public class DamageStats {
         ds._tech = stats_._tech.damage;
         ds._psychic = stats_._psychic.damage;
 
-        /* Make it crit*/
-        float crit = Random.Range(0f, 1f);
-        if (crit <= stats_._normal.crit)
+        if (alwaysCrit_)
         {
             ds._normal = stats_._normal.critDamage;
-        }
-
-        crit = Random.Range(0f, 1f);
-        if (crit <= stats_._tech.crit)
-        {
             ds._tech = stats_._tech.critDamage;
-        }
-
-        crit = Random.Range(0f, 1f);
-        if (crit <= stats_._psychic.crit)
-        {
             ds._psychic = stats_._psychic.critDamage;
-        }
-
-        crit = Random.Range(0f, 1f);
-        if (crit <= stats_._kinetic.crit)
-        {
             ds._kinetic = stats_._kinetic.critDamage;
         }
+        else
+        {
+            /* Make it crit*/
+            float crit = Random.Range(0f, 1f);
+            if (crit <= stats_._normal.crit)
+            {
+                ds._normal = stats_._normal.critDamage;
+            }
+
+            crit = Random.Range(0f, 1f);
+            if (crit <= stats_._tech.crit)
+            {
+                ds._tech = stats_._tech.critDamage;
+            }
+
+            crit = Random.Range(0f, 1f);
+            if (crit <= stats_._psychic.crit)
+            {
+                ds._psychic = stats_._psychic.critDamage;
+            }
+
+            crit = Random.Range(0f, 1f);
+            if (crit <= stats_._kinetic.crit)
+            {
+                ds._kinetic = stats_._kinetic.critDamage;
+            }
+        }
+       
 
         return ds;
     }
