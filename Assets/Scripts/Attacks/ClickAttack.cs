@@ -56,7 +56,6 @@ public class ClickAttack : BaseAttack {
                                     //Build up sound for crit
                                     audio.PlayOneShot(_tempHitSounds[_hitSound]);
                                     _hitSound++;
-
                                 }
                                 else
                                     audio.PlayOneShot(_tempHitSounds[0]);

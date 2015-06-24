@@ -9,7 +9,7 @@ public class EnemyAttack : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        _attackTimer = Random.Range(0f, 2f);
 	}
 	
 	// Update is called once per frame

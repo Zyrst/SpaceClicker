@@ -34,10 +34,10 @@ public class CharacterStats {
         { }
     }
 
-    public float _baseStat;
+    public vap _baseStat;
 
-    public float _health;
-    public float _maxHealth;
+    public vap _health;
+    public vap _maxHealth;
 
     public float _multiplierHealth;
     public float _multiplierDamage;
@@ -59,13 +59,13 @@ public class CharacterStats {
     /// Calculate stats according to level 
     /// </summary>
     /// <param name="level_"> Characters new level</param>
-    public void LevelUp(uint level_)
+    public void LevelUp(vap level_)
     {
         /*_maxHealth *= Mathf.Pow(Global.Instance._healthScale, level_);
         _health = _maxHealth;
         _normal.damage *= Mathf.Pow(Global.Instance._damageScale, level_);*/
 
-        _baseStat = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
+        _baseStat = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_.GetFloat() / _powerDiv)))) * _valueMultiplier;
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
         _health = _maxHealth;
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;

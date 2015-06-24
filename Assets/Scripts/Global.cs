@@ -11,6 +11,7 @@ public class Global : MonoBehaviour {
         public GameObject InventorySlot;
         public GameObject[] _enemyPrefab;
         public GameObject GoldCoin;
+        public GameObject HealthPotion;
     }
 
     [System.Serializable]
@@ -82,7 +83,7 @@ public class Global : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.G))
         {
-            _player.SetExperience(10);
+            _player.SetExperience((uint)(_player._experianceToNext * 0.1f));
         }
     }
 
