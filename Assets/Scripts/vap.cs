@@ -32,7 +32,7 @@ public class vap {
         }
     }
 
-    public PREFIX _prefix = 0;
+    public PREFIX _prefix = PREFIX.d;
     public float[] _values = new float[8] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
 
     public string GetString()
@@ -73,7 +73,7 @@ public class vap {
 
         for (int i = 0; i < ret._values.Length; i++)
         {
-            if (i > (int)ret._prefix)
+            if (i < (int)ret._prefix)
             {
                 while (ret._values[i] >= 1000f)
                 {
@@ -133,25 +133,21 @@ public class vap {
     {
         vap ret = new vap();
 
-        // börja nedifrån
-        // minska första
-            // om den är < 0
-                // minska nästa med en, sätt denna till max
-                // om nästa är 0 innan, kolla nästa efter det, etc.
-                // om alla är 0 så är det slut
-
         for (int i = 0; i < ret._values.Length; i++)
         {
             ret._values[i] = v1_._values[i] - v2_._values[i];
+        }
+
+        for (int i = 0; i < (int)ret._prefix; i++)
+        {
             if (ret._values[i] < 0f)
             {
-                for (int i2 = i; i2 < ret._values.Length; i2++)
+                for (int p = (int)ret._prefix; p > i; p--)
                 {
-                    if (v1_._values[i2] > 0f)
+                    if (ret._values[p+1] > 0f)
                     {
-                        v1_._values[i2]--;
-                        ret._values[i] += 1000f;
-                        break;
+                        ret._values[p] += 1000f;
+                        ret._values[p + 1] -= 1f;
                     }
                 }
             }
@@ -187,32 +183,26 @@ public class vap {
     }
     public static bool operator <(vap v1_, vap v2_)
     {
+        bool ret = false;
+        // if v1 prefix is smaller than v2 preifx
         if ((int)v1_._prefix < (int)v2_._prefix)
         {
-            return true;
+            ret = true;
         }
-        if (v1_._prefix == v2_._prefix)
+        // if the prefixes are equal
+        else if (v1_._prefix == v2_._prefix)
         {
+            // if the value for v1 for the current prefix is lesser 
+            // than the value for v2
             if (v1_._values[(int)v1_._prefix] < v2_._values[(int)v1_._prefix])
             {
-                return true;
+                ret = true;
             }
         }
-        return false;
+        return ret;
     }
     public static bool operator >(vap v1_, vap v2_)
     {
-        if ((int)v1_._prefix > (int)v2_._prefix)
-        {
-            return true;
-        }
-        if (v1_._prefix == v2_._prefix)
-        {
-            if (v1_._values[(int)v1_._prefix] > v2_._values[(int)v1_._prefix])
-            {
-                return true;
-            }
-        }
-        return false;
+        return !(v1_ < v2_);
     }
 }

@@ -136,7 +136,7 @@ public class Player : Character {
             _stats._health = new vap(_combinedStats._maxHealth);
 
         SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
-        Debug.Log("innan dödskoll");
+        
         if (_stats._health._values[0] < 1f)
         {
             Debug.Log("död");
@@ -145,7 +145,6 @@ public class Player : Character {
             Die(hitter_);
             Debug.Log("efter die()");
         }
-        Debug.Log("efter dödskoll");
     }
 
 

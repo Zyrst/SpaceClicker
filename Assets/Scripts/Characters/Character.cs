@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using System.Threading;
 
 public class Character : MonoBehaviour {
     
@@ -39,11 +40,13 @@ public class Character : MonoBehaviour {
 
         //If heal make sure we don't go over maxhealth
         if (_stats._health > _stats._maxHealth)
+        {
             _stats._health = new vap(_stats._maxHealth);
+        }
 
         SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
 
-        if (_stats._health._values[0] < 1f)
+        if (_stats._health.GetFloat() < 1f)
         {
             _stats._health = new vap();
             Die(hitter_);

@@ -35,11 +35,6 @@ public class Enemy : Character
         GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "HitCooldown").transform.localScale = new Vector3(GetComponent<EnemyAttack>()._attackTimer / GetComponent<EnemyAttack>()._cooldownTimer, 1, 1);
 	}
 
-    public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_)
-    {
-        base.TakeDamage(ds_, hitPoint_);
-    }
-
     public override void Die()
     {
         // effekter och skits
