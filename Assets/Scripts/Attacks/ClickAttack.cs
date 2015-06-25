@@ -29,7 +29,7 @@ public class ClickAttack : BaseAttack {
             {
                 try
                 {
-                    Debug.DrawRay(ray.origin, ray.direction * 1000, Color.blue,10f);
+                    //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.blue,10f);
                     // hit enemy
                     if (hit.collider.transform.parent.parent.tag == "Enemy")
                     {
@@ -45,7 +45,7 @@ public class ClickAttack : BaseAttack {
                                 
                             //Debug.Log("Hit count: " + _hitCount);
                             _canDealDamage = false;
-                            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red, 10f);
+                            //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 10f);
                             _lastTarget = hit.collider.transform.parent.parent.gameObject;
                             CharacterStats cs = gameObject.GetComponent<Player>()._combinedStats;
                             AudioSource audio = Global.Instance._player.GetComponent<AudioSource>();

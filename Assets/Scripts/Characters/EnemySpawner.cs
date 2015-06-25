@@ -77,7 +77,7 @@ public class EnemySpawner : MonoBehaviour {
             if (_enemy != null)
             {
                 _enemy.gameObject.SetActive(true);
-                _enemy._stats._health = _enemy._stats._maxHealth;
+                _enemy._stats._health = new vap(_enemy._stats._maxHealth);
             }
         }
         catch (System.NullReferenceException) { }

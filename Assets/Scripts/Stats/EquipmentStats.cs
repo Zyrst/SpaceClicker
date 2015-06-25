@@ -10,7 +10,7 @@ public class EquipmentStats {
     public CharacterStats.Element _psychic = new CharacterStats.Element();
 
     //Increase player health
-    public float _health;
+    public vap _health;
 
 	// Use this for initialization
 	void Start () {

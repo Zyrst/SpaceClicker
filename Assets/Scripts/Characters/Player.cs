@@ -121,27 +121,31 @@ public class Player : Character {
     public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
     {
         //Calculate damage with resistance from the characters stats
-        float normal = ds_._normal * (1f - _combinedStats._normal.resistance);
-        float tech = ds_._tech * (1f - _combinedStats._tech.resistance);
-        float psychic = ds_._psychic * (1f - _combinedStats._psychic.resistance);
-        float kinetic = ds_._kinetic * (1f - _combinedStats._kinetic.resistance);
+        vap normal = ds_._normal * (1f - _combinedStats._normal.resistance);
+        vap tech = ds_._tech * (1f - _combinedStats._tech.resistance);
+        vap psychic = ds_._psychic * (1f - _combinedStats._psychic.resistance);
+        vap kinetic = ds_._kinetic * (1f - _combinedStats._kinetic.resistance);
 
-        float totalDamage = normal + tech + psychic + kinetic;
+        vap totalDamage = normal + tech + psychic + kinetic;
 
         _stats._health -= totalDamage;
         _stats._health += ds_._heal;
 
         //If heal make sure we don't go over maxhealth
         if (_stats._health > _combinedStats._maxHealth)
-            _stats._health = _combinedStats._maxHealth;
+            _stats._health = new vap(_combinedStats._maxHealth);
 
         SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
-
-        if (_stats._health < 1f)
+        Debug.Log("innan dödskoll");
+        if (_stats._health._values[0] < 1f)
         {
-            _stats._health = 0f;
+            Debug.Log("död");
+            _stats._health = new vap();
+            Debug.Log("inan die()");
             Die(hitter_);
+            Debug.Log("efter die()");
         }
+        Debug.Log("efter dödskoll");
     }
 
 
@@ -165,7 +169,7 @@ public class Player : Character {
     public void ResetNow()
     {
         gameObject.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Model").gameObject.SetActive(true);
-        _stats._health = _stats._maxHealth;
+        _stats._health = new vap(_stats._maxHealth);
 
         _isAlive = true;
 

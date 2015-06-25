@@ -11,12 +11,13 @@ public class Enemy : Character
         _level = Global.Instance.GetEnemyLevel();
         //_stats.LevelUp(_level);
         
-        _stats._baseStat = (_stats._constMultiplier*_level + ( Mathf.Pow(_stats._basePower,(_level/_stats._powerDiv)))) * _stats._valueMultiplier;
-
+        _stats._baseStat._values[0] = (_stats._constMultiplier*_level + ( Mathf.Pow(_stats._basePower,(_level/_stats._powerDiv)))) * _stats._valueMultiplier;
+        _stats._baseStat.Checker();
         _stats._baseStat = _stats._baseStat * (1f / ((EnemySpawner._enemiesSpawn / 2f) + 0.5f));
+        _stats._baseStat.Checker();
 
         _stats._maxHealth = (_stats._baseStat * _stats._multiplierHealth) * _stats._healthStatDist;
-        _stats._health = _stats._maxHealth;
+        _stats._health = new vap(_stats._maxHealth);
         _stats._normal.damage = (_stats._baseStat * _stats._multiplierDamage) * _stats._damageStatDist;
 
         Transform tr = transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model");

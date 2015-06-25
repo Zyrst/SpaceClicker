@@ -31,7 +31,7 @@ public class FarmMode : MonoBehaviour {
 
     public void allEnemiesDied()
     {
-        Global.Instance._player._stats._health = Global.Instance._player._stats._maxHealth;
+        Global.Instance._player._stats._health = new vap(Global.Instance._player._stats._maxHealth);
 
     }
 

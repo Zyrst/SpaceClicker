@@ -8,22 +8,22 @@ public class SpellStats {
     public CharacterStats.Element _tech;
     public CharacterStats.Element _kinetic;
     public CharacterStats.Element _psychic;
-    public float _heal;
-    public float _lifeSteal;
+    public vap _heal;
+    public vap _lifeSteal;
     public float _stunTime;
     public float _cooldown;
 
     public bool hasDamage
     {
-        get { return _normal.damage > 0f || _tech.damage > 0f || _kinetic.damage > 0f || _psychic.damage > 0f; }
+        get { return _normal.damage.GetFloat() > 0f || _tech.damage.GetFloat() > 0f || _kinetic.damage.GetFloat() > 0f || _psychic.damage.GetFloat() > 0f; }
     }
     public bool hasHeal
     {
-        get { return _heal > 0f; }
+        get { return _heal.GetFloat() > 0f; }
     }
     public bool hasLifeSteal
     {
-        get { return _lifeSteal > 0f; }
+        get { return _lifeSteal.GetFloat() > 0f; }
     }
     public bool hasStun
     {
@@ -51,7 +51,7 @@ public class SpellStats {
     /// <param name="stats_">Character combine stats</param>
     public void AddStats(CharacterStats stats_)
     {
-        if (_normal.damage > 0)
+        if (_normal.damage.GetFloat() > 0)
         {
             _normal.damage += stats_._normal.damage;
             _cooldown -= stats_._normal.cooldownReduction;
@@ -59,23 +59,23 @@ public class SpellStats {
             _normal.critMultiplier += stats_._normal.critMultiplier;
         }
 
-        if (_tech.damage > 0)
+        if (_tech.damage.GetFloat() > 0)
         {
             _tech.damage += stats_._tech.damage;
             _cooldown -= stats_._tech.cooldownReduction;
             _tech.crit += stats_._tech.crit;
             _tech.critMultiplier += stats_._tech.critMultiplier;
         }
-        
-        if (_kinetic.damage > 0)
+
+        if (_kinetic.damage.GetFloat() > 0)
         {
             _kinetic.damage += stats_._kinetic.damage;
             _cooldown -= stats_._kinetic.cooldownReduction;
             _kinetic.crit += stats_._kinetic.crit;
             _kinetic.critMultiplier += stats_._kinetic.critMultiplier;
         }
-       
-        if (_psychic.damage > 0)
+
+        if (_psychic.damage.GetFloat() > 0)
         {
             _psychic.damage += stats_._psychic.damage;
             _cooldown -= stats_._psychic.cooldownReduction;

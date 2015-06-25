@@ -33,11 +33,11 @@ public class vap {
     }
 
     public PREFIX _prefix = 0;
-    private float[] _values = new float[8];
+    public float[] _values = new float[8] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
 
     public string GetString()
     {
-        string _str = _values[(int)_prefix].ToString();
+        string _str = System.Math.Floor(_values[(int)_prefix]+0.5f).ToString();
         if (_prefix != 0)
         {
             _str += _prefix.ToString();
@@ -47,6 +47,53 @@ public class vap {
     public float GetFloat()
     {
         return _values[(int)_prefix];
+    }
+
+    /// <summary>
+    /// returns a values between 0 and 1
+    /// </summary>
+    /// <param name="v1_">must be lesser than v2_</param>
+    /// <param name="v2_">must be greater than v1_</param>
+    /// <returns></returns>
+    public static float GetScale(vap v1_ , vap v2_)
+    {
+        float ret = 0f;
+        PREFIX prefix = v2_._prefix;
+
+        ret = v1_._values[(int)prefix] / v2_._values[(int)prefix];
+        if ((int)prefix != 0)
+            ret += (v1_._values[((int)prefix) - 1] * 0.001f) / v2_._values[(int)prefix];
+
+        return ret;
+    }
+
+    public void Checker()
+    {
+        vap ret = new vap(this);
+
+        for (int i = 0; i < ret._values.Length; i++)
+        {
+            if (i > (int)ret._prefix)
+            {
+                while (ret._values[i] >= 1000f)
+                {
+                    ret._values[i + 1] += 1f;
+                    ret._values[i] -= 1000f;
+                }
+            }
+            else if (i == (int)ret._prefix)
+            {
+                while (ret._values[i] >= 100000f)
+                {
+                    ret._prefix = (PREFIX)(i + 1);
+                    ret._values[i + 1] += 100f;
+                    ret._values[i] -= 100000f;
+                }
+            }
+        }
+
+        _values = ret._values;
+        _prefix = ret._prefix;
     }
 
     public static vap operator +(vap v1_, vap v2_)
@@ -72,9 +119,13 @@ public class vap {
                     ret._values[i + 1]++;
                     ret._values[i] -= 1000f;
                 }
+                else
+                {
+                    break;
+                }
             }
         }
-
+        ret.Checker();
         return ret;
     }
 
@@ -96,62 +147,72 @@ public class vap {
             {
                 for (int i2 = i; i2 < ret._values.Length; i2++)
                 {
-                    if (v1_._values[i2] > 0)
+                    if (v1_._values[i2] > 0f)
                     {
                         v1_._values[i2]--;
-                        ret._values[i] += 100000f;
+                        ret._values[i] += 1000f;
                         break;
                     }
                 }
             }
         }
 
-        for (int i = 0; i < ret._values[i]; i++)
-        {
-            if (ret._values[i] >= 100f)
-            {
-                ret._prefix = (PREFIX)i;
-            }
-        }
-
+        ret.Checker();
         return ret;
     }
 
     public static vap operator *(float f_, vap v1_) { return v1_ * f_; }
     public static vap operator *(vap v1_, float f_)
     {
-        for (int i = 0; i < v1_._values.Length; i++)
+        vap ret = new vap(v1_);
+        for (int i = 0; i < ret._values.Length; i++)
         {
-            v1_._values[i] *= f_;
+            ret._values[i] *= f_;
         }
 
-        for (int i = 0; i < v1_._values[i]; i++)
-        {
-            if (v1_._values[i] >= 100f)
-            {
-                v1_._prefix = (PREFIX)i;
-            }
-        }
-
-        return v1_;
+        ret.Checker();
+        return ret;
     }
 
     public static vap operator /(float f_, vap v1_) { return v1_ / f_; }
     public static vap operator /(vap v1_, float f_)
     {
-        for (int i = 0; i < v1_._values.Length; i++)
+        vap ret = new vap(v1_);
+        for (int i = 0; i < ret._values.Length; i++)
         {
-            v1_._values[i] /= f_;
+            ret._values[i] /= f_;
         }
-
-        for (int i = 0; i < v1_._values[i]; i++)
+        ret.Checker();
+        return ret;
+    }
+    public static bool operator <(vap v1_, vap v2_)
+    {
+        if ((int)v1_._prefix < (int)v2_._prefix)
         {
-            if (v1_._values[i] >= 100f)
+            return true;
+        }
+        if (v1_._prefix == v2_._prefix)
+        {
+            if (v1_._values[(int)v1_._prefix] < v2_._values[(int)v1_._prefix])
             {
-                v1_._prefix = (PREFIX)i;
+                return true;
             }
         }
-
-        return v1_;
+        return false;
+    }
+    public static bool operator >(vap v1_, vap v2_)
+    {
+        if ((int)v1_._prefix > (int)v2_._prefix)
+        {
+            return true;
+        }
+        if (v1_._prefix == v2_._prefix)
+        {
+            if (v1_._values[(int)v1_._prefix] > v2_._values[(int)v1_._prefix])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

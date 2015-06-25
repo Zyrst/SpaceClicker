@@ -88,9 +88,9 @@ public class DamageStats {
         return ds;
     }
 
-    public float _normal;
-    public float _tech;
-    public float _kinetic;
-    public float _psychic;
-    public float _heal;
+    public vap _normal = new vap();
+    public vap _tech = new vap();
+    public vap _kinetic = new vap();
+    public vap _psychic = new vap();
+    public vap _heal = new vap();
 }

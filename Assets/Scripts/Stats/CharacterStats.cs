@@ -6,14 +6,14 @@ public class CharacterStats {
     [System.Serializable]
     public class Element
     {
-        public float damage;
+        public vap damage = new vap();
         public float crit;
         public float critMultiplier;
         public float resistance;
         public float cooldownReduction; //Abilities
 
 
-        public float critDamage
+        public vap critDamage
         {
             get
             {
@@ -34,10 +34,10 @@ public class CharacterStats {
         { }
     }
 
-    public vap _baseStat;
+    public vap _baseStat = new vap();
 
-    public vap _health;
-    public vap _maxHealth;
+    public vap _health = new vap();
+    public vap _maxHealth = new vap();
 
     public float _multiplierHealth;
     public float _multiplierDamage;
@@ -59,15 +59,16 @@ public class CharacterStats {
     /// Calculate stats according to level 
     /// </summary>
     /// <param name="level_"> Characters new level</param>
-    public void LevelUp(vap level_)
+    public void LevelUp(uint level_)
     {
         /*_maxHealth *= Mathf.Pow(Global.Instance._healthScale, level_);
         _health = _maxHealth;
         _normal.damage *= Mathf.Pow(Global.Instance._damageScale, level_);*/
 
-        _baseStat = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_.GetFloat() / _powerDiv)))) * _valueMultiplier;
+        _baseStat._values[0] = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
+        _baseStat.Checker();
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
-        _health = _maxHealth;
+        _health = new vap(_maxHealth);
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
     }
 
@@ -77,7 +78,7 @@ public class CharacterStats {
         this._kinetic = new Element(stats_._kinetic);
         this._tech = new Element(stats_._tech);
         this._psychic = new Element(stats_._psychic);
-        this._maxHealth = stats_._maxHealth;
+        this._maxHealth = new vap(stats_._maxHealth);
     }
 
     public CharacterStats()
