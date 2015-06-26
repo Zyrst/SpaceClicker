@@ -61,12 +61,9 @@ public class CharacterStats {
     /// <param name="level_"> Characters new level</param>
     public void LevelUp(uint level_)
     {
-        /*_maxHealth *= Mathf.Pow(Global.Instance._healthScale, level_);
-        _health = _maxHealth;
-        _normal.damage *= Mathf.Pow(Global.Instance._damageScale, level_);*/
-
         _baseStat._values[0] = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
-        _baseStat.Checker();
+        Debug.Log("level: " + level_ + " basestat: " + _baseStat._values[0]);
+        //_baseStat.Checker();
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
         _health = new vap(_maxHealth);
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;

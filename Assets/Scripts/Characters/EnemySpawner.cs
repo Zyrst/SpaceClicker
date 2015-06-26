@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour {
             foreach (var item in spawns)
 	        {
                 count++;
-                if (count == number_)
+                if (count >= number_)
                 {
                     ((EnemySpawner)item)._enemy = null;
                 }

@@ -71,6 +71,16 @@ public class vap {
     {
         vap ret = new vap(this);
 
+        for (int i = ret._values.Length-1; i > 0; i--)
+        {
+            while ((int)ret._prefix <= i && ret._values[i] < 100f && ret._values[i] > 0f)
+            {
+                ret._prefix = (PREFIX)(i - 1);
+                ret._values[i - 1] += 1000f;
+                ret._values[i] -= 1f;
+            }
+        }
+
         for (int i = 0; i < ret._values.Length; i++)
         {
             if (i < (int)ret._prefix)
@@ -100,31 +110,13 @@ public class vap {
     {
         vap ret = new vap();
         PREFIX highest = ((int)v1_._prefix >= (int)(v2_._prefix) ? v1_._prefix : v2_._prefix);
+        ret._prefix = highest;
 
         for (int i = 0; i < ret._values.Length; i++)
         {
             ret._values[i] = v1_._values[i] + v2_._values[i];
         }
 
-        for (int i = 0; i < ret._values.Length; i++)
-        {
-            if (ret._values[i] >= 100f)
-            {
-                ret._prefix = (PREFIX)(i);
-            }
-            while (ret._values[i] >= 1000f)
-            {
-                if ((int)highest != i)
-                {
-                    ret._values[i + 1]++;
-                    ret._values[i] -= 1000f;
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
         ret.Checker();
         return ret;
     }
@@ -132,24 +124,33 @@ public class vap {
     public static vap operator -(vap v1_, vap v2_)
     {
         vap ret = new vap();
+        PREFIX highest = ((int)v1_._prefix >= (int)(v2_._prefix) ? v1_._prefix : v2_._prefix);
+        ret._prefix = highest;
 
-        for (int i = 0; i < ret._values.Length; i++)
+        for (int i = ret._values.Length-1; i > -1; i--)
         {
             ret._values[i] = v1_._values[i] - v2_._values[i];
         }
 
-        for (int i = 0; i < (int)ret._prefix; i++)
+    begin:
+        bool exit = true;
+        for (int i = 0; i < ret._values.Length-1; i++)
         {
-            if (ret._values[i] < 0f)
+            while (ret._values[i] < 0f)
             {
-                for (int p = (int)ret._prefix; p > i; p--)
-                {
-                    if (ret._values[p+1] > 0f)
-                    {
-                        ret._values[p] += 1000f;
-                        ret._values[p + 1] -= 1f;
-                    }
-                }
+                ret._values[i] += 1000f;
+                ret._values[i + 1] -= 1f;
+                exit = false;
+            }
+
+            if (i+1 == (int)PREFIX.Y && ret._values[i+1] < 0f)
+            {
+                ret = new vap();
+            }
+            else if (i + 1 == (int)PREFIX.Y && ret._values[i + 1] > 0f)
+            {
+                if (!exit)
+                    goto begin;
             }
         }
 
