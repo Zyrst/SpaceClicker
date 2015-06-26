@@ -23,7 +23,7 @@ public class CharacterStats {
 
         public Element(Element element_)
         {
-            this.damage = element_.damage;
+            this.damage = new vap(element_.damage);
             this.crit = element_.crit;
             this.critMultiplier = element_.critMultiplier;
             this.resistance = element_.resistance;
@@ -63,7 +63,7 @@ public class CharacterStats {
     {
         _baseStat._values[0] = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
         Debug.Log("level: " + level_ + " basestat: " + _baseStat._values[0]);
-        //_baseStat.Checker();
+        _baseStat.Checker();
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
         _health = new vap(_maxHealth);
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;

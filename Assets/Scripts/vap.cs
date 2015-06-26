@@ -83,15 +83,8 @@ public class vap {
 
         for (int i = 0; i < ret._values.Length; i++)
         {
-            if (i < (int)ret._prefix)
-            {
-                while (ret._values[i] >= 1000f)
-                {
-                    ret._values[i + 1] += 1f;
-                    ret._values[i] -= 1000f;
-                }
-            }
-            else if (i == (int)ret._prefix)
+            // 100k && prefix är större
+            if (i <= (int)ret._prefix)
             {
                 while (ret._values[i] >= 100000f)
                 {
@@ -99,6 +92,24 @@ public class vap {
                     ret._values[i + 1] += 100f;
                     ret._values[i] -= 100000f;
                 }
+            }
+            if (i < (int)ret._prefix)
+            {
+                // 10k
+                while (ret._values[i] >= 10000f)
+                {
+                    ret._prefix = (PREFIX)(i + 1);
+                    ret._values[i + 1] += 10f;
+                    ret._values[i] -= 10000f;
+                }
+                // 1k
+                while (ret._values[i] >= 1000f)
+                {
+                    ret._prefix = (PREFIX)(i + 1);
+                    ret._values[i + 1] += 1f;
+                    ret._values[i] -= 1000f;
+                }
+
             }
         }
 

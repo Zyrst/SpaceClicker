@@ -37,6 +37,10 @@ public class Enemy : Character
 
     public override void Die()
     {
+        try { 
+            GetComponentInChildren<Animator>().SetTrigger("DeadTrigger"); 
+        }
+        catch (System.NullReferenceException) { }
         // effekter och skits
         base.Die();
 
@@ -54,5 +58,15 @@ public class Enemy : Character
         }
 
         gameObject.SetActive(false);
+    }
+
+    public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
+    {
+       try{
+            GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
+       }
+
+       catch (System.NullReferenceException) { }
+        base.TakeDamage(ds_, hitPoint_, hitter_);
     }
 }

@@ -39,8 +39,8 @@ public class SpellStats {
         this._tech = new CharacterStats.Element(stats_._tech);
         this._psychic = new CharacterStats.Element(stats_._psychic);
 
-        this._heal = stats_._heal;
-        this._lifeSteal = stats_._lifeSteal;
+        this._heal = new vap(stats_._heal);
+        this._lifeSteal = new vap(stats_._lifeSteal);
         this._stunTime = stats_._stunTime;
         this._cooldown = stats_._cooldown;
     }

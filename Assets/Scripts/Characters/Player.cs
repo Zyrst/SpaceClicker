@@ -132,8 +132,8 @@ public class Player : Character {
         _stats._health += ds_._heal;
 
         //If heal make sure we don't go over maxhealth
-        //if (_stats._health > _combinedStats._maxHealth)
-            //_stats._health = new vap(_combinedStats._maxHealth);
+        if (_stats._health > _combinedStats._maxHealth)
+            _stats._health = new vap(_combinedStats._maxHealth);
 
         SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
         
