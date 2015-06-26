@@ -81,7 +81,7 @@ public class vap {
             }
         }
 
-        for (int i = 0; i < ret._values.Length; i++)
+        for (int i = 0; i < (int)ret._prefix+1; i++)
         {
             // 100k && prefix är större
             if (i <= (int)ret._prefix)
@@ -176,6 +176,11 @@ public class vap {
         for (int i = 0; i < ret._values.Length; i++)
         {
             ret._values[i] *= f_;
+
+            /*using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
+            {
+                file.WriteLine(ret._values[i].ToString());
+            }*/
         }
 
         ret.Checker();
