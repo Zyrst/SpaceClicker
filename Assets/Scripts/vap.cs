@@ -72,7 +72,7 @@ public class vap {
         vap ret = new vap(this);
 
         for (int i = ret._values.Length-1; i > 0; i--)
-        {
+        {   
             while ((int)ret._prefix <= i && ret._values[i] < 100f && ret._values[i] > 0f)
             {
                 ret._prefix = (PREFIX)(i - 1);
@@ -80,17 +80,22 @@ public class vap {
                 ret._values[i] -= 1f;
             }
         }
-
         for (int i = 0; i < (int)ret._prefix+1; i++)
         {
-            // 100k && prefix är större
             if (i <= (int)ret._prefix)
             {
-                while (ret._values[i] >= 100000f)
+                string top = "100000000000000000000000000000";      // vad som subtraheras från denna
+                string bot = "100000000000000000000000000";         // vad som adderas till nästa
+                while (bot.Length > 3)
                 {
-                    ret._prefix = (PREFIX)(i + 1);
-                    ret._values[i + 1] += 100f;
-                    ret._values[i] -= 100000f;
+                    while (ret._values[i] >= float.Parse(top))
+                    {
+                        ret._prefix = (PREFIX)(i + 1);
+                        ret._values[i + 1] += float.Parse(bot);
+                        ret._values[i] -= float.Parse(top);
+                    }
+                    top = top.Remove(top.Length - 1);
+                    bot = bot.Remove(bot.Length - 1);
                 }
             }
             if (i < (int)ret._prefix)
@@ -105,11 +110,11 @@ public class vap {
                 // 1k
                 while (ret._values[i] >= 1000f)
                 {
+                    
                     ret._prefix = (PREFIX)(i + 1);
                     ret._values[i + 1] += 1f;
                     ret._values[i] -= 1000f;
                 }
-
             }
         }
 

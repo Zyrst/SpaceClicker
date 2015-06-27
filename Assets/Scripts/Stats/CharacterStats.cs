@@ -73,10 +73,18 @@ public class CharacterStats {
             _baseStat._values[i] = (_constMultiplier * level_ + (_baseStat._values[i] * 1.165438502f)) * _valueMultiplier;
             _baseStat.Checker();
         }*/
-        _baseStat._values[0] = (_constMultiplier * level_ + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
-        //Debug.Log("level: " + level_ + " basestat: " + _baseStat._values[0]);
-        _baseStat.Checker();
 
+
+
+        //                                      1                               2                                   3
+        _baseStat._values[0] = ((_constMultiplier * level_) + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
+
+        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", false))
+        {
+            file.WriteLine("start " + level_.ToString());
+        }
+
+        _baseStat.Checker();
 
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
         _health = new vap(_maxHealth);
