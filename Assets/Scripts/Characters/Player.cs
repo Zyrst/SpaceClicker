@@ -139,15 +139,14 @@ public class Player : Character {
         
         if (_stats._health._values[0] < 1f)
         {
-            Debug.Log("död");
             _stats._health = new vap();
-            Debug.Log("inan die()");
             Die(hitter_);
-            Debug.Log("efter die()");
         }
     }
 
-
+    /// <summary>
+    /// Player is dead
+    /// </summary>
     public override void Die()
     {
         base.Die();

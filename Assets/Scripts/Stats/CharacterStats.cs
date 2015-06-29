@@ -83,8 +83,10 @@ public class CharacterStats {
 
         _baseStat.Checker();
 
-        _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
+        _maxHealth = new vap(new vap((_baseStat * _multiplierHealth)) * _healthStatDist);
+        _maxHealth.Checker();
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
+        _normal.damage.Checker();
 
         Debug.Log("MaxHealth: " + _maxHealth._values[0]);
         Debug.Log("baseStat: " + _baseStat._values[0]);

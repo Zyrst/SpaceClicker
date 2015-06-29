@@ -37,17 +37,25 @@ public class EnemyAttack : MonoBehaviour {
     {
         if (Global.Instance.PlayerAlive())
         {
+            if (!_nextAttackIsShield)
+            {
             try
             {
                 GetComponentInChildren<Animator>().SetTrigger("AttackTrigger");
             }
             catch (System.NullReferenceException) { }
-            if (!_nextAttackIsShield)
-            {
                 Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats, false), gameObject.GetComponent<Enemy>());
             }
             else
             {
+
+                try
+                {
+                    GetComponentInChildren<Animator>().SetTrigger("ShieldTrigger");
+                }
+
+                catch (System.NullReferenceException) { }
+
                 shield.gameObject.SetActive(true);
                 _shieldUp = true;
                 GetComponent<Enemy>()._shieldUp = true;

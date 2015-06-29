@@ -14,13 +14,15 @@ public class vap {
         P = 5,
         E = 6,
         Z = 7,
-        Y = 8
+        Y = 8,
+        Yk = 9,
+        Ym = 10
     }
     
     public vap()
     {
         _prefix = PREFIX.d;
-        _values = new float[9] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
+        _values = new float[11] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
     }
 
     public vap(vap vap_)
@@ -31,11 +33,12 @@ public class vap {
         {
             _values[i] = vap_._values[i];
         }
+        Checker();
     }
 
     public PREFIX _prefix = PREFIX.d;
-    public float[] _values = new float[9] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
-    public const int LENGTH = 9;
+    public float[] _values = new float[11] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
+    public const int LENGTH = 11;
 
     public string GetString()
     {
@@ -72,65 +75,69 @@ public class vap {
 
     public void Checker()
     {
-        vap ret = new vap(this);
-
         for (int i = LENGTH - 1; i > 0; i--)
         {   
-            while ((int)ret._prefix <= i && ret._values[i] < 100f && ret._values[i] > 0f)
+            while ((int)_prefix <= i && _values[i] < 100f && _values[i] > 0f)
             {
-                ret._prefix = (PREFIX)(i - 1);
-                ret._values[i - 1] += 1000f;
-                ret._values[i] -= 1f;
+                _prefix = (PREFIX)(i - 1);
+                _values[i - 1] += 1000f;
+                _values[i] -= 1f;
             }
         }
-        for (int i = 0; i < (int)ret._prefix+1; i++)
+
+        for (int i = 0; i < LENGTH; i++)
         {
-            if (i <= (int)ret._prefix)
+            if (_values[i] != 0f)
+            {
+                _prefix = (PREFIX)i;
+            }
+        }
+
+        for (int i = 0; i < (int)_prefix+1; i++)
+        {
+            if (i <= (int)_prefix)
             {
                 string top = "100000000000000000000000000000";      // vad som subtraheras från denna
                 string bot = "100000000000000000000000000";         // vad som adderas till nästa
                 while (bot.Length > 2)
                 {
-                    while (ret._values[i] >= float.Parse(top))
+                    while (_values[i] >= float.Parse(top))
                     {
-                        ret._prefix = (PREFIX)(i + 1);
-                        ret._values[i + 1] += float.Parse(bot);
-                        ret._values[i] -= float.Parse(top);
+                        _prefix = (PREFIX)(i + 1);
+                        _values[i + 1] += float.Parse(bot);
+                        _values[i] -= float.Parse(top);
                     }
                     top = top.Remove(top.Length - 1);
                     bot = bot.Remove(bot.Length - 1);
                 }
             }
-            if (i < (int)ret._prefix)
+            if (i < (int)_prefix)
             {
                 // 10k
-                while (ret._values[i] >= 10000f)
+                while (_values[i] >= 10000f)
                 {
-                    ret._prefix = (PREFIX)(i + 1);
-                    ret._values[i + 1] += 10f;
-                    ret._values[i] -= 10000f;
+                    _prefix = (PREFIX)(i + 1);
+                    _values[i + 1] += 10f;
+                    _values[i] -= 10000f;
                 }
                 // 1k
-                while (ret._values[i] >= 1000f)
+                while (_values[i] >= 1000f)
                 {
                     
-                    ret._prefix = (PREFIX)(i + 1);
-                    ret._values[i + 1] += 1f;
-                    ret._values[i] -= 1000f;
+                    _prefix = (PREFIX)(i + 1);
+                    _values[i + 1] += 1f;
+                    _values[i] -= 1000f;
                 }
             }
         }
 
         for (int i = 0; i < LENGTH; i++)
         {
-            if (ret._values[i] != 0f)
+            if (_values[i] != 0f)
             {
-                ret._prefix = (PREFIX)i;
+                _prefix = (PREFIX)i;
             }
         }
-
-        _values = ret._values;
-        _prefix = ret._prefix;
     }
 
     public static vap operator +(vap v1_, vap v2_)
@@ -192,8 +199,9 @@ public class vap {
         for (int i = 0; i < (int)ret._prefix + 1; i++)
         {
             ret._values[i] *= f_;
-            ret.Checker();
         }
+        ret.Checker();
+        ret.Checker();
         return ret;
     }
 
@@ -204,8 +212,9 @@ public class vap {
         for (int i = 0; i < (int)ret._prefix + 1; i++)
         {
             ret._values[i] /= f_;
-            ret.Checker();
         }
+        ret.Checker();
+        ret.Checker();
         return ret;
     }
     public static bool operator <(vap v1_, vap v2_)

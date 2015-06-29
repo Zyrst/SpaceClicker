@@ -72,6 +72,7 @@ public class Global : MonoBehaviour {
 
     void Start()
     {
+        Profiler.maxNumberOfSamplesPerFrame = 50000;
         UpdateLevel();
         UpdateExpBar();
         SwitchScene(GameType.Ship);
