@@ -230,5 +230,7 @@ public class Player : Character {
             if(_spellsArray[i] != null)
                 _spellsArray[i].CombineSpellStats();
         }
+
+        _stats._health = new vap(_combinedStats._maxHealth);
     }
 }

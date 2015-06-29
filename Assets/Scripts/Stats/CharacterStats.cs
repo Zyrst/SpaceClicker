@@ -31,7 +31,9 @@ public class CharacterStats {
         }
 
         public Element()
-        { }
+        {
+            damage = new vap();
+        }
     }
 
     public vap _baseStat = new vap();
@@ -79,16 +81,50 @@ public class CharacterStats {
         //                                      1                               2                                   3
         _baseStat._values[0] = ((_constMultiplier * level_) + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
 
-        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", false))
-        {
-            file.WriteLine("start " + level_.ToString());
-        }
-
         _baseStat.Checker();
 
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
-        _health = new vap(_maxHealth);
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
+
+        #region print
+        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", false))
+        {
+            file.WriteLine(" MAXHEALTH: " + _maxHealth._prefix);
+
+        }
+        for (int i = 0; i < _maxHealth._values.Length; i++)
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
+            {
+                file.WriteLine(i + " " + _maxHealth._values[i].ToString());
+
+            }
+        }
+        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
+        {
+            file.WriteLine(" BASESTATS ");
+
+        }
+        for (int i = 0; i < _maxHealth._values.Length; i++)
+        {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
+            {
+                file.WriteLine(i + " " + _baseStat._values[i].ToString());
+
+            }
+        }
+        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
+        {
+            file.WriteLine(" MULTIPLIIER HEALTH : " + _multiplierHealth);
+
+        }
+        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
+        {
+            file.WriteLine(" HEALTH STAT DIST : " + _healthStatDist);
+
+        } 
+        #endregion
+
     }
 
     public CharacterStats(CharacterStats stats_)
@@ -102,7 +138,11 @@ public class CharacterStats {
 
     public CharacterStats()
     {
-
+        _normal = new Element();
+        _kinetic = new Element();
+        _tech = new Element();
+        _psychic = new Element();
+        _maxHealth = new vap();
     }
 
     /// <summary>

@@ -13,27 +13,29 @@ public class vap {
         T = 4,
         P = 5,
         E = 6,
-        Y = 7
+        Z = 7,
+        Y = 8
     }
     
     public vap()
     {
+        _prefix = PREFIX.d;
+        _values = new float[9] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
     }
-    public vap(float value_, PREFIX prefix_)
-    {
-        _values[(int)prefix_] = value_;
-    }
+
     public vap(vap vap_)
     {
         _prefix = vap_._prefix;
-        for (int i = 0; i < _values.Length; i++)
+
+        for (int i = 0; i < LENGTH; i++)
         {
             _values[i] = vap_._values[i];
         }
     }
 
     public PREFIX _prefix = PREFIX.d;
-    public float[] _values = new float[8] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
+    public float[] _values = new float[9] { 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f };
+    public const int LENGTH = 9;
 
     public string GetString()
     {
@@ -61,6 +63,7 @@ public class vap {
         PREFIX prefix = v2_._prefix;
 
         ret = v1_._values[(int)prefix] / v2_._values[(int)prefix];
+
         if ((int)prefix != 0)
             ret += (v1_._values[((int)prefix) - 1] * 0.001f) / v2_._values[(int)prefix];
 
@@ -71,7 +74,7 @@ public class vap {
     {
         vap ret = new vap(this);
 
-        for (int i = ret._values.Length-1; i > 0; i--)
+        for (int i = LENGTH - 1; i > 0; i--)
         {   
             while ((int)ret._prefix <= i && ret._values[i] < 100f && ret._values[i] > 0f)
             {
@@ -86,7 +89,7 @@ public class vap {
             {
                 string top = "100000000000000000000000000000";      // vad som subtraheras från denna
                 string bot = "100000000000000000000000000";         // vad som adderas till nästa
-                while (bot.Length > 3)
+                while (bot.Length > 2)
                 {
                     while (ret._values[i] >= float.Parse(top))
                     {
@@ -118,6 +121,14 @@ public class vap {
             }
         }
 
+        for (int i = 0; i < LENGTH; i++)
+        {
+            if (ret._values[i] != 0f)
+            {
+                ret._prefix = (PREFIX)i;
+            }
+        }
+
         _values = ret._values;
         _prefix = ret._prefix;
     }
@@ -128,7 +139,7 @@ public class vap {
         PREFIX highest = ((int)v1_._prefix >= (int)(v2_._prefix) ? v1_._prefix : v2_._prefix);
         ret._prefix = highest;
 
-        for (int i = 0; i < ret._values.Length; i++)
+        for (int i = 0; i < LENGTH; i++)
         {
             ret._values[i] = v1_._values[i] + v2_._values[i];
         }
@@ -143,14 +154,14 @@ public class vap {
         PREFIX highest = ((int)v1_._prefix >= (int)(v2_._prefix) ? v1_._prefix : v2_._prefix);
         ret._prefix = highest;
 
-        for (int i = ret._values.Length-1; i > -1; i--)
+        for (int i = LENGTH - 1; i > -1; i--)
         {
             ret._values[i] = v1_._values[i] - v2_._values[i];
         }
 
     begin:
         bool exit = true;
-        for (int i = 0; i < ret._values.Length-1; i++)
+    for (int i = 0; i < LENGTH - 1; i++)
         {
             while (ret._values[i] < 0f)
             {
@@ -178,17 +189,11 @@ public class vap {
     public static vap operator *(vap v1_, float f_)
     {
         vap ret = new vap(v1_);
-        for (int i = 0; i < ret._values.Length; i++)
+        for (int i = 0; i < (int)ret._prefix; i++)
         {
             ret._values[i] *= f_;
-
-            /*using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
-            {
-                file.WriteLine(ret._values[i].ToString());
-            }*/
+            ret.Checker();
         }
-
-        ret.Checker();
         return ret;
     }
 
@@ -196,11 +201,11 @@ public class vap {
     public static vap operator /(vap v1_, float f_)
     {
         vap ret = new vap(v1_);
-        for (int i = 0; i < ret._values.Length; i++)
+        for (int i = 0; i < (int)ret._prefix; i++)
         {
             ret._values[i] /= f_;
+            ret.Checker();
         }
-        ret.Checker();
         return ret;
     }
     public static bool operator <(vap v1_, vap v2_)
@@ -225,6 +230,22 @@ public class vap {
     }
     public static bool operator >(vap v1_, vap v2_)
     {
-        return !(v1_ < v2_);
+        bool ret = false;
+        // if v1 prefix is greater than v2 preifx
+        if ((int)v1_._prefix > (int)v2_._prefix)
+        {
+            ret = true;
+        }
+        // if the prefixes are equal
+        else if (v1_._prefix == v2_._prefix)
+        {
+            // if the value for v1 for the current prefix is greater 
+            // than the value for v2
+            if (v1_._values[(int)v1_._prefix] > v2_._values[(int)v1_._prefix])
+            {
+                ret = true;
+            }
+        }
+        return ret;
     }
 }

@@ -30,7 +30,16 @@ public class SpellStats {
         get { return _stunTime > 0f; }
     }
 
-    public SpellStats() { }
+    public SpellStats() 
+    {
+        _normal = new CharacterStats.Element();
+        _kinetic = new CharacterStats.Element();
+        _tech = new CharacterStats.Element();
+        _psychic = new CharacterStats.Element();
+
+        _heal = new vap();
+        _lifeSteal = new vap();
+    }
 
     public SpellStats(SpellStats stats_)
     {
