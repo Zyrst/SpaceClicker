@@ -73,7 +73,22 @@ public class Enemy : Character
         }
         else
         {
+            CharacterStats _shieldStats = new CharacterStats(_stats);
+            vap _shieldVap = _shieldStats._normal.damage + _shieldStats._tech.damage + _shieldStats._kinetic.damage + _shieldStats._psychic.damage;
+            _shieldVap *= GetComponent<EnemyAttack>()._shieldDamageMulti;
 
+            // hitta vilken typ av sköld det är
+
+            _shieldStats = new CharacterStats();
+            _shieldStats._tech.damage = _shieldVap;
+
+
+            Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(_shieldStats , false), gameObject.GetComponent<Enemy>());
+            GetComponent<EnemyAttack>().ResetShield();
+            if (GetComponent<EnemyAttack>().IsInvoking())
+            {
+                GetComponent<EnemyAttack>().CancelInvoke();
+            }
         }
     }
 }

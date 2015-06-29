@@ -14,6 +14,7 @@ public class EnemyAttack : MonoBehaviour {
     public bool _nextAttackIsShield = false;
     public bool _shieldUp = false;
     public float _shieldTime = 2f;
+    public float _shieldDamageMulti = 3f;
 
 	// Use this for initialization
 	void Start () {
@@ -49,6 +50,7 @@ public class EnemyAttack : MonoBehaviour {
             {
                 shield.gameObject.SetActive(true);
                 _shieldUp = true;
+                GetComponent<Enemy>()._shieldUp = true;
                 Invoke("ResetShield", _shieldTime);
             }
         }
@@ -72,5 +74,6 @@ public class EnemyAttack : MonoBehaviour {
     {
         shield.gameObject.SetActive(false);
         _shieldUp = false;
+        GetComponent<Enemy>()._shieldUp = false;
     }
 }
