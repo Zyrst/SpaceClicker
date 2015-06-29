@@ -189,7 +189,7 @@ public class vap {
     public static vap operator *(vap v1_, float f_)
     {
         vap ret = new vap(v1_);
-        for (int i = 0; i < (int)ret._prefix; i++)
+        for (int i = 0; i < (int)ret._prefix + 1; i++)
         {
             ret._values[i] *= f_;
             ret.Checker();
@@ -201,7 +201,7 @@ public class vap {
     public static vap operator /(vap v1_, float f_)
     {
         vap ret = new vap(v1_);
-        for (int i = 0; i < (int)ret._prefix; i++)
+        for (int i = 0; i < (int)ret._prefix + 1; i++)
         {
             ret._values[i] /= f_;
             ret.Checker();

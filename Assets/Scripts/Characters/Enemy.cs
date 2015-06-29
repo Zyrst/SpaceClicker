@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Enemy : Character
 {
+    public bool _shieldUp = false;
 	// Use this for initialization
     void Start()
     {
@@ -31,8 +32,6 @@ public class Enemy : Character
         Vector3 rot = Vector3.up;
 
         transform.Rotate(rot * 0f * Time.deltaTime);
-
-        GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "HitCooldown").transform.localScale = new Vector3(GetComponent<EnemyAttack>()._attackTimer / GetComponent<EnemyAttack>()._cooldownTimer, 1, 1);
 	}
 
     public override void Die()
@@ -62,11 +61,19 @@ public class Enemy : Character
 
     public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
     {
-       try{
-            GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
-       }
+        if (!_shieldUp)
+        {
+            try
+            {
+                GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
+            }
 
-       catch (System.NullReferenceException) { }
-        base.TakeDamage(ds_, hitPoint_, hitter_);
+            catch (System.NullReferenceException) { }
+            base.TakeDamage(ds_, hitPoint_, hitter_);
+        }
+        else
+        {
+
+        }
     }
 }

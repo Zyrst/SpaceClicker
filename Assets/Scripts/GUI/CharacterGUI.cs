@@ -8,6 +8,8 @@ public class CharacterGUI : MonoBehaviour {
     public GameObject LevelText;
     public GameObject HealthText;
     public Character character;
+    public GameObject Shield;
+    public GameObject CooldownBar;
 
     
 	// Use this for initialization
@@ -26,6 +28,7 @@ public class CharacterGUI : MonoBehaviour {
         {
             LevelText.GetComponent<Text>().text = character._level.ToString();
             HealthText.GetComponent<Text>().text = character._stats._health.GetString();
+            CooldownBar.GetComponent<Image>().transform.localScale = new Vector3(GetComponentInParent<EnemyAttack>()._attackTimer / GetComponentInParent<EnemyAttack>()._cooldownTimer, 1, 1);
         }
 	}
 }

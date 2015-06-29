@@ -86,6 +86,17 @@ public class CharacterStats {
         _maxHealth = (_baseStat * _multiplierHealth) * _healthStatDist;
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
 
+        Debug.Log("MaxHealth: " + _maxHealth._values[0]);
+        Debug.Log("baseStat: " + _baseStat._values[0]);
+        Debug.Log("Multiplier health: " + _multiplierHealth);
+        Debug.Log("Health stat dist: " + _healthStatDist);
+
+        Debug.Log("Damage: " + _normal.damage._values[0]);
+        Debug.Log("baseStat: " + _baseStat._values[0]);
+        Debug.Log("Multiplier Damage: " + _multiplierDamage);
+        Debug.Log("Damage stat dist: " + _damageStatDist);
+   
+
         #region print
         using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", false))
         {
