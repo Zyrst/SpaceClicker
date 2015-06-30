@@ -101,5 +101,6 @@ public class EnemyAttack : MonoBehaviour {
     {
         _stunTime = stunTime_;
         _stunned = true;
+        _attackTimer = 0f;
     }
 }

@@ -88,7 +88,7 @@ public class CharacterStats {
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
         _normal.damage.Checker();
 
-        Debug.Log("MaxHealth: " + _maxHealth._values[0]);
+     /*   Debug.Log("MaxHealth: " + _maxHealth._values[0]);
         Debug.Log("baseStat: " + _baseStat._values[0]);
         Debug.Log("Multiplier health: " + _multiplierHealth);
         Debug.Log("Health stat dist: " + _healthStatDist);
@@ -96,7 +96,7 @@ public class CharacterStats {
         Debug.Log("Damage: " + _normal.damage._values[0]);
         Debug.Log("baseStat: " + _baseStat._values[0]);
         Debug.Log("Multiplier Damage: " + _multiplierDamage);
-        Debug.Log("Damage stat dist: " + _damageStatDist);
+        Debug.Log("Damage stat dist: " + _damageStatDist);*/
    
 
         #region print

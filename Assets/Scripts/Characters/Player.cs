@@ -134,6 +134,14 @@ public class Player : Character {
         //If heal make sure we don't go over maxhealth
         if (_stats._health > _combinedStats._maxHealth)
             _stats._health = new vap(_combinedStats._maxHealth);
+        if (ds_._stunTime > 0f)
+        {
+            GetComponent<ClickAttack>().Stunned(ds_._stunTime);
+            foreach (var item in _spellsArray)
+            {
+                item.Stunned(ds_._stunTime);
+            }
+        }
 
         SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
         
