@@ -4,6 +4,8 @@ using System.Collections;
 public class Ship : MonoBehaviour {
    
     private static Ship _instance = null;
+
+    
    
     public static Ship Instance
     {
@@ -30,6 +32,7 @@ public class Ship : MonoBehaviour {
 
     public void Farm()
     {
+        gameObject.GetComponent<FMOD_StudioEventEmitter>().Play();
         Global.Instance.SwitchScene(Global.GameType.Farm);
     }
 
