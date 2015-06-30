@@ -33,12 +33,14 @@ public class CharacterScreen : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Instance.gameObject.SetActive(false);
+        CloseTalentTree();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
     void LateUpdate()
     {
         if (_lastFrameClick && !MouseController.Instance.buttonDown)
@@ -56,6 +58,16 @@ public class CharacterScreen : MonoBehaviour {
         }
     }
 
+    public void TalentTree()
+    {
+        GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(true);
+    }
+
+    public void CloseTalentTree()
+    {
+        GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(false);
+    }
+
     public void GenerateInventorySlots()
     {
         EquipmentPopup.Reset();
@@ -69,7 +81,9 @@ public class CharacterScreen : MonoBehaviour {
             {
                 
                 GameObject tmpInv = GameObject.Instantiate(Global.Instance._prefabs.InventorySlot);
-                tmpInv.gameObject.GetComponent<RectTransform>().SetParent(transform.GetComponentInChildren<Canvas>().GetComponent<RectTransform>());
+                //tmpInv.gameObject.GetComponent<RectTransform>().SetParent(transform.GetComponentInChildren<Canvas>().GetComponent<RectTransform>());
+                tmpInv.gameObject.GetComponent<RectTransform>().SetParent(
+                    transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "InventoryBackground").GetComponent<RectTransform>());
                 tmpInv.gameObject.GetComponent<RectTransform>().localPosition = currentPos;
                 currentPos.x += _offSet.x;
                 tmpInv.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);

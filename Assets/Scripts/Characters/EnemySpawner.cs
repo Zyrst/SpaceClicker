@@ -25,6 +25,12 @@ public class EnemySpawner : MonoBehaviour {
                 count++;
                 if (count >= number_)
                 {
+                    try
+                    {
+                        Destroy(((EnemySpawner)item)._enemy.gameObject);
+                    }
+                    catch (System.NullReferenceException) { }
+
                     ((EnemySpawner)item)._enemy = null;
                 }
                 else
@@ -55,7 +61,7 @@ public class EnemySpawner : MonoBehaviour {
 
     public void Spawn()
     {
-        Invoke("spawner", 1f);
+        Invoke("spawner", 0.5f);
     }
 
     private void spawner()
