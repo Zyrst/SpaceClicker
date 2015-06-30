@@ -15,6 +15,9 @@ public class EnemyAttack : MonoBehaviour {
     public bool _shieldUp = false;
     public float _shieldTime = 2f;
     public float _shieldDamageMulti = 3f;
+    public bool _stunned = false;
+
+    public float _stunTime = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -24,12 +27,21 @@ public class EnemyAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _attackTimer += Time.deltaTime;
-
-        if (_attackTimer > _cooldownTimer)
+        if (!_stunned)
         {
-            Attack();
-            _attackTimer = 0f;
+            _attackTimer += Time.deltaTime;
+
+            if (_attackTimer > _cooldownTimer)
+            {
+                Attack();
+                _attackTimer = 0f;
+            }
+        }
+        else
+        {
+            _stunTime -= Time.deltaTime;
+            if (_stunTime <= 0)
+                _stunned = false;
         }
 	}
 
@@ -83,5 +95,11 @@ public class EnemyAttack : MonoBehaviour {
         shield.gameObject.SetActive(false);
         _shieldUp = false;
         GetComponent<Enemy>()._shieldUp = false;
+    }
+
+    public void Stunned(float stunTime_)
+    {
+        _stunTime = stunTime_;
+        _stunned = true;
     }
 }

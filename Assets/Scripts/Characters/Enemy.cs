@@ -70,6 +70,10 @@ public class Enemy : Character
 
             catch (System.NullReferenceException) { }
             base.TakeDamage(ds_, hitPoint_, hitter_);
+            if (ds_._stunTime > 0f)
+            {
+                GetComponent<EnemyAttack>().Stunned(ds_._stunTime);
+            }
         }
         else
         {
