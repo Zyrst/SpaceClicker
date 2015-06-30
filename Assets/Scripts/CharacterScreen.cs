@@ -143,4 +143,19 @@ public class CharacterScreen : MonoBehaviour {
             }
         }
     }
+
+    public void GenerateCharInfo()
+    {
+        
+        string info = "Health: " +  Global.Instance._player._combinedStats._maxHealth.GetString();
+        info += System.Environment.NewLine + "Click Damage : " + Global.Instance._player._combinedStats._normal.damage.GetString();
+        info += System.Environment.NewLine + "Click Crit Chance" + Global.Instance._player._combinedStats._normal.crit.ToString();
+        info += System.Environment.NewLine + "Tech Damage : " +  Global.Instance._player._combinedStats._tech.damage.GetString();
+        info += System.Environment.NewLine + "Kinetic Damage : " + Global.Instance._player._combinedStats._kinetic.damage.GetString();
+        info += System.Environment.NewLine + "Psychic Damage : " + Global.Instance._player._combinedStats._psychic.damage.GetString();
+
+
+        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "CharInfo").text = info;
+    }
+
 }

@@ -41,6 +41,7 @@ public class Ship : MonoBehaviour {
         CharacterScreen.Instance.gameObject.SetActive(true);
         Global.Instance._player.SortInventory();
         CharacterScreen.Instance.GenerateInventorySlots();
+        CharacterScreen.Instance.GenerateCharInfo();
     }
 
     public void Star()
