@@ -27,27 +27,30 @@ public class EnemyAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!_stunned)
+        if (GetComponent<Enemy>()._isAlive)
         {
-            _attackTimer += Time.deltaTime;
-
-            if (_attackTimer > _cooldownTimer)
+            if (!_stunned)
             {
-                Attack();
-                _attackTimer = 0f;
+                _attackTimer += Time.deltaTime;
+
+                if (_attackTimer > _cooldownTimer)
+                {
+                    Attack();
+                    _attackTimer = 0f;
+                }
             }
-        }
-        else
-        {
-            _stunTime -= Time.deltaTime;
-            if (_stunTime <= 0)
-                _stunned = false;
+            else
+            {
+                _stunTime -= Time.deltaTime;
+                if (_stunTime <= 0)
+                    _stunned = false;
+            }
         }
 	}
 
     public void Attack()
     {
-        if (Global.Instance.PlayerAlive())
+        if (Global.Instance.PlayerAlive() && GetComponent<Enemy>()._isAlive)
         {
             if (!_nextAttackIsShield)
             {
@@ -74,7 +77,7 @@ public class EnemyAttack : MonoBehaviour {
                 Invoke("ResetShield", _shieldTime);
             }
         }
-        if (!_nextAttackIsShield)
+        if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive)
         {
             int result = Random.Range(0, 2);
             if (result == 1)

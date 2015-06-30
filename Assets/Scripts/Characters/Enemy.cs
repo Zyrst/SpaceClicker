@@ -53,11 +53,13 @@ public class Enemy : Character
         Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
 
         Invoke("Kill", 3f);
+        GetComponentInChildren<CharacterGUI>().gameObject.SetActive(false);
     }
 
     public void Kill()
     {
         gameObject.SetActive(false);
+
         if (Global.Instance.EnemiesAlive() == 0)
         {
             EnemySpawner.triggers.newWave();
