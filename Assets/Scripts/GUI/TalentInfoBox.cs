@@ -4,8 +4,9 @@ using System.Collections;
 
 public class TalentInfoBox : MonoBehaviour {
 
-    public TalentInfoBox _instance;
-    public TalentInfoBox Instance
+    public TalentInfoBox instance;
+    private static TalentInfoBox _instance;
+    public static TalentInfoBox Instance
     {
         get
         {
@@ -26,7 +27,7 @@ public class TalentInfoBox : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        _instance = instance;
 	}
 	
 	// Update is called once per frame
