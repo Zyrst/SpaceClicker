@@ -44,54 +44,62 @@ public class Enemy : Character
         base.Die();
 
         // spawn goldcoin
-        Vector3 dir = Vector3.up + -Camera.main.transform.forward;
-        GoldCoin.Create(transform.position, dir * 200f).GetComponent<GoldCoin>()._value = _level;
+        Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance._player.transform.position);
+        GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = _level;
         float rnd = Random.Range(0f, 1f);
         if(rnd >= 0.9f)
-            HealthPotion.Create(transform.position, dir * 200f);
+            HealthPotion.Create(transform.position + (Vector3.up * 2f), dir * 20f);
 
         Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
+
+        Invoke("Kill", 3f);
+    }
+
+    public void Kill()
+    {
+        gameObject.SetActive(false);
         if (Global.Instance.EnemiesAlive() == 0)
         {
             EnemySpawner.triggers.newWave();
         }
-
-        gameObject.SetActive(false);
     }
 
     public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
     {
-        if (!_shieldUp)
+        if (_isAlive)
         {
-            try
+            if (!_shieldUp)
             {
-                GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
+                try
+                {
+                    GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
+                }
+
+                catch (System.NullReferenceException) { }
+                base.TakeDamage(ds_, hitPoint_, hitter_);
+                if (ds_._stunTime > 0f)
+                {
+                    GetComponent<EnemyAttack>().Stunned(ds_._stunTime);
+                }
             }
-
-            catch (System.NullReferenceException) { }
-            base.TakeDamage(ds_, hitPoint_, hitter_);
-            if (ds_._stunTime > 0f)
+            else
             {
-                GetComponent<EnemyAttack>().Stunned(ds_._stunTime);
-            }
-        }
-        else
-        {
-            CharacterStats _shieldStats = new CharacterStats(_stats);
-            vap _shieldVap = _shieldStats._normal.damage + _shieldStats._tech.damage + _shieldStats._kinetic.damage + _shieldStats._psychic.damage;
-            _shieldVap *= GetComponent<EnemyAttack>()._shieldDamageMulti;
+                CharacterStats _shieldStats = new CharacterStats(_stats);
+                vap _shieldVap = _shieldStats._normal.damage + _shieldStats._tech.damage + _shieldStats._kinetic.damage + _shieldStats._psychic.damage;
+                _shieldVap *= GetComponent<EnemyAttack>()._shieldDamageMulti;
 
-            // hitta vilken typ av sköld det är
+                // hitta vilken typ av sköld det är
 
-            _shieldStats = new CharacterStats();
-            _shieldStats._tech.damage = _shieldVap;
+                _shieldStats = new CharacterStats();
+                _shieldStats._tech.damage = _shieldVap;
 
 
-            Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(_shieldStats , false), gameObject.GetComponent<Enemy>());
-            GetComponent<EnemyAttack>().ResetShield();
-            if (GetComponent<EnemyAttack>().IsInvoking())
-            {
-                GetComponent<EnemyAttack>().CancelInvoke();
+                Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(_shieldStats, false), gameObject.GetComponent<Enemy>());
+                GetComponent<EnemyAttack>().ResetShield();
+                if (GetComponent<EnemyAttack>().IsInvoking())
+                {
+                    GetComponent<EnemyAttack>().CancelInvoke();
+                }
             }
         }
     }
