@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Galaxy : MonoBehaviour {
 
+    public float _float = 54f;
+
     private static Galaxy _instance = null;
     public static Galaxy Instance
     {

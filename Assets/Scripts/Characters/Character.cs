@@ -163,4 +163,5 @@ public class Character : MonoBehaviour {
         vap tmp = new vap();
         SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, transform.position);
     }
+
 }
