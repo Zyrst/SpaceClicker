@@ -46,7 +46,6 @@ public class DamageStats {
             }
         }
        
-        
         return ds;
     }
 
@@ -85,6 +84,7 @@ public class DamageStats {
         }
 
         ds._heal = stats_._heal;
+        ds._lifeSteal = stats_._lifeSteal;
         ds._stunTime = stats_._stunTime;
         return ds;
     }
@@ -94,5 +94,6 @@ public class DamageStats {
     public vap _kinetic = new vap();
     public vap _psychic = new vap();
     public vap _heal = new vap();
+    public vap _lifeSteal = new vap();
     public float _stunTime = 0f;
 }

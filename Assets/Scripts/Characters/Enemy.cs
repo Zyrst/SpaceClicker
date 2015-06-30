@@ -50,7 +50,7 @@ public class Enemy : Character
         if(rnd >= 0.9f)
             HealthPotion.Create(transform.position, dir * 200f);
 
-        Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
+        //Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
         if (Global.Instance.EnemiesAlive() == 0)
         {
             EnemySpawner.triggers.newWave();

@@ -38,6 +38,11 @@ public class Character : MonoBehaviour {
         _stats._health -= totalDamage;
         _stats._health += ds_._heal;
 
+        if (ds_._lifeSteal.GetFloat() > 0f)
+        {
+            hitter_.LifeSteal(ds_._lifeSteal);
+        }
+
         //If heal make sure we don't go over maxhealth
         if (_stats._health > _stats._maxHealth)
         {
@@ -145,5 +150,17 @@ public class Character : MonoBehaviour {
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.healColor;
         }
+    }
+
+    public virtual void LifeSteal(vap lifeSteal_)
+    {
+        _stats._health += lifeSteal_;
+        if (_stats._health > _stats._maxHealth)
+        {
+            _stats._health = _stats._maxHealth;
+        }
+
+        vap tmp = new vap();
+        SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, transform.position);
     }
 }
