@@ -98,6 +98,7 @@ public class CharacterStats {
         Debug.Log("Multiplier Damage: " + _multiplierDamage);
         Debug.Log("Damage stat dist: " + _damageStatDist);
    
+        /*
 
         #region print
         using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", false))
@@ -138,6 +139,8 @@ public class CharacterStats {
         } 
         #endregion
 
+
+        */
     }
 
     public CharacterStats(CharacterStats stats_)
