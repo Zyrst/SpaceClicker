@@ -240,4 +240,16 @@ public class Player : Character {
 
         _stats._health = new vap(_combinedStats._maxHealth);
     }
+
+    public override void LifeSteal(vap lifeSteal_)
+    {
+        _stats._health += lifeSteal_;
+        if (_stats._health > _combinedStats._maxHealth)
+        {
+            _stats._health = _combinedStats._maxHealth;
+        }
+
+        vap tmp = new vap();
+        SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, transform.position);
+    }
 }
