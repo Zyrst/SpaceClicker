@@ -200,9 +200,10 @@ public class CharacterScreen : MonoBehaviour {
         playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
         playerModel.LookAt(Global.Instance._uiCamera.transform.position);
         playerModel.localScale = new Vector3(50, 50, 50);
+
         Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
         Global.Instance._player.GetComponent<ClickAttack>().enabled = false;
-        Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = true;
+        Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = false;
     }
 
     public void ResetModel()
