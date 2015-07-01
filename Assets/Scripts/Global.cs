@@ -57,6 +57,9 @@ public class Global : MonoBehaviour {
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
 
+    public Camera _gameCamera;
+    public Camera _uiCamera;
+
     private static Global _instance = null;
     public static Global Instance
     {
@@ -103,6 +106,8 @@ public class Global : MonoBehaviour {
                 Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(false);
                 FarmMode.Instance.startFarmMode();
+                _gameCamera.gameObject.SetActive(true);
+                _uiCamera.gameObject.SetActive(false);
                 break;
             case GameType.Quest:
                 break;
@@ -111,6 +116,8 @@ public class Global : MonoBehaviour {
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(true);
                 Starmap.Instance.gameObject.SetActive(false);
+                _gameCamera.gameObject.SetActive(false);
+                _uiCamera.gameObject.SetActive(true);
                 break;
             case GameType.Star:
                 _player.gameObject.SetActive(false);
