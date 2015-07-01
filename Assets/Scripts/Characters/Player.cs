@@ -98,6 +98,7 @@ public class Player : Character {
     public GameObject _equipmentObject;
 
     public CharacterStats _combinedStats = new CharacterStats();
+    public TalentStats _talentStats = new TalentStats();
 
     public uint _unspentLevels = 0;
 
@@ -228,6 +229,8 @@ public class Player : Character {
     public void UpdateCombinedStats()
     {
         _combinedStats = new CharacterStats(_stats);
+
+        // equipment
         if (_equipped._chest != null)
             _combinedStats.AddStats(_equipped._chest._stats);
         if (_equipped._head != null)
@@ -237,11 +240,28 @@ public class Player : Character {
         if (_equipped._weapon != null)
             _combinedStats.AddStats(_equipped._weapon._stats);
 
+        // spells
         for (int i = 0; i < _spellsArray.Length; i++)
         {
             if(_spellsArray[i] != null)
                 _spellsArray[i].CombineSpellStats();
         }
+
+        // talents
+                        // hp
+        if (_talentStats._healtPercent.value > 0f)
+            _combinedStats._maxHealth *= _talentStats._healtPercent.value;
+        _combinedStats._maxHealth += _talentStats._health;
+
+                        // dmg
+        if (_talentStats._damagePercent.value > 0f)
+            _combinedStats._normal.damage *= _talentStats._damagePercent.value;
+        _combinedStats._normal.damage += _talentStats._normal.damage;
+
+                        // crit
+        if (_talentStats._normal.critMultiplier > 0f) 
+            _combinedStats._normal.critMultiplier *= _talentStats._normal.critMultiplier;
+        _combinedStats._normal.crit += _talentStats._normal.crit;
 
         _stats._health = new vap(_combinedStats._maxHealth);
     }

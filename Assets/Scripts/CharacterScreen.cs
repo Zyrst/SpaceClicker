@@ -63,12 +63,17 @@ public class CharacterScreen : MonoBehaviour {
 
     public void TalentTree()
     {
+
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(true);
     }
 
     public void CloseTalentTree()
     {
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(false);
+        if (TalentInfoBox.Instance != null)
+        {
+            TalentInfoBox.Instance.IsUp = false;
+        }
     }
 
     public void GenerateInventorySlots()
@@ -152,7 +157,6 @@ public class CharacterScreen : MonoBehaviour {
     /// </summary>
     public void GenerateCharInfo()
     {
-
         string info = "Health: " +  Global.Instance._player._combinedStats._maxHealth.GetString();
         
         info+= System.Environment.NewLine + System.Environment.NewLine + "Click";

@@ -35,6 +35,8 @@ public class TalentButton : MonoBehaviour {
 
     public void Click()
     {
+        TalentInfoBox.Instance.IsUp = true;
+
         TalentInfoBox.Instance._lastButton = this;
         TalentInfoBox.Instance.DeterminButtonStatus();
 
@@ -45,8 +47,6 @@ public class TalentButton : MonoBehaviour {
         TalentInfoBox.Instance.levelInfo.maxLevelText.text = maxLevel;
 
         SeeWhatTypeItIs();
-
-
     }
 
     public void SeeWhatTypeItIs()
