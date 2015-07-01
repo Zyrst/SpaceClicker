@@ -77,7 +77,7 @@ public class Enemy : Character
                 {
                     int rnd = Random.Range(1,3);
                     GetComponentInChildren<Animator>().SetInteger("Hit",rnd);
-                    
+                    GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
                 }
 
                 catch (System.NullReferenceException) { }
