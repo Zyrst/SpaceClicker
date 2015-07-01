@@ -13,7 +13,8 @@ public class CharacterScreen : MonoBehaviour {
     public Vector2 _offSet;
     public Vector2 _numInventorySlot;
     public Vector3 _invStartPos = new Vector3();
-    public Transform _playerPos;
+    public Vector3 _playerPos = Vector3.zero;
+    public Quaternion _playerRot = Quaternion.identity;
     public bool _lastFrameClick = false;
 
     public ArrayList _inventory = new ArrayList();
@@ -189,22 +190,29 @@ public class CharacterScreen : MonoBehaviour {
 
     public void Model()
     {
-        _playerPos = Global.Instance._player.transform;
-        Global.Instance._player.transform.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
-        Global.Instance._player.transform.LookAt(Global.Instance._uiCamera.transform.position);
+        _playerPos = Global.Instance._player.transform.position;
+        _playerRot = Global.Instance._player.transform.rotation;
+
         Global.Instance._player.gameObject.SetActive(true);
-        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").localScale = new Vector3(50, 50, 50);
+        Transform playerModel = Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
+
+        
+        playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
+        playerModel.LookAt(Global.Instance._uiCamera.transform.position);
+        playerModel.localScale = new Vector3(50, 50, 50);
         Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
         Global.Instance._player.GetComponent<ClickAttack>().enabled = false;
-        //Global.Instance._playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").canvas.enabled = false;
-        Global.Instance._playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").canvas.enabled = false;
+        Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = true;
     }
 
     public void ResetModel()
     {
-        Global.Instance._player.transform.position = _playerPos.position;
-        Global.Instance._player.transform.rotation = _playerPos.rotation;
-        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").localScale = new Vector3(2, 2, 2);
+
+        Transform playerModel = Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
+
+        playerModel.position = _playerPos;
+        playerModel.rotation = _playerRot;
+        playerModel.localScale = new Vector3(2, 2, 2);
         Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
         Global.Instance._player.GetComponent<ClickAttack>().enabled = true;
         Global.Instance._player.gameObject.SetActive(false);
