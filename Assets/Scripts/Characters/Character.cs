@@ -81,6 +81,10 @@ public class Character : MonoBehaviour {
         if (_experience >= _experianceToNext)
         {
             LevelUp();
+            if (this is Player)
+            {
+                ((Player)this)._unspentLevels++;
+            }
         }
     }
 
