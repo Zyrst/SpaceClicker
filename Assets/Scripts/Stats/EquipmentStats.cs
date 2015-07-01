@@ -10,15 +10,5 @@ public class EquipmentStats {
     public CharacterStats.Element _psychic = new CharacterStats.Element();
 
     //Increase player health
-    public vap _health;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public vap _health = new vap();
 }

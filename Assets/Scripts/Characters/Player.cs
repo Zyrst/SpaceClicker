@@ -90,11 +90,16 @@ public class Player : Character {
     
     public SpellAttack[] _spellsArray = new SpellAttack[4];
     public GameObject[] _spellSlotArray = new GameObject[4];
+
+    public GameObject _inventoryObject;
     public GameObject[] _inventoryArray = new GameObject[32];
+
     public EquipmentOnPlayer _equipped = new EquipmentOnPlayer();
     public GameObject _equipmentObject;
-    public GameObject _inventoryObject;
+
     public CharacterStats _combinedStats = new CharacterStats();
+
+    public uint _unspentLevels = 0;
 
 	// Use this for initialization
 	void Start () {
