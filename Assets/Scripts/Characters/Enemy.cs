@@ -23,7 +23,7 @@ public class Enemy : Character
 
         Transform tr = transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model");
         tr.LookAt(Global.Instance._player.transform);
-        Quaternion rot = transform.rotation;
+       // Quaternion rot = transform.rotation;
         //rot.z = 0f;
 	}
 	
@@ -50,7 +50,7 @@ public class Enemy : Character
         if(rnd >= 0.9f)
             HealthPotion.Create(transform.position + (Vector3.up * 2f), dir * 20f);
 
-        Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
+        //Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
 
         Invoke("Kill", 3f);
         GetComponentInChildren<CharacterGUI>().gameObject.SetActive(false);

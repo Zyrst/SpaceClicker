@@ -23,7 +23,9 @@ public class GoldCoin : MonoBehaviour {
         }
         else
         {
-            Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
+            
+            //Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
+            Ray ray = Global.Instance._gameCamera.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit))
             {

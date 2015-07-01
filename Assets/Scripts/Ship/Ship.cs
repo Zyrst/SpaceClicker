@@ -42,6 +42,7 @@ public class Ship : MonoBehaviour {
         Global.Instance._player.SortInventory();
         CharacterScreen.Instance.GenerateInventorySlots();
         CharacterScreen.Instance.GenerateCharInfo();
+        CharacterScreen.Instance.Model();
     }
 
     public void Star()
@@ -53,6 +54,7 @@ public class Ship : MonoBehaviour {
     {
         CharacterScreen.Instance.gameObject.SetActive(false);
         CharacterScreen.Instance.RemoveInventorySlots();
+        CharacterScreen.Instance.ResetModel();
     }
 
     public void ExitGame()

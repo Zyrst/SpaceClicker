@@ -13,6 +13,7 @@ public class CharacterScreen : MonoBehaviour {
     public Vector2 _offSet;
     public Vector2 _numInventorySlot;
     public Vector3 _invStartPos = new Vector3();
+    public Transform _playerPos;
     public bool _lastFrameClick = false;
 
     public ArrayList _inventory = new ArrayList();
@@ -144,18 +145,70 @@ public class CharacterScreen : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Generates the Character stats in CharScreen
+    /// </summary>
     public void GenerateCharInfo()
     {
         
         string info = "Health: " +  Global.Instance._player._combinedStats._maxHealth.GetString();
+        
+        info+= System.Environment.NewLine + System.Environment.NewLine + "Click";
         info += System.Environment.NewLine + "Click Damage : " + Global.Instance._player._combinedStats._normal.damage.GetString();
-        info += System.Environment.NewLine + "Click Crit Chance" + Global.Instance._player._combinedStats._normal.crit.ToString();
-        info += System.Environment.NewLine + "Tech Damage : " +  Global.Instance._player._combinedStats._tech.damage.GetString();
-        info += System.Environment.NewLine + "Kinetic Damage : " + Global.Instance._player._combinedStats._kinetic.damage.GetString();
-        info += System.Environment.NewLine + "Psychic Damage : " + Global.Instance._player._combinedStats._psychic.damage.GetString();
+        info += System.Environment.NewLine + "Click Crit Chance " + (Global.Instance._player._combinedStats._normal.crit * 100) + "%";
+        info += System.Environment.NewLine + "Click Crit multiplier : " + Global.Instance._player._combinedStats._normal.critMultiplier;
 
+        info += System.Environment.NewLine + System.Environment.NewLine + "<color=blue>Tech</color>";
+        info += System.Environment.NewLine + "Tech Damage : "  + Global.Instance._player._combinedStats._tech.damage.GetString();
+        info += System.Environment.NewLine + "Tech Crit Chance : " + (Global.Instance._player._combinedStats._tech.crit * 100) + "%";
+        info += System.Environment.NewLine + "Tech Crit multiplier : " + Global.Instance._player._combinedStats._tech.critMultiplier;
+
+        info += System.Environment.NewLine + System.Environment.NewLine + "<color=yellow>Kinetic</color>";
+        info += System.Environment.NewLine + "Kinetic Damage : " + Global.Instance._player._combinedStats._kinetic.damage.GetString();
+        info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance._player._combinedStats._kinetic.crit * 100) + "%";
+        info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance._player._combinedStats._kinetic.critMultiplier;
+
+        info += System.Environment.NewLine + System.Environment.NewLine + "<color=purple>Psychic</color>";
+        info += System.Environment.NewLine + "Psychic Damage : " + Global.Instance._player._combinedStats._psychic.damage.GetString();
+        info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance._player._combinedStats._psychic.crit * 100) + "%";
+        info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance._player._combinedStats._psychic.critMultiplier;
+
+        info += System.Environment.NewLine + System.Environment.NewLine + "Resistance";
+        info += System.Environment.NewLine + "Normal Resistance : " + Global.Instance._player._combinedStats._normal.resistance;
+        info += System.Environment.NewLine + "Tech Resistance : " + Global.Instance._player._combinedStats._tech.resistance;
+        info += System.Environment.NewLine + "Kinetic Resistance : " + Global.Instance._player._combinedStats._kinetic.resistance;
+        info += System.Environment.NewLine + "Psychic Resistance : " + Global.Instance._player._combinedStats._psychic.resistance;
+
+        float cooldown = Global.Instance._player._combinedStats._psychic.cooldownReduction + Global.Instance._player._combinedStats._normal.cooldownReduction +
+            Global.Instance._player._combinedStats._kinetic.cooldownReduction + Global.Instance._player._combinedStats._tech.cooldownReduction;
+
+        info += System.Environment.NewLine + "Cooldown Reduction : " + cooldown;
 
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "CharInfo").text = info;
     }
 
+    public void Model()
+    {
+        _playerPos = Global.Instance._player.transform;
+        Global.Instance._player.transform.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
+        Global.Instance._player.transform.LookAt(Global.Instance._uiCamera.transform.position);
+        Global.Instance._player.gameObject.SetActive(true);
+        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").localScale = new Vector3(50, 50, 50);
+        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
+        Global.Instance._player.GetComponent<ClickAttack>().enabled = false;
+        //Global.Instance._playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").canvas.enabled = false;
+        Global.Instance._playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").canvas.enabled = false;
+    }
+
+    public void ResetModel()
+    {
+        Global.Instance._player.transform.position = _playerPos.position;
+        Global.Instance._player.transform.rotation = _playerPos.rotation;
+        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").localScale = new Vector3(2, 2, 2);
+        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
+        Global.Instance._player.GetComponent<ClickAttack>().enabled = true;
+        Global.Instance._player.gameObject.SetActive(false);
+        Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = true;
+
+    }
 }
