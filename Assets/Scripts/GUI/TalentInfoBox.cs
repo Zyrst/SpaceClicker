@@ -12,7 +12,7 @@ public class TalentInfoBox : MonoBehaviour {
         {
             if (_instance == null)
             {
-                Debug.LogError("SUPERFAIL - talent info box not sett");
+                Debug.Log("<color=red>SUPERFAIL - talent info box not sett</color>");
             }
             return _instance;
         }
@@ -27,12 +27,34 @@ public class TalentInfoBox : MonoBehaviour {
 
     public Button acceptButton;
 
+    public bool IsUp
+    {
+        get
+        {
+            return gameObject.activeSelf;
+        }
+        set
+        {
+            if (value)
+            {
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
     [HideInInspector]
     public TalentButton _lastButton = null;
 
 	// Use this for initialization
 	void Start () {
+        Debug.Log("NU ÄR VI INNE I START() PÅ TALENTINFOBOX");
         _instance = instance;
+
+        IsUp = false;
 	}
 	
 	// Update is called once per frame
@@ -44,6 +66,9 @@ public class TalentInfoBox : MonoBehaviour {
     {
         AddStatsToPlayer();
         LevelUpTalentAndShit();
+        _lastButton.Click();
+
+        Global.Instance._player.UpdateCombinedStats();
     }
 
     private void AddStatsToPlayer()
@@ -53,27 +78,46 @@ public class TalentInfoBox : MonoBehaviour {
         switch (_lastButton._talentType)
         {
             case TalentButton.TalentTypes.hpPercent:
-                _player._stats._maxHealth *= _lastButton._stats._healtPercent.value;
+                if (_player._talentStats._healtPercent.value == 0f)  // första gången
+                    _player._talentStats._healtPercent.value = _lastButton._stats._healtPercent.value;
+                else                                                    // alla andra gånger'
+                    _player._talentStats._healtPercent.value *= _lastButton._stats._healtPercent.value;
 
                 if (_lastButton._totalStats._healtPercent.value == 0f)
                     _lastButton._totalStats._healtPercent.value = _lastButton._stats._healtPercent.value;
-
-                _lastButton._totalStats._healtPercent.value *= _lastButton._stats._healtPercent.value;
+                else
+                    _lastButton._totalStats._healtPercent.value *= _lastButton._stats._healtPercent.value;
                 break;
             case TalentButton.TalentTypes.dmgPercent:
-                _player._stats._normal.damage *= _lastButton._stats._damagePercent.value;
+                if (_lastButton._totalStats._damagePercent.value == 0f)  // första gången
+                    _player._talentStats._damagePercent.value = _lastButton._stats._damagePercent.value;
+                else                                                    // alla andra gånger'
+                    _player._talentStats._damagePercent.value *= _lastButton._stats._damagePercent.value;
+
+                if (_lastButton._totalStats._damagePercent.value == 0f)
+                    _lastButton._totalStats._damagePercent.value = _lastButton._stats._damagePercent.value;
+                else
+                    _lastButton._totalStats._damagePercent.value *= _lastButton._stats._damagePercent.value;
                 break;
             case TalentButton.TalentTypes.hp:
-                _player._stats._maxHealth += _lastButton._stats._health;
+                _player._talentStats._health += _lastButton._stats._health;
+
+                _lastButton._totalStats._health += _lastButton._stats._health;
                 break;
             case TalentButton.TalentTypes.dmg:
-                _player._stats._normal.damage += _lastButton._stats._normal.damage;
+                _player._talentStats._normal.damage += _lastButton._stats._normal.damage;
+
+                _lastButton._totalStats._normal.damage += _lastButton._stats._normal.damage;
                 break;
             case TalentButton.TalentTypes.critChans:
-                _player._stats._normal.crit += _lastButton._stats._normal.crit;
+                _player._talentStats._normal.crit += _lastButton._stats._normal.crit;
+
+                _lastButton._totalStats._normal.crit += _lastButton._stats._normal.crit;
                 break;
             case TalentButton.TalentTypes.critPercent:
-                _player._stats._normal.critMultiplier += _lastButton._stats._normal.critMultiplier;
+                _player._talentStats._normal.critMultiplier += _lastButton._stats._normal.critMultiplier;
+
+                _lastButton._totalStats._normal.critMultiplier += _lastButton._stats._normal.critMultiplier;
                 break;
             default:
                 break;
