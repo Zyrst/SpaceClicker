@@ -34,8 +34,9 @@ public class CharacterScreen : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-        Instance.gameObject.SetActive(false);
         CloseTalentTree();
+        Instance.gameObject.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
@@ -187,7 +188,7 @@ public class CharacterScreen : MonoBehaviour {
         float cooldown = Global.Instance._player._combinedStats._psychic.cooldownReduction + Global.Instance._player._combinedStats._normal.cooldownReduction +
             Global.Instance._player._combinedStats._kinetic.cooldownReduction + Global.Instance._player._combinedStats._tech.cooldownReduction;
 
-        info += System.Environment.NewLine + "Cooldown Reduction : " + cooldown;
+        info += System.Environment.NewLine + System.Environment.NewLine + "Cooldown Reduction : " + cooldown;
 
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "CharInfo").text = info;
     }

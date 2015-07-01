@@ -32,6 +32,7 @@ public class Enemy : Character
         Vector3 rot = Vector3.up;
 
         transform.Rotate(rot * 0f * Time.deltaTime);
+        
 	}
 
     public override void Die()
@@ -74,6 +75,8 @@ public class Enemy : Character
             {
                 try
                 {
+                    int rnd = Random.Range(1,3);
+                    GetComponentInChildren<Animator>().SetInteger("Hit",rnd);
                     GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
                 }
 
