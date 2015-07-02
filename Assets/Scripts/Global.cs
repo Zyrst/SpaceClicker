@@ -89,6 +89,10 @@ public class Global : MonoBehaviour {
         {
             _player.SetExperience((uint)(_player._experianceToNext * 0.1f));
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Camera.main.GetComponent<GameCamera>().Shake();
+        }
     }
 
     void LateUpdate()

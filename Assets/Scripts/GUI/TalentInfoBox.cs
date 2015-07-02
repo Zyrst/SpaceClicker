@@ -150,7 +150,7 @@ public class TalentInfoBox : MonoBehaviour {
     /// </summary>
     public void DeterminButtonStatus()
     {
-        if (Global.Instance._player._unspentLevels == 0)
+        if (Global.Instance._player._unspentLevels == 0 || _lastButton._level == _lastButton._maxLevel)
         {
             TalentInfoBox.Instance.acceptButton.interactable = false;
         }

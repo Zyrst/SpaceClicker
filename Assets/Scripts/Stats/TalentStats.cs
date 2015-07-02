@@ -39,7 +39,7 @@ public class TalentStats {
             {
                 _decimal = value;
 
-                _percent = (_decimal - 1f) * 100f + "%";
+                _percent = ((_decimal - 1f) * 100f).ToString("N2") + "%";
             }
         }
     }

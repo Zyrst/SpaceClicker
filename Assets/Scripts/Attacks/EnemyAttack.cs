@@ -32,23 +32,26 @@ public class EnemyAttack : MonoBehaviour {
 
         Animator anim = GetComponentInChildren<Animator>();
 
-        RuntimeAnimatorController ac = anim.runtimeAnimatorController;    //Get Animator controller
-        for (int i = 0; i < ac.animationClips.Length; i++)                 //For all animations
+        try
         {
-            Debug.Log("name animaiton: " + ac.animationClips[i].name);
-            if (ac.animationClips[i].name == "Attack")        //If it has the same name as your clip
+            RuntimeAnimatorController ac = anim.runtimeAnimatorController;          // get animator controller
+            for (int i = 0; i < ac.animationClips.Length; i++)                      // for each clip in the controller
             {
-                float attackSpeed = 2f;
-                anim.SetFloat("AttackSpeed", attackSpeed);
-                _startAttackAnimationTime = ac.animationClips[i].length / attackSpeed;
-            }
-            else if (ac.animationClips[i].name == "Shield")
-            {
-                float shieldSpeed = 2f;
-                anim.SetFloat("ShieldSpeed", shieldSpeed);
-                _startShieldAnimationTime = ac.animationClips[i].length / shieldSpeed;
+                if (ac.animationClips[i].name == "Attack")                          // name of the clip (not state machine)
+                {
+                    float attackSpeed = 2f;
+                    anim.SetFloat("AttackSpeed", attackSpeed);                      // set speed of the clip
+                    _startAttackAnimationTime = ac.animationClips[i].length / attackSpeed;      // lenght with speed in mind
+                }
+                else if (ac.animationClips[i].name == "Shield")
+                {
+                    float shieldSpeed = 2f;
+                    anim.SetFloat("ShieldSpeed", shieldSpeed);
+                    _startShieldAnimationTime = ac.animationClips[i].length / shieldSpeed;
+                }
             }
         }
+        catch (System.NullReferenceException) { }
 	}
 	
 	// Update is called once per frame
@@ -109,7 +112,7 @@ public class EnemyAttack : MonoBehaviour {
     {
         if (Global.Instance.PlayerAlive() && GetComponent<Enemy>()._isAlive)
         {
-            if (!_nextAttackIsShield)
+            if (!_nextAttackIsShield)           // do regular attack
             {
                 Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats, false), gameObject.GetComponent<Enemy>());
             }
@@ -121,10 +124,10 @@ public class EnemyAttack : MonoBehaviour {
                 Invoke("ResetShield", _shieldTime);
             }
         }
-        if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive)
+        if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive)     // determine next attack
         {
             int result = Random.Range(0, 2);
-            if (result == 1)
+            if (result == 1)                                            // next attack is shield
             {
                 _nextAttackIsShield = true;
                 GetComponentInChildren<CharacterGUI>().CooldownBar.GetComponent<Image>().color = Color.blue;

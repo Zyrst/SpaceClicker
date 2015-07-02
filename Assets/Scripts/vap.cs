@@ -49,6 +49,11 @@ public class vap {
         }
         return _str;
     }
+
+    /// <summary>
+    /// returns the value for the toppest prefix
+    /// </summary>
+    /// <returns></returns>
     public float GetFloat()
     {
         return _values[(int)_prefix];
@@ -73,8 +78,12 @@ public class vap {
         return ret;
     }
 
+    /// <summary>
+    /// fixes formatting between prefixes
+    /// </summary>
     public void Checker()
     {
+        // returns 99x and less to the previous prefix
         for (int i = LENGTH - 1; i > 0; i--)
         {   
             while ((int)_prefix <= i && _values[i] < 100f && _values[i] > 0f)
@@ -85,6 +94,7 @@ public class vap {
             }
         }
 
+        // finds the most current prefix
         for (int i = 0; i < LENGTH; i++)
         {
             if (_values[i] != 0f)
@@ -93,10 +103,12 @@ public class vap {
             }
         }
 
+        // pushes 100000x and more to the next prefix
         for (int i = 0; i < (int)_prefix+1; i++)
         {
             if (i <= (int)_prefix)
             {
+                // find something cheaper here
                 string top = "100000000000000000000000000000";      // vad som subtraheras från denna
                 string bot = "100000000000000000000000000";         // vad som adderas till nästa
                 while (bot.Length > 2)
@@ -131,6 +143,7 @@ public class vap {
             }
         }
 
+        // double checks the prefix
         for (int i = 0; i < LENGTH; i++)
         {
             if (_values[i] != 0f)
