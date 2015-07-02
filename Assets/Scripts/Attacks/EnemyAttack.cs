@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
@@ -19,10 +20,35 @@ public class EnemyAttack : MonoBehaviour {
 
     public float _stunTime = 0f;
 
+    private float _startAttackAnimationTime = 0f;
+    private float _startShieldAnimationTime = 0f;
+
+    public bool _animationIsTriggered = false;
+
 	// Use this for initialization
 	void Start () {
         _attackTimer = Random.Range(0f, 2f);
         shield = gameObject.GetComponentInChildren<CharacterGUI>().Shield;
+
+        Animator anim = GetComponentInChildren<Animator>();
+
+        RuntimeAnimatorController ac = anim.runtimeAnimatorController;    //Get Animator controller
+        for (int i = 0; i < ac.animationClips.Length; i++)                 //For all animations
+        {
+            Debug.Log("name animaiton: " + ac.animationClips[i].name);
+            if (ac.animationClips[i].name == "Attack")        //If it has the same name as your clip
+            {
+                float attackSpeed = 2f;
+                anim.SetFloat("AttackSpeed", attackSpeed);
+                _startAttackAnimationTime = ac.animationClips[i].length / attackSpeed;
+            }
+            else if (ac.animationClips[i].name == "Shield")
+            {
+                float shieldSpeed = 2f;
+                anim.SetFloat("ShieldSpeed", shieldSpeed);
+                _startShieldAnimationTime = ac.animationClips[i].length / shieldSpeed;
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -33,10 +59,41 @@ public class EnemyAttack : MonoBehaviour {
             {
                 _attackTimer += Time.deltaTime;
 
+                // start attack animation
+                if (Global.Instance.PlayerAlive() && GetComponent<Enemy>()._isAlive && !_animationIsTriggered)
+                {
+                    if (!_nextAttackIsShield)
+                    {
+                        if (_attackTimer > (_cooldownTimer - _startAttackAnimationTime))
+                        {
+                            try
+                            {
+                                GetComponentInChildren<Animator>().SetTrigger("AttackTrigger");
+                                _animationIsTriggered = true;
+                            }
+                            catch (System.NullReferenceException) { }
+                        }
+                    }
+                    else
+                    {
+                        if (_attackTimer > (_cooldownTimer - _startShieldAnimationTime))
+                        {
+                            try
+                            {
+                                GetComponentInChildren<Animator>().SetTrigger("ShieldTrigger");
+                                _animationIsTriggered = true;
+                            }
+
+                            catch (System.NullReferenceException) { }
+                        }
+                    }
+                }
+
                 if (_attackTimer > _cooldownTimer)
                 {
                     Attack();
                     _attackTimer = 0f;
+                    _animationIsTriggered = false;
                 }
             }
             else
@@ -54,23 +111,10 @@ public class EnemyAttack : MonoBehaviour {
         {
             if (!_nextAttackIsShield)
             {
-            try
-            {
-                GetComponentInChildren<Animator>().SetTrigger("AttackTrigger");
-            }
-            catch (System.NullReferenceException) { }
                 Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats, false), gameObject.GetComponent<Enemy>());
             }
             else
             {
-
-                try
-                {
-                    GetComponentInChildren<Animator>().SetTrigger("ShieldTrigger");
-                }
-
-                catch (System.NullReferenceException) { }
-
                 shield.gameObject.SetActive(true);
                 _shieldUp = true;
                 GetComponent<Enemy>()._shieldUp = true;
