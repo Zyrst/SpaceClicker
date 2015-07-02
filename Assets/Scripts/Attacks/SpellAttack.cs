@@ -56,7 +56,9 @@ public class SpellAttack : BaseAttack {
             _followerDiff = MouseController.Instance.position - _slot.transform.position;
             _clicked = true;
             MouseController.Instance.locked = true;
+            GetComponentInParent<ClickAttack>().HoldingSpell();
             Invoke("ResetCanDealDamage", 0.1f);
+            
         }
     }
 
@@ -68,10 +70,13 @@ public class SpellAttack : BaseAttack {
         if (!MouseController.Instance.buttonDown)
         {
             ResetGUI();
+            //GetComponentInParent<ClickAttack>()._canDealDamage = true;
         }
         else
         {
             CheckHit();
+          //  GetComponentInParent<ClickAttack>()._canDealDamage = false;
+            
         }
     }
 
@@ -92,6 +97,10 @@ public class SpellAttack : BaseAttack {
                         ResetGUI();
                         hit.collider.transform.parent.parent.gameObject.GetComponent<Character>().TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit.point, Global.Instance._player);
                     }
+                    else if (!hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
+                    {
+                        ResetGUI();
+                    }
                    
                 }
                 catch (System.NullReferenceException) { }
@@ -103,6 +112,7 @@ public class SpellAttack : BaseAttack {
         _clicked = false;
         MouseController.Instance.locked = false;
         _slot.transform.position = _startGUIPos;
+        GetComponentInParent<ClickAttack>().ReleasedSpell();
     }
 
     public void Cooldown()

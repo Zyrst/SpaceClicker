@@ -12,6 +12,8 @@ public class ClickAttack : BaseAttack {
     public bool _stunned = false;
     public float _stunTime = 0f;
 
+    public bool _holdingSpell = false;
+
     public AudioClip[] _tempHitSounds = new AudioClip[5];
     
 
@@ -23,7 +25,7 @@ public class ClickAttack : BaseAttack {
 	// Update is called once per frame
 	void Update () {
         // LMB
-        if (MouseController.Instance.clickButtonDown && !_stunned)
+        if (MouseController.Instance.clickButtonDown && !_stunned && !_holdingSpell && GetComponentInParent<Character>()._isAlive)
         {
             // mouseon the ground
             Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
@@ -81,7 +83,7 @@ public class ClickAttack : BaseAttack {
                 }
                 catch (System.NullReferenceException) { _canDealDamage = true; }
             }
-            else
+            else if(!_holdingSpell)
             {
                 _canDealDamage = true;
             }
@@ -95,7 +97,7 @@ public class ClickAttack : BaseAttack {
                 _canDealDamage = true;
             }
         }
-        else
+        else if(!_holdingSpell)
         {
             _canDealDamage = true;
         }
@@ -106,5 +108,16 @@ public class ClickAttack : BaseAttack {
         _stunned = true;
         _stunTime = stunTime_;
         _canDealDamage = false;
+    }
+
+    public void HoldingSpell()
+    {
+        _holdingSpell = true;
+        _canDealDamage = false;
+    }
+
+    public void ReleasedSpell()
+    {
+        _holdingSpell = false;
     }
 }

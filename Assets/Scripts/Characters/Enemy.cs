@@ -6,6 +6,11 @@ using System.Linq;
 public class Enemy : Character
 {
     public bool _shieldUp = false;
+    [HideInInspector]
+    public int _animCounter = 0;
+    [HideInInspector]
+    public int _lastAnim = 0;
+
 	// Use this for initialization
     void Start()
     {
@@ -76,6 +81,25 @@ public class Enemy : Character
                 try
                 {
                     int rnd = Random.Range(1,3);
+                    //Try to make so not the same hit animation gets trigged 
+                    if (_lastAnim == rnd)
+                    {
+                        _animCounter++;
+                        if (_animCounter == 3)
+                        {
+                            rnd--;
+                            if (rnd == 0)
+                            {
+                                rnd = 2;
+                            }
+                            _animCounter = 0;
+                        }
+                    }
+                    else
+                    {
+                        _animCounter = 0;
+                        _lastAnim = rnd;
+                    }
                     GetComponentInChildren<Animator>().SetInteger("Hit",rnd);
                     GetComponentInChildren<Animator>().SetTrigger("HitTrigger");
                 }
@@ -85,6 +109,7 @@ public class Enemy : Character
                 if (ds_._stunTime > 0f)
                 {
                     GetComponent<EnemyAttack>().Stunned(ds_._stunTime);
+                    GetComponentInChildren<Animator>().SetTrigger("StunTrigger");
                 }
             }
             else
