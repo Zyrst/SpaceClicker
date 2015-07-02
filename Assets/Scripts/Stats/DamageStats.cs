@@ -17,14 +17,18 @@ public class DamageStats {
             ds._tech = stats_._tech.critDamage;
             ds._psychic = stats_._psychic.critDamage;
             ds._kinetic = stats_._kinetic.critDamage;
+
+            Global.Instance.ShakeCamera();
         }
         else
         {
+            bool didaCrit = false;
             /* Make it crit*/
             float crit = Random.Range(0f, 1f);
             if (crit <= stats_._normal.crit)
             {
                 ds._normal = stats_._normal.critDamage;
+                didaCrit = true;
             }
 
             crit = Random.Range(0f, 1f);
@@ -44,6 +48,11 @@ public class DamageStats {
             {
                 ds._kinetic = stats_._kinetic.critDamage;
             }
+
+            if (didaCrit)
+            {
+                Global.Instance.ShakeCamera();
+            }
         }
        
         return ds;
@@ -58,29 +67,40 @@ public class DamageStats {
         ds._tech = stats_._tech.damage;
         ds._psychic = stats_._psychic.damage;
 
+
+        bool didaCrit = false;
         /* Make it crit*/
         float crit = Random.Range(0f, 1f);
         if (crit <= stats_._normal.crit)
         {
             ds._normal = stats_._normal.critDamage;
+            didaCrit = true;
         }
 
         crit = Random.Range(0f, 1f);
         if (crit <= stats_._tech.crit)
         {
             ds._tech = stats_._tech.critDamage;
+            didaCrit = true;
         }
 
         crit = Random.Range(0f, 1f);
         if (crit <= stats_._psychic.crit)
         {
             ds._psychic = stats_._psychic.critDamage;
+            didaCrit = true;
         }
 
         crit = Random.Range(0f, 1f);
         if (crit <= stats_._kinetic.crit)
         {
             ds._kinetic = stats_._kinetic.critDamage;
+            didaCrit = true;
+        }
+
+        if (didaCrit)
+        {
+            Global.Instance.ShakeCamera();
         }
 
         ds._heal = stats_._heal;

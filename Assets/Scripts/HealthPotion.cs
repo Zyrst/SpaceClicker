@@ -7,10 +7,11 @@ public class HealthPotion : MonoBehaviour {
     [HideInInspector]
     public float _timer = 0f;
 
+    public static TalentStats.Percent _chansIncrease = new TalentStats.Percent(1.01f);
+    public static TalentStats.Percent _healingIncrease = new TalentStats.Percent(1.01f);
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -45,7 +46,7 @@ public class HealthPotion : MonoBehaviour {
 
     public void Collect()
     {
-        Global.Instance._player._stats._health += (Global.Instance._player._stats._maxHealth * 0.1f);
+        Global.Instance._player._stats._health += (Global.Instance._player._stats._maxHealth * Global.Instance._potionHealthPercent.value);
         if ((Global.Instance._player._stats._health) > (Global.Instance._player._stats._maxHealth)) 
             Global.Instance._player._stats._health = new vap(Global.Instance._player._stats._maxHealth);
 
