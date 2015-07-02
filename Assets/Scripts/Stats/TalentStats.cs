@@ -6,27 +6,22 @@ public class TalentStats {
     [System.Serializable]
     public class Percent
     {
+        public Percent()
+        {
+        }
+
+        public Percent(float value_)
+        {
+            value = value_;
+        }
         [SerializeField]        // syns i editorn
         private float _decimal = 0f;
-        [SerializeField]
-        private string _percent = "0%";
 
         public string PerCent
         {
             get
             {
-                return _percent;
-            }
-            set
-            {
-                _percent = value;
-
-                if (_percent[_percent.Length-1] != '%')
-                {
-                    _percent = _percent + "%";
-                }
-
-                _decimal = (float.Parse(_percent.Substring(_percent.Length - 1)) / 100f) + 1f;
+                return _decimal == 0f ? "0%" : ((_decimal - 1f) * 100f).ToString("N2") + "%";
             }
         }
         public float value
@@ -38,8 +33,6 @@ public class TalentStats {
             set
             {
                 _decimal = value;
-
-                _percent = ((_decimal - 1f) * 100f).ToString("N2") + "%";
             }
         }
     }

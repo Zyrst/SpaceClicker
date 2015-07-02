@@ -53,7 +53,7 @@ public class Enemy : Character
         Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance._player.transform.position);
         GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = _level;
         float rnd = Random.Range(0f, 1f);
-        if(rnd >= 0.9f)
+        if(rnd >= 1f - Global.Instance._potionDropChans.value)
             HealthPotion.Create(transform.position + (Vector3.up * 2f), dir * 20f);
 
         //Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());

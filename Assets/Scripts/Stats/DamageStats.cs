@@ -18,7 +18,7 @@ public class DamageStats {
             ds._psychic = stats_._psychic.critDamage;
             ds._kinetic = stats_._kinetic.critDamage;
 
-            //Camera.main.GetComponent<GameCamera>().Shake();
+            Global.Instance.ShakeCamera();
         }
         else
         {
@@ -51,8 +51,7 @@ public class DamageStats {
 
             if (didaCrit)
             {
-                Debug.Log("di a crit in click");
-                Camera.main.GetComponent<GameCamera>().Shake();
+                Global.Instance.ShakeCamera();
             }
         }
        
@@ -101,7 +100,7 @@ public class DamageStats {
 
         if (didaCrit)
         {
-            Camera.main.GetComponent<GameCamera>().Shake();
+            Global.Instance.ShakeCamera();
         }
 
         ds._heal = stats_._heal;

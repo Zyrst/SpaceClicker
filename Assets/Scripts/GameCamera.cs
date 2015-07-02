@@ -44,8 +44,6 @@ public class GameCamera : MonoBehaviour {
 
     public void Shake()
     {
-        Debug.Log("gör en shake");
-
         if (!_shake)
         {
             _originalPos = transform.position;

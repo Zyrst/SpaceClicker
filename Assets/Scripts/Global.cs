@@ -54,8 +54,13 @@ public class Global : MonoBehaviour {
     public float _expScale = 1.5f;
     public GameObject _playerGUI;
     public Planet _planet;
+
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
+
+
+    public TalentStats.Percent _potionDropChans = new TalentStats.Percent(1.05f);
+    public TalentStats.Percent _potionHealthPercent = new TalentStats.Percent(1.2f);
 
     public Camera _gameCamera;
     public Camera _uiCamera;
@@ -91,7 +96,7 @@ public class Global : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Camera.main.GetComponent<GameCamera>().Shake();
+            ShakeCamera();
         }
     }
 
@@ -219,5 +224,17 @@ public class Global : MonoBehaviour {
     public void UpdateLevel()
     {
         _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Level").text = _player._level.ToString();
+    }
+
+    public void ShakeCamera()
+    {
+        try
+        {
+            Camera.main.GetComponent<GameCamera>().Shake();
+        }
+        catch (System.NullReferenceException)
+        {
+            Debug.Log("Cannot shake current camera");
+        }
     }
 }

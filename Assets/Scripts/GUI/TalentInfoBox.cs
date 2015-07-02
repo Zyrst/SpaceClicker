@@ -51,7 +51,6 @@ public class TalentInfoBox : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Debug.Log("NU ÄR VI INNE I START() PÅ TALENTINFOBOX");
         _instance = instance;
 
         IsUp = false;
@@ -119,6 +118,31 @@ public class TalentInfoBox : MonoBehaviour {
 
                 _lastButton._totalStats._normal.critMultiplier += _lastButton._stats._normal.critMultiplier;
                 break;
+            case TalentButton.TalentTypes.hpPotionChans:
+                Global.Instance._potionDropChans.value += (HealthPotion._chansIncrease.value - 1f);
+                break;
+            case TalentButton.TalentTypes.hpPotionHealingPercent:
+                Global.Instance._potionHealthPercent.value += (HealthPotion._healingIncrease.value - 1f);
+                break;
+            case TalentButton.TalentTypes.AllResistance:
+                if (_player._talentStats._kinetic.resistance == 0f)             // kinetic
+                    _player._talentStats._kinetic.resistance = _lastButton._stats._normal.resistance;
+                else
+                    _player._talentStats._kinetic.resistance *= _lastButton._stats._normal.resistance;
+                if (_player._talentStats._tech.resistance == 0f)                // tech
+                    _player._talentStats._tech.resistance = _lastButton._stats._normal.resistance;
+                else
+                    _player._talentStats._tech.resistance = _lastButton._stats._normal.resistance;
+                if (_player._talentStats._psychic.resistance == 0f)             // psychic
+                    _player._talentStats._psychic.resistance = _lastButton._stats._normal.resistance;
+                else
+                    _player._talentStats._psychic.resistance *= _lastButton._stats._normal.resistance;
+
+                if (_lastButton._totalStats._normal.resistance == 0f)
+                    _lastButton._totalStats._normal.resistance = _lastButton._stats._normal.resistance;
+                else
+                    _lastButton._totalStats._normal.resistance *= _lastButton._stats._normal.resistance;
+                break;
             default:
                 break;
         }
@@ -150,7 +174,7 @@ public class TalentInfoBox : MonoBehaviour {
     /// </summary>
     public void DeterminButtonStatus()
     {
-        if (Global.Instance._player._unspentLevels == 0 || _lastButton._level == _lastButton._maxLevel)
+        if ((Global.Instance._player._unspentLevels == 0) || (_lastButton._maxLevel != 0 && _lastButton._level == _lastButton._maxLevel))
         {
             TalentInfoBox.Instance.acceptButton.interactable = false;
         }
