@@ -129,9 +129,12 @@ public class CharacterScreen : MonoBehaviour {
     {
         _EquipPopup.gameObject.SetActive(true);
         Vector3 temp = MouseController.Instance.position;
+        //temp.z = 100f; //Distance to plane
         temp.y += 40f;
+       // _EquipPopup.transform.position = Global.Instance._uiCamera.ScreenToWorldPoint(temp);
         _EquipPopup.transform.position = temp;
         _lastEquip = equi_;
+        EquipmentStatsPopUp(equi_);
     }
 
     public void ClosePopup()
@@ -224,5 +227,128 @@ public class CharacterScreen : MonoBehaviour {
         Global.Instance._player.gameObject.SetActive(false);
         Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = true;
 
+    }
+
+    /// <summary>
+    /// Diffrence between gear
+    /// </summary>
+    /// <param name="equip_">Equipment</param>
+    public void EquipmentStatsPopUp(Equipment equip_)
+    {
+
+        string info = equip_._stats._name;
+        if (Global.Instance._player._equipped._chest == null && equip_._type == Equipment.EquipmentType.Chest || Global.Instance._player._equipped._head == null && equip_._type == Equipment.EquipmentType.Head || 
+            Global.Instance._player._equipped._legs == null && equip_._type == Equipment.EquipmentType.Legs || Global.Instance._player._equipped._weapon == null && equip_._type == Equipment.EquipmentType.Weapon)
+        {
+            if(equip_._stats._normal.damage.GetFloat() > 0f)
+                info += equip_._stats._normal.damage.GetString() + "     +" + equip_._stats._normal.damage.GetString() + System.Environment.NewLine;
+            if (equip_._stats._normal.crit > 0f)
+                info += equip_._stats._normal.crit.ToString() + "     +" + equip_._stats._normal.crit.ToString() + System.Environment.NewLine; 
+            if(equip_._stats._normal.critMultiplier >0f)
+                info += equip_._stats._normal.critMultiplier.ToString() + "     +" + equip_._stats._normal.critMultiplier.ToString() + System.Environment.NewLine; 
+            if(equip_._stats._normal.resistance > 0f)
+                info += equip_._stats._normal.resistance.ToString() + "     +" + equip_._stats._normal.resistance.ToString() + System.Environment.NewLine;
+            return;
+        }
+
+
+
+
+        vap calc = new vap();
+ 
+        switch (equip_._type)
+        {
+            case Equipment.EquipmentType.Weapon:
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._weapon._stats._normal.damage);
+                break;
+            case Equipment.EquipmentType.Head:
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._head._stats._normal.damage);
+                break;
+            case Equipment.EquipmentType.Chest:
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._chest._stats._normal.damage);
+                break;
+            case Equipment.EquipmentType.Legs:
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._legs._stats._normal.damage);
+                break;
+            default:
+                calc = equip_._stats._normal.damage;
+                break;
+        }
+
+        if(calc.GetFloat() > 0f || calc.GetFloat() < 0f)
+        {
+            info += System.Environment.NewLine + "Click damage: " + equip_._stats._normal.damage.GetString();
+            info += "   ";
+            if (calc.GetFloat() > 0)
+            {
+                info += "+" + calc.GetString();
+            }
+            else
+                info += calc.GetString();
+        }
+
+         float calcF = 0f;
+         switch (equip_._type)
+         {
+             case Equipment.EquipmentType.Weapon:
+                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._weapon._stats._normal.crit;
+                  break;
+             case Equipment.EquipmentType.Head:
+                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._head._stats._normal.crit;
+                  break;
+             case Equipment.EquipmentType.Chest:
+                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._chest._stats._normal.crit;
+                  break;
+             case Equipment.EquipmentType.Legs:
+                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._legs._stats._normal.crit;
+                  break;
+             default:
+                  calcF = equip_._stats._normal.crit;
+                  break;
+         }
+
+        if(calcF > 0f || calcF < 0f)
+        {
+            info += System.Environment.NewLine + "Click crit chance : " + (equip_._stats._normal.crit * 100f) + "%";
+            info += "    ";
+            if (calcF > 0)
+                info += "+" + (calcF * 100f).ToString() + "%";
+            else
+                info += (calcF * 100f).ToString() + "%";
+        }
+
+        calcF = 0f;
+        switch (equip_._type)
+        {
+            case Equipment.EquipmentType.Weapon:
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._weapon._stats._normal.critMultiplier;
+                break;
+            case Equipment.EquipmentType.Head:
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._head._stats._normal.critMultiplier;
+                break;
+            case Equipment.EquipmentType.Chest:
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._chest._stats._normal.critMultiplier;
+                break;
+            case Equipment.EquipmentType.Legs:
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._legs._stats._normal.critMultiplier;
+                break;
+            default:
+                break;
+        }
+        if (calcF > 0f || calcF < 0f)
+        {
+            info += System.Environment.NewLine + "Click crit chance : " + equip_._stats._normal.critMultiplier;
+            info += "    ";
+            if (calcF > 0)
+                info += "+" + calcF.ToString();
+            else
+                info += calcF.ToString();
+        }
+            
+        
+
+
+
+        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "StatsText").text = info;
     }
 }

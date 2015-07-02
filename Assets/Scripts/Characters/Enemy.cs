@@ -110,6 +110,7 @@ public class Enemy : Character
                 {
                     GetComponent<EnemyAttack>().Stunned(ds_._stunTime);
                     GetComponentInChildren<Animator>().SetTrigger("StunTrigger");
+                    GetComponentInChildren<Animator>().SetInteger("Hit", 0);
                 }
             }
             else

@@ -11,4 +11,6 @@ public class EquipmentStats {
 
     //Increase player health
     public vap _health = new vap();
+
+    public string _name = "Gorilla Pants of Death";
 }

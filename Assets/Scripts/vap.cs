@@ -257,4 +257,24 @@ public class vap {
         }
         return ret;
     }
+
+    /// <summary>
+    /// Calculate with negative numbers, vap1 - vap 2
+    /// </summary>
+    /// <param name="v1_">Vap with stats</param>
+    /// <param name="v2_">vap with stats</param>
+    /// <returns>Calculated vap with negative and positive numbers</returns>
+    public static vap Minus(vap v1_, vap v2_)
+    {
+        vap ret = new vap();
+        PREFIX highest = ((int)v1_._prefix >= (int)(v2_._prefix) ? v1_._prefix : v2_._prefix);
+        ret._prefix = highest;
+
+        for (int i = LENGTH - 1; i > -1; i--)
+        {
+            ret._values[i] = v1_._values[i] - v2_._values[i];
+        }
+
+        return ret;
+    }
 }
