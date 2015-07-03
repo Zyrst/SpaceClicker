@@ -38,7 +38,8 @@ public class ClickAttack : BaseAttack {
                     // hit enemy
                     if (hit.collider.transform.parent.parent.tag == "Enemy")
                     {
-                        if (_canDealDamage || (_lastTarget != null && _lastTarget != hit.collider.gameObject.transform.parent.parent.gameObject))
+                        if ((_canDealDamage || (_lastTarget != null && _lastTarget != hit.collider.gameObject.transform.parent.parent.gameObject))
+                            && hit.collider.gameObject.GetComponentInParent<Character>()._isAlive)
                         {
                             if (_lastTarget == hit.collider.gameObject.transform.parent.parent.gameObject)
                                 _hitCount++;
