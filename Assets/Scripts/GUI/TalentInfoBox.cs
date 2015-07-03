@@ -66,7 +66,7 @@ public class TalentInfoBox : MonoBehaviour {
         AddStatsToPlayer();
         LevelUpTalentAndShit();
         _lastButton.Click();
-
+        Debug.Log("Talent info box pre stats update");
         Global.Instance._player.UpdateCombinedStats();
     }
 

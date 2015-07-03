@@ -70,7 +70,7 @@ public class Enemy : Character
 
         if (Global.Instance.EnemiesAlive() == 0 && _myNumDeath == 0)
         {
-            Debug.Log("Triggered new wave");
+            //Debug.Log("Triggered new wave");
             EnemySpawner.triggers.newWave();
         }
         gameObject.SetActive(false);

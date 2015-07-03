@@ -228,6 +228,8 @@ public class Player : Character {
     /// </summary>
     public void UpdateCombinedStats()
     {
+
+
         _combinedStats = new CharacterStats(_stats);
 
         // equipment

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class Ship : MonoBehaviour {
    
@@ -22,7 +23,7 @@ public class Ship : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        FixPlayerStats();
 	}
 	
 	// Update is called once per frame
@@ -39,10 +40,11 @@ public class Ship : MonoBehaviour {
     public void Character()
     {
         CharacterScreen.Instance.gameObject.SetActive(true);
+        //Global.Instance._player.gameObject.SetActive(true);
         Global.Instance._player.SortInventory();
-        CharacterScreen.Instance.GenerateInventorySlots();
-        CharacterScreen.Instance.GenerateCharInfo();
-        CharacterScreen.Instance.Model();
+        Global.Instance._player.UpdateCombinedStats();
+        CharacterScreen.Instance.Activate();
+        
     }
 
     public void Star()
@@ -55,10 +57,25 @@ public class Ship : MonoBehaviour {
         CharacterScreen.Instance.gameObject.SetActive(false);
         CharacterScreen.Instance.RemoveInventorySlots();
         CharacterScreen.Instance.ResetModel();
+        Global.Instance._player.gameObject.SetActive(false);
     }
 
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void FixPlayerStats()
+    {
+        Global.Instance._player.gameObject.SetActive(true);
+        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
+
+        Invoke("DisablePlayer", 0.5f);
+    }
+
+    public void DisablePlayer()
+    {
+        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
+        Global.Instance._player.gameObject.SetActive(false);
     }
 }

@@ -35,7 +35,9 @@ public class CharacterScreen : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         CloseTalentTree();
+        GenerateCharInfo();
         Instance.gameObject.SetActive(false);
+        
 
 	}
 	
@@ -59,6 +61,13 @@ public class CharacterScreen : MonoBehaviour {
         {
             _lastFrameClick = false;
         }
+    }
+
+    public void Activate()
+    {
+        Model();
+        GenerateInventorySlots();
+        GenerateCharInfo();
     }
 
     public void TalentTree()
@@ -123,6 +132,7 @@ public class CharacterScreen : MonoBehaviour {
         Debug.Log("EquipLast");
         ResetInventorySprite(_lastEquip);
         Global.Instance._player._equipped.Equip(_lastEquip);
+        GenerateCharInfo();
     }
 
     public void PopItUp(Equipment equi_)
@@ -160,7 +170,9 @@ public class CharacterScreen : MonoBehaviour {
     /// </summary>
     public void GenerateCharInfo()
     {
-        string info = "Health: " +  Global.Instance._player._combinedStats._maxHealth.GetString();
+
+        string info = "Level : " + Global.Instance._player._level.ToString();
+        info += System.Environment.NewLine + "Health: " +  Global.Instance._player._combinedStats._maxHealth.GetString();
         
         info+= System.Environment.NewLine + System.Environment.NewLine + "Click";
         info += System.Environment.NewLine + "Click Damage : " + Global.Instance._player._combinedStats._normal.damage.GetString();
@@ -224,7 +236,7 @@ public class CharacterScreen : MonoBehaviour {
         playerModel.localScale = new Vector3(2, 2, 2);
         Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
         Global.Instance._player.GetComponent<ClickAttack>().enabled = true;
-        Global.Instance._player.gameObject.SetActive(false);
+    //    Global.Instance._player.gameObject.SetActive(false);
         Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = true;
 
     }
@@ -241,13 +253,14 @@ public class CharacterScreen : MonoBehaviour {
             Global.Instance._player._equipped._legs == null && equip_._type == Equipment.EquipmentType.Legs || Global.Instance._player._equipped._weapon == null && equip_._type == Equipment.EquipmentType.Weapon)
         {
             if(equip_._stats._normal.damage.GetFloat() > 0f)
-                info += equip_._stats._normal.damage.GetString() + "     +" + equip_._stats._normal.damage.GetString() + System.Environment.NewLine;
+                info += System.Environment.NewLine + "Click Damage :  " + equip_._stats._normal.damage.GetString() + "     +" + equip_._stats._normal.damage.GetString();
             if (equip_._stats._normal.crit > 0f)
-                info += equip_._stats._normal.crit.ToString() + "     +" + equip_._stats._normal.crit.ToString() + System.Environment.NewLine; 
+                info += System.Environment.NewLine + "Click Crit Chance :  " + (equip_._stats._normal.crit * 100) + "% " + "     +" + (equip_._stats._normal.crit * 100) + "% "; 
             if(equip_._stats._normal.critMultiplier >0f)
-                info += equip_._stats._normal.critMultiplier.ToString() + "     +" + equip_._stats._normal.critMultiplier.ToString() + System.Environment.NewLine; 
+                info += System.Environment.NewLine + "Click Crit Multiplier :  " + equip_._stats._normal.critMultiplier.ToString() + "     +" + equip_._stats._normal.critMultiplier.ToString(); 
             if(equip_._stats._normal.resistance > 0f)
-                info += equip_._stats._normal.resistance.ToString() + "     +" + equip_._stats._normal.resistance.ToString() + System.Environment.NewLine;
+                info += System.Environment.NewLine + "Click Resistance :  " + equip_._stats._normal.resistance.ToString() + "     +" + equip_._stats._normal.resistance.ToString();
+            GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "StatsText").text = info;
             return;
         }
 
