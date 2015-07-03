@@ -7,8 +7,9 @@ public class EnemySpawner : MonoBehaviour {
         public void newWave()
         {
             Global.Instance.AllEnemiesDied();
-            int rnd = Random.Range(1, spawns.Count+1);
+            int rnd = Random.Range(1, spawns.Count + 1);
             EnemySpawner._enemiesSpawn = rnd;
+           // Debug.Log(EnemySpawner._enemiesSpawn);
             Spawn(rnd);
         }
         public ArrayList spawns = new ArrayList();
@@ -40,10 +41,10 @@ public class EnemySpawner : MonoBehaviour {
     }
 
     public static Triggers triggers = new Triggers();
-
+    
     public Enemy _enemy = null;
     public static int _enemiesSpawn = 3;
-
+    
     public bool EnemyIsActive()
     {
         return _enemy != null && _enemy._isAlive;
@@ -61,7 +62,8 @@ public class EnemySpawner : MonoBehaviour {
 
     public void Spawn()
     {
-        Invoke("spawner", 0.5f);
+        if(!IsInvoking("spawner"))
+            Invoke("spawner", 0.5f);
     }
 
     private void spawner()
