@@ -191,10 +191,10 @@ public class TalentButton : MonoBehaviour {
                 break;
             case TalentTypes.AllResistance:             // resistance %
                 TalentInfoBox.Instance.currentInfo.statInfo.text = "Resistance:";
-                TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + (_totalStats._normal.resistance == 0f ? "0%" : ((_totalStats._normal.resistance - 1f) * 100f).ToString("N2") + "%");
+                TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal.resistance.PerCent;
 
                 TalentInfoBox.Instance.nextInfo.statInfo.text = "Resistance:";
-                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + ((_stats._normal.resistance-1f) * 100f).ToString("N2") + "%";
+                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.resistance.PerCent;
 
                 break;
             default:

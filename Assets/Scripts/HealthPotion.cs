@@ -7,8 +7,8 @@ public class HealthPotion : MonoBehaviour {
     [HideInInspector]
     public float _timer = 0f;
 
-    public static TalentStats.Percent _chansIncrease = new TalentStats.Percent(1.01f);
-    public static TalentStats.Percent _healingIncrease = new TalentStats.Percent(1.01f);
+    public static TalentStats.Percent _chansIncrease = new TalentStats.Percent(0.01f);
+    public static TalentStats.Percent _healingIncrease = new TalentStats.Percent(0.01f);
 
 	// Use this for initialization
 	void Start () {

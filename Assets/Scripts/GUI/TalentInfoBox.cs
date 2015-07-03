@@ -236,23 +236,25 @@ public class TalentInfoBox : MonoBehaviour {
                 Global.Instance._potionHealthPercent.value += (HealthPotion._healingIncrease.value - 1f);
                 break;
             case TalentButton.TalentTypes.AllResistance:
-                if (_player._talentStats._kinetic.resistance == 0f)             // kinetic
-                    _player._talentStats._kinetic.resistance = _lastButton._stats._normal.resistance;
+                if (_player._talentStats._kinetic.resistance.value == 0f)             // kinetic
+                    _player._talentStats._kinetic.resistance.value = _lastButton._stats._normal.resistance.value;
                 else
-                    _player._talentStats._kinetic.resistance *= _lastButton._stats._normal.resistance;
-                if (_player._talentStats._tech.resistance == 0f)                // tech
-                    _player._talentStats._tech.resistance = _lastButton._stats._normal.resistance;
-                else
-                    _player._talentStats._tech.resistance = _lastButton._stats._normal.resistance;
-                if (_player._talentStats._psychic.resistance == 0f)             // psychic
-                    _player._talentStats._psychic.resistance = _lastButton._stats._normal.resistance;
-                else
-                    _player._talentStats._psychic.resistance *= _lastButton._stats._normal.resistance;
+                    _player._talentStats._kinetic.resistance.value += _lastButton._stats._normal.resistance.value;
 
-                if (_lastButton._totalStats._normal.resistance == 0f)
+                if (_player._talentStats._tech.resistance.value == 0f)                // tech
+                    _player._talentStats._tech.resistance.value = _lastButton._stats._normal.resistance.value;
+                else
+                    _player._talentStats._tech.resistance.value += _lastButton._stats._normal.resistance.value;
+
+                if (_player._talentStats._psychic.resistance.value == 0f)             // psychic
+                    _player._talentStats._psychic.resistance.value = _lastButton._stats._normal.resistance.value;
+                else
+                    _player._talentStats._psychic.resistance.value += _lastButton._stats._normal.resistance.value;
+
+                if (_lastButton._totalStats._normal.resistance.value == 0f)
                     _lastButton._totalStats._normal.resistance = _lastButton._stats._normal.resistance;
                 else
-                    _lastButton._totalStats._normal.resistance *= _lastButton._stats._normal.resistance;
+                    _lastButton._totalStats._normal.resistance.value += _lastButton._stats._normal.resistance.value;
                 break;
             default:
                 break;

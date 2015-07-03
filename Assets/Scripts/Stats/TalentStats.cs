@@ -43,7 +43,7 @@ public class TalentStats {
         public vap damage = new vap();
         public Percent crit;
         public Percent critMultiplier;
-        public float resistance;
+        public Percent resistance;
         public float cooldownReduction; //Abilities
         public Percent _damagePercent;
 
