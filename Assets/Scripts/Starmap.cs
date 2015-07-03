@@ -61,6 +61,7 @@ public class Starmap : MonoBehaviour {
         _planetInfoBox.gameObject.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "MinLevel").text = "Min " + planet_._minLevel.ToString();
         _planetInfoBox.gameObject.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "MaxLevel").text = "Max " + planet_._maxLevel.ToString();
         _planetInfoBox.gameObject.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Name").text = planet_._name;
+        _planetInfoBox.gameObject.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Theme").text = "Theme: " + System.Enum.GetName(typeof(Planet.PlanetType), planet_._type);
 
         Global.Instance._planet = _selectedPlanet;
         switch (_selectedPlanet._type)

@@ -241,10 +241,10 @@ public class TalentInfoBox : MonoBehaviour {
 	        #endregion
                 break;
             case TalentButton.TalentTypes.hpPotionChans:
-                Global.Instance._potionDropChans.value += (HealthPotion._chansIncrease.value - 1f);
+                Global.Instance._potionDropChans.value += HealthPotion._chansIncrease.value;
                 break;
             case TalentButton.TalentTypes.hpPotionHealingPercent:
-                Global.Instance._potionHealthPercent.value += (HealthPotion._healingIncrease.value - 1f);
+                Global.Instance._potionHealthPercent.value += HealthPotion._healingIncrease.value;
                 break;
             case TalentButton.TalentTypes.AllResistance:
                 if (_player._talentStats._kinetic.resistance.value == 0f)             // kinetic
