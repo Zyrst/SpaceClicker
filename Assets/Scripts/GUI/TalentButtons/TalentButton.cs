@@ -11,6 +11,7 @@ public class TalentButton : MonoBehaviour {
 
     public string _name = "";
     public TalentTypes _talentType = TalentTypes.hpPercent;
+    public Elements _element = Elements.All;
 
     public TalentStats _stats = new TalentStats();
     public TalentStats _totalStats = new TalentStats();
@@ -27,6 +28,7 @@ public class TalentButton : MonoBehaviour {
     }
 
     public enum TalentTypes { hpPercent, dmgPercent, hp, dmg, critChans, critPercent, hpPotionChans, hpPotionHealingPercent, AllResistance };
+    public enum Elements { All, Normal, Tech, Kinetic, Pshycic };
 
 
 	// Use this for initialization
@@ -67,11 +69,35 @@ public class TalentButton : MonoBehaviour {
                 TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._healtPercent.PerCent;
                 break;
             case TalentTypes.dmgPercent:        // DMG%
-                TalentInfoBox.Instance.currentInfo.statInfo.text = "Damage:";
-                TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._damagePercent.PerCent;
-
+                #region per element
+		        TalentInfoBox.Instance.currentInfo.statInfo.text = "Damage:";
                 TalentInfoBox.Instance.nextInfo.statInfo.text = "Damage:";
-                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._damagePercent.PerCent;
+                switch (_element)
+	            {
+                    case Elements.All:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal._damagePercent.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal._damagePercent.PerCent;
+                        break;
+                    case Elements.Normal:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal._damagePercent.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal._damagePercent.PerCent;
+                        break;
+                    case Elements.Tech:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._tech._damagePercent.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._tech._damagePercent.PerCent;
+                        break;
+                    case Elements.Kinetic:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._kinetic._damagePercent.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._kinetic._damagePercent.PerCent;
+                        break;
+                    case Elements.Pshycic:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._psychic._damagePercent.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._psychic._damagePercent.PerCent;
+                        break;
+                    default:
+                        break;
+	            } 
+	#endregion
                 break;
             case TalentTypes.hp:                // HP
                 TalentInfoBox.Instance.currentInfo.statInfo.text = "Health:";
@@ -87,19 +113,67 @@ public class TalentButton : MonoBehaviour {
                 TalentInfoBox.Instance.nextInfo.statInfo.text = "Damage:";
                 TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.damage.GetFloat();
                 break;
-            case TalentTypes.critChans:       // crit%
-                TalentInfoBox.Instance.currentInfo.statInfo.text = "Critical:";
-                TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal.critMultiplier + "%";
-
-                TalentInfoBox.Instance.nextInfo.statInfo.text = "Critical:";
-                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.critMultiplier + "%";
-                break;
-            case TalentTypes.critPercent:              // crit%
-                TalentInfoBox.Instance.currentInfo.statInfo.text = "Crit. Damage:";
-                TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal.crit + "%";
-
+            case TalentTypes.critPercent:       // crit%
+                #region per element
+		        TalentInfoBox.Instance.currentInfo.statInfo.text = "Crit. Damage:";
                 TalentInfoBox.Instance.nextInfo.statInfo.text = "Crit. Damage:";
-                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.crit + "%";
+                switch (_element)
+	            {
+                    case Elements.All:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal.critMultiplier.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.critMultiplier.PerCent;
+                        break;
+                    case Elements.Normal:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal.critMultiplier.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.critMultiplier.PerCent;
+                        break;
+                    case Elements.Tech:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._tech.critMultiplier.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._tech.critMultiplier.PerCent;
+                        break;
+                    case Elements.Kinetic:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._kinetic.critMultiplier.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._kinetic.critMultiplier.PerCent;
+                        break;
+                    case Elements.Pshycic:
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._psychic.critMultiplier.PerCent;
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._psychic.critMultiplier.PerCent;
+                        break;
+                    default:
+                        break;
+	            } 
+	#endregion
+                break;
+            case TalentTypes.critChans:              // crit%
+                #region per element
+		        TalentInfoBox.Instance.currentInfo.statInfo.text = "Critical:";
+                TalentInfoBox.Instance.nextInfo.statInfo.text = "Critical:";
+                switch (_element)
+	            {
+                    case Elements.All:
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.crit.PerCent;
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal.crit.PerCent;
+                        break;
+                    case Elements.Normal:
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._normal.crit.PerCent;
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._normal.crit.PerCent;
+                        break;
+                    case Elements.Tech:
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._tech.crit.PerCent;
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._tech.crit.PerCent;
+                        break;
+                    case Elements.Kinetic:
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._kinetic.crit.PerCent;
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._kinetic.crit.PerCent;
+                        break;
+                    case Elements.Pshycic:
+                        TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + _stats._psychic.crit.PerCent;
+                        TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + _totalStats._psychic.crit.PerCent;
+                        break;
+                    default:
+                        break;
+	            } 
+	#endregion
                 break;
             case TalentTypes.hpPotionChans:     // potion drop%
                 TalentInfoBox.Instance.currentInfo.statInfo.text = "Potion Drop:";

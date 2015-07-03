@@ -254,14 +254,38 @@ public class Player : Character {
         _combinedStats._maxHealth += _talentStats._health;
 
                         // dmg
-        if (_talentStats._damagePercent.value > 0f)
-            _combinedStats._normal.damage *= _talentStats._damagePercent.value;
+        if (_talentStats._normal._damagePercent.value > 0f)
+            _combinedStats._normal.damage *= _talentStats._normal._damagePercent.value;
         _combinedStats._normal.damage += _talentStats._normal.damage;
 
+        if (_talentStats._tech._damagePercent.value > 0f)
+            _combinedStats._tech.damage *= _talentStats._tech._damagePercent.value;
+        _combinedStats._tech.damage += _talentStats._tech.damage;
+
+        if (_talentStats._kinetic._damagePercent.value > 0f)
+            _combinedStats._kinetic.damage *= _talentStats._kinetic._damagePercent.value;
+        _combinedStats._kinetic.damage += _talentStats._kinetic.damage;
+
+        if (_talentStats._psychic._damagePercent.value > 0f)
+            _combinedStats._psychic.damage *= _talentStats._psychic._damagePercent.value;
+        _combinedStats._psychic.damage += _talentStats._psychic.damage;
+
                         // crit
-        if (_talentStats._normal.critMultiplier > 0f) 
-            _combinedStats._normal.critMultiplier *= _talentStats._normal.critMultiplier;
-        _combinedStats._normal.crit += _talentStats._normal.crit;
+        if (_talentStats._normal.critMultiplier.value > 0f) 
+            _combinedStats._normal.critMultiplier *= _talentStats._normal.critMultiplier.value;
+        _combinedStats._normal.crit += _talentStats._normal.crit.value;
+
+        if (_talentStats._tech.critMultiplier.value > 0f)
+            _combinedStats._tech.critMultiplier *= _talentStats._tech.critMultiplier.value;
+        _combinedStats._tech.crit += _talentStats._tech.crit.value;
+
+        if (_talentStats._kinetic.critMultiplier.value > 0f)
+            _combinedStats._kinetic.critMultiplier *= _talentStats._kinetic.critMultiplier.value;
+        _combinedStats._kinetic.crit += _talentStats._kinetic.crit.value;
+
+        if (_talentStats._psychic.critMultiplier.value > 0f)
+            _combinedStats._psychic.critMultiplier *= _talentStats._psychic.critMultiplier.value;
+        _combinedStats._psychic.crit += _talentStats._psychic.crit.value;
 
         _stats._health = new vap(_combinedStats._maxHealth);
     }

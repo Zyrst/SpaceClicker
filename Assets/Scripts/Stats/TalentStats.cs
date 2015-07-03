@@ -21,7 +21,7 @@ public class TalentStats {
         {
             get
             {
-                return _decimal == 0f ? "0%" : ((_decimal - 1f) * 100f).ToString("N2") + "%";
+                return _decimal == 0f ? "0%" : (_decimal * 100f).ToString("N2") + "%";
             }
         }
         public float value
@@ -37,16 +37,40 @@ public class TalentStats {
         }
     }
 
-    public CharacterStats.Element _normal = new CharacterStats.Element();
-    public CharacterStats.Element _tech = new CharacterStats.Element();
-    public CharacterStats.Element _kinetic = new CharacterStats.Element();
-    public CharacterStats.Element _psychic = new CharacterStats.Element();
+    [System.Serializable]
+    public class Element
+    {
+        public vap damage = new vap();
+        public Percent crit;
+        public Percent critMultiplier;
+        public float resistance;
+        public float cooldownReduction; //Abilities
+        public Percent _damagePercent;
+
+        public Element(Element element_)
+        {
+            this.damage = new vap(element_.damage);
+            this.crit = element_.crit;
+            this.critMultiplier = element_.critMultiplier;
+            this.resistance = element_.resistance;
+            this.cooldownReduction = element_.cooldownReduction;
+        }
+
+        public Element()
+        {
+            damage = new vap();
+        }
+    }
+
+    public Element _normal = new Element();
+    public Element _tech = new Element();
+    public Element _kinetic = new Element();
+    public Element _psychic = new Element();
 
     public vap _health;
 
     public Percent _healtPercent;
     
-    public Percent _damagePercent;
     public Percent _techPercent;
     public Percent _kineticPercent;
     public Percent _psychicPercent;
