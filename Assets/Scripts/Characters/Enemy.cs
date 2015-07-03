@@ -10,6 +10,8 @@ public class Enemy : Character
     public int _animCounter = 0;
     [HideInInspector]
     public int _lastAnim = 0;
+    [HideInInspector]
+    public int _myNumDeath = 0;
 
 	// Use this for initialization
     void Start()
@@ -47,7 +49,9 @@ public class Enemy : Character
         }
         catch (System.NullReferenceException) { }
         // effekter och skits
+        
         base.Die();
+        _myNumDeath = Global.Instance.EnemiesAlive();
 
         // spawn goldcoin
         Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance._player.transform.position);
@@ -55,21 +59,21 @@ public class Enemy : Character
         float rnd = Random.Range(0f, 1f);
         if(rnd >= 1f - Global.Instance._potionDropChans.value)
             HealthPotion.Create(transform.position + (Vector3.up * 2f), dir * 20f);
-
-        //Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
-
-        Invoke("Kill", 3f);
+        
+       // Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
+        Invoke("Kill", 2f);
         GetComponentInChildren<CharacterGUI>().gameObject.SetActive(false);
     }
 
     public void Kill()
     {
-        gameObject.SetActive(false);
 
-        if (Global.Instance.EnemiesAlive() == 0)
+        if (Global.Instance.EnemiesAlive() == 0 && _myNumDeath == 0)
         {
+            Debug.Log("Triggered new wave");
             EnemySpawner.triggers.newWave();
         }
+        gameObject.SetActive(false);
     }
 
     public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
