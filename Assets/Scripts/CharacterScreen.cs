@@ -63,8 +63,8 @@ public class CharacterScreen : MonoBehaviour {
 
     public void TalentTree()
     {
-
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(true);
+        TalentInfoBox.Instance.talentPointText.text = Global.Instance._player._talentPoints.ToString();
     }
 
     public void CloseTalentTree()

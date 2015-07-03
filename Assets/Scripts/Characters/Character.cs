@@ -83,7 +83,7 @@ public class Character : MonoBehaviour {
             LevelUp();
             if (this is Player)
             {
-                ((Player)this)._unspentLevels++;
+                ((Player)this)._talentPoints++;
             }
         }
     }
