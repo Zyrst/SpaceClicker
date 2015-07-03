@@ -100,7 +100,7 @@ public class Player : Character {
     public CharacterStats _combinedStats = new CharacterStats();
     public TalentStats _talentStats = new TalentStats();
 
-    public uint _unspentLevels = 0;
+    public uint _talentPoints = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -228,7 +228,6 @@ public class Player : Character {
     /// </summary>
     public void UpdateCombinedStats()
     {
-
 
         _combinedStats = new CharacterStats(_stats);
 

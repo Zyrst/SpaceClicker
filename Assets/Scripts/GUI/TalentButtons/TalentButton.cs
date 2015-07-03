@@ -12,6 +12,7 @@ public class TalentButton : MonoBehaviour {
     public string _name = "";
     public TalentTypes _talentType = TalentTypes.hpPercent;
     public Elements _element = Elements.All;
+    public TalentInfoBox.Arms _arm = TalentInfoBox.Arms.NoArm;
 
     public TalentStats _stats = new TalentStats();
     public TalentStats _totalStats = new TalentStats();

@@ -27,6 +27,11 @@ public class TalentInfoBox : MonoBehaviour {
 
     public Button acceptButton;
 
+    public Text talentPointText;
+
+    public enum Arms : int { Right = 0, Left = 1, Top = 2, Down = 3, NoArm = 4 };
+    public uint[] pointsPerArm = new uint[] { 0, 0, 0, 0, 0 };
+
     public bool IsUp
     {
         get
@@ -38,6 +43,7 @@ public class TalentInfoBox : MonoBehaviour {
             if (value)
             {
                 gameObject.SetActive(true);
+                talentPointText.text = Global.Instance._player._talentPoints.ToString();
             }
             else
             {
@@ -66,8 +72,13 @@ public class TalentInfoBox : MonoBehaviour {
         AddStatsToPlayer();
         LevelUpTalentAndShit();
         _lastButton.Click();
-        Debug.Log("Talent info box pre stats update");
+
+        // add points per arm
+        Debug.Log("_arm: " + (int)_lastButton._arm + " " + _lastButton._arm);
+        pointsPerArm[(int)_lastButton._arm]++;
+
         Global.Instance._player.UpdateCombinedStats();
+        talentPointText.text = Global.Instance._player._talentPoints.ToString();
     }
 
     private void AddStatsToPlayer()
@@ -264,7 +275,7 @@ public class TalentInfoBox : MonoBehaviour {
     private void LevelUpTalentAndShit()
     {
         _lastButton._level++;
-        Global.Instance._player._unspentLevels--;
+        Global.Instance._player._talentPoints--;
 
         DeterminButtonStatus();
     }
@@ -287,7 +298,7 @@ public class TalentInfoBox : MonoBehaviour {
     /// </summary>
     public void DeterminButtonStatus()
     {
-        if ((Global.Instance._player._unspentLevels == 0) || (_lastButton._maxLevel != 0 && _lastButton._level == _lastButton._maxLevel))
+        if ((Global.Instance._player._talentPoints == 0) || (_lastButton._maxLevel != 0 && _lastButton._level == _lastButton._maxLevel))
         {
             TalentInfoBox.Instance.acceptButton.interactable = false;
         }
