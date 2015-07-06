@@ -98,6 +98,11 @@ public class Global : MonoBehaviour {
         {
             ShakeCamera();
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log(Sounds.Instance.enemySounds.damage_medium.path);
+            Sounds.OneShot(Sounds.Instance.enemySounds.damage_medium, new Vector3(-74, 61, -74));
+        }
     }
 
     void LateUpdate()

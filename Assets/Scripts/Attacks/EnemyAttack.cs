@@ -114,13 +114,27 @@ public class EnemyAttack : MonoBehaviour {
         {
             if (!_nextAttackIsShield)           // do regular attack
             {
+                // get enemy type first
+                FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();
+                sound.asset = Sounds.Instance.enemySounds.damage_light;
+                sound.Play();
+
                 Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats, false), gameObject.GetComponent<Enemy>());
             }
             else
             {
+                // do shield
                 shield.gameObject.SetActive(true);
                 _shieldUp = true;
                 GetComponent<Enemy>()._shieldUp = true;
+
+                Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.start, new Vector3(-74, 61, -74));      // shield start sound
+
+                FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();                        // shield loop sound
+                sound.asset = Sounds.Instance.enemySounds.shieldSounds.loop;
+                sound.path = Sounds.Instance.enemySounds.shieldSounds.loop.path;
+                sound.Play();
+
                 Invoke("ResetShield", _shieldTime);
             }
         }
@@ -142,6 +156,8 @@ public class EnemyAttack : MonoBehaviour {
 
     public void ResetShield()
     {
+        Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.stop, new Vector3(-74, 61, -74));
+
         shield.gameObject.SetActive(false);
         _shieldUp = false;
         GetComponent<Enemy>()._shieldUp = false;

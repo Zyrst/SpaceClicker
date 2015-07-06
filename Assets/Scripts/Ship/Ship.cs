@@ -33,7 +33,6 @@ public class Ship : MonoBehaviour {
 
     public void Farm()
     {
-        gameObject.GetComponent<FMOD_StudioEventEmitter>().Play();
         Global.Instance.SwitchScene(Global.GameType.Farm);
     }
 

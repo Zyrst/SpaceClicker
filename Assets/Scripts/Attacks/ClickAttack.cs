@@ -54,24 +54,23 @@ public class ClickAttack : BaseAttack {
                             //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 10f);
                             _lastTarget = hit.collider.transform.parent.parent.gameObject;
                             CharacterStats cs = gameObject.GetComponent<Player>()._combinedStats;
-                            AudioSource audio = Global.Instance._player.GetComponent<AudioSource>();
                             if (_hitCount < _critHitCount)
                             {
                                 if (_hitCount >= (_critHitCount / _critHitSoundStart))
                                 {
                                     //Build up sound for crit
-                                    audio.PlayOneShot(_tempHitSounds[_hitSound]);
+                                    //audio.PlayOneShot(_tempHitSounds[_hitSound]);
                                     _hitSound++;
                                 }
-                                else
-                                    audio.PlayOneShot(_tempHitSounds[0]);
+                                //else
+                                 //   audio.PlayOneShot(_tempHitSounds[0]);
                                 hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), hit.point, Global.Instance._player);
                             }
                                 
                             else if (_hitCount == _critHitCount)
                             {
                                 hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, true), hit.point, Global.Instance._player);
-                                audio.PlayOneShot(_tempHitSounds[5]);
+                                //audio.PlayOneShot(_tempHitSounds[5]);
                                 _hitSound = 0;
                                 _hitCount = 0;
                             }

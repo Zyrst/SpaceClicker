@@ -263,7 +263,7 @@ public class TalentInfoBox : MonoBehaviour {
                     _player._talentStats._psychic.resistance.value += _lastButton._stats._normal.resistance.value;
 
                 if (_lastButton._totalStats._normal.resistance.value == 0f)
-                    _lastButton._totalStats._normal.resistance = _lastButton._stats._normal.resistance;
+                    _lastButton._totalStats._normal.resistance.value = _lastButton._stats._normal.resistance.value;
                 else
                     _lastButton._totalStats._normal.resistance.value += _lastButton._stats._normal.resistance.value;
                 break;
