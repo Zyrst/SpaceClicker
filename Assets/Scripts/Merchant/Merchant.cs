@@ -42,4 +42,9 @@ public class Merchant : MonoBehaviour {
         gameObject.SetActive(true);
         tabs.GetComponent<Tabs>().OpenTab(Tabs.TabType.Buy);
     }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
+    }
 }

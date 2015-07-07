@@ -74,7 +74,6 @@ public class TalentInfoBox : MonoBehaviour {
         _lastButton.Click();
 
         // add points per arm
-        Debug.Log("_arm: " + (int)_lastButton._arm + " " + _lastButton._arm);
         pointsPerArm[(int)_lastButton._arm]++;
 
         Global.Instance._player.UpdateCombinedStats();

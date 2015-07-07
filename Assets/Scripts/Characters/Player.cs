@@ -302,4 +302,9 @@ public class Player : Character {
         vap tmp = new vap();
         SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, transform.position);
     }
+
+    void OnEnable()
+    {
+        GetComponentInChildren<CharacterGUI>().ResetDir();
+    }
 }

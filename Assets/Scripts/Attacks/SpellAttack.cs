@@ -202,9 +202,13 @@ public class SpellAttack : BaseAttack {
 
     public void ResetCooldown()
     {
-        _cd = false;
-        _coolDown = 0f;
-        _slotImage.color = new Color(1f, 1f, 1f);
+        try
+        {
+            _cd = false;
+            _coolDown = 0f;
+            _slotImage.color = new Color(1f, 1f, 1f);
+        }
+        catch (System.NullReferenceException) {}
     }
 
     public void Stun()

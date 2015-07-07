@@ -14,8 +14,17 @@ public class CharacterGUI : MonoBehaviour {
     
 	// Use this for initialization
 	void Start () {
-        transform.forward = Camera.main.transform.forward;
+        ResetDir();
 	}
+
+    public void ResetDir()
+    {
+        try
+        {
+            transform.forward = Camera.main.transform.forward;
+        }
+        catch (System.NullReferenceException) { }
+    }
 	
 	// Update is called once per frame
 	void Update () {
