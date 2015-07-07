@@ -132,6 +132,14 @@ public class Global : MonoBehaviour {
                 Starmap.Instance.gameObject.SetActive(false);
                 _gameCamera.gameObject.SetActive(false);
                 _uiCamera.gameObject.SetActive(true);
+
+                foreach (var item in _player.gameObject.GetComponentsInChildren<SpellAttack>(true))
+                {
+                    if (item.IsInvoking())
+                        item.CancelInvoke();
+
+                    item.ResetCooldown();
+                }
                 break;
             case GameType.Star:
                 _player.gameObject.SetActive(false);

@@ -110,19 +110,25 @@ public class Enemy : Character
 
                 catch (System.NullReferenceException) { }
 
+                vap oldHP = new vap(_stats._health);
 
                 base.TakeDamage(ds_, hitPoint_, hitter_);
+
+                Debug.Log("old: " + vap.GetScale(oldHP, _stats._maxHealth) + " new: " + vap.GetScale(_stats._health, _stats._maxHealth));
                 // play taking damage sound
-                if (vap.GetScale(_stats._health, _stats._maxHealth) >= 0.85f)
+                if (vap.GetScale(oldHP, _stats._maxHealth) >= 0.85f && vap.GetScale(_stats._health, _stats._maxHealth) <= 0.85f)
                 {
+                    Debug.Log("light");
                     Sounds.OneShot(Sounds.Instance.enemySounds.damage_light);
                 }
-                else if (vap.GetScale(_stats._health, _stats._maxHealth) >= 0.35f)
+                else if (vap.GetScale(oldHP, _stats._maxHealth) >= 0.35f && vap.GetScale(_stats._health, _stats._maxHealth) <= 0.35f)
                 {
+                    Debug.Log("medium");
                     Sounds.OneShot(Sounds.Instance.enemySounds.damage_medium);
                 }
-                else
+                else if (!_isAlive)
                 {
+                    Debug.Log("heavy");
                     Sounds.OneShot(Sounds.Instance.enemySounds.damage_heavy);
                 }
 
@@ -158,5 +164,15 @@ public class Enemy : Character
                 }
             }
         }
+    }
+
+    void OnDestroy()
+    {
+        CancelInvoke();
+    }
+
+    void OnDisable()
+    {
+        CancelInvoke();
     }
 }

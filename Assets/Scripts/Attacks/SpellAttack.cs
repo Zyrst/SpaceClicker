@@ -192,15 +192,19 @@ public class SpellAttack : BaseAttack {
             _coolDown += Time.deltaTime;
             if (_coolDown >= _combinedStats._cooldown)
             {
-                _cd = false;
-                _coolDown = 0f;
-                _slotImage.color = new Color(1f, 1f, 1f);
-
+                ResetCooldown();
                 // play ready sound
                 _readySound.start();
             }
         }
        
+    }
+
+    public void ResetCooldown()
+    {
+        _cd = false;
+        _coolDown = 0f;
+        _slotImage.color = new Color(1f, 1f, 1f);
     }
 
     public void Stun()
@@ -241,4 +245,15 @@ public class SpellAttack : BaseAttack {
     {
         _holdSound.start();
     }
+
+    void OnDestroy()
+    {
+        CancelInvoke();
+    }
+
+    void OnDisable()
+    {
+        CancelInvoke();
+    }
+
 }
