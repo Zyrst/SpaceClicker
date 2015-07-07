@@ -20,21 +20,54 @@ public class SpellAttack : BaseAttack {
     public bool _stunned = false;
     public float _stunTime = 0f;
 
+    public enum SpellType : int { Damage = 0, Heal = 1, Stun = 2 };
+    public SpellType _type = SpellType.Damage;
+
+    public FMOD.Studio.EventInstance _holdSound;
+    public FMOD.Studio.EventInstance _readySound;
+    public FMOD.Studio.EventInstance _useSound;
+    public FMOD.Studio.EventInstance _takeSound;
+
 	// Use this for initialization
 	void Start () {
-       _slot =  Global.Instance._player.getSpellSlot(this);
-       if (_slot == null)
-       {
-           Debug.Log("slot är null");
-       }
-       if (_spellImage == null)
-       {
-           Debug.Log("_spellImage är null");
-       }
-       _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
-      _slotImage.sprite = _spellImage;
+        _slot =  Global.Instance._player.getSpellSlot(this);
+        if (_slot == null)
+        {
+            Debug.Log("slot är null");
+        }
+        if (_spellImage == null)
+        {
+            Debug.Log("_spellImage är null");
+        }
+        _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
+        _slotImage.sprite = _spellImage;
 
-       _startGUIPos = _slot.transform.position;
+        _startGUIPos = _slot.transform.position;
+
+        switch (_type)
+        {
+            case SpellType.Damage:
+                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.damageSpell.hold);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.damageSpell.ready);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.damageSpell.take);
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.damageSpell.use);
+                break;
+            case SpellType.Heal:
+                //_holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.healingSpell.hold);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.healingSpell.ready);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.healingSpell.take);
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.healingSpell.use);
+                break;
+            case SpellType.Stun:
+                //_holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.stunSpell.hold);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.stunSpell.ready);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.stunSpell.take);
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.stunSpell.use);
+                break;
+            default:
+                break;
+        }
+
 	}
 	
 	// Update is called once per frame
@@ -52,6 +85,19 @@ public class SpellAttack : BaseAttack {
     {
         if (!_clicked && !_cd && !_stunned)
         {
+            try
+            {
+                //play take sound
+                _takeSound.start();
+                _holdSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                if (IsInvoking("PlayHoldSound"))
+                {
+                    CancelInvoke("PlayHoldSound");
+                }
+                Invoke("PlayHoldSound", (float)Sounds.GetLength(_takeSound) / 1000f);
+            }
+            catch (System.NullReferenceException) {}
+
             _startGUIPos = _slot.transform.position;
             _followerDiff = MouseController.Instance.position - _slot.transform.position;
             _clicked = true;
@@ -89,12 +135,25 @@ public class SpellAttack : BaseAttack {
             {
                 try
                 {
-                    // hit enemy
+                    // hit enemy or player
                     if (hit.collider.transform.parent.parent.tag == "Enemy" || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
                         _cd = true;
                         ResetGUI();
+
+                        // play use sound
+                        try
+                        {
+                            _holdSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                            if (IsInvoking("PlayHoldSound"))
+                            {
+                                CancelInvoke("PlayHoldSound");
+                            }
+                        }
+                        catch (System.NullReferenceException) {}
+                        _useSound.start();
+
                         hit.collider.transform.parent.parent.gameObject.GetComponent<Character>().TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit.point, Global.Instance._player);
                     }
                     else if (!hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
@@ -113,6 +172,17 @@ public class SpellAttack : BaseAttack {
         MouseController.Instance.locked = false;
         _slot.transform.position = _startGUIPos;
         GetComponentInParent<ClickAttack>().ReleasedSpell();
+
+        // stop hold sound
+        try
+        {
+            _holdSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            if (IsInvoking("PlayHoldSound"))
+            {
+                CancelInvoke("PlayHoldSound");
+            }
+        }
+        catch (System.NullReferenceException) { }
     }
 
     public void Cooldown()
@@ -125,6 +195,9 @@ public class SpellAttack : BaseAttack {
                 _cd = false;
                 _coolDown = 0f;
                 _slotImage.color = new Color(1f, 1f, 1f);
+
+                // play ready sound
+                _readySound.start();
             }
         }
        
@@ -162,5 +235,10 @@ public class SpellAttack : BaseAttack {
         _stunTime = stunTime_;
         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
 
+    }
+
+    public void PlayHoldSound()
+    {
+        _holdSound.start();
     }
 }

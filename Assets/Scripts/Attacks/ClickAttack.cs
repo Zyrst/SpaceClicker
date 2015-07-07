@@ -15,9 +15,9 @@ public class ClickAttack : BaseAttack {
     public bool _holdingSpell = false;
 
     public static class Swipes {  
-        public static float tech = 0f; 
+        public static float tech = 0.8f; 
         public static float kinetic = 0.4f;
-        public static float pshycic = 0.8f; 
+        public static float pshycic = 0f; 
     };
 
     public FMOD.Studio.EventInstance _swipeSoundEvent;
@@ -64,10 +64,33 @@ public class ClickAttack : BaseAttack {
                             _lastTarget = hit.collider.transform.parent.parent.gameObject;
                             CharacterStats cs = gameObject.GetComponent<Player>()._combinedStats;
 
+
+                            CharacterStats comb = GetComponent<Player>()._combinedStats;
                             // play sound, fix crit later
-                            _swipeSoundVariable.setValue(Swipes.tech);
-                            _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                            _swipeSoundEvent.start();
+                            if (comb._tech.damage > comb._psychic.damage && comb._tech.damage > comb._kinetic.damage)               // tech is störst
+                            {
+                                _swipeSoundVariable.setValue(Swipes.tech);
+                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                _swipeSoundEvent.start();
+                            }
+                            else if (comb._kinetic.damage > comb._psychic.damage && comb._kinetic.damage > comb._tech.damage)       // kinetic is störst
+                            {
+                                _swipeSoundVariable.setValue(Swipes.kinetic);
+                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                _swipeSoundEvent.start();
+                            }
+                            else if (comb._psychic.damage > comb._kinetic.damage && comb._psychic.damage > comb._tech.damage)       // pshycic is störst
+                            {
+                                _swipeSoundVariable.setValue(Swipes.pshycic);
+                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                _swipeSoundEvent.start();
+                            }
+                            else
+                            {
+                                _swipeSoundVariable.setValue(Swipes.pshycic);
+                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                _swipeSoundEvent.start();
+                            }
 
 
                             if (_hitCount < _critHitCount)

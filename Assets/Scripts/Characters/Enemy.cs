@@ -115,17 +115,14 @@ public class Enemy : Character
                 // play taking damage sound
                 if (vap.GetScale(_stats._health, _stats._maxHealth) >= 0.85f)
                 {
-                    Debug.Log("light");
                     Sounds.OneShot(Sounds.Instance.enemySounds.damage_light);
                 }
                 else if (vap.GetScale(_stats._health, _stats._maxHealth) >= 0.35f)
                 {
-                    Debug.Log("medium");
                     Sounds.OneShot(Sounds.Instance.enemySounds.damage_medium);
                 }
                 else
                 {
-                    Debug.Log("heavy");
                     Sounds.OneShot(Sounds.Instance.enemySounds.damage_heavy);
                 }
 

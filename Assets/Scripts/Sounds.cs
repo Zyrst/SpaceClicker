@@ -36,9 +36,21 @@ public class Sounds : MonoBehaviour {
     }
 
     [System.Serializable]
+    public struct SpellSounds
+    {
+        public FMODAsset hold;
+        public FMODAsset ready;
+        public FMODAsset take;
+        public FMODAsset use;
+    }
+
+    [System.Serializable]
     public struct PlayerSounds
     {
         public FMODAsset swipe;
+        public SpellSounds healingSpell;
+        public SpellSounds damageSpell;
+        public SpellSounds stunSpell;
     }
 
     public PlayerSounds playerSounds;
@@ -68,17 +80,21 @@ public class Sounds : MonoBehaviour {
     /// </summary>
     /// <param name="asset_"></param>
     /// <returns></returns>
-    public static int GetLenght(FMODAsset asset_)
+    public static int GetLength(FMODAsset asset_)
     {
-        int lenghtms = 0;
+        FMOD.Studio.EventInstance ev = FMOD_StudioSystem.instance.GetEvent(asset_);
+        return GetLength(ev);
+    }
 
-        FMOD.Studio.EventInstance ev = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.shieldSounds.start);
+    public static int GetLength(FMOD.Studio.EventInstance event_)
+    {
+        int lengthms = 0;
 
         FMOD.Studio.EventDescription ed = null;
-        ev.getDescription(out ed);
+        event_.getDescription(out ed);
 
-        ed.getLength(out lenghtms);
+        ed.getLength(out lengthms);
 
-        return lenghtms;
+        return lengthms;
     }
 }

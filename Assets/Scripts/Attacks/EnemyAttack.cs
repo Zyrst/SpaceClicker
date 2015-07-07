@@ -124,7 +124,7 @@ public class EnemyAttack : MonoBehaviour {
 
                 Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.start);      // shield start sound
 
-                Invoke("StartShieldLoop", (float)Sounds.GetLenght(Sounds.Instance.enemySounds.shieldSounds.start)/1000f);    // start the loop sound after ^^ is finshed
+                Invoke("StartShieldLoop", (float)Sounds.GetLength(Sounds.Instance.enemySounds.shieldSounds.start)/1000f);    // start the loop sound after ^^ is finshed
 
                 Invoke("ResetShield", _shieldTime);                 // stop loop and play stop
             }
