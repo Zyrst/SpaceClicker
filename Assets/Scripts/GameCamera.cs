@@ -6,9 +6,8 @@ public class GameCamera : MonoBehaviour {
     private Vector3 _originalPos = Vector3.zero;
     private Quaternion _originalRot = new Quaternion();
 
-    public float _shakeStartIntensity = 0.05f;
-    public float _shakeIntensity = 0f;
-    public float _shakeDecay = 0.002f;
+    public float _shakeDuration = 0.5f;
+    public float _shakeTime = 0f;
     public float _shakeDist = 0.1f;
 
     public bool _shake = false;
@@ -23,16 +22,16 @@ public class GameCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
-        if (_shake && _shakeIntensity > 0f)
+        if (_shake && _shakeTime > 0f)
         {
-            _shakeIntensity -= _shakeDecay;
+            _shakeTime -= Time.deltaTime;
 
-            transform.position = _originalPos + Random.insideUnitSphere * _shakeIntensity;
+            transform.position = _originalPos + Random.insideUnitSphere * _shakeTime;
             transform.rotation = new Quaternion(
-                            _originalRot.x + Random.Range(-_shakeIntensity, _shakeIntensity) * _shakeDist,
-                            _originalRot.y + Random.Range(-_shakeIntensity, _shakeIntensity) * _shakeDist,
-                            _originalRot.z + Random.Range(-_shakeIntensity, _shakeIntensity) * _shakeDist,
-                            _originalRot.w + Random.Range(-_shakeIntensity, _shakeIntensity) * _shakeDist);
+                            _originalRot.x + Random.Range(-_shakeTime, _shakeTime) * _shakeDist * Time.deltaTime,
+                            _originalRot.y + Random.Range(-_shakeTime, _shakeTime) * _shakeDist * Time.deltaTime,
+                            _originalRot.z + Random.Range(-_shakeTime, _shakeTime) * _shakeDist * Time.deltaTime,
+                            _originalRot.w + Random.Range(-_shakeTime, _shakeTime) * _shakeDist * Time.deltaTime);
         }
         else
 	    {
@@ -49,7 +48,7 @@ public class GameCamera : MonoBehaviour {
             _originalPos = transform.position;
             _originalRot = transform.rotation;
         }
-        _shakeIntensity = _shakeStartIntensity;
+        _shakeTime = _shakeDuration;
 
         _shake = true;
     }
