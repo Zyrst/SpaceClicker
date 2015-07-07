@@ -14,12 +14,21 @@ public class ClickAttack : BaseAttack {
 
     public bool _holdingSpell = false;
 
-    public AudioClip[] _tempHitSounds = new AudioClip[5];
+    public static class Swipes {  
+        public static float tech = 0f; 
+        public static float kinetic = 0.4f;
+        public static float pshycic = 0.8f; 
+    };
+
+    public FMOD.Studio.EventInstance _swipeSoundEvent;
+    public FMOD.Studio.ParameterInstance _swipeSoundVariable;
     
 
 	// Use this for initialization
 	void Start () {
-	
+
+        _swipeSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.swipe);
+        _swipeSoundEvent.getParameter("Spec", out _swipeSoundVariable);
 	}
 	
 	// Update is called once per frame
@@ -54,6 +63,13 @@ public class ClickAttack : BaseAttack {
                             //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 10f);
                             _lastTarget = hit.collider.transform.parent.parent.gameObject;
                             CharacterStats cs = gameObject.GetComponent<Player>()._combinedStats;
+
+                            // play sound, fix crit later
+                            _swipeSoundVariable.setValue(Swipes.tech);
+                            _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                            _swipeSoundEvent.start();
+
+
                             if (_hitCount < _critHitCount)
                             {
                                 if (_hitCount >= (_critHitCount / _critHitSoundStart))

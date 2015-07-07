@@ -109,7 +109,26 @@ public class Enemy : Character
                 }
 
                 catch (System.NullReferenceException) { }
+
+
                 base.TakeDamage(ds_, hitPoint_, hitter_);
+                // play taking damage sound
+                if (vap.GetScale(_stats._health, _stats._maxHealth) >= 0.85f)
+                {
+                    Debug.Log("light");
+                    Sounds.OneShot(Sounds.Instance.enemySounds.damage_light);
+                }
+                else if (vap.GetScale(_stats._health, _stats._maxHealth) >= 0.35f)
+                {
+                    Debug.Log("medium");
+                    Sounds.OneShot(Sounds.Instance.enemySounds.damage_medium);
+                }
+                else
+                {
+                    Debug.Log("heavy");
+                    Sounds.OneShot(Sounds.Instance.enemySounds.damage_heavy);
+                }
+
                 if (ds_._stunTime > 0f)
                 {
                     GetComponent<EnemyAttack>().Stunned(ds_._stunTime);
@@ -127,6 +146,11 @@ public class Enemy : Character
 
                 _shieldStats = new CharacterStats();
                 _shieldStats._tech.damage = _shieldVap;
+
+                // play shield damage sound
+                Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.damage);
+                GetComponent<EnemyAttack>().ResetShield();
+
 
 
                 Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(_shieldStats, false), gameObject.GetComponent<Enemy>());

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
@@ -114,11 +113,6 @@ public class EnemyAttack : MonoBehaviour {
         {
             if (!_nextAttackIsShield)           // do regular attack
             {
-                // get enemy type first
-                FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();
-                sound.asset = Sounds.Instance.enemySounds.damage_light;
-                sound.Play();
-
                 Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats, false), gameObject.GetComponent<Enemy>());
             }
             else
@@ -128,14 +122,11 @@ public class EnemyAttack : MonoBehaviour {
                 _shieldUp = true;
                 GetComponent<Enemy>()._shieldUp = true;
 
-                Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.start, new Vector3(-74, 61, -74));      // shield start sound
+                Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.start);      // shield start sound
 
-                FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();                        // shield loop sound
-                sound.asset = Sounds.Instance.enemySounds.shieldSounds.loop;
-                sound.path = Sounds.Instance.enemySounds.shieldSounds.loop.path;
-                sound.Play();
+                Invoke("StartShieldLoop", (float)Sounds.GetLenght(Sounds.Instance.enemySounds.shieldSounds.start)/1000f);    // start the loop sound after ^^ is finshed
 
-                Invoke("ResetShield", _shieldTime);
+                Invoke("ResetShield", _shieldTime);                 // stop loop and play stop
             }
         }
         if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive)     // determine next attack
@@ -154,9 +145,18 @@ public class EnemyAttack : MonoBehaviour {
         }
     }
 
+    public void StartShieldLoop()
+    {
+        FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();                        // shield loop sound
+        sound.asset = Sounds.Instance.enemySounds.shieldSounds.loop;
+        sound.Play();
+    }
+
     public void ResetShield()
     {
-        Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.stop, new Vector3(-74, 61, -74));
+        FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();                        // shield loop sound
+        sound.Stop();
+        Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.stop);
 
         shield.gameObject.SetActive(false);
         _shieldUp = false;

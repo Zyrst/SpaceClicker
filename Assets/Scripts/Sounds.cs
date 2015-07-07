@@ -35,6 +35,13 @@ public class Sounds : MonoBehaviour {
         public ShieldSounds shieldSounds;
     }
 
+    [System.Serializable]
+    public struct PlayerSounds
+    {
+        public FMODAsset swipe;
+    }
+
+    public PlayerSounds playerSounds;
     public EnemySounds enemySounds;
 
 	// Use this for initialization
@@ -46,8 +53,32 @@ public class Sounds : MonoBehaviour {
 	void Update () {
 	}
 
+    public static void OneShot(FMODAsset asset_)
+    {
+        OneShot(asset_, new Vector3(-74, 61, -74));
+    }
+
     public static void OneShot(FMODAsset asset_, Vector3 pos_)
     {
         FMOD_StudioSystem.instance.PlayOneShot(asset_.path, pos_);
+    }
+
+    /// <summary>
+    /// returns lenght of sound in milliseconds
+    /// </summary>
+    /// <param name="asset_"></param>
+    /// <returns></returns>
+    public static int GetLenght(FMODAsset asset_)
+    {
+        int lenghtms = 0;
+
+        FMOD.Studio.EventInstance ev = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.shieldSounds.start);
+
+        FMOD.Studio.EventDescription ed = null;
+        ev.getDescription(out ed);
+
+        ed.getLength(out lenghtms);
+
+        return lenghtms;
     }
 }
