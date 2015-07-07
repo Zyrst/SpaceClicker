@@ -130,7 +130,7 @@ public class EnemyAttack : MonoBehaviour {
                 Invoke("ResetShield", _shieldTime);                 // stop loop and play stop
             }
         }
-        if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive)     // determine next attack
+        if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive)     // determine next attack, can never get two shields in a row
         {
             int result = Random.Range(0, 2);
             if (result == 1)                                            // next attack is shield
@@ -148,14 +148,14 @@ public class EnemyAttack : MonoBehaviour {
 
     public void StartShieldLoop()
     {
-        FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();                        // shield loop sound
+        FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();        // shield loop sound
         sound.asset = Sounds.Instance.enemySounds.shieldSounds.loop;
         sound.Play();
     }
 
     public void ResetShield()
     {
-        FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();                        // shield loop sound
+        FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();        // shield loop sound
         sound.Stop();
         Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.stop);
 
