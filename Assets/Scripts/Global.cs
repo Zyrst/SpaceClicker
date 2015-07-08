@@ -22,6 +22,11 @@ public class Global : MonoBehaviour {
         public Color kineticAttackColor;
         public Color psychicAttackColor;
         public Color healColor;
+
+        public Color green;
+        public Color blue;
+        public Color purple;
+        public Color orange;
     }
     [System.Serializable]
     public class Enemies
@@ -29,6 +34,11 @@ public class Global : MonoBehaviour {
         public GameObject[] _postApc;
         public GameObject[] _mech;
         public GameObject[] _currentEnemies;
+    }
+    [System.Serializable]
+    public class Sprites
+    {
+        public Sprite equipment;
     }
 
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }
@@ -50,6 +60,7 @@ public class Global : MonoBehaviour {
     public Prefabs _prefabs = new Prefabs();
     public Enemies _enemies = new Enemies();
     public Colors _colors = new Colors();
+    public Sprites _sprites = new Sprites();
     public float _expVariable = 10f;
     public float _expScale = 1.5f;
     public GameObject _playerGUI;

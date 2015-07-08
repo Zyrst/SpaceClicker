@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class BuyTab : Tabs {
@@ -13,4 +14,18 @@ public class BuyTab : Tabs {
 	void Update () {
 	
 	}
+
+    public void GenerateNewEquipment()
+    {
+        foreach (var item in GetComponentsInChildren<BuyEquipmentButton>())
+        {
+            if (item.GetComponentInChildren<Equipment>() != null)
+            {
+                Destroy(item.GetComponentInChildren<Equipment>().gameObject);
+            }
+            item.GetComponent<Button>().interactable = true;
+            BuyEquipmentGeneration.SetEquipmentOnSlot(item);
+        }
+        Debug.Log("New equipment has been generated");
+    }
 }

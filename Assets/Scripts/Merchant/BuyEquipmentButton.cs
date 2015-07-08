@@ -23,5 +23,24 @@ public class BuyEquipmentButton : MonoBehaviour {
     public void Click()
     {
         Debug.Log("Clicked on the button");
+        bool set = false;
+        for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+        {
+            if (Global.Instance._player._inventoryArray[i] == null)
+            {
+                Global.Instance._player._inventoryArray[i] = GetComponentInChildren<Equipment>().gameObject;
+                GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance._player._inventoryObject.transform;
+
+                set = true;
+                break;
+            }
+        }
+
+        if (!set)
+        {
+            Debug.Log("<color=red>Inentory is full</color>");
+        }
+
+        GetComponent<Button>().interactable = false;
     }
 }

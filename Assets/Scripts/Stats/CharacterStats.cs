@@ -64,21 +64,7 @@ public class CharacterStats {
     public void LevelUp(uint level_)
     {
         _baseStat = new vap();
-       /* _baseStat._values[0] = _constMultiplier * level_;
-        _baseStat.Checker();
 
-        //_baseStat._values[0] += Mathf.Pow(_basePower, (level_ / _powerDiv));
-        _baseStat *= _valueMultiplier;
-        */
-        /*for (int i = 0; i < (int)_baseStat._prefix+1; i++)
-        {
-            _baseStat._values[i] = (_constMultiplier * level_ + (_baseStat._values[i] * 1.165438502f)) * _valueMultiplier;
-            _baseStat.Checker();
-        }*/
-
-
-
-        //                                      1                               2                                   3
         _baseStat._values[0] = ((_constMultiplier * level_) + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
 
         _baseStat.Checker();
@@ -87,60 +73,6 @@ public class CharacterStats {
         _maxHealth.Checker();
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
         _normal.damage.Checker();
-
-     /*   Debug.Log("MaxHealth: " + _maxHealth._values[0]);
-        Debug.Log("baseStat: " + _baseStat._values[0]);
-        Debug.Log("Multiplier health: " + _multiplierHealth);
-        Debug.Log("Health stat dist: " + _healthStatDist);
-
-        Debug.Log("Damage: " + _normal.damage._values[0]);
-        Debug.Log("baseStat: " + _baseStat._values[0]);
-        Debug.Log("Multiplier Damage: " + _multiplierDamage);
-        Debug.Log("Damage stat dist: " + _damageStatDist);*/
-   
-        /*
-
-        #region print
-        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", false))
-        {
-            file.WriteLine(" MAXHEALTH: " + _maxHealth._prefix);
-
-        }
-        for (int i = 0; i < _maxHealth._values.Length; i++)
-        {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
-            {
-                file.WriteLine(i + " " + _maxHealth._values[i].ToString());
-
-            }
-        }
-        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
-        {
-            file.WriteLine(" BASESTATS ");
-
-        }
-        for (int i = 0; i < _maxHealth._values.Length; i++)
-        {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
-            {
-                file.WriteLine(i + " " + _baseStat._values[i].ToString());
-
-            }
-        }
-        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
-        {
-            file.WriteLine(" MULTIPLIIER HEALTH : " + _multiplierHealth);
-
-        }
-        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"E:\values.txt", true))
-        {
-            file.WriteLine(" HEALTH STAT DIST : " + _healthStatDist);
-
-        } 
-        #endregion
-
-
-        */
     }
 
     public CharacterStats(CharacterStats stats_)

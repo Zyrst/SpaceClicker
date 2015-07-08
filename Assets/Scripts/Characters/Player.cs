@@ -7,10 +7,10 @@ public class Player : Character {
     [System.Serializable]
     public class EquipmentOnPlayer
     {
-        public Weapon _weapon = null;
-        public Head _head = null;
-        public Chest _chest = null;
-        public Legs _legs = null;
+        public Equipment _weapon = null;
+        public Equipment _head = null;
+        public Equipment _chest = null;
+        public Equipment _legs = null;
 
         public GameObject _weaponSlot;
         public GameObject _headSlot;
@@ -22,7 +22,6 @@ public class Player : Character {
             switch (equi_._type)
             {
                 case Equipment.EquipmentType.Weapon:
-                   
                     for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
                     {
                         if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
@@ -43,40 +42,76 @@ public class Player : Character {
                             break;
                         }
                     }
-                    _weapon = (Weapon)equi_;
-                        break;
+                    _weapon = equi_;
+                    break;
                 case Equipment.EquipmentType.Head:
-                        _head = (Head)equi_;
-                        for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+                    for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+                    {
+                        if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
                         {
-                            if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
-                            {
+                            //Change to equipped 
+                            Global.Instance._player._inventoryArray[i].gameObject.transform.parent = Global.Instance._player._equipmentObject.transform;
+                            //Set old to inventoy
+                            if (_head == null)
+	                        {
                                 Global.Instance._player._inventoryArray[i] = null;
-                                break;
+	                        }
+                            else
+                            {
+                                Global.Instance._player._inventoryArray[i] = _head.gameObject;
+                                _head.transform.parent = Global.Instance._player._inventoryObject.transform;
                             }
+                            _headSlot.GetComponent<Image>().sprite = equi_._sprite;
+                            break;
                         }
+                    }
+                    _head = equi_;
                     break;
                 case Equipment.EquipmentType.Chest:
-                    _chest = (Chest)equi_;
                     for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
                     {
                         if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
                         {
-                            Global.Instance._player._inventoryArray[i] = null;
+                            //Change to equipped 
+                            Global.Instance._player._inventoryArray[i].gameObject.transform.parent = Global.Instance._player._equipmentObject.transform;
+                            //Set old to inventoy
+                            if (_chest == null)
+                            {
+                                Global.Instance._player._inventoryArray[i] = null;
+                            }
+                            else
+                            {
+                                Global.Instance._player._inventoryArray[i] = _chest.gameObject;
+                                _chest.transform.parent = Global.Instance._player._inventoryObject.transform;
+                            }
+                            _chestSlot.GetComponent<Image>().sprite = equi_._sprite;
                             break;
                         }
                     }
+                    _chest = equi_;
                     break;
                 case Equipment.EquipmentType.Legs:
-                    _legs = (Legs)equi_;
                     for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
                     {
                         if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
                         {
-                            Global.Instance._player._inventoryArray[i] = null;
+                            //Change to equipped 
+                            Global.Instance._player._inventoryArray[i].gameObject.transform.parent = Global.Instance._player._equipmentObject.transform;
+                            //Set old to inventoy
+                            if (_legs == null)
+                            {
+                                Global.Instance._player._inventoryArray[i] = null;
+                            }
+                            else
+                            {
+                                Global.Instance._player._inventoryArray[i] = _legs.gameObject;
+                                _legs.transform.parent = Global.Instance._player._inventoryObject.transform;
+                            }
+                            _legsSlot.GetComponent<Image>().sprite = equi_._sprite;
                             break;
                         }
                     }
+                    _legs = equi_;
                     break;
                 default:
                     break;
