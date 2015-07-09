@@ -31,6 +31,8 @@ public class BuyEquipmentButton : MonoBehaviour {
                 Global.Instance._player._inventoryArray[i] = GetComponentInChildren<Equipment>().gameObject;
                 GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance._player._inventoryObject.transform;
 
+                GetComponent<Button>().interactable = false;
+
                 set = true;
                 break;
             }
@@ -41,6 +43,5 @@ public class BuyEquipmentButton : MonoBehaviour {
             Debug.Log("<color=red>Inentory is full</color>");
         }
 
-        GetComponent<Button>().interactable = false;
     }
 }

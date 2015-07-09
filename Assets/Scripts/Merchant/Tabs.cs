@@ -40,6 +40,7 @@ public class Tabs : MonoBehaviour {
             case TabType.MysteryItem:
                 break;
             case TabType.Preview:
+                ((PreviewTab)allTabs[(int)type_]).GenerateButtons();
                 break;
             default:
                 break;

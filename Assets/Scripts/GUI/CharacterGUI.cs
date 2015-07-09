@@ -29,6 +29,12 @@ public class CharacterGUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float scale = vap.GetScale(character._stats._health, character._stats._maxHealth);
+
+        if (character is Player)
+        {
+            scale = vap.GetScale(character._stats._health, ((Player)character)._combinedStats._maxHealth);
+        }
+
         GameObject lifebar = HealthBar.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Life").gameObject;
 
         lifebar.transform.localScale = new Vector3(scale, lifebar.transform.localScale.y, lifebar.transform.localScale.z);

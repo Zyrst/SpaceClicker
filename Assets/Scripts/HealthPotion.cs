@@ -46,9 +46,9 @@ public class HealthPotion : MonoBehaviour {
 
     public void Collect()
     {
-        Global.Instance._player._stats._health += (Global.Instance._player._stats._maxHealth * Global.Instance._potionHealthPercent.value);
-        if ((Global.Instance._player._stats._health) > (Global.Instance._player._stats._maxHealth)) 
-            Global.Instance._player._stats._health = new vap(Global.Instance._player._stats._maxHealth);
+        Global.Instance._player._stats._health += (Global.Instance._player._combinedStats._maxHealth * Global.Instance._potionHealthPercent.value);
+        if ((Global.Instance._player._stats._health) > (Global.Instance._player._combinedStats._maxHealth)) 
+            Global.Instance._player._stats._health = new vap(Global.Instance._player._combinedStats._maxHealth);
 
         GameObject.Destroy(gameObject);
     }

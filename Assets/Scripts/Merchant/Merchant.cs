@@ -42,7 +42,8 @@ public class Merchant : MonoBehaviour {
         gameObject.SetActive(true);
         tabs.GetComponent<Tabs>().OpenTab(Tabs.TabType.Buy);
 
-        GetComponentInChildren<BuyTab>().GenerateNewEquipment();
+        GetComponentsInChildren<BuyTab>(true)[0].GenerateNewEquipment();
+        GetComponentsInChildren<MysteryTab>(true)[0].GenerateNewItem();
     }
 
     public void Close()

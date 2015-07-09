@@ -210,13 +210,17 @@ public class Player : Character {
     }
     public void Reset(float time_)
     {
+        if (IsInvoking())
+        {
+            CancelInvoke();
+        }
         Invoke("ResetNow", time_);
     }
 
     public void ResetNow()
     {
         gameObject.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Model").gameObject.SetActive(true);
-        _stats._health = new vap(_stats._maxHealth);
+        _stats._health = new vap(_combinedStats._maxHealth);
 
         _isAlive = true;
 

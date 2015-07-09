@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 public class Global : MonoBehaviour {
@@ -76,6 +77,15 @@ public class Global : MonoBehaviour {
     public Camera _gameCamera;
     public Camera _uiCamera;
 
+    [System.Serializable]
+    private class DebugMessage
+    {
+        public string message;
+        public float time;
+        public void Update() { time -= Time.unscaledDeltaTime; }
+    }
+    private List<DebugMessage> _debugMessages = new List<DebugMessage>();
+
     private static Global _instance = null;
     public static Global Instance
     {
@@ -114,6 +124,31 @@ public class Global : MonoBehaviour {
             Debug.Log(Sounds.Instance.enemySounds.damage_medium.path);
             Sounds.OneShot(Sounds.Instance.enemySounds.damage_medium);
         }
+        if (Input.GetKeyDown(KeyCode.Plus) || Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            if (Time.timeScale == 0f)
+            {
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                if (Time.timeScale + 2f <= 100f)
+                    Time.timeScale += 2f;
+                else
+                    Time.timeScale = 100;
+            }
+            DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
+        }
+        if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
+        {
+            if (Time.timeScale - 2f >= 0f)
+                Time.timeScale -= 2f;
+            else
+                Time.timeScale = 0f;
+            DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
+        }
+
+        UpdateBebugMessages();
     }
 
     void LateUpdate()
@@ -260,5 +295,39 @@ public class Global : MonoBehaviour {
         {
             Debug.Log("Cannot shake current camera");
         }
+    }
+
+    /// <summary>
+    /// displays message on screen for 5 seconds
+    /// </summary>
+    /// <param name="message_"></param>
+    public void DebugOnScreen(string message_)
+    {
+        DebugMessage newMess = new DebugMessage();
+        newMess.message = message_;
+        newMess.time = 5f;
+
+        _debugMessages.Add(newMess);
+    }
+
+    public void UpdateBebugMessages()
+    {
+        string allMessages = "";
+        for (int i = 0; i < _debugMessages.Count; i++)
+        {
+            _debugMessages.ToArray()[i].Update();
+
+            if (_debugMessages.ToArray()[i].time <= 0f)
+            {
+                _debugMessages.Remove(_debugMessages.ToArray()[i]);
+                i--;
+            }
+            else
+            {
+                allMessages = allMessages + "\n" + _debugMessages.ToArray()[i].message;
+            }
+        }
+
+        GetComponentInChildren<Text>().text = allMessages;
     }
 }

@@ -43,6 +43,7 @@ public class Ship : MonoBehaviour {
         Global.Instance._player.SortInventory();
         Global.Instance._player.UpdateCombinedStats();
         CharacterScreen.Instance.Activate();
+        gameObject.SetActive(false);
         
     }
 
@@ -57,6 +58,7 @@ public class Ship : MonoBehaviour {
         CharacterScreen.Instance.RemoveInventorySlots();
         CharacterScreen.Instance.ResetModel();
         Global.Instance._player.gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 
     public void ExitGame()
@@ -69,7 +71,7 @@ public class Ship : MonoBehaviour {
         Global.Instance._player.gameObject.SetActive(true);
         Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
 
-        Invoke("DisablePlayer", 0.5f);
+        Invoke("DisablePlayer", 0.1f);
     }
 
     public void DisablePlayer()
