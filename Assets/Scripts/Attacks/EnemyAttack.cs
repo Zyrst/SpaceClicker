@@ -149,14 +149,22 @@ public class EnemyAttack : MonoBehaviour {
     public void StartShieldLoop()
     {
         FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();        // shield loop sound
-        sound.asset = Sounds.Instance.enemySounds.shieldSounds.loop;
-        sound.Play();
+        try
+        {
+            sound.asset = Sounds.Instance.enemySounds.shieldSounds.loop;
+            sound.Play();
+        } catch (System.NullReferenceException){
+        }
     }
 
     public void ResetShield()
     {
         FMOD_StudioEventEmitter sound = GetComponent<FMOD_StudioEventEmitter>();        // shield loop sound
-        sound.Stop();
+        try
+        {
+            sound.Stop();
+        } catch (System.NullReferenceException){
+        }
         Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.stop);
 
         shield.gameObject.SetActive(false);

@@ -9,6 +9,7 @@ public class BuyEquipmentButton : MonoBehaviour {
     public Text _typeText;
     public Text _infoText;
     public Text _goldText;
+    public Text _equipText;
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +41,7 @@ public class BuyEquipmentButton : MonoBehaviour {
 
         if (!set)
         {
-            Debug.Log("<color=red>Inentory is full</color>");
+            Global.DebugOnScreen("INVENTORY IS FULL!!!!");
         }
 
     }

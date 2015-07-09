@@ -28,6 +28,8 @@ public class MysteryTab : Tabs {
             equi.transform.parent = item.transform;
 
             item._equipmentImage.sprite = equi._sprite;
+
+            item._goldText.text = equi._cost.ToString();
         }
         Debug.Log("New Mystery Item has been generated");
     }

@@ -77,14 +77,13 @@ public class Global : MonoBehaviour {
     public Camera _gameCamera;
     public Camera _uiCamera;
 
-    [System.Serializable]
     private class DebugMessage
     {
         public string message;
         public float time;
         public void Update() { time -= Time.unscaledDeltaTime; }
     }
-    private List<DebugMessage> _debugMessages = new List<DebugMessage>();
+    private static List<DebugMessage> _debugMessages = new List<DebugMessage>();
 
     private static Global _instance = null;
     public static Global Instance
@@ -301,7 +300,7 @@ public class Global : MonoBehaviour {
     /// displays message on screen for 5 seconds
     /// </summary>
     /// <param name="message_"></param>
-    public void DebugOnScreen(string message_)
+    public static void DebugOnScreen(string message_)
     {
         DebugMessage newMess = new DebugMessage();
         newMess.message = message_;

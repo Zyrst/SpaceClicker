@@ -19,6 +19,8 @@ public class Equipment : MonoBehaviour {
     public ElementType _element;
     public Rareness _rareness;
 
+    public uint _cost = 0;
+
 	// Use this for initialization
 	void Start () {
 	

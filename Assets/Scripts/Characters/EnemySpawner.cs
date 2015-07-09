@@ -88,8 +88,12 @@ public class EnemySpawner : MonoBehaviour {
                 _enemy.gameObject.SetActive(true);
                 _enemy._stats._health = new vap(_enemy._stats._maxHealth);
                 _enemy._isAlive = true;
-                _enemy.gameObject.GetComponentsInChildren<CharacterGUI>(true)[0].gameObject.SetActive(true);
-                _enemy.gameObject.GetComponentsInChildren<Animator>(true)[0].SetTrigger("IdleTrigger");
+                try
+                {
+                    _enemy.gameObject.GetComponentsInChildren<CharacterGUI>(true)[0].gameObject.SetActive(true);
+                    _enemy.gameObject.GetComponentsInChildren<Animator>(true)[0].SetTrigger("IdleTrigger");
+                } catch (System.IndexOutOfRangeException) {
+                }
             }
         }
         catch (System.NullReferenceException) { }

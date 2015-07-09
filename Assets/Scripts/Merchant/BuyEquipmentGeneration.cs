@@ -18,14 +18,19 @@ public class BuyEquipmentGeneration {
     {
         Equipment equi = GenerateOne();
 
-        slot_._equipmentImage.sprite = equi._sprite;
-        slot_._levelText.text = equi._stats._level.ToString();
-        slot_._nameText.text = equi._stats._name;
-        slot_._typeText.text = System.Enum.GetName(typeof(Equipment.EquipmentType), equi._type);
+        ConnectEquipmentToTheButton(slot_, equi);
 
         equi.transform.parent = slot_.transform;
+    }
 
-        switch (equi._rareness)
+    public static void ConnectEquipmentToTheButton(BuyEquipmentButton slot_, Equipment equipment_)
+    {
+        slot_._equipmentImage.sprite = equipment_._sprite;
+        slot_._levelText.text = equipment_._stats._level.ToString();
+        slot_._nameText.text = equipment_._stats._name;
+        slot_._typeText.text = System.Enum.GetName(typeof(Equipment.EquipmentType), equipment_._type);
+
+        switch (equipment_._rareness)
         {
             case Equipment.Rareness.Green:
                 slot_.GetComponent<Image>().color = Global.Instance._colors.green;
@@ -46,34 +51,36 @@ public class BuyEquipmentGeneration {
         string critMult = "";
         string crit = "";
         string damage = "";
-        switch (equi._element)
+        switch (equipment_._element)
         {
             case Equipment.ElementType.Tech:
-                critMult = "(Tech)Crit. Damage:\t+ " + (equi._stats._tech.critMultiplier*100f).ToString() + "%";
-                crit = "(Tech)Crit. Chans:\t\t+ " + (equi._stats._tech.crit * 100f).ToString() + "%";
-                damage = "(Tech)Damage:\t\t\t+ " + equi._stats._tech.damage.GetString();
+                critMult = "(Tech)Crit. Damage:\t+ " + (equipment_._stats._tech.critMultiplier * 100f).ToString() + "%";
+                crit = "(Tech)Crit. Chans:\t\t+ " + (equipment_._stats._tech.crit * 100f).ToString() + "%";
+                damage = "(Tech)Damage:\t\t\t+ " + equipment_._stats._tech.damage.GetString();
                 break;
             case Equipment.ElementType.Kinetic:
-                critMult = "(Kinetic)Crit. Damage:\t+ " + (equi._stats._kinetic.critMultiplier * 100f).ToString() + "%";
-                crit = "(Kinetic)Crit. Chans:\t\t+ " + (equi._stats._kinetic.crit * 100f).ToString() + "%";
-                damage = "(Kinetic)Damage:\t\t\t+ " + equi._stats._kinetic.damage.GetString();
+                critMult = "(Kin.)Crit. Damage:\t+ " + (equipment_._stats._kinetic.critMultiplier * 100f).ToString() + "%";
+                crit = "(Kin.)Crit. Chans:\t\t+ " + (equipment_._stats._kinetic.crit * 100f).ToString() + "%";
+                damage = "(Kin.)Damage:\t\t\t+ " + equipment_._stats._kinetic.damage.GetString();
                 break;
             case Equipment.ElementType.Pshycic:
-                critMult = "(Psychic)Crit. Damage:\t+ " + (equi._stats._psychic.critMultiplier * 100f).ToString() + "%";
-                crit = "(Psychic)Crit. Chans:\t\t+ " + (equi._stats._psychic.crit * 100f).ToString() + "%";
-                damage = "(Psychic)Damage:\t\t\t+ " + equi._stats._psychic.damage.GetString();
+                critMult = "(Psy.)Crit. Damage:\t+ " + (equipment_._stats._psychic.critMultiplier * 100f).ToString() + "%";
+                crit = "(Psy.)Crit. Chans:\t\t+ " + (equipment_._stats._psychic.crit * 100f).ToString() + "%";
+                damage = "(Psy.)Damage:\t\t\t+ " + equipment_._stats._psychic.damage.GetString();
                 break;
             case Equipment.ElementType.Normal:
-                critMult = "(Normal)Crit. Damage:\t+ " + (equi._stats._normal.critMultiplier * 100f).ToString() + "%";
-                crit = "(Normal)Crit. Chans:\t\t+ " + (equi._stats._normal.crit * 100f).ToString() + "%";
-                damage = "(Normal)Damage:\t\t\t+ " + equi._stats._normal.damage.GetString();
+                critMult = "(Nor.)Crit. Damage:\t+ " + (equipment_._stats._normal.critMultiplier * 100f).ToString() + "%";
+                crit = "(Nor.)Crit. Chans:\t\t+ " + (equipment_._stats._normal.crit * 100f).ToString() + "%";
+                damage = "(Nor.)Damage:\t\t\t+ " + equipment_._stats._normal.damage.GetString();
                 break;
             default:
                 break;
         }
-        string health = "Health:\t\t\t\t\t\t+ " + equi._stats._health.GetString();
+        string health = "Health:\t\t\t\t\t\t+ " + equipment_._stats._health.GetString();
 
         slot_._infoText.text = critMult + "\n" + crit + "\n" + damage + "\n" + health;
+
+        slot_._goldText.text = equipment_._cost.ToString();
     }
 
     public static Equipment GenerateOne()
@@ -233,6 +240,8 @@ public class BuyEquipmentGeneration {
             default:
                 break;
         }
+
+        ret._cost = 10;
 
         return ret;
     }
