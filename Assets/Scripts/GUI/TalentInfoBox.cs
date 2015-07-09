@@ -69,6 +69,7 @@ public class TalentInfoBox : MonoBehaviour {
 
     public void AcceptButton()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         AddStatsToPlayer();
         LevelUpTalentAndShit();
         _lastButton.Click();

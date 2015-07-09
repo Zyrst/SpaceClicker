@@ -33,6 +33,7 @@ public class Ship : MonoBehaviour {
 
     public void Farm()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Global.Instance.SwitchScene(Global.GameType.Farm);
     }
 
@@ -44,11 +45,15 @@ public class Ship : MonoBehaviour {
         Global.Instance._player.UpdateCombinedStats();
         CharacterScreen.Instance.Activate();
         gameObject.SetActive(false);
+
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.openInventory);
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         
     }
 
     public void Star()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Global.Instance.SwitchScene(Global.GameType.Star);
     }
 
@@ -59,10 +64,13 @@ public class Ship : MonoBehaviour {
         CharacterScreen.Instance.ResetModel();
         Global.Instance._player.gameObject.SetActive(false);
         gameObject.SetActive(true);
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.closeInventory);
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
     }
 
     public void ExitGame()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Application.Quit();
     }
 

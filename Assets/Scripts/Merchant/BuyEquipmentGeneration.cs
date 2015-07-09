@@ -89,7 +89,6 @@ public class BuyEquipmentGeneration {
         go.AddComponent<Equipment>();
         Equipment ret = go.GetComponent<Equipment>();
         ret.name = "Clementine";
-        ret._sprite = Global.Instance._sprites.equipment;
 
         ret._stats._multiplierHealth = Global.Instance._player._stats._multiplierHealth;
         ret._stats._multiplierDamage = Global.Instance._player._stats._multiplierDamage;
@@ -227,15 +226,19 @@ public class BuyEquipmentGeneration {
         {
             case Equipment.EquipmentType.Weapon:
                 ret._stats._name = "Weapon";
+                ret._sprite = Global.Instance._sprites.equipment_weapon;
                 break;
             case Equipment.EquipmentType.Head:
                 ret._stats._name = "Hat";
+                ret._sprite = Global.Instance._sprites.equipment_head;
                 break;
             case Equipment.EquipmentType.Chest:
                 ret._stats._name = "Shirt";
+                ret._sprite = Global.Instance._sprites.equipment_chest;
                 break;
             case Equipment.EquipmentType.Legs:
                 ret._stats._name = "Pantalones";
+                ret._sprite = Global.Instance._sprites.equipment_legs;
                 break;
             default:
                 break;

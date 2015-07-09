@@ -21,28 +21,48 @@ public class BuyEquipmentButton : MonoBehaviour {
 	
 	}
 
+    /// <summary>
+    /// this one is for when you buy from merchant
+    /// </summary>
     public void Click()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Debug.Log("Clicked on the button");
-        bool set = false;
-        for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+        if (Global.Instance._gold >= GetComponentInChildren<Equipment>()._cost)
         {
-            if (Global.Instance._player._inventoryArray[i] == null)
+            Global.Instance._gold -= GetComponentInChildren<Equipment>()._cost;
+            bool set = false;
+            for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
             {
-                Global.Instance._player._inventoryArray[i] = GetComponentInChildren<Equipment>().gameObject;
-                GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance._player._inventoryObject.transform;
+                if (Global.Instance._player._inventoryArray[i] == null)
+                {
+                    Global.Instance._player._inventoryArray[i] = GetComponentInChildren<Equipment>().gameObject;
+                    GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance._player._inventoryObject.transform;
 
-                GetComponent<Button>().interactable = false;
+                    GetComponent<Button>().interactable = false;
 
-                set = true;
-                break;
+                    set = true;
+                    break;
+                }
+            }
+
+            if (!set)
+            {
+                Global.DebugOnScreen("INVENTORY IS FULL!!!!");
             }
         }
-
-        if (!set)
+        else
         {
-            Global.DebugOnScreen("INVENTORY IS FULL!!!!");
+            Global.DebugOnScreen("ITEM WAS TOO EXPENSIVE");
         }
+    }
 
+    /// <summary>
+    /// this one is for when you are on preview tab
+    /// </summary>
+    public void ClickPreview()
+    {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        Debug.Log("Clicked on the button");
     }
 }

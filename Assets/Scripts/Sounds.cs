@@ -53,8 +53,24 @@ public class Sounds : MonoBehaviour {
         public SpellSounds stunSpell;
     }
 
+    [System.Serializable]
+    public struct NavigationSounds
+    {
+        public FMODAsset closeInventory;
+        public FMODAsset openInventory;
+    }
+
+    [System.Serializable]
+    public struct UISounds
+    {
+        public NavigationSounds navigation;
+        public FMODAsset coinCollect;
+        public FMODAsset Button;
+    }
+
     public PlayerSounds playerSounds;
     public EnemySounds enemySounds;
+    public UISounds uiSounds;
 
 	// Use this for initialization
 	void Start () {

@@ -39,7 +39,14 @@ public class Global : MonoBehaviour {
     [System.Serializable]
     public class Sprites
     {
-        public Sprite equipment;
+        public Sprite equipment_legs;
+        public Sprite equipment_chest;
+        public Sprite equipment_head;
+        public Sprite equipment_weapon;
+
+        public Sprite spell_attack;
+        public Sprite spell_heal;
+        public Sprite spell_stun;
     }
 
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }
@@ -105,6 +112,7 @@ public class Global : MonoBehaviour {
         UpdateExpBar();
         SwitchScene(GameType.Ship);
         Starmap.Instance.Generate(1, 100, 9001);
+
     }
     void Update()
     {

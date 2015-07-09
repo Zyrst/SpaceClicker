@@ -29,6 +29,7 @@ public class Galaxy : MonoBehaviour {
 
     public void Generate()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Starmap.Instance.Generate(1, 100, 9001);
     }
 }

@@ -49,6 +49,7 @@ public class FarmMode : MonoBehaviour {
 
     public void backToShip()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Global.Instance.SwitchScene(Global.GameType.Ship);
         Destroy(_arena);
     }

@@ -39,6 +39,7 @@ public class Merchant : MonoBehaviour {
 
     public void Open()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         gameObject.SetActive(true);
         tabs.GetComponent<Tabs>().OpenTab(Tabs.TabType.Buy);
 
@@ -48,6 +49,7 @@ public class Merchant : MonoBehaviour {
 
     public void Close()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         gameObject.SetActive(false);
     }
 }

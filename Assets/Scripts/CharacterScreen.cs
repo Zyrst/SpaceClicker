@@ -72,12 +72,16 @@ public class CharacterScreen : MonoBehaviour {
 
     public void TalentTree()
     {
+
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(true);
         TalentInfoBox.Instance.talentPointText.text = Global.Instance._player._talentPoints.ToString();
     }
 
     public void CloseTalentTree()
     {
+
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(false);
         if (TalentInfoBox.Instance != null)
         {
@@ -129,6 +133,7 @@ public class CharacterScreen : MonoBehaviour {
 
     public void EquipLast()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Debug.Log("EquipLast");
         ResetInventorySprite(_lastEquip);
         Global.Instance._player._equipped.Equip(_lastEquip);
@@ -149,6 +154,7 @@ public class CharacterScreen : MonoBehaviour {
 
     public void ClosePopup()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         _EquipPopup.gameObject.SetActive(false);
     }
 

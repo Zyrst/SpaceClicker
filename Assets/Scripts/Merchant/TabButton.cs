@@ -44,6 +44,7 @@ public class TabButton : UnityEngine.UI.Button {
 
     public override void OnPointerUp(UnityEngine.EventSystems.PointerEventData eventData)
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         //base.OnPointerUp(eventData);
         if (Merchant.Instance.tabs == null)
         {

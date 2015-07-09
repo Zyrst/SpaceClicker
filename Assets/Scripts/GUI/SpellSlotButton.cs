@@ -19,6 +19,7 @@ public class SpellSlotButton : Button
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         int index = 0;
         switch (transform.parent.name)
         {
@@ -39,5 +40,10 @@ public class SpellSlotButton : Button
         }
 
         Global.Instance._player._spellsArray[index].Clicked();
+    }
+
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        base.OnPointerUp(eventData);
     }
 }

@@ -44,6 +44,7 @@ public class TalentButton : MonoBehaviour {
 
     public void Click()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         TalentInfoBox.Instance.IsUp = true;
 
         TalentInfoBox.Instance._lastButton = this;

@@ -51,6 +51,7 @@ public class Starmap : MonoBehaviour {
 
     public void BackToShip()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Global.Instance.SwitchScene(Global.GameType.Ship);
     }
 

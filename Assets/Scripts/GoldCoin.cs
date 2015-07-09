@@ -48,7 +48,7 @@ public class GoldCoin : MonoBehaviour {
     public void Collect()
     {
         Global.Instance.Gold += _value;
-
+        Sounds.OneShot(Sounds.Instance.uiSounds.coinCollect);
         GameObject.Destroy(gameObject);
     }
 
