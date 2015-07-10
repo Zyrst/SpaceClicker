@@ -18,15 +18,17 @@ public class PreviewTab : Tabs {
         int counter = 0;
         Vector3 pos = Vector3.zero;
 
+        // det sser lite konstigt ut högst upp här, men man ska aldrig kunna vara utan equipment sen
+
+        counter++;
         if (Global.Instance._player._equipped._chest != null)
         {
-            counter++;
             BuyEquipmentGeneration.ConnectEquipmentToTheButton(GetComponentsInChildren<BuyEquipmentButton>()[0], Global.Instance._player._equipped._chest);
             GetComponentsInChildren<BuyEquipmentButton>()[0]._equipText.text = "Equipped";
         }
+        counter++;
         if (Global.Instance._player._equipped._head != null)
         {
-            counter++;
             if (counter % 2 == 0)
                 pos.x = 475f;
             else
@@ -48,9 +50,9 @@ public class PreviewTab : Tabs {
                 Debug.LogError("NÅGOT GICK JÄVLIGT FEL, DET SKALL INTE FINNAS NÅGON BUYEQUIPMENTBUTTON HÄR");
             }
         }
+        counter++;
         if (Global.Instance._player._equipped._legs != null)
         {
-            counter++;
             if (counter % 2 == 0)
                 pos.x = 475f;
             else
@@ -72,9 +74,9 @@ public class PreviewTab : Tabs {
                 Debug.LogError("NÅGOT GICK JÄVLIGT FEL, DET SKALL INTE FINNAS NÅGON BUYEQUIPMENTBUTTON HÄR");
             }
         }
+        counter++;
         if (Global.Instance._player._equipped._weapon != null)
         {
-            counter++;
             if (counter % 2 == 0)
                 pos.x = 475f;
             else

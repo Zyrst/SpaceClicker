@@ -6,17 +6,17 @@ public class DamageStats {
     {
         DamageStats ds = new DamageStats();
 
-        ds._normal = stats_._normal.damage;
-        ds._kinetic = stats_._kinetic.damage;
-        ds._tech = stats_._tech.damage;
-        ds._psychic = stats_._psychic.damage;
+        ds._normal = new vap(stats_._normal.damage);
+        ds._kinetic = new vap(stats_._kinetic.damage);
+        ds._tech = new vap(stats_._tech.damage);
+        ds._psychic = new vap(stats_._psychic.damage);
 
         if (alwaysCrit_)
         {
-            ds._normal = stats_._normal.critDamage;
-            ds._tech = stats_._tech.critDamage;
-            ds._psychic = stats_._psychic.critDamage;
-            ds._kinetic = stats_._kinetic.critDamage;
+            ds._normal = new vap(stats_._normal.critDamage);
+            ds._tech = new vap(stats_._tech.critDamage);
+            ds._psychic = new vap(stats_._psychic.critDamage);
+            ds._kinetic = new vap(stats_._kinetic.critDamage);
 
             Global.Instance.ShakeCamera();
         }
@@ -27,26 +27,33 @@ public class DamageStats {
             float crit = Random.Range(0f, 1f);
             if (crit <= stats_._normal.crit)
             {
-                ds._normal = stats_._normal.critDamage;
+                ds._normal = new vap(stats_._normal.critDamage);
+                if (stats_._normal.critDamage > stats_._normal.damage)
                 didaCrit = true;
             }
 
             crit = Random.Range(0f, 1f);
             if (crit <= stats_._tech.crit)
             {
-                ds._tech = stats_._tech.critDamage;
+                ds._tech = new vap(stats_._tech.critDamage);
+                if (stats_._tech.critDamage > stats_._tech.damage)
+                didaCrit = true;
             }
 
             crit = Random.Range(0f, 1f);
             if (crit <= stats_._psychic.crit)
             {
-                ds._psychic = stats_._psychic.critDamage;
+                ds._psychic = new vap(stats_._psychic.critDamage);
+                if (stats_._psychic.critDamage > stats_._psychic.damage)
+                didaCrit = true;
             }
 
             crit = Random.Range(0f, 1f);
             if (crit <= stats_._kinetic.crit)
             {
-                ds._kinetic = stats_._kinetic.critDamage;
+                ds._kinetic = new vap(stats_._kinetic.critDamage);
+                if (stats_._kinetic.critDamage > stats_._kinetic.damage)
+                    didaCrit = true;
             }
 
             if (didaCrit)

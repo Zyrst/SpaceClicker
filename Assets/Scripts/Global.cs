@@ -72,7 +72,7 @@ public class Global : MonoBehaviour {
     public float _expVariable = 10f;
     public float _expScale = 1.5f;
     public GameObject _playerGUI;
-    public Planet _planet;
+    public Planet _planet = null;
 
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
@@ -113,6 +113,7 @@ public class Global : MonoBehaviour {
         SwitchScene(GameType.Ship);
         Starmap.Instance.Generate(1, 100, 9001);
 
+        _planet = null;
     }
     void Update()
     {

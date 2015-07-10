@@ -34,7 +34,12 @@ public class Ship : MonoBehaviour {
     public void Farm()
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
-        Global.Instance.SwitchScene(Global.GameType.Farm);
+        if (Global.Instance._planet == null)
+        {
+            Global.DebugOnScreen("Please select a planet");
+        }
+        else
+            Global.Instance.SwitchScene(Global.GameType.Farm);
     }
 
     public void Character()

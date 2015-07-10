@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
 public class Planet {
 
     public int _minLevel = 1;

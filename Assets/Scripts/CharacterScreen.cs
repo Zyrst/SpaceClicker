@@ -37,8 +37,7 @@ public class CharacterScreen : MonoBehaviour {
         CloseTalentTree();
         GenerateCharInfo();
         Instance.gameObject.SetActive(false);
-        
-
+        CloseSpells();
 	}
 	
 	// Update is called once per frame
@@ -68,11 +67,11 @@ public class CharacterScreen : MonoBehaviour {
         Model();
         GenerateInventorySlots();
         GenerateCharInfo();
+        PutEquipmentOnTheSlots();
     }
 
     public void TalentTree()
     {
-
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(true);
         TalentInfoBox.Instance.talentPointText.text = Global.Instance._player._talentPoints.ToString();
@@ -80,13 +79,24 @@ public class CharacterScreen : MonoBehaviour {
 
     public void CloseTalentTree()
     {
-
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(false);
         if (TalentInfoBox.Instance != null)
         {
             TalentInfoBox.Instance.IsUp = false;
         }
+    }
+
+    public void Spells()
+    {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "SpellsMap").GetComponent<SpellsMap>().Open();
+    }
+
+    public void CloseSpells()
+    {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "SpellsMap").GetComponent<SpellsMap>().Close();
     }
 
     public void GenerateInventorySlots()
@@ -368,5 +378,13 @@ public class CharacterScreen : MonoBehaviour {
 
 
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "StatsText").text = info;
+    }
+
+    public void PutEquipmentOnTheSlots()
+    {
+        Global.Instance._player._equipped._chestSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._chest._sprite;
+        Global.Instance._player._equipped._legsSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._legs._sprite;
+        Global.Instance._player._equipped._weaponSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._weapon._sprite;
+        Global.Instance._player._equipped._headSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._head._sprite;
     }
 }
