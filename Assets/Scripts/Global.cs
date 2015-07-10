@@ -49,6 +49,14 @@ public class Global : MonoBehaviour {
         public Sprite spell_stun;
     }
 
+    [System.Serializable]
+    public class Spells
+    {
+        public List<SpellAttack> damageSpells = new List<SpellAttack>();
+        public List<SpellAttack> healSpells = new List<SpellAttack>();
+        public List<SpellAttack> stunSpells = new List<SpellAttack>();
+    }
+
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }
     public GameType _gameType = GameType.Farm;
 
@@ -69,10 +77,13 @@ public class Global : MonoBehaviour {
     public Enemies _enemies = new Enemies();
     public Colors _colors = new Colors();
     public Sprites _sprites = new Sprites();
+    public Spells _lockedSpells = new Spells();
+    public Spells _unlockedSpells = new Spells();
     public float _expVariable = 10f;
     public float _expScale = 1.5f;
     public GameObject _playerGUI;
     public Planet _planet = null;
+    public GameObject _spellsObject;
 
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
@@ -176,6 +187,7 @@ public class Global : MonoBehaviour {
                 FarmMode.Instance.startFarmMode();
                 _gameCamera.gameObject.SetActive(true);
                 _uiCamera.gameObject.SetActive(false);
+                _gameCamera.tag = "MainCamera";
                 break;
             case GameType.Quest:
                 break;
@@ -186,6 +198,7 @@ public class Global : MonoBehaviour {
                 Starmap.Instance.gameObject.SetActive(false);
                 _gameCamera.gameObject.SetActive(false);
                 _uiCamera.gameObject.SetActive(true);
+                _uiCamera.tag = "MainCamera";
 
                 foreach (var item in _player.gameObject.GetComponentsInChildren<SpellAttack>(true))
                 {
@@ -306,16 +319,26 @@ public class Global : MonoBehaviour {
     }
 
     /// <summary>
-    /// displays message on screen for 5 seconds
+    /// displays message on screen for 'time_' amount of seconds
     /// </summary>
     /// <param name="message_"></param>
-    public static void DebugOnScreen(string message_)
+    /// <param name="time_"></param>
+    public static void DebugOnScreen(string message_, float time_)
     {
         DebugMessage newMess = new DebugMessage();
         newMess.message = message_;
         newMess.time = 5f;
 
         _debugMessages.Add(newMess);
+    }
+
+    /// <summary>
+    /// displays message on screen for 5 seconds
+    /// </summary>
+    /// <param name="message_"></param>
+    public static void DebugOnScreen(string message_)
+    {
+        DebugOnScreen(message_, 5f);
     }
 
     public void UpdateBebugMessages()

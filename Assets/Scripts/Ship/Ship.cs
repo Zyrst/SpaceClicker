@@ -40,6 +40,8 @@ public class Ship : MonoBehaviour {
         }
         else
             Global.Instance.SwitchScene(Global.GameType.Farm);
+
+        Global.Instance._player.UpdateCombinedStats();
     }
 
     public void Character()

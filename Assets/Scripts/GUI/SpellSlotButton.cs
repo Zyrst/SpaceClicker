@@ -39,7 +39,11 @@ public class SpellSlotButton : Button
                 break;
         }
 
-        Global.Instance._player._spellsArray[index].Clicked();
+        try
+        {
+            Global.Instance._player._spellsArray[index].Clicked();
+        }
+        catch (System.NullReferenceException) { }
     }
 
     public override void OnPointerUp(PointerEventData eventData)

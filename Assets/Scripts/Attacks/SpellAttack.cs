@@ -39,10 +39,6 @@ public class SpellAttack : BaseAttack {
         {
             Debug.Log("_spellImage är null");
         }
-        _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
-        _slotImage.sprite = _spellImage;
-
-        _startGUIPos = _slot.transform.position;
 
         switch (_type)
         {
@@ -69,6 +65,14 @@ public class SpellAttack : BaseAttack {
         }
 
 	}
+
+    public void Init()
+    {
+        _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
+        _slotImage.sprite = _spellImage;
+
+        _startGUIPos = _slot.transform.position;
+    }
 	
 	// Update is called once per frame
     void Update()
@@ -233,6 +237,7 @@ public class SpellAttack : BaseAttack {
 
     public void CombineSpellStats()
     {
+        Global.DebugOnScreen("Combining spellstats");
         _combinedStats = new SpellStats(_stats);
         _combinedStats.AddStats(Global.Instance._player._combinedStats);
     }
