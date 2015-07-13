@@ -103,12 +103,12 @@ public class ClickAttack : BaseAttack {
                                 }
                                 //else
                                  //   audio.PlayOneShot(_tempHitSounds[0]);
-                                hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), hit.point, Global.Instance._player);
+                                hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), hit.point, Global.Instance.player);
                             }
                                 
                             else if (_hitCount == _critHitCount)
                             {
-                                hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, true), hit.point, Global.Instance._player);
+                                hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, true), hit.point, Global.Instance.player);
                                 //audio.PlayOneShot(_tempHitSounds[5]);
                                 _hitSound = 0;
                                 _hitCount = 0;

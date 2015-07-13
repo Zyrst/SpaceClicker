@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading;
 
+[System.Serializable]
 public class Character : MonoBehaviour {
     
     public CharacterStats _stats = new CharacterStats();

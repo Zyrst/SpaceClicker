@@ -43,7 +43,7 @@ public class TalentInfoBox : MonoBehaviour {
             if (value)
             {
                 gameObject.SetActive(true);
-                talentPointText.text = Global.Instance._player._talentPoints.ToString();
+                talentPointText.text = Global.Instance.player._talentPoints.ToString();
             }
             else
             {
@@ -77,13 +77,13 @@ public class TalentInfoBox : MonoBehaviour {
         // add points per arm
         pointsPerArm[(int)_lastButton._arm]++;
 
-        Global.Instance._player.UpdateCombinedStats();
-        talentPointText.text = Global.Instance._player._talentPoints.ToString();
+        Global.Instance.player.UpdateCombinedStats();
+        talentPointText.text = Global.Instance.player._talentPoints.ToString();
     }
 
     private void AddStatsToPlayer()
     {
-        Player _player = Global.Instance._player;
+        Player _player = Global.Instance.player;
 
         switch (_lastButton._talentType)
         {
@@ -241,10 +241,10 @@ public class TalentInfoBox : MonoBehaviour {
 	        #endregion
                 break;
             case TalentButton.TalentTypes.hpPotionChans:
-                Global.Instance._potionDropChans.value += HealthPotion._chansIncrease.value;
+                Global.Instance._potionDropChans.value += Global.Instance._potionChansIncrease.value;
                 break;
             case TalentButton.TalentTypes.hpPotionHealingPercent:
-                Global.Instance._potionHealthPercent.value += HealthPotion._healingIncrease.value;
+                Global.Instance._potionHealthPercent.value += Global.Instance._PotionHealingIncrease.value;
                 break;
             case TalentButton.TalentTypes.AllResistance:
                 if (_player._talentStats._kinetic.resistance.value == 0f)             // kinetic
@@ -275,7 +275,7 @@ public class TalentInfoBox : MonoBehaviour {
     private void LevelUpTalentAndShit()
     {
         _lastButton._level++;
-        Global.Instance._player._talentPoints--;
+        Global.Instance.player._talentPoints--;
 
         DeterminButtonStatus();
     }
@@ -298,7 +298,7 @@ public class TalentInfoBox : MonoBehaviour {
     /// </summary>
     public void DeterminButtonStatus()
     {
-        if ((Global.Instance._player._talentPoints == 0) || (_lastButton._maxLevel != 0 && _lastButton._level == _lastButton._maxLevel))
+        if ((Global.Instance.player._talentPoints == 0) || (_lastButton._maxLevel != 0 && _lastButton._level == _lastButton._maxLevel))
         {
             TalentInfoBox.Instance.acceptButton.interactable = false;
         }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+[System.Serializable]
 public class Global : MonoBehaviour {
     [System.Serializable]
     public class Prefabs
@@ -60,8 +61,6 @@ public class Global : MonoBehaviour {
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }
     public GameType _gameType = GameType.Farm;
 
-
-
     public uint _gold = 0;
     public uint Gold
     {
@@ -73,6 +72,18 @@ public class Global : MonoBehaviour {
         }
     }
     public Player _player;
+    public Player player
+    {
+        get
+        {
+            if (_player == null)
+            {
+                _player = Player.Instance;
+            }
+
+            return _player;
+        }
+    }
     public Prefabs _prefabs = new Prefabs();
     public Enemies _enemies = new Enemies();
     public Colors _colors = new Colors();
@@ -92,9 +103,13 @@ public class Global : MonoBehaviour {
     public TalentStats.Percent _potionDropChans = new TalentStats.Percent(1.05f);
     public TalentStats.Percent _potionHealthPercent = new TalentStats.Percent(1.2f);
 
+    public TalentStats.Percent _potionChansIncrease = new TalentStats.Percent(0.01f);
+    public TalentStats.Percent _PotionHealingIncrease = new TalentStats.Percent(0.01f);
+
     public Camera _gameCamera;
     public Camera _uiCamera;
 
+    [System.Serializable]
     private class DebugMessage
     {
         public string message;
@@ -114,6 +129,10 @@ public class Global : MonoBehaviour {
             }
             return _instance;
         }
+        set
+        {
+            _instance = value;
+        }
     }
 
     void Start()
@@ -132,7 +151,7 @@ public class Global : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.G))
         {
-            _player.SetExperience((uint)(_player._experianceToNext * 0.1f));
+            player.SetExperience((uint)(player._experianceToNext * 0.1f));
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -180,7 +199,7 @@ public class Global : MonoBehaviour {
         switch (gt_)
         {
             case GameType.Farm:
-                _player.gameObject.SetActive(true);
+                player.gameObject.SetActive(true);
                 FarmMode.Instance.gameObject.SetActive(true);
                 Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(false);
@@ -192,7 +211,7 @@ public class Global : MonoBehaviour {
             case GameType.Quest:
                 break;
             case GameType.Ship:
-                _player.gameObject.SetActive(false);
+                player.gameObject.SetActive(false);
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(true);
                 Starmap.Instance.gameObject.SetActive(false);
@@ -200,7 +219,7 @@ public class Global : MonoBehaviour {
                 _uiCamera.gameObject.SetActive(true);
                 _uiCamera.tag = "MainCamera";
 
-                foreach (var item in _player.gameObject.GetComponentsInChildren<SpellAttack>(true))
+                foreach (var item in player.gameObject.GetComponentsInChildren<SpellAttack>(true))
                 {
                     if (item.IsInvoking())
                         item.CancelInvoke();
@@ -209,7 +228,7 @@ public class Global : MonoBehaviour {
                 }
                 break;
             case GameType.Star:
-                _player.gameObject.SetActive(false);
+                player.gameObject.SetActive(false);
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(true);
@@ -219,13 +238,26 @@ public class Global : MonoBehaviour {
         }
     }
 
+    public ArrayList GetAllEnemies()
+    {
+        switch (_gameType)
+        {
+            case GameType.Farm:
+                return FarmMode.Instance.GetAllEnemies();
+            default:
+                break;
+        }
+
+        return new ArrayList();
+    }
+
     /// <summary>
     /// returns if the player is alive
     /// </summary>
     /// <returns></returns>
     public bool PlayerAlive()
     {
-        return _player._isAlive;
+        return player._isAlive;
     }
 
     /// <summary>
@@ -280,7 +312,7 @@ public class Global : MonoBehaviour {
     {
         if (_gameType == GameType.Farm)
         {
-            int level = Random.Range((int)_player._level - 1, (int)_player._level+2);
+            int level = Random.Range((int)player._level - 1, (int)player._level+2);
             if (level <= _planet._minLevel)
             {
                 return (uint)_planet._minLevel;
@@ -296,14 +328,14 @@ public class Global : MonoBehaviour {
 
     public void UpdateExpBar()
     {
-        float value = (float)(_player._experience) /(float)( _player._experianceToNext);
+        float value = (float)(player._experience) /(float)( player._experianceToNext);
         _playerGUI.transform.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Exp").transform.localScale = new Vector3(value, 1f, 1f);
-        _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "ExpText").text = _player._experience.ToString() + "/" + _player._experianceToNext.ToString();
+        _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "ExpText").text = player._experience.ToString() + "/" + player._experianceToNext.ToString();
     }
 
     public void UpdateLevel()
     {
-        _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Level").text = _player._level.ToString();
+        _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Level").text = player._level.ToString();
     }
 
     public void ShakeCamera()
@@ -360,5 +392,10 @@ public class Global : MonoBehaviour {
         }
 
         GetComponentInChildren<Text>().text = allMessages;
+    }
+
+    public void PostIO()
+    {
+        GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spells").gameObject.SetActive(false);
     }
 }

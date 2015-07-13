@@ -90,12 +90,12 @@ public class BuyEquipmentGeneration {
         Equipment ret = go.GetComponent<Equipment>();
         ret.name = "Clementine";
 
-        ret._stats._multiplierHealth = Global.Instance._player._stats._multiplierHealth;
-        ret._stats._multiplierDamage = Global.Instance._player._stats._multiplierDamage;
-        ret._stats._constMultiplier = Global.Instance._player._stats._constMultiplier;
-        ret._stats._valueMultiplier = Global.Instance._player._stats._valueMultiplier;
-        ret._stats._basePower = Global.Instance._player._stats._basePower;
-        ret._stats._powerDiv = Global.Instance._player._stats._powerDiv;
+        ret._stats._multiplierHealth = Global.Instance.player._stats._multiplierHealth;
+        ret._stats._multiplierDamage = Global.Instance.player._stats._multiplierDamage;
+        ret._stats._constMultiplier = Global.Instance.player._stats._constMultiplier;
+        ret._stats._valueMultiplier = Global.Instance.player._stats._valueMultiplier;
+        ret._stats._basePower = Global.Instance.player._stats._basePower;
+        ret._stats._powerDiv = Global.Instance.player._stats._powerDiv;
 
         ret._rareness = Equipment.Rareness.Green;
         float ITEMSTATMULTIPLIER = 0f;
@@ -121,13 +121,13 @@ public class BuyEquipmentGeneration {
                 break;
 	    }
 
-        ret._stats._level = Global.Instance._player._level;                                                         // level
+        ret._stats._level = Global.Instance.player._level;                                                         // level
                                                                                                                     // base
-        ret._stats._baseStat._values[0] = ret._stats._constMultiplier *
-            (ret._stats._level + (int)ret._rareness) + (Mathf.Pow(ret._stats._basePower, (ret._stats._level + (int)ret._rareness) / ret._stats._powerDiv)) * ITEMSTATMULTIPLIER;
+        ret._stats._baseStat._values[0] = (ret._stats._constMultiplier *
+            (ret._stats._level + (int)ret._rareness) + (Mathf.Pow(ret._stats._basePower, (ret._stats._level + (int)ret._rareness) / ret._stats._powerDiv))) * ITEMSTATMULTIPLIER;
         ret._stats._baseStat.Checker();
 
-        ret._stats._health = (ret._stats._baseStat / 2f) * Global.Instance._player._stats._multiplierHealth;        // health
+        ret._stats._health = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierHealth;        // health
 
         ret._element = (Equipment.ElementType)Random.Range(0,4);                                                    // element
 
@@ -207,16 +207,16 @@ public class BuyEquipmentGeneration {
         switch (ret._element)
         {
             case Equipment.ElementType.Tech:
-                ret._stats._tech.damage = (ret._stats._baseStat / 2f) * Global.Instance._player._stats._multiplierDamage;
+                ret._stats._tech.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
                 break;
             case Equipment.ElementType.Kinetic:
-                ret._stats._kinetic.damage = (ret._stats._baseStat / 2f) * Global.Instance._player._stats._multiplierDamage;
+                ret._stats._kinetic.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
                 break;
             case Equipment.ElementType.Pshycic:
-                ret._stats._psychic.damage = (ret._stats._baseStat / 2f) * Global.Instance._player._stats._multiplierDamage;
+                ret._stats._psychic.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
                 break;
             case Equipment.ElementType.Normal:
-                ret._stats._normal.damage = (ret._stats._baseStat / 2f) * Global.Instance._player._stats._multiplierDamage;
+                ret._stats._normal.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
                 break;
             default:
                 break;

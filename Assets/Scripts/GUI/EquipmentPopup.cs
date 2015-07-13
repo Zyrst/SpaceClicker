@@ -26,7 +26,7 @@ public class EquipmentPopup : Button {
     {
         try
         {
-            Global.Instance._player._inventoryArray[_myCount].GetComponent<Equipment>().Popup();
+            Global.Instance.player._inventoryArray[_myCount].GetComponent<Equipment>().Popup();
         }
         catch (System.NullReferenceException) { }
     }

@@ -41,7 +41,7 @@ public class SpellSlotButton : Button
 
         try
         {
-            Global.Instance._player._spellsArray[index].Clicked();
+            Global.Instance.player._spellsArray[index].Clicked();
         }
         catch (System.NullReferenceException) { }
     }

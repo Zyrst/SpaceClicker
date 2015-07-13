@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
 
+[System.Serializable]
 public class Player : Character {
     [System.Serializable]
     public class EquipmentOnPlayer
@@ -22,21 +23,21 @@ public class Player : Character {
             switch (equi_._type)
             {
                 case Equipment.EquipmentType.Weapon:
-                    for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+                    for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)
                     {
-                        if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
+                        if (Global.Instance.player._inventoryArray[i] == equi_.gameObject)
                         {
                             //Change to equipped 
-                            Global.Instance._player._inventoryArray[i].gameObject.transform.parent = Global.Instance._player._equipmentObject.transform;
+                            Global.Instance.player._inventoryArray[i].gameObject.transform.parent = Global.Instance.player._equipmentObject.transform;
                             //Set old to inventoy
                             if (_weapon == null)
 	                        {
-                                Global.Instance._player._inventoryArray[i] = null;
+                                Global.Instance.player._inventoryArray[i] = null;
 	                        }
                             else
                             {
-                                Global.Instance._player._inventoryArray[i] = _weapon.gameObject;
-                                _weapon.transform.parent = Global.Instance._player._inventoryObject.transform;
+                                Global.Instance.player._inventoryArray[i] = _weapon.gameObject;
+                                _weapon.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
                             _weaponSlot.GetComponent<Image>().sprite = equi_._sprite;
                             break;
@@ -45,21 +46,21 @@ public class Player : Character {
                     _weapon = equi_;
                     break;
                 case Equipment.EquipmentType.Head:
-                    for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+                    for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)
                     {
-                        if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
+                        if (Global.Instance.player._inventoryArray[i] == equi_.gameObject)
                         {
                             //Change to equipped 
-                            Global.Instance._player._inventoryArray[i].gameObject.transform.parent = Global.Instance._player._equipmentObject.transform;
+                            Global.Instance.player._inventoryArray[i].gameObject.transform.parent = Global.Instance.player._equipmentObject.transform;
                             //Set old to inventoy
                             if (_head == null)
 	                        {
-                                Global.Instance._player._inventoryArray[i] = null;
+                                Global.Instance.player._inventoryArray[i] = null;
 	                        }
                             else
                             {
-                                Global.Instance._player._inventoryArray[i] = _head.gameObject;
-                                _head.transform.parent = Global.Instance._player._inventoryObject.transform;
+                                Global.Instance.player._inventoryArray[i] = _head.gameObject;
+                                _head.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
                             _headSlot.GetComponent<Image>().sprite = equi_._sprite;
                             break;
@@ -68,21 +69,21 @@ public class Player : Character {
                     _head = equi_;
                     break;
                 case Equipment.EquipmentType.Chest:
-                    for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+                    for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)
                     {
-                        if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
+                        if (Global.Instance.player._inventoryArray[i] == equi_.gameObject)
                         {
                             //Change to equipped 
-                            Global.Instance._player._inventoryArray[i].gameObject.transform.parent = Global.Instance._player._equipmentObject.transform;
+                            Global.Instance.player._inventoryArray[i].gameObject.transform.parent = Global.Instance.player._equipmentObject.transform;
                             //Set old to inventoy
                             if (_chest == null)
                             {
-                                Global.Instance._player._inventoryArray[i] = null;
+                                Global.Instance.player._inventoryArray[i] = null;
                             }
                             else
                             {
-                                Global.Instance._player._inventoryArray[i] = _chest.gameObject;
-                                _chest.transform.parent = Global.Instance._player._inventoryObject.transform;
+                                Global.Instance.player._inventoryArray[i] = _chest.gameObject;
+                                _chest.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
                             _chestSlot.GetComponent<Image>().sprite = equi_._sprite;
                             break;
@@ -91,21 +92,21 @@ public class Player : Character {
                     _chest = equi_;
                     break;
                 case Equipment.EquipmentType.Legs:
-                    for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+                    for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)
                     {
-                        if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
+                        if (Global.Instance.player._inventoryArray[i] == equi_.gameObject)
                         {
                             //Change to equipped 
-                            Global.Instance._player._inventoryArray[i].gameObject.transform.parent = Global.Instance._player._equipmentObject.transform;
+                            Global.Instance.player._inventoryArray[i].gameObject.transform.parent = Global.Instance.player._equipmentObject.transform;
                             //Set old to inventoy
                             if (_legs == null)
                             {
-                                Global.Instance._player._inventoryArray[i] = null;
+                                Global.Instance.player._inventoryArray[i] = null;
                             }
                             else
                             {
-                                Global.Instance._player._inventoryArray[i] = _legs.gameObject;
-                                _legs.transform.parent = Global.Instance._player._inventoryObject.transform;
+                                Global.Instance.player._inventoryArray[i] = _legs.gameObject;
+                                _legs.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
                             _legsSlot.GetComponent<Image>().sprite = equi_._sprite;
                             break;
@@ -118,7 +119,7 @@ public class Player : Character {
             }
             CharacterScreen.Instance.RemoveInventorySlots();
             CharacterScreen.Instance.GenerateInventorySlots();
-            Global.Instance._player.UpdateCombinedStats();
+            Global.Instance.player.UpdateCombinedStats();
         }
 
     }
@@ -137,10 +138,19 @@ public class Player : Character {
 
     public uint _talentPoints = 0;
 
+    public static Player Instance = null;
+
+    public Player()
+    {
+        Instance = this;
+    }
+
 	// Use this for initialization
 	void Start () {
         LevelUp();
         UpdateCombinedStats();
+
+        Global.DebugOnScreen("PLAYER START()");
 	}
 	
 	// Update is called once per frame
@@ -267,7 +277,6 @@ public class Player : Character {
     /// </summary>
     public void UpdateCombinedStats()
     {
-
         Global.DebugOnScreen("kör combine stats");
         _combinedStats = new CharacterStats(_stats);
 
@@ -345,6 +354,12 @@ public class Player : Character {
 
     void OnEnable()
     {
-        GetComponentInChildren<CharacterGUI>().ResetDir();
+        try
+        {
+            GetComponentInChildren<CharacterGUI>().ResetDir();
+        }
+        catch (System.NullReferenceException)
+        {
+        }
     }
 }

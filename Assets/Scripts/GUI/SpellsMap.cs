@@ -43,14 +43,13 @@ public class SpellsMap : MonoBehaviour {
     public void UpdatePlayerSpellSlots()
     {
         MenuSpellSlotButton[] arr = GetComponentsInChildren<MenuSpellSlotButton>() as MenuSpellSlotButton[];
-        for (int i = 0; i < Global.Instance._player._spellsArray.Length; i++)
+        for (int i = 0; i < Global.Instance.player._spellsArray.Length; i++)
         {
-            if (Global.Instance._player._spellsArray[i] == null)
+            if (Global.Instance.player._spellsArray[i] != null)
             {
-                break;
+                arr[i].GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage;
+                arr[i]._spell = Global.Instance.player._spellsArray[i];
             }
-            arr[i].GetComponent<Image>().sprite = Global.Instance._player._spellsArray[i]._spellImage;
-            arr[i]._spell = Global.Instance._player._spellsArray[i];
         }
     }
 

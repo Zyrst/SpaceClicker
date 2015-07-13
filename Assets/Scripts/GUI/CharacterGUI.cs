@@ -34,6 +34,10 @@ public class CharacterGUI : MonoBehaviour {
         {
             scale = vap.GetScale(character._stats._health, ((Player)character)._combinedStats._maxHealth);
         }
+        if (float.IsNaN(scale))
+        {
+            scale = 0f;
+        }
 
         GameObject lifebar = HealthBar.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Life").gameObject;
 

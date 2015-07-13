@@ -26,12 +26,12 @@ public class FarmMode : MonoBehaviour {
     public void startFarmMode()
     {
         _arena = (GameObject.Instantiate(arenaPrefab) as GameObject);
-        Global.Instance._player.transform.position = _arena.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "PlayerSpawnPoint").position;
+        Global.Instance.player.transform.position = _arena.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "PlayerSpawnPoint").position;
     }
 
     public void allEnemiesDied()
     {
-        Global.Instance._player._stats._health = new vap(Global.Instance._player._combinedStats._maxHealth);
+        Global.Instance.player._stats._health = new vap(Global.Instance.player._combinedStats._maxHealth);
 
     }
 
@@ -44,7 +44,7 @@ public class FarmMode : MonoBehaviour {
         }
 
         // reset player
-        Global.Instance._player.Reset(2f);
+        Global.Instance.player.Reset(2f);
     }
 
     public void backToShip()
@@ -52,5 +52,19 @@ public class FarmMode : MonoBehaviour {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Global.Instance.SwitchScene(Global.GameType.Ship);
         Destroy(_arena);
+    }
+
+    public ArrayList GetAllEnemies()
+    {
+        ArrayList ret = new ArrayList();
+        foreach (var item in _arena.GetComponentsInChildren<EnemySpawner>())
+        {
+            if (item.EnemyIsActive())
+            {
+                ret.Add(item._enemy);
+            }
+        }
+
+        return ret;
     }
 }

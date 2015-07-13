@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
+[System.Serializable]
 public class Equipment : MonoBehaviour {
 
     public EquipmentStats _stats = new EquipmentStats();

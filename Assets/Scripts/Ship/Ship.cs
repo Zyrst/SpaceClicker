@@ -41,15 +41,15 @@ public class Ship : MonoBehaviour {
         else
             Global.Instance.SwitchScene(Global.GameType.Farm);
 
-        Global.Instance._player.UpdateCombinedStats();
+        Global.Instance.player.UpdateCombinedStats();
     }
 
     public void Character()
     {
         CharacterScreen.Instance.gameObject.SetActive(true);
         //Global.Instance._player.gameObject.SetActive(true);
-        Global.Instance._player.SortInventory();
-        Global.Instance._player.UpdateCombinedStats();
+        Global.Instance.player.SortInventory();
+        Global.Instance.player.UpdateCombinedStats();
         CharacterScreen.Instance.Activate();
         gameObject.SetActive(false);
 
@@ -69,7 +69,7 @@ public class Ship : MonoBehaviour {
         CharacterScreen.Instance.gameObject.SetActive(false);
         CharacterScreen.Instance.RemoveInventorySlots();
         CharacterScreen.Instance.ResetModel();
-        Global.Instance._player.gameObject.SetActive(false);
+        Global.Instance.player.gameObject.SetActive(false);
         gameObject.SetActive(true);
         Sounds.OneShot(Sounds.Instance.uiSounds.navigation.closeInventory);
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
@@ -83,15 +83,15 @@ public class Ship : MonoBehaviour {
 
     public void FixPlayerStats()
     {
-        Global.Instance._player.gameObject.SetActive(true);
-        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
+        Global.Instance.player.gameObject.SetActive(true);
+        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
 
         Invoke("DisablePlayer", 0.1f);
     }
 
     public void DisablePlayer()
     {
-        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
-        Global.Instance._player.gameObject.SetActive(false);
+        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
+        Global.Instance.player.gameObject.SetActive(false);
     }
 }

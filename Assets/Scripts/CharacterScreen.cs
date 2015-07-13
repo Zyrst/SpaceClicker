@@ -31,6 +31,10 @@ public class CharacterScreen : MonoBehaviour {
             }
             return _instance;
         }
+        set
+        {
+            _instance = value;
+        }
     }
 	// Use this for initialization
 	void Start () {
@@ -74,7 +78,14 @@ public class CharacterScreen : MonoBehaviour {
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "TalentTree").gameObject.SetActive(true);
-        TalentInfoBox.Instance.talentPointText.text = Global.Instance._player._talentPoints.ToString();
+        try
+        {
+            TalentInfoBox.Instance.talentPointText.text = Global.Instance.player._talentPoints.ToString();
+        }
+        catch (System.NullReferenceException)
+        {
+            Debug.LogError("Med högsta sannolikhet så är talent tree inaktiv i hierarkin");
+        }
     }
 
     public void CloseTalentTree()
@@ -120,7 +131,7 @@ public class CharacterScreen : MonoBehaviour {
                 tmpInv.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
                 try
                 {
-                    tmpInv.gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "EquipSprite").sprite = Global.Instance._player._inventoryArray[counter].gameObject.GetComponent<Equipment>()._sprite;
+                    tmpInv.gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "EquipSprite").sprite = Global.Instance.player._inventoryArray[counter].gameObject.GetComponent<Equipment>()._sprite;
                 }
                 catch (System.NullReferenceException) {}
   
@@ -146,7 +157,7 @@ public class CharacterScreen : MonoBehaviour {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Debug.Log("EquipLast");
         ResetInventorySprite(_lastEquip);
-        Global.Instance._player._equipped.Equip(_lastEquip);
+        Global.Instance.player._equipped.Equip(_lastEquip);
         GenerateCharInfo();
     }
 
@@ -171,9 +182,9 @@ public class CharacterScreen : MonoBehaviour {
     public void ResetInventorySprite(Equipment equi_)
     {
 
-        for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+        for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)
         {
-            if (Global.Instance._player._inventoryArray[i] == equi_.gameObject)
+            if (Global.Instance.player._inventoryArray[i] == equi_.gameObject)
             {
                 object[] arr = _inventory.ToArray();
                 ((GameObject)arr[i]).GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "EquipSprite").sprite = null;
@@ -187,70 +198,76 @@ public class CharacterScreen : MonoBehaviour {
     public void GenerateCharInfo()
     {
 
-        string info = "Level : " + Global.Instance._player._level.ToString();
-        info += System.Environment.NewLine + "Health: " +  Global.Instance._player._combinedStats._maxHealth.GetString();
+        string info = "Level : " + Global.Instance.player._level.ToString();
+        info += System.Environment.NewLine + "Health: " +  Global.Instance.player._combinedStats._maxHealth.GetString();
         
         info+= System.Environment.NewLine + System.Environment.NewLine + "Click";
-        info += System.Environment.NewLine + "Click Damage : " + Global.Instance._player._combinedStats._normal.damage.GetString();
-        info += System.Environment.NewLine + "Click Crit Chance " + (Global.Instance._player._combinedStats._normal.crit * 100) + "%";
-        info += System.Environment.NewLine + "Click Crit multiplier : " + Global.Instance._player._combinedStats._normal.critMultiplier;
+        info += System.Environment.NewLine + "Click Damage : " + Global.Instance.player._combinedStats._normal.damage.GetString();
+        info += System.Environment.NewLine + "Click Crit Chance " + (Global.Instance.player._combinedStats._normal.crit * 100) + "%";
+        info += System.Environment.NewLine + "Click Crit multiplier : " + Global.Instance.player._combinedStats._normal.critMultiplier;
 
         info += System.Environment.NewLine + System.Environment.NewLine + "<color=blue>Tech</color>";
-        info += System.Environment.NewLine + "Tech Damage : "  + Global.Instance._player._combinedStats._tech.damage.GetString();
-        info += System.Environment.NewLine + "Tech Crit Chance : " + (Global.Instance._player._combinedStats._tech.crit * 100) + "%";
-        info += System.Environment.NewLine + "Tech Crit multiplier : " + Global.Instance._player._combinedStats._tech.critMultiplier;
+        info += System.Environment.NewLine + "Tech Damage : "  + Global.Instance.player._combinedStats._tech.damage.GetString();
+        info += System.Environment.NewLine + "Tech Crit Chance : " + (Global.Instance.player._combinedStats._tech.crit * 100) + "%";
+        info += System.Environment.NewLine + "Tech Crit multiplier : " + Global.Instance.player._combinedStats._tech.critMultiplier;
 
         info += System.Environment.NewLine + System.Environment.NewLine + "<color=yellow>Kinetic</color>";
-        info += System.Environment.NewLine + "Kinetic Damage : " + Global.Instance._player._combinedStats._kinetic.damage.GetString();
-        info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance._player._combinedStats._kinetic.crit * 100) + "%";
-        info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance._player._combinedStats._kinetic.critMultiplier;
+        info += System.Environment.NewLine + "Kinetic Damage : " + Global.Instance.player._combinedStats._kinetic.damage.GetString();
+        info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance.player._combinedStats._kinetic.crit * 100) + "%";
+        info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance.player._combinedStats._kinetic.critMultiplier;
 
         info += System.Environment.NewLine + System.Environment.NewLine + "<color=purple>Psychic</color>";
-        info += System.Environment.NewLine + "Psychic Damage : " + Global.Instance._player._combinedStats._psychic.damage.GetString();
-        info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance._player._combinedStats._psychic.crit * 100) + "%";
-        info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance._player._combinedStats._psychic.critMultiplier;
+        info += System.Environment.NewLine + "Psychic Damage : " + Global.Instance.player._combinedStats._psychic.damage.GetString();
+        info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance.player._combinedStats._psychic.crit * 100) + "%";
+        info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance.player._combinedStats._psychic.critMultiplier;
 
         info += System.Environment.NewLine + System.Environment.NewLine + "Resistance";
-        info += System.Environment.NewLine + "Normal Resistance : " + Global.Instance._player._combinedStats._normal.resistance;
-        info += System.Environment.NewLine + "Tech Resistance : " + Global.Instance._player._combinedStats._tech.resistance;
-        info += System.Environment.NewLine + "Kinetic Resistance : " + Global.Instance._player._combinedStats._kinetic.resistance;
-        info += System.Environment.NewLine + "Psychic Resistance : " + Global.Instance._player._combinedStats._psychic.resistance;
+        info += System.Environment.NewLine + "Normal Resistance : " + Global.Instance.player._combinedStats._normal.resistance;
+        info += System.Environment.NewLine + "Tech Resistance : " + Global.Instance.player._combinedStats._tech.resistance;
+        info += System.Environment.NewLine + "Kinetic Resistance : " + Global.Instance.player._combinedStats._kinetic.resistance;
+        info += System.Environment.NewLine + "Psychic Resistance : " + Global.Instance.player._combinedStats._psychic.resistance;
 
-        float cooldown = Global.Instance._player._combinedStats._psychic.cooldownReduction + Global.Instance._player._combinedStats._normal.cooldownReduction +
-            Global.Instance._player._combinedStats._kinetic.cooldownReduction + Global.Instance._player._combinedStats._tech.cooldownReduction;
+        float cooldown = Global.Instance.player._combinedStats._psychic.cooldownReduction + Global.Instance.player._combinedStats._normal.cooldownReduction +
+            Global.Instance.player._combinedStats._kinetic.cooldownReduction + Global.Instance.player._combinedStats._tech.cooldownReduction;
 
         info += System.Environment.NewLine + System.Environment.NewLine + "Cooldown Reduction : " + cooldown;
 
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "CharInfo").text = info;
+
+        for (int i = 0; i < Global.Instance.player._spellsArray.Length; i++)
+        {
+            if (Global.Instance.player._spellsArray[i] != null)
+                GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spell" + i).GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage;
+        }
     }
 
     public void Model()
     {
-        _playerPos = Global.Instance._player.transform.position;
-        _playerRot = Global.Instance._player.transform.rotation;
+        _playerPos = Global.Instance.player.transform.position;
+        _playerRot = Global.Instance.player.transform.rotation;
 
-        Global.Instance._player.gameObject.SetActive(true);
-        Transform playerModel = Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
+        Global.Instance.player.gameObject.SetActive(true);
+        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
 
         
         playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
         playerModel.LookAt(Global.Instance._uiCamera.transform.position);
         playerModel.localScale = new Vector3(50, 50, 50);
 
-        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
-        Global.Instance._player.GetComponent<ClickAttack>().enabled = false;
+        Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
+        Global.Instance.player.GetComponent<ClickAttack>().enabled = false;
         Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = false;
     }
 
     public void ResetModel()
     {
-        Transform playerModel = Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
+        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
 
         playerModel.position = _playerPos;
         playerModel.rotation = _playerRot;
         playerModel.localScale = new Vector3(2, 2, 2);
-        Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
-        Global.Instance._player.GetComponent<ClickAttack>().enabled = true;
+        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
+        Global.Instance.player.GetComponent<ClickAttack>().enabled = true;
     //    Global.Instance._player.gameObject.SetActive(false);
         Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = true;
 
@@ -264,8 +281,8 @@ public class CharacterScreen : MonoBehaviour {
     {
 
         string info = equip_._stats._name;
-        if (Global.Instance._player._equipped._chest == null && equip_._type == Equipment.EquipmentType.Chest || Global.Instance._player._equipped._head == null && equip_._type == Equipment.EquipmentType.Head || 
-            Global.Instance._player._equipped._legs == null && equip_._type == Equipment.EquipmentType.Legs || Global.Instance._player._equipped._weapon == null && equip_._type == Equipment.EquipmentType.Weapon)
+        if (Global.Instance.player._equipped._chest == null && equip_._type == Equipment.EquipmentType.Chest || Global.Instance.player._equipped._head == null && equip_._type == Equipment.EquipmentType.Head || 
+            Global.Instance.player._equipped._legs == null && equip_._type == Equipment.EquipmentType.Legs || Global.Instance.player._equipped._weapon == null && equip_._type == Equipment.EquipmentType.Weapon)
         {
             if(equip_._stats._normal.damage.GetFloat() > 0f)
                 info += System.Environment.NewLine + "Click Damage :  " + equip_._stats._normal.damage.GetString() + "     +" + equip_._stats._normal.damage.GetString();
@@ -287,16 +304,16 @@ public class CharacterScreen : MonoBehaviour {
         switch (equip_._type)
         {
             case Equipment.EquipmentType.Weapon:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._weapon._stats._normal.damage);
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._weapon._stats._normal.damage);
                 break;
             case Equipment.EquipmentType.Head:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._head._stats._normal.damage);
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._head._stats._normal.damage);
                 break;
             case Equipment.EquipmentType.Chest:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._chest._stats._normal.damage);
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._chest._stats._normal.damage);
                 break;
             case Equipment.EquipmentType.Legs:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance._player._equipped._legs._stats._normal.damage);
+                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._legs._stats._normal.damage);
                 break;
             default:
                 calc = equip_._stats._normal.damage;
@@ -319,16 +336,16 @@ public class CharacterScreen : MonoBehaviour {
          switch (equip_._type)
          {
              case Equipment.EquipmentType.Weapon:
-                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._weapon._stats._normal.crit;
+                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._weapon._stats._normal.crit;
                   break;
              case Equipment.EquipmentType.Head:
-                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._head._stats._normal.crit;
+                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._head._stats._normal.crit;
                   break;
              case Equipment.EquipmentType.Chest:
-                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._chest._stats._normal.crit;
+                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._chest._stats._normal.crit;
                   break;
              case Equipment.EquipmentType.Legs:
-                  calcF = equip_._stats._normal.crit - Global.Instance._player._equipped._legs._stats._normal.crit;
+                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._legs._stats._normal.crit;
                   break;
              default:
                   calcF = equip_._stats._normal.crit;
@@ -349,16 +366,16 @@ public class CharacterScreen : MonoBehaviour {
         switch (equip_._type)
         {
             case Equipment.EquipmentType.Weapon:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._weapon._stats._normal.critMultiplier;
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._weapon._stats._normal.critMultiplier;
                 break;
             case Equipment.EquipmentType.Head:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._head._stats._normal.critMultiplier;
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._head._stats._normal.critMultiplier;
                 break;
             case Equipment.EquipmentType.Chest:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._chest._stats._normal.critMultiplier;
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._chest._stats._normal.critMultiplier;
                 break;
             case Equipment.EquipmentType.Legs:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance._player._equipped._legs._stats._normal.critMultiplier;
+                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._legs._stats._normal.critMultiplier;
                 break;
             default:
                 break;
@@ -382,9 +399,9 @@ public class CharacterScreen : MonoBehaviour {
 
     public void PutEquipmentOnTheSlots()
     {
-        Global.Instance._player._equipped._chestSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._chest._sprite;
-        Global.Instance._player._equipped._legsSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._legs._sprite;
-        Global.Instance._player._equipped._weaponSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._weapon._sprite;
-        Global.Instance._player._equipped._headSlot.GetComponent<Image>().sprite = Global.Instance._player._equipped._head._sprite;
+        Global.Instance.player._equipped._chestSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._chest._sprite;
+        Global.Instance.player._equipped._legsSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._legs._sprite;
+        Global.Instance.player._equipped._weaponSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._weapon._sprite;
+        Global.Instance.player._equipped._headSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._head._sprite;
     }
 }

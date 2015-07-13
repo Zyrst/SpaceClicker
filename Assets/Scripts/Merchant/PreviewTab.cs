@@ -21,13 +21,13 @@ public class PreviewTab : Tabs {
         // det sser lite konstigt ut högst upp här, men man ska aldrig kunna vara utan equipment sen
 
         counter++;
-        if (Global.Instance._player._equipped._chest != null)
+        if (Global.Instance.player._equipped._chest != null)
         {
-            BuyEquipmentGeneration.ConnectEquipmentToTheButton(GetComponentsInChildren<BuyEquipmentButton>()[0], Global.Instance._player._equipped._chest);
+            BuyEquipmentGeneration.ConnectEquipmentToTheButton(GetComponentsInChildren<BuyEquipmentButton>()[0], Global.Instance.player._equipped._chest);
             GetComponentsInChildren<BuyEquipmentButton>()[0]._equipText.text = "Equipped";
         }
         counter++;
-        if (Global.Instance._player._equipped._head != null)
+        if (Global.Instance.player._equipped._head != null)
         {
             if (counter % 2 == 0)
                 pos.x = 475f;
@@ -42,7 +42,7 @@ public class PreviewTab : Tabs {
             if (GetComponentsInChildren<BuyEquipmentButton>().Length < counter)
             {
                 BuyEquipmentButton but = makeAButton(pos);
-                BuyEquipmentGeneration.ConnectEquipmentToTheButton(but, Global.Instance._player._equipped._head);
+                BuyEquipmentGeneration.ConnectEquipmentToTheButton(but, Global.Instance.player._equipped._head);
                 but._equipText.text = "Equipped";
             }
             else
@@ -51,7 +51,7 @@ public class PreviewTab : Tabs {
             }
         }
         counter++;
-        if (Global.Instance._player._equipped._legs != null)
+        if (Global.Instance.player._equipped._legs != null)
         {
             if (counter % 2 == 0)
                 pos.x = 475f;
@@ -66,7 +66,7 @@ public class PreviewTab : Tabs {
             if (GetComponentsInChildren<BuyEquipmentButton>().Length < counter)
             {
                 BuyEquipmentButton but = makeAButton(pos);
-                BuyEquipmentGeneration.ConnectEquipmentToTheButton(but, Global.Instance._player._equipped._legs);
+                BuyEquipmentGeneration.ConnectEquipmentToTheButton(but, Global.Instance.player._equipped._legs);
                 but._equipText.text = "Equipped";
             }
             else
@@ -75,7 +75,7 @@ public class PreviewTab : Tabs {
             }
         }
         counter++;
-        if (Global.Instance._player._equipped._weapon != null)
+        if (Global.Instance.player._equipped._weapon != null)
         {
             if (counter % 2 == 0)
                 pos.x = 475f;
@@ -90,7 +90,7 @@ public class PreviewTab : Tabs {
             if (GetComponentsInChildren<BuyEquipmentButton>().Length < counter)
             {
                 BuyEquipmentButton but = makeAButton(pos);
-                BuyEquipmentGeneration.ConnectEquipmentToTheButton(but, Global.Instance._player._equipped._weapon);
+                BuyEquipmentGeneration.ConnectEquipmentToTheButton(but, Global.Instance.player._equipped._weapon);
                 but._equipText.text = "Equipped";
             }
             else
@@ -99,7 +99,7 @@ public class PreviewTab : Tabs {
             }
         }
 
-        foreach (var item in Global.Instance._player._inventoryArray)
+        foreach (var item in Global.Instance.player._inventoryArray)
         {
             counter ++;
             if (item == null)

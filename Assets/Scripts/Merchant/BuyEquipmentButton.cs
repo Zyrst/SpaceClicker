@@ -32,12 +32,12 @@ public class BuyEquipmentButton : MonoBehaviour {
         {
             Global.Instance._gold -= GetComponentInChildren<Equipment>()._cost;
             bool set = false;
-            for (int i = 0; i < Global.Instance._player._inventoryArray.Length; i++)
+            for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)
             {
-                if (Global.Instance._player._inventoryArray[i] == null)
+                if (Global.Instance.player._inventoryArray[i] == null)
                 {
-                    Global.Instance._player._inventoryArray[i] = GetComponentInChildren<Equipment>().gameObject;
-                    GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance._player._inventoryObject.transform;
+                    Global.Instance.player._inventoryArray[i] = GetComponentInChildren<Equipment>().gameObject;
+                    GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance.player._inventoryObject.transform;
 
                     GetComponent<Button>().interactable = false;
 

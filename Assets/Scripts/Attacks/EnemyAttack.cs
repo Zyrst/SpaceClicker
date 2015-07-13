@@ -113,7 +113,7 @@ public class EnemyAttack : MonoBehaviour {
         {
             if (!_nextAttackIsShield)           // do regular attack
             {
-                Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats, false), gameObject.GetComponent<Enemy>());
+                Global.Instance.player.TakeDamage(DamageStats.GenerateFromCharacterStats(gameObject.GetComponent<Enemy>()._stats, false), gameObject.GetComponent<Enemy>());
             }
             else
             {

@@ -182,14 +182,14 @@ public class TalentButton : MonoBehaviour {
                 TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + Global.Instance._potionDropChans.PerCent;
                 
                 TalentInfoBox.Instance.nextInfo.statInfo.text = "Potion Drop:";
-                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + HealthPotion._chansIncrease.PerCent;
+                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + Global.Instance._potionChansIncrease.PerCent;
                 break;
             case TalentTypes.hpPotionHealingPercent:    // healing %
                 TalentInfoBox.Instance.currentInfo.statInfo.text = "Potion Healing:";
                 TalentInfoBox.Instance.currentInfo.statsInfoText.text = "+" + Global.Instance._potionHealthPercent.PerCent;
 
                 TalentInfoBox.Instance.nextInfo.statInfo.text = "Potion Healing:";
-                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + HealthPotion._healingIncrease.PerCent;
+                TalentInfoBox.Instance.nextInfo.statsInfoText.text = "+" + Global.Instance._PotionHealingIncrease.PerCent;
                 break;
             case TalentTypes.AllResistance:             // resistance %
                 TalentInfoBox.Instance.currentInfo.statInfo.text = "Resistance:";

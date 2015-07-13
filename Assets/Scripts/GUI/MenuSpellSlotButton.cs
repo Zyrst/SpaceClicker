@@ -66,23 +66,38 @@ public class MenuSpellSlotButton : Button {
         {
             if (_slot != null)
             {
-                GameObject go = GameObject.Instantiate(_spell.gameObject);
-                Global.Instance._player._spellsArray[_slotNum] = go.GetComponent<SpellAttack>();
+                GameObject old = null;
+                // remove old spell
+                if (Global.Instance.player._spellsArray[_slotNum] != null)
+                {
+                    old = Global.Instance.player._spellsArray[_slotNum].gameObject;
+                }
 
-                Global.Instance._player._spellSlotArray[_slotNum
+                // create new instance of selected spell
+                GameObject go = GameObject.Instantiate(_spell.gameObject);
+                Global.Instance.player._spellsArray[_slotNum] = go.GetComponent<SpellAttack>();
+
+
+                Global.Instance.player._spellSlotArray[_slotNum
                     ].GetComponentsInChildren<Image>(true).FirstOrDefault(
                         x => x.name == "Image").sprite = go.GetComponent<SpellAttack>()._spellImage;
 
-                go.transform.parent = Global.Instance._player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spells").transform;
+                go.transform.parent = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Spells").transform;
 
-                go.GetComponent<SpellAttack>()._slot = Global.Instance._player._spellSlotArray[_slotNum];
+                go.GetComponent<SpellAttack>()._slot = Global.Instance.player._spellSlotArray[_slotNum];
                 go.GetComponent<SpellAttack>().Init();
 
-                GetComponentInParent<SpellsMap>().UpdatePlayerSpellSlots();
+                if (old != null)
+                {
+                    Destroy(old);
+                }
+
             }
 
             GetComponent<RectTransform>().position = _startPos;
             _held = false;
         }
+
+        GetComponentInParent<SpellsMap>().UpdatePlayerSpellSlots();
     }
 }

@@ -29,7 +29,7 @@ public class Enemy : Character
         _stats._normal.damage = (_stats._baseStat * _stats._multiplierDamage) * _stats._damageStatDist;
 
         Transform tr = transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model");
-        tr.LookAt(Global.Instance._player.transform);
+        tr.LookAt(Global.Instance.player.transform);
        // Quaternion rot = transform.rotation;
         //rot.z = 0f;
 	}
@@ -54,7 +54,7 @@ public class Enemy : Character
         _myNumDeath = Global.Instance.EnemiesAlive();
 
         // spawn goldcoin
-        Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance._player.transform.position);
+        Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance.player.transform.position);
         GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = _level;
         float rnd = Random.Range(0f, 1f);
         if(rnd >= 1f - Global.Instance._potionDropChans.value)
@@ -152,7 +152,7 @@ public class Enemy : Character
 
 
 
-                Global.Instance._player.TakeDamage(DamageStats.GenerateFromCharacterStats(_shieldStats, false), gameObject.GetComponent<Enemy>());
+                Global.Instance.player.TakeDamage(DamageStats.GenerateFromCharacterStats(_shieldStats, false), gameObject.GetComponent<Enemy>());
                 GetComponent<EnemyAttack>().ResetShield();
                 if (GetComponent<EnemyAttack>().IsInvoking())
                 {
