@@ -7,7 +7,8 @@ public class EquipmentPopup : Button {
     public static int _count = -1;
     public int _myCount;
 	// Use this for initialization
-	void Start () {
+
+	protected override void Start () {
         _count++;
         _myCount = _count;
 	}
@@ -17,7 +18,7 @@ public class EquipmentPopup : Button {
 	
 	}
 
-    public static void Reset()
+    public static void reset()
     {
         _count = -1;
     }

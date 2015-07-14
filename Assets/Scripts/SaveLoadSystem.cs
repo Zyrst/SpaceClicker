@@ -40,36 +40,21 @@ public class SaveLoadSystem {
             }
         }
 
-        Global.Instance._player.gameObject.SetActive(true);
+        Global.Instance.player.PreSave();
 
-        Transform[] Parr = Global.Instance._player.gameObject.GetComponentsInChildren<Transform>(true);
-        for (int i = 0; i < Parr.Length; i++)
+        Transform[] Sarr = Starmap.Instance.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < Sarr.Length; i++)
         {
-            if (Parr[i].GetComponent<StoreInformation>() == null)
-            {
-                Parr[i].gameObject.AddComponent<StoreInformation>();
-            }
-            if (Parr[i].GetComponent<StoreMaterials>() == null)
-            {
-                Parr[i].gameObject.AddComponent<StoreMaterials>();
-            }
+            Sarr[i].gameObject.SetActive(true);
         }
-
-        /*Transform[] SCarr = CharacterScreen.Instance.GetComponentsInChildren<Transform>(true);
-        for (int i = 0; i < SCarr.Length; i++)
-        {
-            SCarr[i].gameObject.SetActive(true);
-            if (SCarr[i].GetComponent<StoreInformation>() == null)
-            {
-                SCarr[i].GetComponent<StoreInformation>();
-            }
-        }*/
+        Starmap.Instance.gameObject.SetActive(true);
 
         LevelSerializer.SaveGame("SpaceClicker");
 
         Global.Instance.PostIO();
+        Global.Instance.player.PostSave();
 
-        Global.Instance._player.gameObject.SetActive(false);
+        Starmap.Instance.gameObject.SetActive(true);
 
         //CharacterScreen.Instance.ClosePopup();
         //Ship.Instance.ExitCharacter();
@@ -88,12 +73,13 @@ public class SaveLoadSystem {
 
         Global.Instance.player._spellsArray = ss;*/
         //CharacterScreen.Instance = gs._charScreen;
-
+        Global.Instance.player.PreLoad();
 
         LevelSerializer.LoadNow(LevelSerializer.SavedGames[LevelSerializer.PlayerName][0].Data);
 
         Global.Instance.PostIO();
-        Global.Instance._player.gameObject.SetActive(false);
+        Global.Instance.player.PostLoad();
+        Starmap.Instance.gameObject.SetActive(false);
         //CharacterScreen.Instance.ClosePopup();
         //Ship.Instance.ExitCharacter();
     }

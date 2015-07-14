@@ -112,7 +112,7 @@ public class CharacterScreen : MonoBehaviour {
 
     public void GenerateInventorySlots()
     {
-        EquipmentPopup.Reset();
+        EquipmentPopup.reset();
         Vector3 currentPos = Vector3.zero;
         currentPos.x = _invStartPos.x;
         currentPos.y = _invStartPos.y;
@@ -131,7 +131,7 @@ public class CharacterScreen : MonoBehaviour {
                 tmpInv.gameObject.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
                 try
                 {
-                    tmpInv.gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "EquipSprite").sprite = Global.Instance.player._inventoryArray[counter].gameObject.GetComponent<Equipment>()._sprite;
+                    tmpInv.gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "EquipSprite").sprite = Global.Instance.player._inventoryArray[counter].gameObject.GetComponent<Equipment>()._sprite.sprite;
                 }
                 catch (System.NullReferenceException) {}
   
@@ -237,7 +237,7 @@ public class CharacterScreen : MonoBehaviour {
         for (int i = 0; i < Global.Instance.player._spellsArray.Length; i++)
         {
             if (Global.Instance.player._spellsArray[i] != null)
-                GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spell" + i).GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage;
+                GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spell" + i).GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage.sprite;
         }
     }
 
@@ -399,9 +399,9 @@ public class CharacterScreen : MonoBehaviour {
 
     public void PutEquipmentOnTheSlots()
     {
-        Global.Instance.player._equipped._chestSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._chest._sprite;
-        Global.Instance.player._equipped._legsSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._legs._sprite;
-        Global.Instance.player._equipped._weaponSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._weapon._sprite;
-        Global.Instance.player._equipped._headSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._head._sprite;
+        Global.Instance.player._equipped._chestSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._chest._sprite.sprite;
+        Global.Instance.player._equipped._legsSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._legs._sprite.sprite;
+        Global.Instance.player._equipped._weaponSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._weapon._sprite.sprite;
+        Global.Instance.player._equipped._headSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._head._sprite.sprite;
     }
 }

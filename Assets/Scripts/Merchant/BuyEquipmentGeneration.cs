@@ -25,7 +25,7 @@ public class BuyEquipmentGeneration {
 
     public static void ConnectEquipmentToTheButton(BuyEquipmentButton slot_, Equipment equipment_)
     {
-        slot_._equipmentImage.sprite = equipment_._sprite;
+        slot_._equipmentImage.sprite = equipment_._sprite.sprite;
         slot_._levelText.text = equipment_._stats._level.ToString();
         slot_._nameText.text = equipment_._stats._name;
         slot_._typeText.text = System.Enum.GetName(typeof(Equipment.EquipmentType), equipment_._type);
@@ -226,19 +226,19 @@ public class BuyEquipmentGeneration {
         {
             case Equipment.EquipmentType.Weapon:
                 ret._stats._name = "Weapon";
-                ret._sprite = Global.Instance._sprites.equipment_weapon;
+                ret._sprite = Sprites.Instance.equipment.Weapon;
                 break;
             case Equipment.EquipmentType.Head:
                 ret._stats._name = "Hat";
-                ret._sprite = Global.Instance._sprites.equipment_head;
+                ret._sprite = Sprites.Instance.equipment.Head;
                 break;
             case Equipment.EquipmentType.Chest:
                 ret._stats._name = "Shirt";
-                ret._sprite = Global.Instance._sprites.equipment_chest;
+                ret._sprite = Sprites.Instance.equipment.Chest;
                 break;
             case Equipment.EquipmentType.Legs:
                 ret._stats._name = "Pantalones";
-                ret._sprite = Global.Instance._sprites.equipment_legs;
+                ret._sprite = Sprites.Instance.equipment.Legs;
                 break;
             default:
                 break;

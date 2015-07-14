@@ -47,7 +47,7 @@ public class SpellsMap : MonoBehaviour {
         {
             if (Global.Instance.player._spellsArray[i] != null)
             {
-                arr[i].GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage;
+                arr[i].GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage.sprite;
                 arr[i]._spell = Global.Instance.player._spellsArray[i];
             }
         }
@@ -95,7 +95,7 @@ public class SpellsMap : MonoBehaviour {
             go.GetComponent<RectTransform>().localScale = Vector3.one;
 
             msp._spell = item;
-            msp.GetComponent<Image>().sprite = item._spellImage;
+            msp.GetComponent<Image>().sprite = item._spellImage.sprite;
 
             rect.position = new Vector2(rect.position.x + _buttonOffset.x, rect.position.y);
             row++;

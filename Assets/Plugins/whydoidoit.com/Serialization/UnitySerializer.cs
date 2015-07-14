@@ -1694,11 +1694,14 @@ namespace Serialization
 						return null;
 					if(_componentHelper == null)
 					{
-						_componentHelper = new GameObject("Component Helper") { hideFlags = HideFlags.HideAndDontSave, active = false };
+						_componentHelper = new GameObject("Component Helper") { hideFlags = HideFlags.HideAndDontSave/*, active = true*/ };
+                        _componentHelper.SetActive(true);   // **************************************** //
 					}
 					try
 					{
-						var component = _componentHelper.GetComponent(itemType);
+                        var component = _componentHelper.GetComponent(itemType);
+                        /*if (component == null)
+                            component = _componentHelper.GetComponent(itemType.BaseType);*/
 						if(component == null)
 							component = _componentHelper.AddComponent(itemType);
 						

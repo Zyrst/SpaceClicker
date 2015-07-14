@@ -6,7 +6,7 @@ using System.Collections;
 public class Equipment : MonoBehaviour {
 
     public EquipmentStats _stats = new EquipmentStats();
-    public Sprite _sprite = new Sprite();
+    public SpriteRef _sprite;
 
     public enum EquipmentType
     {

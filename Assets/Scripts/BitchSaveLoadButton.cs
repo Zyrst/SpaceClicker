@@ -5,11 +5,6 @@ using System.Collections;
 public class BitchSaveLoadButton : Button {
 
     public bool trueIfSave = false;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {

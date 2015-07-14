@@ -40,7 +40,7 @@ public class Player : Character {
                                 Global.Instance.player._inventoryArray[i] = _weapon.gameObject;
                                 _weapon.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
-                            _weaponSlot.GetComponent<Image>().sprite = equi_._sprite;
+                            _weaponSlot.GetComponent<Image>().sprite = equi_._sprite.sprite;
                             break;
                         }
                     }
@@ -63,7 +63,7 @@ public class Player : Character {
                                 Global.Instance.player._inventoryArray[i] = _head.gameObject;
                                 _head.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
-                            _headSlot.GetComponent<Image>().sprite = equi_._sprite;
+                            _headSlot.GetComponent<Image>().sprite = equi_._sprite.sprite;
                             break;
                         }
                     }
@@ -86,7 +86,7 @@ public class Player : Character {
                                 Global.Instance.player._inventoryArray[i] = _chest.gameObject;
                                 _chest.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
-                            _chestSlot.GetComponent<Image>().sprite = equi_._sprite;
+                            _chestSlot.GetComponent<Image>().sprite = equi_._sprite.sprite;
                             break;
                         }
                     }
@@ -109,7 +109,7 @@ public class Player : Character {
                                 Global.Instance.player._inventoryArray[i] = _legs.gameObject;
                                 _legs.transform.parent = Global.Instance.player._inventoryObject.transform;
                             }
-                            _legsSlot.GetComponent<Image>().sprite = equi_._sprite;
+                            _legsSlot.GetComponent<Image>().sprite = equi_._sprite.sprite;
                             break;
                         }
                     }
@@ -124,6 +124,8 @@ public class Player : Character {
         }
 
     }
+
+    public GameObject GUIPrefab;
     
     public SpellAttack[] _spellsArray = new SpellAttack[4];
     public GameObject[] _spellSlotArray = new GameObject[4];
@@ -361,6 +363,69 @@ public class Player : Character {
         }
         catch (System.NullReferenceException)
         {
+        }
+    }
+
+    public void PreSave()
+    {
+        Global.Instance._player.gameObject.SetActive(true);
+
+        Transform[] Parr = Global.Instance._player.gameObject.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < Parr.Length; i++)
+        {
+            bool found = false;
+            foreach (var item in gameObject.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentsInChildren<Transform>(true))
+            {
+                if (Parr[i].gameObject == item.gameObject || Parr[i].name == "GUI")
+	            {
+                    found = true;
+	            }
+            }
+            if (!found)
+            {
+                if (Parr[i].GetComponent<StoreInformation>() == null)
+                {
+                    Parr[i].gameObject.AddComponent<StoreInformation>();
+                }
+            }
+        }
+    }
+
+    public void PostSave()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void PreLoad()
+    {
+        Transform[] arr = gameObject.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i].gameObject.SetActive(true);
+        }
+    }
+
+    public void PostLoad()
+    {
+        gameObject.SetActive(false);
+
+        Destroy(gameObject.GetComponentInChildren<CharacterGUI>().gameObject);
+
+        GameObject go = GameObject.Instantiate(GUIPrefab);
+        go.transform.parent = transform;
+
+        go.GetComponent<CharacterGUI>().character = this;
+
+        Transform[] arr = go.GetComponentsInChildren<Transform>();
+        for (int i = 0; i < _spellSlotArray.Length; i++)
+        {
+            for (int p = 0; p < arr.Length; p++)
+            {
+                if (arr[p].name == "Spellslot " + i)
+                {
+                    _spellSlotArray[i] = arr[p].gameObject;
+                }
+            }
         }
     }
 }

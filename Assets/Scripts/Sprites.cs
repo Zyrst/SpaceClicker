@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class Sprites : MonoBehaviour {
 
-    public static Sprites _instance;
+    private static Sprites _instance;
     public static Sprites Instance
     {
         get
@@ -13,14 +12,31 @@ public class Sprites : MonoBehaviour {
         }
     }
 
+    public Sprites()
+    {
+        _instance = this;
+    }
+
+    [System.Serializable]
+    public class Equipment {
+        public SpriteRef Head;
+        public SpriteRef Chest;
+        public SpriteRef Weapon;
+        public SpriteRef Legs;
+    }
     [System.Serializable]
     public class Spells
     {
-        public Sprite[] sprites = new Sprite[24];
+        public SpriteRef Damage;
+        public SpriteRef Heal;
+        public SpriteRef Stun;
     }
 
-    public Spells spells = new Spells();
+    public Spells spells;
+    public Equipment equipment;
 
+    //public Spells spells;
+    //public Equipment equipment;
 	// Use this for initialization
 	void Start () {
 	

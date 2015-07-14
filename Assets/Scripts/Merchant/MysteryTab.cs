@@ -27,7 +27,7 @@ public class MysteryTab : Tabs {
             Equipment equi = BuyEquipmentGeneration.GenerateOne();
             equi.transform.parent = item.transform;
 
-            item._equipmentImage.sprite = equi._sprite;
+            item._equipmentImage.sprite = equi._sprite.sprite;
 
             item._goldText.text = equi._cost.ToString();
         }

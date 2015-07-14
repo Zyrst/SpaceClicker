@@ -671,6 +671,8 @@ public static class LevelSerializer
 
     private static void PerformSave(string name, bool urgent)
     {
+        SavedGames.Clear(); // ********************************* //
+
         var newGame = CreateSaveEntry(name, urgent);
         SavedGames[PlayerName].Insert(0, newGame);
 
@@ -679,6 +681,7 @@ public static class LevelSerializer
         {
             SavedGames[PlayerName].RemoveAt(SavedGames.Count - 1);
         }
+
 
         SaveDataToPlayerPrefs();
 
@@ -939,7 +942,7 @@ public static class LevelSerializer
 									                     layer = n.layer,
 									                     tag = n.tag,
 									                     setExtraData = true,
-                                                         Active = n.active,
+                                                         Active = n.activeSelf,
                                                          Components =
                                                              n.GetComponents<Component>().Where(c=>c!=null).Select(
                                                                  c => c.GetType().FullName).Distinct()

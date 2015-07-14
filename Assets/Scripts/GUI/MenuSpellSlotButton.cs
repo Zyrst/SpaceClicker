@@ -11,11 +11,6 @@ public class MenuSpellSlotButton : Button {
     private Vector2 _mouseDelta;
     private GameObject _slot;
     private int _slotNum = 0;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -80,7 +75,7 @@ public class MenuSpellSlotButton : Button {
 
                 Global.Instance.player._spellSlotArray[_slotNum
                     ].GetComponentsInChildren<Image>(true).FirstOrDefault(
-                        x => x.name == "Image").sprite = go.GetComponent<SpellAttack>()._spellImage;
+                        x => x.name == "Image").sprite = go.GetComponent<SpellAttack>()._spellImage.sprite;
 
                 go.transform.parent = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Spells").transform;
 

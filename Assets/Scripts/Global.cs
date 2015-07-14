@@ -38,19 +38,6 @@ public class Global : MonoBehaviour {
         public GameObject[] _currentEnemies;
     }
     [System.Serializable]
-    public class Sprites
-    {
-        public Sprite equipment_legs;
-        public Sprite equipment_chest;
-        public Sprite equipment_head;
-        public Sprite equipment_weapon;
-
-        public Sprite spell_attack;
-        public Sprite spell_heal;
-        public Sprite spell_stun;
-    }
-
-    [System.Serializable]
     public class Spells
     {
         public List<SpellAttack> damageSpells = new List<SpellAttack>();
@@ -87,7 +74,6 @@ public class Global : MonoBehaviour {
     public Prefabs _prefabs = new Prefabs();
     public Enemies _enemies = new Enemies();
     public Colors _colors = new Colors();
-    public Sprites _sprites = new Sprites();
     public Spells _lockedSpells = new Spells();
     public Spells _unlockedSpells = new Spells();
     public float _expVariable = 10f;
@@ -214,9 +200,13 @@ public class Global : MonoBehaviour {
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(true);
                 Starmap.Instance.gameObject.SetActive(false);
-                _gameCamera.gameObject.SetActive(false);
-                _uiCamera.gameObject.SetActive(true);
-                _uiCamera.tag = "MainCamera";
+                try
+                {
+                    _gameCamera.gameObject.SetActive(false);
+                    _uiCamera.gameObject.SetActive(true);
+                    _uiCamera.tag = "MainCamera";
+                }
+                catch (System.NullReferenceException) { Debug.Log("kamera i switch scene"); }
 
                 foreach (var item in player.gameObject.GetComponentsInChildren<SpellAttack>(true))
                 {
@@ -327,14 +317,22 @@ public class Global : MonoBehaviour {
 
     public void UpdateExpBar()
     {
-        float value = (float)(player._experience) /(float)( player._experianceToNext);
-        _playerGUI.transform.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Exp").transform.localScale = new Vector3(value, 1f, 1f);
-        _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "ExpText").text = player._experience.ToString() + "/" + player._experianceToNext.ToString();
+        try
+        {
+            float value = (float)(player._experience) / (float)(player._experianceToNext);
+            _playerGUI.transform.GetComponentsInChildren<Image>(true).FirstOrDefault(x => x.name == "Exp").transform.localScale = new Vector3(value, 1f, 1f);
+            _playerGUI.transform.GetComponentsInChildren<Text>(true).FirstOrDefault(x => x.name == "ExpText").text = player._experience.ToString() + "/" + player._experianceToNext.ToString();
+        }
+        catch (System.NullReferenceException) { }
     }
 
     public void UpdateLevel()
     {
-        _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Level").text = player._level.ToString();
+        try
+        {
+            _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Level").text = player._level.ToString();
+        }
+        catch (System.NullReferenceException) { }
     }
 
     public void ShakeCamera()

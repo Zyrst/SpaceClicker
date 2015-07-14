@@ -13,7 +13,7 @@ public class TabButton : UnityEngine.UI.Button {
     }
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         switch (_buttonType)
         {
             case Tabs.TabType.Buy:

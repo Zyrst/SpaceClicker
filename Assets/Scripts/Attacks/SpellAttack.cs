@@ -7,7 +7,7 @@ public class SpellAttack : BaseAttack {
 
     public SpellStats _stats = new SpellStats();
     public SpellStats _combinedStats = new SpellStats();
-    public Sprite _spellImage;
+    public SpriteRef _spellImage;
     public GameObject _slot;
     public Image _slotImage;
 
@@ -71,7 +71,7 @@ public class SpellAttack : BaseAttack {
     public void Init()
     {
         _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
-        _slotImage.sprite = _spellImage;
+        _slotImage.sprite = _spellImage.sprite;
 
         _startGUIPos = _slot.transform.position;
     }
