@@ -26,22 +26,53 @@ public class SaveLoadSystem {
 
     public static void Save()
     {
-        for (int i = 0; i < Global.Instance.gameObject.GetComponentsInChildren<Transform>(true).Length; i++)
+        Transform[] Garr = Global.Instance.gameObject.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < Garr.Length; i++)
         {
-            Global.Instance.gameObject.GetComponentsInChildren<Transform>(true)[i].gameObject.SetActive(true);
-        }
-
-        foreach (var item in Global.Instance.GetComponentsInChildren<Transform>())
-        {
-            if (item.GetComponent<StoreInformation>() == null)
+            Garr[i].gameObject.SetActive(true);
+            if (Garr[i].GetComponent<StoreInformation>() == null)
             {
-                item.gameObject.AddComponent<StoreInformation>();
+                Garr[i].gameObject.AddComponent<StoreInformation>();
+            }
+            if (Garr[i].GetComponent<StoreMaterials>() == null)
+            {
+                Garr[i].gameObject.AddComponent<StoreMaterials>();
             }
         }
+
+        Global.Instance._player.gameObject.SetActive(true);
+
+        Transform[] Parr = Global.Instance._player.gameObject.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < Parr.Length; i++)
+        {
+            if (Parr[i].GetComponent<StoreInformation>() == null)
+            {
+                Parr[i].gameObject.AddComponent<StoreInformation>();
+            }
+            if (Parr[i].GetComponent<StoreMaterials>() == null)
+            {
+                Parr[i].gameObject.AddComponent<StoreMaterials>();
+            }
+        }
+
+        /*Transform[] SCarr = CharacterScreen.Instance.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < SCarr.Length; i++)
+        {
+            SCarr[i].gameObject.SetActive(true);
+            if (SCarr[i].GetComponent<StoreInformation>() == null)
+            {
+                SCarr[i].GetComponent<StoreInformation>();
+            }
+        }*/
 
         LevelSerializer.SaveGame("SpaceClicker");
 
         Global.Instance.PostIO();
+
+        Global.Instance._player.gameObject.SetActive(false);
+
+        //CharacterScreen.Instance.ClosePopup();
+        //Ship.Instance.ExitCharacter();
     }
 
     public static void Load()
@@ -62,5 +93,8 @@ public class SaveLoadSystem {
         LevelSerializer.LoadNow(LevelSerializer.SavedGames[LevelSerializer.PlayerName][0].Data);
 
         Global.Instance.PostIO();
+        Global.Instance._player.gameObject.SetActive(false);
+        //CharacterScreen.Instance.ClosePopup();
+        //Ship.Instance.ExitCharacter();
     }
 }

@@ -239,7 +239,7 @@ public class StoreMaterials : MonoBehaviour
 			MaterialProperties.Add(new MaterialProperty { type = MaterialProperty.PropertyType.real,  name = "_Shininess"});
 			MaterialProperties.Add(new MaterialProperty { type = MaterialProperty.PropertyType.color,  name = "_ReflectColor"});
 			MaterialProperties.Add(new MaterialProperty { type = MaterialProperty.PropertyType.texture,  name = "_BumpMap"});
-			MaterialProperties.Add(new MaterialProperty { type = MaterialProperty.PropertyType.unknown,  name = "_Parallax"});
+			//MaterialProperties.Add(new MaterialProperty { type = MaterialProperty.PropertyType.unknown,  name = "_Parallax"}); // ************************************* //
 			
 		}
 	}

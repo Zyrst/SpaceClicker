@@ -109,7 +109,6 @@ public class Global : MonoBehaviour {
     public Camera _gameCamera;
     public Camera _uiCamera;
 
-    [System.Serializable]
     private class DebugMessage
     {
         public string message;

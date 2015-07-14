@@ -261,7 +261,7 @@ public class CharacterScreen : MonoBehaviour {
 
     public void ResetModel()
     {
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
+        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
 
         playerModel.position = _playerPos;
         playerModel.rotation = _playerRot;

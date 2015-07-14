@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using System.Threading;
 
 [System.Serializable]
 public class Player : Character {

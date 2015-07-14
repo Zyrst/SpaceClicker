@@ -26,14 +26,10 @@ public class SpellAttack : BaseAttack {
     public SpellType _type = SpellType.Damage;
     public SpellTarget _target = SpellTarget.Single;
 
-    //[System.NonSerialized]
-    public FMOD.Studio.EventInstance _holdSound;
-    //[System.NonSerialized]
-    public FMOD.Studio.EventInstance _readySound;
-    //[System.NonSerialized]
-    public FMOD.Studio.EventInstance _useSound;
-    //[System.NonSerialized]
-    public FMOD.Studio.EventInstance _takeSound;
+    private FMOD.Studio.EventInstance _holdSound;
+    private FMOD.Studio.EventInstance _readySound;
+    private FMOD.Studio.EventInstance _useSound;
+    private FMOD.Studio.EventInstance _takeSound;
 
 	// Use this for initialization
 	void Start () {
@@ -70,7 +66,6 @@ public class SpellAttack : BaseAttack {
             default:
                 break;
         }
-
 	}
 
     public void Init()

@@ -20,8 +20,8 @@ public class ClickAttack : BaseAttack {
         public static float pshycic = 0f; 
     };
 
-    public FMOD.Studio.EventInstance _swipeSoundEvent;
-    public FMOD.Studio.ParameterInstance _swipeSoundVariable;
+    private FMOD.Studio.EventInstance _swipeSoundEvent;
+    private FMOD.Studio.ParameterInstance _swipeSoundVariable;
     
 
 	// Use this for initialization
