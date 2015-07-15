@@ -526,7 +526,7 @@ public class LevelLoader : MonoBehaviour
 			//Get rid of the current object that is holding this level loader, it was
             //created solely for the purpose of running this script
             Destroy(gameObject, 0.1f);
-        
+
         }
     }
 }

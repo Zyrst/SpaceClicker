@@ -371,7 +371,7 @@ public class Player : Character {
         Global.Instance._player.gameObject.SetActive(true);
 
         Transform[] Parr = Global.Instance._player.gameObject.GetComponentsInChildren<Transform>(true);
-        for (int i = 0; i < Parr.Length; i++)
+        /*for (int i = 0; i < Parr.Length; i++)
         {
             bool found = false;
             foreach (var item in gameObject.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentsInChildren<Transform>(true))
@@ -388,6 +388,39 @@ public class Player : Character {
                     Parr[i].gameObject.AddComponent<StoreInformation>();
                 }
             }
+        }*/
+        for (int i = 0; i < Parr.Length; i++)
+        {
+            Parr[i].gameObject.SetActive(true);
+        }
+
+        foreach (var item in GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "GUI").GetComponentsInChildren<Transform>(true))
+        {
+            if (item.GetComponent<StoreInformation>() == null)
+            {
+                item.gameObject.AddComponent<StoreInformation>();
+            }
+        }
+        foreach (var item in GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Inventory").GetComponentsInChildren<Transform>(true))
+        {
+            if (item.GetComponent<StoreInformation>() == null)
+            {
+                item.gameObject.AddComponent<StoreInformation>();
+            }
+        }
+        foreach (var item in GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Equipment").GetComponentsInChildren<Transform>(true))
+        {
+            if (item.GetComponent<StoreInformation>() == null)
+            {
+                item.gameObject.AddComponent<StoreInformation>();
+            }
+        }
+        foreach (var item in GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Model").GetComponentsInChildren<Transform>(true))
+        {
+            if (item.GetComponent<StoreInformation>() == null)
+            {
+                item.gameObject.AddComponent<StoreInformation>();
+            }
         }
     }
 
@@ -403,29 +436,57 @@ public class Player : Character {
         {
             arr[i].gameObject.SetActive(true);
         }
+        gameObject.SetActive(true);
     }
 
     public void PostLoad()
     {
         gameObject.SetActive(false);
 
-        Destroy(gameObject.GetComponentInChildren<CharacterGUI>().gameObject);
+        foreach (var item in _spellsArray)
+        {
+            if (item != null)
+            {
+                item._slotImage.sprite = item._spellImage.sprite;
+            }
+        }
+
+       /* try
+        {
+            Destroy(gameObject.GetComponentsInChildren<CharacterGUI>(true).FirstOrDefault().gameObject);
+        }
+        catch (System.NullReferenceException)
+        {
+            Debug.Log("nu försvann guit innan jag kunde ta bort det");
+        }
 
         GameObject go = GameObject.Instantiate(GUIPrefab);
         go.transform.parent = transform;
 
         go.GetComponent<CharacterGUI>().character = this;
 
-        Transform[] arr = go.GetComponentsInChildren<Transform>();
+        Transform[] arr = go.GetComponentsInChildren<Transform>(true);
         for (int i = 0; i < _spellSlotArray.Length; i++)
         {
-            for (int p = 0; p < arr.Length; p++)
+            //Debug.Log("hallå eller?");
+            foreach (var item in go.GetComponentsInChildren<Transform>(true))
             {
-                if (arr[p].name == "Spellslot " + i)
+                //Debug.Log(item.name);
+                if (item.name == "Spellslot " + i)
                 {
-                    _spellSlotArray[i] = arr[p].gameObject;
+                    //Debug.Log("ja");
+                    _spellSlotArray[i] = item.gameObject;
                 }
             }
         }
+
+        for (int i = 0; i < _spellsArray.Length; i++)
+        {
+            if (_spellsArray[i] != null)
+            {
+                _spellsArray[i]._slot = _spellSlotArray[i];
+                _spellsArray[i]._slotImage = _spellSlotArray[i].GetComponentsInChildren<Image>().FirstOrDefault(x => x.gameObject.name == "Image");
+            }
+        }*/
     }
 }
