@@ -74,6 +74,7 @@ public class DamageStats {
         ds._tech = stats_._tech.damage;
         ds._psychic = stats_._psychic.damage;
 
+        ds._healPercent = stats_._healPercent;
 
         bool didaCrit = false;
         /* Make it crit*/
@@ -113,6 +114,7 @@ public class DamageStats {
         ds._heal = stats_._heal;
         ds._lifeSteal = stats_._lifeSteal;
         ds._stunTime = stats_._stunTime;
+        ds._slowTime = stats_._slowTime;
         return ds;
     }
 
@@ -123,4 +125,6 @@ public class DamageStats {
     public vap _heal = new vap();
     public vap _lifeSteal = new vap();
     public float _stunTime = 0f;
+    public float _slowTime = 0f;
+    public float _healPercent = 0;
 }

@@ -134,6 +134,12 @@ public class Enemy : Character
                     GetComponentInChildren<Animator>().SetTrigger("StunTrigger");
                     GetComponentInChildren<Animator>().SetInteger("Hit", 0);
                 }
+                if (ds_._slowTime > 0f)
+                {
+                    GetComponent<EnemyAttack>().Stunned(ds_._slowTime);
+                    GetComponentInChildren<Animator>().SetTrigger("StunTrigger");
+                    GetComponentInChildren<Animator>().SetInteger("Hit", 0);
+                }
             }
             else
             {

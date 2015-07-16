@@ -13,9 +13,15 @@ public class TalentInfoBox : MonoBehaviour {
             if (_instance == null)
             {
                 Debug.Log("<color=red>SUPERFAIL - talent info box not set</color>");
+
             }
             return _instance;
         }
+    }
+
+    public TalentInfoBox()
+    {
+        _instance = this;
     }
 
     public Text nameText;

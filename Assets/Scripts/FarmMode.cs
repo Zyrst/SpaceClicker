@@ -44,7 +44,7 @@ public class FarmMode : MonoBehaviour {
         }
 
         // reset player
-        Global.Instance.player.Reset(2f);
+        Global.Instance.player.Reset(5f);
     }
 
     public void backToShip()

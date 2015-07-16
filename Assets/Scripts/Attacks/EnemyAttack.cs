@@ -16,13 +16,18 @@ public class EnemyAttack : MonoBehaviour {
     public float _shieldTime = 2f;
     public float _shieldDamageMulti = 3f;
     public bool _stunned = false;
+    public bool _slowed = false;
 
     public float _stunTime = 0f;
+    public float _slowTime = 0f;
+
+    public float _speed = 1f;
 
     private float _startAttackAnimationTime = 0f;
     private float _startShieldAnimationTime = 0f;
 
     public bool _animationIsTriggered = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -59,7 +64,7 @@ public class EnemyAttack : MonoBehaviour {
         {
             if (!_stunned)
             {
-                _attackTimer += Time.deltaTime;
+                _attackTimer += (Time.deltaTime * _speed);
 
                 // start attack animation
                 if (Global.Instance.PlayerAlive() && GetComponent<Enemy>()._isAlive && !_animationIsTriggered)
@@ -101,8 +106,15 @@ public class EnemyAttack : MonoBehaviour {
             else
             {
                 _stunTime -= Time.deltaTime;
-                if (_stunTime <= 0)
+                if (_stunTime <= 0f)
                     _stunned = false;
+            }
+
+            if (_slowed)
+            {
+                _slowTime -= Time.deltaTime;
+                if (_slowTime <= 0f)
+                    Slow(0f, 1f);
             }
         }
 	}
@@ -177,5 +189,12 @@ public class EnemyAttack : MonoBehaviour {
         _stunTime = stunTime_;
         _stunned = true;
         _attackTimer = 0f;
+    }
+
+    public void Slow(float time_, float amount_)
+    {
+        _slowed = true;
+        _slowTime = time_;
+        _speed = amount_;
     }
 }

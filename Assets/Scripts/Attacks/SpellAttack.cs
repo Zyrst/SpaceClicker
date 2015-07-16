@@ -8,23 +8,32 @@ public class SpellAttack : BaseAttack {
     public SpellStats _stats = new SpellStats();
     public SpellStats _combinedStats = new SpellStats();
     public SpriteRef _spellImage;
+
+    [HideInInspector]
     public GameObject _slot;
+    [HideInInspector]
     public Image _slotImage;
 
     private bool _clicked = false;
     private bool _cd = false;
     private float _coolDown = 0f;
+    [HideInInspector]
     public Vector3 _startGUIPos;
+    [HideInInspector]
     public Vector3 _followerDiff = Vector3.zero;
 
+    [HideInInspector]
     public bool _stunned = false;
+    [HideInInspector]
     public float _stunTime = 0f;
 
-    public enum SpellType : int { Damage = 0, Heal = 1, Stun = 2 };
+    public enum SpellType : int { Damage = 0, Heal = 1, Stun = 2, Shield = 3 };
     public enum SpellTarget : int { Single = 0, Adjacent = 1, EnemiesAndPlayer = 2, Enemies = 3 };
+    public enum SpellTrigger : int { Drag = 0, Click = 1 };
 
     public SpellType _type = SpellType.Damage;
     public SpellTarget _target = SpellTarget.Single;
+    public SpellTrigger _trigger = SpellTrigger.Drag;
 
     private FMOD.Studio.EventInstance _holdSound;
     private FMOD.Studio.EventInstance _readySound;
@@ -89,7 +98,15 @@ public class SpellAttack : BaseAttack {
 
     public void Clicked()
     {
-        if (!_clicked && !_cd && !_stunned)
+        if (_type == SpellType.Shield)
+        {
+            Global.Instance.player._shield.Raise(_combinedStats._shieldTime);
+            Global.Instance.player._shield.spellRef = this;
+
+            _cd = true;
+            _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
+        }
+        else if (!_clicked && !_cd && !_stunned)
         {
             try
             {
@@ -104,13 +121,30 @@ public class SpellAttack : BaseAttack {
             }
             catch (System.NullReferenceException) {}
 
+            // start animation
+                // then hold animation
+            Global.Instance.player.Animator.SetTrigger("ability_start");
+            switch (_type)
+            {
+                case SpellType.Damage:
+                    Global.Instance.player.Animator.SetInteger("ability", 0);
+                    break;
+                case SpellType.Heal:
+                    Global.Instance.player.Animator.SetInteger("ability", 1);
+                    break;
+                case SpellType.Stun:
+                    Global.Instance.player.Animator.SetInteger("ability", 1);
+                    break;
+                default:
+                    break;
+            }
+
             _startGUIPos = _slot.transform.position;
             _followerDiff = MouseController.Instance.position - _slot.transform.position;
             _clicked = true;
             MouseController.Instance.locked = true;
             GetComponentInParent<ClickAttack>().HoldingSpell();
             Invoke("ResetCanDealDamage", 0.1f);
-            
         }
     }
 
@@ -122,6 +156,10 @@ public class SpellAttack : BaseAttack {
         if (!MouseController.Instance.buttonDown)
         {
             ResetGUI();
+
+            // reset animation 
+            Global.Instance.player.Animator.SetTrigger("idle");
+            Global.DebugOnScreen("PLAY IDLE");
         }
         else
         {
@@ -131,7 +169,7 @@ public class SpellAttack : BaseAttack {
 
     public void CheckHit()
     {
-            // mouseon the ground
+            // mouse on the ground
             Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit))
@@ -157,12 +195,19 @@ public class SpellAttack : BaseAttack {
                         catch (System.NullReferenceException) {}
                         _useSound.start();
 
+                        // do animation
+                        Global.Instance.player.Animator.SetTrigger("ability_throw");
+
                         // do damage
                         UseSpell(hit.collider.transform.parent.parent.gameObject.GetComponent<Character>(), hit);
                     }
-                    else if (!hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
+                    else if (!hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)      // it was dead
                     {
                         ResetGUI();
+
+                        // reset animation 
+                        Global.Instance.player.Animator.SetTrigger("ability_throw");
+                        Global.DebugOnScreen("PLAY IDLE");
                     }
                    
                 }
@@ -197,8 +242,13 @@ public class SpellAttack : BaseAttack {
             if (_coolDown >= _combinedStats._cooldown)
             {
                 ResetCooldown();
-                // play ready sound
-                _readySound.start();
+                try
+                {
+                    // play ready sound
+                    _readySound.start();
+                }
+                catch (System.NullReferenceException)
+                { }
             }
         }
        
@@ -267,70 +317,76 @@ public class SpellAttack : BaseAttack {
 
     public void UseSpell(Character char_, RaycastHit hit_)
     {
-        switch (_target)
+        if (_type == SpellType.Shield)
         {
-            case SpellTarget.Single:
-                {
-                    char_.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
-                }
-                break;
-            case SpellTarget.Adjacent:
-                {
-                    Enemy[] enemies = (Enemy[])Global.Instance.GetAllEnemies().ToArray(typeof(Enemy));
-                    int enemy = 0;
-                    bool foundIt = false;
-                    for (int i = 0; i < enemies.Length; i++)
+
+        }
+        else
+        {
+            switch (_target)
+            {
+                case SpellTarget.Single:
                     {
-                        if (enemies[i] == char_)
+                        char_.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
+                    }
+                    break;
+                case SpellTarget.Adjacent:
+                    {
+                        Enemy[] enemies = (Enemy[])Global.Instance.GetAllEnemies().ToArray(typeof(Enemy));
+                        int enemy = 0;
+                        bool foundIt = false;
+                        for (int i = 0; i < enemies.Length; i++)
                         {
-                            enemy = i;
-                            foundIt = true;
+                            if (enemies[i] == char_)
+                            {
+                                enemy = i;
+                                foundIt = true;
+                            }
+                        }
+
+                        char_.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
+
+                        if (foundIt)
+                        {
+                            if (enemy - 1 >= 0)
+                            {
+                                enemies[enemy - 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
+                            }
+                            if (enemy + 1 < enemies.Length)
+                            {
+                                enemies[enemy + 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
+                            }
                         }
                     }
-
-                    char_.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
-
-                    if (foundIt)
+                    break;
+                case SpellTarget.EnemiesAndPlayer:
                     {
-                        if (enemy - 1 >= 0)
-                        {
-                            enemies[enemy - 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
-                        }
-                        if (enemy + 1 < enemies.Length)
-                        {
-                            enemies[enemy + 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
-                        }
-                    }
-                }
-                break;
-            case SpellTarget.EnemiesAndPlayer:
-                {
-                    Enemy[] enemies = (Enemy[])Global.Instance.GetAllEnemies().ToArray(typeof(Enemy));
-                    for (int i = 0; i < enemies.Length; i++)
-                    {
-                        enemies[i].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
-                    }
-
-                    Global.Instance.player.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
-                }
-                break;
-            case SpellTarget.Enemies:
-                {
-                    char_.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
-
-                    Enemy[] enemies = (Enemy[])Global.Instance.GetAllEnemies().ToArray(typeof(Enemy));
-                    for (int i = 0; i < enemies.Length; i++)
-                    {
-                        if (enemies[i] != char_)
+                        Enemy[] enemies = (Enemy[])Global.Instance.GetAllEnemies().ToArray(typeof(Enemy));
+                        for (int i = 0; i < enemies.Length; i++)
                         {
                             enemies[i].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
                         }
+
+                        Global.Instance.player.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                case SpellTarget.Enemies:
+                    {
+                        char_.TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
+
+                        Enemy[] enemies = (Enemy[])Global.Instance.GetAllEnemies().ToArray(typeof(Enemy));
+                        for (int i = 0; i < enemies.Length; i++)
+                        {
+                            if (enemies[i] != char_)
+                            {
+                                enemies[i].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hit_.point, Global.Instance.player);
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
-
 }

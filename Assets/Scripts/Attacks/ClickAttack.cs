@@ -57,6 +57,9 @@ public class ClickAttack : BaseAttack {
                                 _hitCount = 0;
                                 _hitSound = 0;
                             }
+
+                            GetComponent<Player>().Animator.SetInteger("attack", Random.Range(0,2));
+                            GetComponent<Player>().Animator.SetTrigger("attack_start");
                                 
                             //Debug.Log("Hit count: " + _hitCount);
                             _canDealDamage = false;
@@ -64,6 +67,7 @@ public class ClickAttack : BaseAttack {
                             _lastTarget = hit.collider.transform.parent.parent.gameObject;
                             CharacterStats cs = gameObject.GetComponent<Player>()._combinedStats;
 
+                            // dom här två är samma sak ^⌄
 
                             CharacterStats comb = GetComponent<Player>()._combinedStats;
                             // play sound, fix crit later

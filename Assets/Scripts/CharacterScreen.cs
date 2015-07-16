@@ -247,12 +247,12 @@ public class CharacterScreen : MonoBehaviour {
         _playerRot = Global.Instance.player.transform.rotation;
 
         Global.Instance.player.gameObject.SetActive(true);
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
+        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
 
         
         playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
         playerModel.LookAt(Global.Instance._uiCamera.transform.position);
-        playerModel.localScale = new Vector3(50, 50, 50);
+        playerModel.localScale = new Vector3(13, 13, 13);
 
         Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
         Global.Instance.player.GetComponent<ClickAttack>().enabled = false;
@@ -261,11 +261,11 @@ public class CharacterScreen : MonoBehaviour {
 
     public void ResetModel()
     {
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Maincharacter_combat_model_01").transform;
+        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
 
         playerModel.position = _playerPos;
         playerModel.rotation = _playerRot;
-        playerModel.localScale = new Vector3(2, 2, 2);
+        playerModel.localScale = new Vector3(1, 1, 1);
         Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
         Global.Instance.player.GetComponent<ClickAttack>().enabled = true;
     //    Global.Instance._player.gameObject.SetActive(false);

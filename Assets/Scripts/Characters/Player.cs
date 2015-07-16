@@ -143,9 +143,56 @@ public class Player : Character {
 
     public static Player Instance = null;
 
+    public class Shield
+    {
+        public bool isUp = false;
+        public SpellAttack spellRef = null;
+        private float timer;
+        /// <summary>
+        /// raises the shield for 'duration_' amount of time
+        /// </summary>
+        /// <param name="duration_">if <= 0, infinite duration</param>
+        public void Raise(float duration_)
+        {
+            isUp = true;
+            Global.Instance.player.GetComponentInChildren<CharacterGUI>().Shield.SetActive(true);
+            timer = duration_;
+            if (duration_ <= 0)
+            {
+                timer = float.NaN;
+            }
+        }
+        public void Lower()
+        {
+            isUp = false;
+            Global.Instance.player.GetComponentInChildren<CharacterGUI>().Shield.SetActive(false);
+        }
+
+        public void Update()
+        {
+            if (!float.IsNaN(timer))
+            {
+                timer -= Time.deltaTime;
+                if (timer <= 0f)
+                {
+                    Lower();
+                }
+            }
+        }
+    }
+    public Shield _shield = new Shield();
+
     public Player()
     {
         Instance = this;
+    }
+
+    public Animator Animator
+    {
+        get
+        {
+            return GetComponentsInChildren<Animator>(true).FirstOrDefault();
+        }
     }
 
 	// Use this for initialization
@@ -158,7 +205,10 @@ public class Player : Character {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (_shield.isUp)
+        {
+            _shield.Update();
+        }
 	}
 
     public override void TakeDamage(DamageStats ds_)
@@ -174,35 +224,48 @@ public class Player : Character {
 
     public override void TakeDamage(DamageStats ds_, Vector3 hitPoint_, Character hitter_)
     {
-        //Calculate damage with resistance from the characters stats
-        vap normal = ds_._normal * (1f - _combinedStats._normal.resistance);
-        vap tech = ds_._tech * (1f - _combinedStats._tech.resistance);
-        vap psychic = ds_._psychic * (1f - _combinedStats._psychic.resistance);
-        vap kinetic = ds_._kinetic * (1f - _combinedStats._kinetic.resistance);
-
-        vap totalDamage = normal + tech + psychic + kinetic;
-
-        _stats._health -= totalDamage;
-        _stats._health += ds_._heal;
-
-        //If heal make sure we don't go over maxhealth
-        if (_stats._health > _combinedStats._maxHealth)
-            _stats._health = new vap(_combinedStats._maxHealth);
-        if (ds_._stunTime > 0f)
+        if (_shield.isUp)
         {
-            GetComponent<ClickAttack>().Stunned(ds_._stunTime);
-            foreach (var item in _spellsArray)
-            {
-                item.Stunned(ds_._stunTime);
-            }
+            hitter_.TakeDamage(DamageStats.GenerateFromSpellStats(_shield.spellRef._combinedStats));
+            _shield.Lower();
         }
-
-        SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
-        
-        if (_stats._health._values[0] < 1f)
+        else
         {
-            _stats._health = new vap();
-            Die(hitter_);
+            //Calculate damage with resistance from the characters stats
+            vap normal = ds_._normal * (1f - _combinedStats._normal.resistance);
+            vap tech = ds_._tech * (1f - _combinedStats._tech.resistance);
+            vap psychic = ds_._psychic * (1f - _combinedStats._psychic.resistance);
+            vap kinetic = ds_._kinetic * (1f - _combinedStats._kinetic.resistance);
+
+            vap totalDamage = normal + tech + psychic + kinetic;
+
+            _stats._health -= totalDamage;
+            if (ds_._healPercent > 0f)
+                ds_._heal += _combinedStats._maxHealth * (ds_._healPercent * 0.01f);
+            _stats._health += ds_._heal;
+
+            //If heal, make sure we don't go over maxhealth
+            if (_stats._health > _combinedStats._maxHealth)
+                _stats._health = new vap(_combinedStats._maxHealth);
+            if (ds_._stunTime > 0f)
+            {
+                GetComponent<ClickAttack>().Stunned(ds_._stunTime);
+                foreach (var item in _spellsArray)
+                {
+                    item.Stunned(ds_._stunTime);
+                }
+            }
+
+            // play hit animation
+            Animator.SetTrigger("hit_start");
+
+            SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
+
+            if (_stats._health._values[0] < 1f)
+            {
+                _stats._health = new vap();
+                Die(hitter_);
+            }
         }
     }
 
@@ -213,7 +276,9 @@ public class Player : Character {
     {
         base.Die();
         Global.Instance.PlayerDied();
-        gameObject.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").gameObject.SetActive(false);
+
+        // play die animation
+        Animator.SetTrigger("die_start");
     }
 
     public override void LevelUp()
@@ -232,7 +297,9 @@ public class Player : Character {
 
     public void ResetNow()
     {
-        gameObject.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Model").gameObject.SetActive(true);
+        // trigger idle animation
+        Animator.SetTrigger("idle");
+
         _stats._health = new vap(_combinedStats._maxHealth);
 
         _isAlive = true;
@@ -293,12 +360,6 @@ public class Player : Character {
         if (_equipped._weapon != null)
             _combinedStats.AddStats(_equipped._weapon._stats);
 
-        // spells
-        for (int i = 0; i < _spellsArray.Length; i++)
-        {
-            if(_spellsArray[i] != null)
-                _spellsArray[i].CombineSpellStats();
-        }
 
         // talents
                         // hp
@@ -341,6 +402,13 @@ public class Player : Character {
         _combinedStats._psychic.crit += _talentStats._psychic.crit.value;
 
         _stats._health = new vap(_combinedStats._maxHealth);
+
+        // spells
+        for (int i = 0; i < _spellsArray.Length; i++)
+        {
+            if(_spellsArray[i] != null)
+                _spellsArray[i].CombineSpellStats();
+        }
     }
 
     public override void LifeSteal(vap lifeSteal_)
