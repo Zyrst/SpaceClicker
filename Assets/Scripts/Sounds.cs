@@ -140,7 +140,7 @@ public class Sounds : MonoBehaviour {
 
     public static void OneShot(FMODAsset asset_)
     {
-        OneShot(asset_, new Vector3(-74, 61, -74));
+        OneShot(asset_, new Vector3(0, 0, 0));
     }
 
     public static void OneShot(FMODAsset asset_, Vector3 pos_)
