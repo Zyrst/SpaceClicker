@@ -12,6 +12,14 @@ public class Character : MonoBehaviour {
     public uint _level = 0;
     public uint _experience = 1;
     public uint _experianceToNext = 100;
+
+    public virtual vap maxHealth
+    {
+        get
+        {
+            return _stats._maxHealth;
+        }
+    }
     
 	// Use this for initialization
 	void Start () {
@@ -36,12 +44,25 @@ public class Character : MonoBehaviour {
 
         vap totalDamage = normal + tech + psychic + kinetic;
 
+        if (ds_._healPercent > 0f)
+            ds_._heal += _stats._maxHealth * (ds_._healPercent * 0.01f);
+
+        if (ds_._healthDamagePercent > 0f)
+        {
+            totalDamage += hitter_.maxHealth * ds_._healthDamagePercent;
+        }
+
         _stats._health -= totalDamage;
         _stats._health += ds_._heal;
 
         if (ds_._lifeSteal.GetFloat() > 0f)
         {
             hitter_.LifeSteal(ds_._lifeSteal);
+        }
+
+        if (ds_._lifeStealAmount > 0f)
+        {
+            hitter_.LifeSteal(totalDamage * ds_._lifeStealAmount);
         }
 
         //If heal make sure we don't go over maxhealth

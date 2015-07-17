@@ -14,14 +14,25 @@ public class SpellStats {
     public float _kineticDamageMultiplier;
     public float _psychicDamageMultiplier;
 
+    [Range(0f, 1f)]
+    public float _healthDamagePercent;
+
     public vap _heal;
 
     public float _healPercent;
 
     public vap _lifeSteal;
+    [Range(0f,1f)]
+    public float _lifeStealAmount = 0f;
     public float _stunTime;
     public float _slowTime;
+    [Range(0f,1f)]
+    public float _slowSpeed;
     public float _shieldTime;
+    public float _buffTime;
+    [Range(0f, 1f)]
+    public float _cooldownModifier;
+
     public float _cooldown;
 
     public bool hasDamage
@@ -68,14 +79,20 @@ public class SpellStats {
         this._kineticDamageMultiplier = stats_._kineticDamageMultiplier;
         this._psychicDamageMultiplier = stats_._psychicDamageMultiplier;
 
+        this._healthDamagePercent = stats_._healthDamagePercent;
+
         this._heal = new vap(stats_._heal);
 
         this._healPercent = stats_._healPercent;
 
         this._lifeSteal = new vap(stats_._lifeSteal);
+        this._lifeStealAmount = stats_._lifeStealAmount;
+
         this._stunTime = stats_._stunTime;
         this._slowTime = stats_._slowTime;
+        this._slowSpeed = stats_._slowSpeed;
         this._shieldTime = stats_._shieldTime;
+        this._buffTime = stats_._buffTime;
         this._cooldown = stats_._cooldown;
     }
 

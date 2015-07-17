@@ -143,6 +143,14 @@ public class Player : Character {
 
     public static Player Instance = null;
 
+    public override vap maxHealth
+    {
+        get
+        {
+            return _combinedStats._maxHealth;
+        }
+    }
+
     public class Shield
     {
         public bool isUp = false;
@@ -244,6 +252,11 @@ public class Player : Character {
                 ds_._heal += _combinedStats._maxHealth * (ds_._healPercent * 0.01f);
             _stats._health += ds_._heal;
 
+            if (ds_._healthDamagePercent > 0f)
+            {
+                totalDamage += hitter_.maxHealth * ds_._healthDamagePercent;
+            }
+
             //If heal, make sure we don't go over maxhealth
             if (_stats._health > _combinedStats._maxHealth)
                 _stats._health = new vap(_combinedStats._maxHealth);
@@ -252,7 +265,10 @@ public class Player : Character {
                 GetComponent<ClickAttack>().Stunned(ds_._stunTime);
                 foreach (var item in _spellsArray)
                 {
-                    item.Stunned(ds_._stunTime);
+                    if (item != null)
+                    {
+                        item.Stunned(ds_._stunTime);
+                    }
                 }
             }
 

@@ -70,6 +70,7 @@ public class MenuSpellSlotButton : Button {
 
                 // create new instance of selected spell
                 GameObject go = GameObject.Instantiate(_spell.gameObject);
+                go.name = _spell.gameObject.name;
                 Global.Instance.player._spellsArray[_slotNum] = go.GetComponent<SpellAttack>();
 
 

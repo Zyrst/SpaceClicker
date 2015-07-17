@@ -136,7 +136,7 @@ public class Enemy : Character
                 }
                 if (ds_._slowTime > 0f)
                 {
-                    GetComponent<EnemyAttack>().Stunned(ds_._slowTime);
+                    GetComponent<EnemyAttack>().Slow(ds_._slowTime, ds_._slowSpeed);
                     GetComponentInChildren<Animator>().SetTrigger("StunTrigger");
                     GetComponentInChildren<Animator>().SetInteger("Hit", 0);
                 }
@@ -148,7 +148,7 @@ public class Enemy : Character
                 _shieldVap *= GetComponent<EnemyAttack>()._shieldDamageMulti;
 
                 // hitta vilken typ av sköld det är
-
+                // ^^ jävligt viktigt
                 _shieldStats = new CharacterStats();
                 _shieldStats._tech.damage = _shieldVap;
 

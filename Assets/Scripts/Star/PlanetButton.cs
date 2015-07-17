@@ -15,6 +15,8 @@ public class PlanetButton : Button {
     public override void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.selectWorld);
+
         Starmap.Instance.SelectPlanet(_planet);
     }
 }

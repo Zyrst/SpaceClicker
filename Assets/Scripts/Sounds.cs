@@ -45,12 +45,61 @@ public class Sounds : MonoBehaviour {
     }
 
     [System.Serializable]
+    public struct AbilityBaseSounds
+    {
+        public SpellSounds damage;
+        public SpellSounds heal;
+        public SpellSounds stun;
+    }
+
+    [System.Serializable]
+    public struct TechAbilitySounds
+    {
+        public FMODAsset granadeReady;
+        public FMODAsset granadeTake;
+        public FMODAsset granadeUse;
+        public FMODAsset lightningUse;
+        public FMODAsset shieldReady;
+        public FMODAsset shieldUse;
+    }
+
+    [System.Serializable]
+    public struct KineticAbilitySounds
+    {
+
+    }
+
+    [System.Serializable]
+    public struct PsychicAbilitySounds
+    {
+        public FMODAsset drainReady;
+        public FMODAsset drainTake;
+        public FMODAsset drainUse;
+        public FMODAsset mindfrayReady;
+        public FMODAsset mindfrayTake;
+        public FMODAsset mindfrayUse;
+    }
+    
+    [System.Serializable]
+    public struct AbilitySounds
+    {
+        public AbilityBaseSounds Base;
+        public TechAbilitySounds tech;
+        public KineticAbilitySounds kinetic;
+        public PsychicAbilitySounds psychic;
+    }
+
+    [System.Serializable]
     public struct PlayerSounds
     {
         public FMODAsset swipe;
-        public SpellSounds healingSpell;
-        public SpellSounds damageSpell;
-        public SpellSounds stunSpell;
+        public AbilitySounds abilities;
+    }
+
+    [System.Serializable]
+    public struct MerchantSounds
+    {
+        public FMODAsset buy;
     }
 
     [System.Serializable]
@@ -58,14 +107,22 @@ public class Sounds : MonoBehaviour {
     {
         public FMODAsset closeInventory;
         public FMODAsset openInventory;
+        public FMODAsset eterStarmap;
+        public FMODAsset exitStarmap;
+        public FMODAsset equipGear;
+        public FMODAsset unequipGear;
+        public FMODAsset selectWorld;
+
     }
 
     [System.Serializable]
     public struct UISounds
     {
+        public MerchantSounds merchant;
         public NavigationSounds navigation;
         public FMODAsset coinCollect;
         public FMODAsset Button;
+        public FMODAsset medpackPickup;
     }
 
     public PlayerSounds playerSounds;

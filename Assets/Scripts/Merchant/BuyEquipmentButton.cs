@@ -27,9 +27,13 @@ public class BuyEquipmentButton : MonoBehaviour {
     public void Click()
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+
         Debug.Log("Clicked on the button");
         if (Global.Instance._gold >= GetComponentInChildren<Equipment>()._cost)
         {
+
+            Sounds.OneShot(Sounds.Instance.uiSounds.merchant.buy);
+
             Global.Instance._gold -= GetComponentInChildren<Equipment>()._cost;
             bool set = false;
             for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)

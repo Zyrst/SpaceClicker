@@ -113,8 +113,14 @@ public class DamageStats {
 
         ds._heal = stats_._heal;
         ds._lifeSteal = stats_._lifeSteal;
+        ds._lifeStealAmount = stats_._lifeStealAmount;
         ds._stunTime = stats_._stunTime;
         ds._slowTime = stats_._slowTime;
+
+        ds._slowSpeed = stats_._slowSpeed;
+
+        ds._healthDamagePercent = stats_._healthDamagePercent;
+
         return ds;
     }
 
@@ -124,7 +130,11 @@ public class DamageStats {
     public vap _psychic = new vap();
     public vap _heal = new vap();
     public vap _lifeSteal = new vap();
+    public float _lifeStealAmount = 0f;
     public float _stunTime = 0f;
     public float _slowTime = 0f;
+    public float _slowSpeed = 0f;
     public float _healPercent = 0;
+
+    public float _healthDamagePercent = 0f;
 }

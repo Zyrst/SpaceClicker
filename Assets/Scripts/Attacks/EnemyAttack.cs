@@ -114,7 +114,7 @@ public class EnemyAttack : MonoBehaviour {
             {
                 _slowTime -= Time.deltaTime;
                 if (_slowTime <= 0f)
-                    Slow(0f, 1f);
+                    Slow(0f, 0f);
             }
         }
 	}
@@ -195,6 +195,6 @@ public class EnemyAttack : MonoBehaviour {
     {
         _slowed = true;
         _slowTime = time_;
-        _speed = amount_;
+        _speed = 1f - amount_;
     }
 }

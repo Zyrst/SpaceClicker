@@ -43,6 +43,8 @@ public class HealthPotion : MonoBehaviour {
 
     public void Collect()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.medpackPickup);
+
         Global.Instance.player._stats._health += (Global.Instance.player._combinedStats._maxHealth * Global.Instance._potionHealthPercent.value);
         if ((Global.Instance.player._stats._health) > (Global.Instance.player._combinedStats._maxHealth)) 
             Global.Instance.player._stats._health = new vap(Global.Instance.player._combinedStats._maxHealth);
