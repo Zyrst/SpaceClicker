@@ -181,6 +181,12 @@ public class CharacterScreen : MonoBehaviour {
         _EquipPopup.gameObject.SetActive(false);
     }
 
+    public void Sell()
+    {
+        //Global.Instance.Gold += _lastEquip._sellValue;
+       // Destroy(Global.Instance._player._inventoryArray.FirstOrDefault(x => x.name == _lastEquip.ToString()));
+    }
+
     public void ResetInventorySprite(Equipment equi_)
     {
 
@@ -281,13 +287,14 @@ public class CharacterScreen : MonoBehaviour {
     /// <param name="equip_">Equipment</param>
     public void EquipmentStatsPopUp(Equipment equip_)
     {
-
         string info = equip_._stats._name;
+        info += System.Environment.NewLine + "Rarity: " + equip_.GetRarity();
+        #region NothingEquipped
         if (Global.Instance.player._equipped._chest == null && equip_._type == Equipment.EquipmentType.Chest || Global.Instance.player._equipped._head == null && equip_._type == Equipment.EquipmentType.Head || 
             Global.Instance.player._equipped._legs == null && equip_._type == Equipment.EquipmentType.Legs || Global.Instance.player._equipped._weapon == null && equip_._type == Equipment.EquipmentType.Weapon)
         {
             if(equip_._stats._normal.damage.GetFloat() > 0f)
-                info += System.Environment.NewLine + "Click Damage :  " + equip_._stats._normal.damage.GetString() + "     +" + equip_._stats._normal.damage.GetString();
+                info += System.Environment.NewLine + "Normal Damage :  " + equip_._stats._normal.damage.GetString() + "     +" + equip_._stats._normal.damage.GetString();
             if (equip_._stats._normal.crit > 0f)
                 info += System.Environment.NewLine + "Click Crit Chance :  " + (equip_._stats._normal.crit * 100) + "% " + "     +" + (equip_._stats._normal.crit * 100) + "% "; 
             if(equip_._stats._normal.critMultiplier >0f)
@@ -297,105 +304,273 @@ public class CharacterScreen : MonoBehaviour {
             GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "StatsText").text = info;
             return;
         }
-
-
-
-
-        vap calc = new vap();
- 
+        #endregion
+        #region CalcDamage
+        /* Vap for different damage types */
+        vap calcN = new vap();
+        vap calcT = new vap();
+        vap calcK = new vap();
+        vap calcP = new vap();
+        //Click damage
         switch (equip_._type)
         {
             case Equipment.EquipmentType.Weapon:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._weapon._stats._normal.damage);
+                calcN = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._weapon._stats._normal.damage);
+                calcT = vap.Minus(equip_._stats._tech.damage, Global.Instance.player._equipped._weapon._stats._tech.damage);
+                calcK = vap.Minus(equip_._stats._kinetic.damage, Global.Instance.player._equipped._weapon._stats._kinetic.damage);
+                calcP = vap.Minus(equip_._stats._psychic.damage, Global.Instance.player._equipped._weapon._stats._psychic.damage);
                 break;
             case Equipment.EquipmentType.Head:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._head._stats._normal.damage);
+                calcN = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._head._stats._normal.damage);
+                calcT = vap.Minus(equip_._stats._tech.damage, Global.Instance.player._equipped._head._stats._tech.damage);
+                calcK = vap.Minus(equip_._stats._kinetic.damage, Global.Instance.player._equipped._head._stats._kinetic.damage);
+                calcP = vap.Minus(equip_._stats._psychic.damage, Global.Instance.player._equipped._head._stats._psychic.damage);
                 break;
             case Equipment.EquipmentType.Chest:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._chest._stats._normal.damage);
+                calcN = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._chest._stats._normal.damage);
+                calcT = vap.Minus(equip_._stats._tech.damage, Global.Instance.player._equipped._chest._stats._tech.damage);
+                calcK = vap.Minus(equip_._stats._kinetic.damage, Global.Instance.player._equipped._chest._stats._kinetic.damage);
+                calcP = vap.Minus(equip_._stats._psychic.damage, Global.Instance.player._equipped._chest._stats._psychic.damage);
                 break;
             case Equipment.EquipmentType.Legs:
-                calc = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._legs._stats._normal.damage);
-                break;
-            default:
-                calc = equip_._stats._normal.damage;
+                calcN = vap.Minus(equip_._stats._normal.damage, Global.Instance.player._equipped._legs._stats._normal.damage);
+                calcT = vap.Minus(equip_._stats._tech.damage, Global.Instance.player._equipped._legs._stats._tech.damage);
+                calcK = vap.Minus(equip_._stats._kinetic.damage, Global.Instance.player._equipped._legs._stats._kinetic.damage);
+                calcP = vap.Minus(equip_._stats._psychic.damage, Global.Instance.player._equipped._legs._stats._psychic.damage);
                 break;
         }
 
-        if(calc.GetFloat() > 0f || calc.GetFloat() < 0f)
+        if(calcN.GetFloat() > 0f || calcN.GetFloat() < 0f)
         {
-            info += System.Environment.NewLine + "Click damage: " + equip_._stats._normal.damage.GetString();
+            info += System.Environment.NewLine + "(Nor.)Damage: " + equip_._stats._normal.damage.GetString();
             info += "   ";
-            if (calc.GetFloat() > 0)
+            if (calcN.GetFloat() > 0f)
             {
-                info += "+" + calc.GetString();
+                info += "+" + calcN.GetString();
             }
             else
-                info += calc.GetString();
+                info += calcN.GetString();
         }
 
-         float calcF = 0f;
+        if (calcT.GetFloat() > 0f || calcT.GetFloat() < 0f)
+        {
+            info += System.Environment.NewLine + "(Tech)Damage: " + equip_._stats._tech.damage.GetString();
+            info += "   ";
+            if (calcT.GetFloat() > 0f)
+            {
+                info += "+" + calcT.GetString();
+            }
+            else
+                info += calcT.GetString();
+        }
+
+        if (calcK.GetFloat() > 0f || calcK.GetFloat() < 0f)
+        {
+            info += System.Environment.NewLine + "(Kin.)Damage: " + equip_._stats._kinetic.damage.GetString();
+            info += "   ";
+            if (calcK.GetFloat() > 0f)
+            {
+                info += "+" + calcK.GetString();
+            }
+            else
+                info += calcK.GetString();
+        }
+
+        if (calcP.GetFloat() > 0f || calcP.GetFloat() < 0f)
+        {
+            info += System.Environment.NewLine + "(Psy.)Damage: " + equip_._stats._psychic.damage.GetString();
+            info += "   ";
+            if (calcP.GetFloat() > 0f)
+            {
+                info += "+" + calcP.GetString();
+            }
+            else
+                info += calcP.GetString();
+        }
+        #endregion
+        #region CalcCritChance
+        /* Damage crit - <type><Crit>*/
+         float calcNC = 0f;
+         float calcTC = 0f;
+         float calcKC = 0f;
+         float calcPC = 0f;
+
          switch (equip_._type)
          {
              case Equipment.EquipmentType.Weapon:
-                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._weapon._stats._normal.crit;
+                  calcNC = equip_._stats._normal.crit - Global.Instance.player._equipped._weapon._stats._normal.crit;
+                  calcTC = equip_._stats._tech.crit - Global.Instance.player._equipped._weapon._stats._tech.crit;
+                  calcKC = equip_._stats._kinetic.crit - Global.Instance.player._equipped._weapon._stats._kinetic.crit;
+                  calcPC = equip_._stats._psychic.crit - Global.Instance.player._equipped._weapon._stats._psychic.crit;
                   break;
              case Equipment.EquipmentType.Head:
-                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._head._stats._normal.crit;
+                  calcNC = equip_._stats._normal.crit - Global.Instance.player._equipped._head._stats._normal.crit;
+                  calcTC = equip_._stats._tech.crit - Global.Instance.player._equipped._head._stats._tech.crit;
+                  calcKC = equip_._stats._kinetic.crit - Global.Instance.player._equipped._head._stats._kinetic.crit;
+                  calcPC = equip_._stats._psychic.crit - Global.Instance.player._equipped._head._stats._psychic.crit;
                   break;
              case Equipment.EquipmentType.Chest:
-                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._chest._stats._normal.crit;
+                  calcNC = equip_._stats._normal.crit - Global.Instance.player._equipped._chest._stats._normal.crit;
+                  calcTC = equip_._stats._tech.crit - Global.Instance.player._equipped._chest._stats._tech.crit;
+                  calcKC = equip_._stats._kinetic.crit - Global.Instance.player._equipped._chest._stats._kinetic.crit;
+                  calcPC = equip_._stats._psychic.crit - Global.Instance.player._equipped._chest._stats._psychic.crit;
                   break;
              case Equipment.EquipmentType.Legs:
-                  calcF = equip_._stats._normal.crit - Global.Instance.player._equipped._legs._stats._normal.crit;
-                  break;
-             default:
-                  calcF = equip_._stats._normal.crit;
+                  calcNC = equip_._stats._normal.crit - Global.Instance.player._equipped._legs._stats._normal.crit;
+                  calcTC = equip_._stats._tech.crit - Global.Instance.player._equipped._legs._stats._tech.crit;
+                  calcKC = equip_._stats._kinetic.crit - Global.Instance.player._equipped._legs._stats._kinetic.crit;
+                  calcPC = equip_._stats._psychic.crit - Global.Instance.player._equipped._legs._stats._psychic.crit;
                   break;
          }
 
-        if(calcF > 0f || calcF < 0f)
+        if(calcNC > 0f || calcNC < 0f)
         {
-            info += System.Environment.NewLine + "Click crit chance : " + (equip_._stats._normal.crit * 100f) + "%";
+            info += System.Environment.NewLine + "(Nor.)Crit. Chance: " + (equip_._stats._normal.crit * 100f) + "%";
             info += "    ";
-            if (calcF > 0)
-                info += "+" + (calcF * 100f).ToString() + "%";
+            if (calcNC > 0f)
+                info += "+" + (calcNC * 100f).ToString() + "%";
             else
-                info += (calcF * 100f).ToString() + "%";
+                info += (calcNC * 100f).ToString() + "%";
         }
 
-        calcF = 0f;
+        if (calcTC > 0f || calcTC < 0f)
+        {
+            info += System.Environment.NewLine + "(Tech)Crit. Chance: " + (equip_._stats._tech.crit * 100f) + "%";
+            info += "    ";
+            if (calcTC > 0f)
+                info += "+" + (calcTC * 100f).ToString() + "%";
+            else
+                info += (calcTC * 100f).ToString() + "%";
+        }
+
+        if (calcKC > 0f || calcKC < 0f)
+        {
+            info += System.Environment.NewLine + "(Kin.)Crit. Chance: " + (equip_._stats._kinetic.crit * 100f) + "%";
+            info += "    ";
+            if (calcKC > 0f)
+                info += "+" + (calcKC * 100f).ToString() + "%";
+            else
+                info += (calcKC * 100f).ToString() + "%";
+        }
+
+        if (calcPC > 0f || calcPC < 0f)
+        {
+            info += System.Environment.NewLine + "(Psy.)Crit. Chans: " + (equip_._stats._psychic.crit * 100f) + "%";
+            info += "    ";
+            if (calcPC > 0f)
+                info += "+" + (calcPC * 100f).ToString() + "%";
+            else
+                info += (calcPC * 100f).ToString() + "%";
+        }
+        #endregion
+        #region CalcCritMulti
+        calcNC = 0f;
+        calcTC = 0f;
+        calcKC = 0f;
+        calcPC = 0f;
+
         switch (equip_._type)
         {
             case Equipment.EquipmentType.Weapon:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._weapon._stats._normal.critMultiplier;
+                calcNC = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._weapon._stats._normal.critMultiplier;
+                calcTC = equip_._stats._tech.critMultiplier - Global.Instance.player._equipped._weapon._stats._tech.critMultiplier;
+                calcKC = equip_._stats._kinetic.critMultiplier - Global.Instance.player._equipped._weapon._stats._kinetic.critMultiplier;
+                calcPC = equip_._stats._psychic.critMultiplier - Global.Instance.player._equipped._weapon._stats._psychic.critMultiplier;
                 break;
             case Equipment.EquipmentType.Head:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._head._stats._normal.critMultiplier;
+                calcNC = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._head._stats._normal.critMultiplier;
+                calcTC = equip_._stats._tech.critMultiplier - Global.Instance.player._equipped._head._stats._tech.critMultiplier;
+                calcKC = equip_._stats._kinetic.critMultiplier - Global.Instance.player._equipped._head._stats._kinetic.critMultiplier;
+                calcPC = equip_._stats._psychic.critMultiplier - Global.Instance.player._equipped._head._stats._psychic.critMultiplier;
                 break;
             case Equipment.EquipmentType.Chest:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._chest._stats._normal.critMultiplier;
+                calcNC = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._chest._stats._normal.critMultiplier;
+                calcTC = equip_._stats._tech.critMultiplier - Global.Instance.player._equipped._chest._stats._tech.critMultiplier;
+                calcKC = equip_._stats._kinetic.critMultiplier - Global.Instance.player._equipped._chest._stats._kinetic.critMultiplier;
+                calcPC = equip_._stats._psychic.critMultiplier - Global.Instance.player._equipped._chest._stats._psychic.critMultiplier;
                 break;
             case Equipment.EquipmentType.Legs:
-                calcF = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._legs._stats._normal.critMultiplier;
+                calcNC = equip_._stats._normal.critMultiplier - Global.Instance.player._equipped._legs._stats._normal.critMultiplier;
+                calcTC = equip_._stats._tech.critMultiplier - Global.Instance.player._equipped._legs._stats._tech.critMultiplier;
+                calcKC = equip_._stats._kinetic.critMultiplier - Global.Instance.player._equipped._legs._stats._kinetic.critMultiplier;
+                calcPC = equip_._stats._psychic.critMultiplier - Global.Instance.player._equipped._legs._stats._psychic.critMultiplier;
                 break;
             default:
                 break;
         }
-        if (calcF > 0f || calcF < 0f)
+        if (calcNC > 0f || calcNC < 0f)
         {
-            info += System.Environment.NewLine + "Click crit chance : " + equip_._stats._normal.critMultiplier;
+            info += System.Environment.NewLine + "(Nor.)Crit. Damage: " + equip_._stats._normal.critMultiplier;
             info += "    ";
-            if (calcF > 0)
-                info += "+" + calcF.ToString();
+            if (calcNC > 0)
+                info += "+" + calcNC.ToString();
             else
-                info += calcF.ToString();
+                info += calcNC.ToString();
         }
-            
-        
 
+        if (calcTC > 0f || calcTC < 0f)
+        {
+            info += System.Environment.NewLine + "(Tech)Crit. Damage: " + equip_._stats._tech.critMultiplier;
+            info += "    ";
+            if (calcTC > 0)
+                info += "+" + calcTC.ToString();
+            else
+                info += calcTC.ToString();
+        }
 
+        if (calcKC > 0f || calcKC < 0f)
+        {
+            info += System.Environment.NewLine + "(Kin.)Crit. Damage: " + equip_._stats._kinetic.critMultiplier;
+            info += "    ";
+            if (calcKC > 0)
+                info += "+" + calcKC.ToString();
+            else
+                info += calcKC.ToString();
+        }
 
+        if (calcPC > 0f || calcPC < 0f)
+        {
+            info += System.Environment.NewLine + "(Psy.)Crit. Damage: " + equip_._stats._psychic.critMultiplier;
+            info += "    ";
+            if (calcPC > 0)
+                info += "+" + calcPC.ToString();
+            else
+                info += calcPC.ToString();
+        }
+#endregion
+        #region CalcHealth
+        vap health = new vap();
+
+        switch (equip_._type)
+        {
+            case Equipment.EquipmentType.Weapon:
+                health = vap.Minus(equip_._stats._health, Global.Instance.player._equipped._weapon._stats._health);
+                break;
+            case Equipment.EquipmentType.Head:
+                health = vap.Minus(equip_._stats._health, Global.Instance.player._equipped._head._stats._health);
+                break;
+            case Equipment.EquipmentType.Chest:
+                health = vap.Minus(equip_._stats._health, Global.Instance.player._equipped._chest._stats._health);
+                break;
+            case Equipment.EquipmentType.Legs:
+                health = vap.Minus(equip_._stats._health, Global.Instance.player._equipped._legs._stats._health);
+                break;
+            default:
+                break;
+        }
+
+        if (health.GetFloat() > 0f || health.GetFloat() < 0f)
+        {
+            info += System.Environment.NewLine + "Health: " + equip_._stats._health.GetString();
+            info += "   ";
+            if (health.GetFloat() > 0f)
+            {
+                info += "+" + health.GetString();
+            }
+            else
+                info += health.GetString();
+        }
+        #endregion
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "StatsText").text = info;
     }
 

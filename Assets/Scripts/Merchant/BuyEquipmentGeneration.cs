@@ -208,15 +208,32 @@ public class BuyEquipmentGeneration {
         {
             case Equipment.ElementType.Tech:
                 ret._stats._tech.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
+                if (ret._stats._tech.damage.GetFloat() > 0f && ret._stats._tech.damage.GetFloat() < 1f)
+                {
+                    ret._stats._tech.damage._values[0] = 1;
+                }
+                
                 break;
             case Equipment.ElementType.Kinetic:
                 ret._stats._kinetic.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
+                if (ret._stats._kinetic.damage.GetFloat() > 0f && ret._stats._kinetic.damage.GetFloat() < 1f)
+                {
+                    ret._stats._kinetic.damage._values[0] = 1;
+                }
                 break;
             case Equipment.ElementType.Pshycic:
                 ret._stats._psychic.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
+                if (ret._stats._psychic.damage.GetFloat() > 0f && ret._stats._psychic.damage.GetFloat() < 1f)
+                {
+                    ret._stats._psychic.damage._values[0] = 1;
+                }
                 break;
             case Equipment.ElementType.Normal:
                 ret._stats._normal.damage = (ret._stats._baseStat / 2f) * Global.Instance.player._stats._multiplierDamage;
+                if (ret._stats._normal.damage.GetFloat() > 0f && ret._stats._normal.damage.GetFloat() < 1f)
+                {
+                    ret._stats._normal.damage._values[0] = 1;
+                }
                 break;
             default:
                 break;

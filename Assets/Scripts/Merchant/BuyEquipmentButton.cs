@@ -33,8 +33,8 @@ public class BuyEquipmentButton : MonoBehaviour {
         {
 
             Sounds.OneShot(Sounds.Instance.uiSounds.merchant.buy);
-
             Global.Instance._gold -= GetComponentInChildren<Equipment>()._cost;
+            Global.Instance.UpdateGoldText();
             bool set = false;
             for (int i = 0; i < Global.Instance.player._inventoryArray.Length; i++)
             {
@@ -44,7 +44,7 @@ public class BuyEquipmentButton : MonoBehaviour {
                     GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance.player._inventoryObject.transform;
 
                     GetComponent<Button>().interactable = false;
-
+                    
                     set = true;
                     break;
                 }

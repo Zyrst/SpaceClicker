@@ -21,10 +21,11 @@ public class Equipment : MonoBehaviour {
     public Rareness _rareness;
 
     public uint _cost = 0;
+    public uint _sellValue = 0;
 
 	// Use this for initialization
 	void Start () {
-	
+        _sellValue = 8;
 	}
 	
 	// Update is called once per frame
@@ -35,5 +36,28 @@ public class Equipment : MonoBehaviour {
     public void Popup()
     {
         CharacterScreen.Instance.PopItUp(this);
+    }
+
+    public string GetRarity()
+    {
+        string ret = "";
+        switch (_rareness)
+        {
+            case Rareness.Green:
+                ret = "Common";
+                break;
+            case Rareness.Blue:
+                ret = "Uncommon";
+                break;
+            case Rareness.Purple:
+                ret = "Dank Purple";
+                break;
+            case Rareness.Orange:
+                ret = "Orange Juice";
+                break;
+            default:
+                break;
+        }
+        return ret;
     }
 }

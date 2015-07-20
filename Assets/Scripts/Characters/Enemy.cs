@@ -36,9 +36,9 @@ public class Enemy : Character
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 rot = Vector3.up;
+       /* Vector3 rot = Vector3.up;
 
-        transform.Rotate(rot * 0f * Time.deltaTime);
+        transform.Rotate(rot * 0f * Time.deltaTime);*/
         
 	}
 

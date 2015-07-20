@@ -246,11 +246,14 @@ public class SpellAttack : BaseAttack {
                 try
                 {
                     // hit enemy or player
-                    if (hit.collider.transform.parent.parent.tag == "Enemy" || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
+                    if (hit.collider.transform.parent.parent.tag == "Enemy" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
                         _cd = true;
                         ResetGUI();
+
+                        // do damage
+                        UseSpell(hit.collider.transform.parent.parent.gameObject.GetComponent<Character>(), hit.point);
 
                         // play use sound
                         try
@@ -267,8 +270,7 @@ public class SpellAttack : BaseAttack {
                         // do animation
                         Global.Instance.player.Animator.SetTrigger("ability_throw");
 
-                        // do damage
-                        UseSpell(hit.collider.transform.parent.parent.gameObject.GetComponent<Character>(), hit.point);
+                        
                     }
                     else if (!hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)      // it was dead
                     {

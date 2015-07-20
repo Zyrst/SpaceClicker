@@ -58,6 +58,8 @@ public class Global : MonoBehaviour {
             _playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").text = _gold.ToString();
         }
     }
+
+    
     public Player _player;
     public Player player
     {
@@ -125,6 +127,7 @@ public class Global : MonoBehaviour {
         Profiler.maxNumberOfSamplesPerFrame = 50000;
         UpdateLevel();
         UpdateExpBar();
+        UpdateGoldText();
         SwitchScene(GameType.Ship);
         Starmap.Instance.Generate(1, 100, 9001);
 
@@ -333,6 +336,11 @@ public class Global : MonoBehaviour {
             _playerGUI.transform.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Level").text = player._level.ToString();
         }
         catch (System.NullReferenceException) { }
+    }
+
+    public void UpdateGoldText()
+    {
+        _playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").text = _gold.ToString();
     }
 
     public void ShakeCamera()
