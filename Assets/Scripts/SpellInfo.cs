@@ -58,6 +58,7 @@ public class SpellInfo : MonoBehaviour {
                 break;
         }
         #endregion
+
         if (spell_._trigger == SpellAttack.SpellTrigger.Click)
         {
             info += System.Environment.NewLine + "Activates on Click";
@@ -108,6 +109,10 @@ public class SpellInfo : MonoBehaviour {
         {
             info += System.Environment.NewLine + "Lifesteal: Yes";
         }
+
+
+        //TODO : Read description for a spell
+
 
         txt.text = info;
     }
