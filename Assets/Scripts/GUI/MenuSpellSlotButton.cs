@@ -40,6 +40,7 @@ public class MenuSpellSlotButton : Button {
     public override void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {
         base.OnPointerClick(eventData);
+        GetComponentInParent<SpellsMap>().spellInfo.gameObject.GetComponent<SpellInfo>().Activate(_spell);
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
     }
     public override void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
@@ -90,6 +91,7 @@ public class MenuSpellSlotButton : Button {
 
             }
 
+            
             GetComponent<RectTransform>().position = _startPos;
             _held = false;
         }

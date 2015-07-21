@@ -362,6 +362,14 @@ public class SpellAttack : BaseAttack {
         _combinedStats.AddStats(Global.Instance.player._combinedStats);
     }
 
+    public SpellStats GetTempSpellStats()
+    {
+        SpellStats tmp = new SpellStats(_stats);
+        tmp.AddStats(Global.Instance.player._combinedStats);
+
+        return tmp;
+    }
+
     public void Stunned(float stunTime_)
     {
         _stunned = true;

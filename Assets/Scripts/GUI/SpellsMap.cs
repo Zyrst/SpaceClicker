@@ -7,6 +7,7 @@ public class SpellsMap : MonoBehaviour {
 
     public GameObject spellSlots;
     public GameObject spellList;
+    public GameObject spellInfo;
 
     public enum Tabs : int { Damage = 0, Healing = 1, Stun = 2 };
 

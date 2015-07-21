@@ -1,0 +1,19 @@
+Damage + Damage typ
+Hur mycket heal
+Shield - Duration
+Lifesteal
+Typ av attack (aoe, single)
+Activate on Click (inte drag)
+
+
+
+Namn: 
+Typ: 
+attacktyp: 
+(om click)
+
+Damage/Shield/Heal:
+Stun:
+Lifesteal:Yes
+
+<Description>

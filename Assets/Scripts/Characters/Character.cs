@@ -38,7 +38,6 @@ public class Character : MonoBehaviour {
     {
         //Calculate damage with resistance from the characters stats
         vap normal = ds_._normal * (1f - _stats._normal.resistance);
-        Debug.Log(normal.GetFloat());
         vap tech = ds_._tech * (1f - _stats._tech.resistance);
         vap psychic = ds_._psychic * (1f - _stats._psychic.resistance);
         vap kinetic = ds_._kinetic * (1f - _stats._kinetic.resistance);
