@@ -48,6 +48,7 @@ public class SaveLoadSystem {
             Sarr[i].gameObject.SetActive(true);
         }
         Starmap.Instance.gameObject.SetActive(true);
+        Companions.Instance.SaveTime();
 
         LevelSerializer.SaveGame("SpaceClicker");
 

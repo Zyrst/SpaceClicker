@@ -428,11 +428,11 @@ public class SpellAttack : BaseAttack {
                         {
                             if (enemy - 1 >= 0)
                             {
-                                enemies[enemy - 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hitpoint_, Global.Instance.player);
+                                enemies[enemy - 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), enemies[enemy - 1].GetComponent<Transform>().position, Global.Instance.player);
                             }
                             if (enemy + 1 < enemies.Length)
                             {
-                                enemies[enemy + 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hitpoint_, Global.Instance.player);
+                                enemies[enemy + 1].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), enemies[enemy + 1].GetComponent<Transform>().position, Global.Instance.player);
                             }
                         }
                     }
@@ -458,7 +458,7 @@ public class SpellAttack : BaseAttack {
                         {
                             if (enemies[i] != char_)
                             {
-                                enemies[i].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), hitpoint_, Global.Instance.player);
+                                enemies[i].TakeDamage(DamageStats.GenerateFromSpellStats(_combinedStats), enemies[i].GetComponent<Transform>().position, Global.Instance.player);
                             }
                         }
                     }

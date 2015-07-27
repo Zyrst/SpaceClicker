@@ -14,6 +14,9 @@ public class ClickAttack : BaseAttack {
 
     public bool _holdingSpell = false;
 
+    public Vector3 _lastRay;
+    public Vector3 _hitPoint;
+
     public static class Swipes {  
         public static float tech = 0.8f; 
         public static float kinetic = 0.4f;
@@ -45,8 +48,10 @@ public class ClickAttack : BaseAttack {
                 {
                     //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.blue,10f);
                     // hit enemy
+                    _hitPoint = hit.point;
                     if (hit.collider.transform.parent.parent.tag == "Enemy")
                     {
+                       
                         if ((_canDealDamage || (_lastTarget != null && _lastTarget != hit.collider.gameObject.transform.parent.parent.gameObject))
                             && hit.collider.gameObject.GetComponentInParent<Character>()._isAlive)
                         {
@@ -65,25 +70,22 @@ public class ClickAttack : BaseAttack {
                             _canDealDamage = false;
                             //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 10f);
                             _lastTarget = hit.collider.transform.parent.parent.gameObject;
-                            CharacterStats cs = gameObject.GetComponent<Player>()._combinedStats;
 
-                            // dom här två är samma sak ^⌄
-
-                            CharacterStats comb = GetComponent<Player>()._combinedStats;
+                            CharacterStats cs = GetComponent<Player>()._combinedStats;
                             // play sound, fix crit later
-                            if (comb._tech.damage > comb._psychic.damage && comb._tech.damage > comb._kinetic.damage)               // tech is störst
+                            if (cs._tech.damage > cs._psychic.damage && cs._tech.damage > cs._kinetic.damage)               // tech is störst
                             {
                                 _swipeSoundVariable.setValue(Swipes.tech);
                                 _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                                 _swipeSoundEvent.start();
                             }
-                            else if (comb._kinetic.damage > comb._psychic.damage && comb._kinetic.damage > comb._tech.damage)       // kinetic is störst
+                            else if (cs._kinetic.damage > cs._psychic.damage && cs._kinetic.damage > cs._tech.damage)       // kinetic is störst
                             {
                                 _swipeSoundVariable.setValue(Swipes.kinetic);
                                 _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                                 _swipeSoundEvent.start();
                             }
-                            else if (comb._psychic.damage > comb._kinetic.damage && comb._psychic.damage > comb._tech.damage)       // pshycic is störst
+                            else if (cs._psychic.damage > cs._kinetic.damage && cs._psychic.damage > cs._tech.damage)       // pshycic is störst
                             {
                                 _swipeSoundVariable.setValue(Swipes.pshycic);
                                 _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -130,6 +132,30 @@ public class ClickAttack : BaseAttack {
             {
                 _canDealDamage = true;
             }
+            //Try to see if we missed a target
+            if (_lastRay != _hitPoint)
+            {
+                RaycastHit lineHit = new RaycastHit();
+                if (Physics.Linecast(_hitPoint, _lastRay, out lineHit))
+                {
+                    Debug.DrawLine(_hitPoint ,_lastRay, Color.green,5f);
+                    try
+                    {
+                        if (lineHit.collider.transform.parent.parent.tag == "Enemy")
+                        {
+                            if (_lastTarget != lineHit.collider.gameObject.transform.parent.parent.gameObject && _canDealDamage)
+                            {
+                                CharacterStats cs = GetComponent<Player>()._combinedStats;
+                                lineHit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), hit.point, Global.Instance.player);
+                            }
+                        }
+                           
+                    }
+                    catch (System.NullReferenceException) { }
+                        
+                 }
+            }
+            _lastRay = hit.point;
         }
         else if(_stunned)
         {

@@ -37,7 +37,7 @@ public class SpellStats {
 
     public bool hasDamage
     {
-        get { return _normal.damage.GetFloat() > 0f || _tech.damage.GetFloat() > 0f || _kinetic.damage.GetFloat() > 0f || _psychic.damage.GetFloat() > 0f; }
+        get { return _normal.damage.GetFloat() > 0f || _tech.damage.GetFloat() > 0f || _kinetic.damage.GetFloat() > 0f || _psychic.damage.GetFloat() > 0f || _healthDamagePercent > 0f; }
     }
     public bool hasHeal
     {

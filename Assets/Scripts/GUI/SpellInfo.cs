@@ -21,6 +21,26 @@ public class SpellInfo : MonoBehaviour {
         SpellStats tmpStat = spell_.GetTempSpellStats();
         Text txt = gameObject.GetComponentInChildren<Text>();
         string info = spell_.gameObject.name;
+
+        #region SpellTargets
+        switch (spell_._target)
+        {
+            case SpellAttack.SpellTarget.Single:
+                info += System.Environment.NewLine + "Attack Type: Single";
+                break;
+            case SpellAttack.SpellTarget.Adjacent:
+                info += System.Environment.NewLine + "Attack Type: Adjacent";
+                break;
+            case SpellAttack.SpellTarget.EnemiesAndPlayer:
+                info += System.Environment.NewLine + "Attack Type: Enemies and Player";
+                break;
+            case SpellAttack.SpellTarget.Enemies:
+                info += System.Environment.NewLine + "Attack Type: AoE";
+                break;
+        }
+        #endregion
+
+
         #region SpellType
         switch (spell_._type)
         {
@@ -41,29 +61,7 @@ public class SpellInfo : MonoBehaviour {
         }
         #endregion
 
-        #region SpellTargets
-        switch (spell_._target)
-        {
-            case SpellAttack.SpellTarget.Single:
-                info += System.Environment.NewLine + "AttackType: Single";
-                break;
-            case SpellAttack.SpellTarget.Adjacent:
-                info += System.Environment.NewLine + "AttackType: Adjacent";
-                break;
-            case SpellAttack.SpellTarget.EnemiesAndPlayer:
-                info += System.Environment.NewLine + "AttackType: Enemies and Player";
-                break;
-            case SpellAttack.SpellTarget.Enemies:
-                info += System.Environment.NewLine + "AttackType: AoE";
-                break;
-        }
-        #endregion
-
-        if (spell_._trigger == SpellAttack.SpellTrigger.Click)
-        {
-            info += System.Environment.NewLine + "Activates on Click";
-        }
-
+        #region Heal and Shield
         if (spell_._type == SpellAttack.SpellType.Shield)
         {
             info += System.Environment.NewLine + "Shield Duration: "  + tmpStat._shieldTime;
@@ -72,8 +70,14 @@ public class SpellInfo : MonoBehaviour {
         
         if (tmpStat.hasHeal)
         {
-            info += System.Environment.NewLine + tmpStat._heal.GetString();
+            info += System.Environment.NewLine + "Heals: " + tmpStat._heal.GetString();
         }
+
+        if (tmpStat._healPercent > 0f)
+        {
+            info += System.Environment.NewLine + "Heals: " + tmpStat._healPercent + "%";
+        }
+        #endregion
 
         #region Damage
         if (tmpStat.hasDamage)
@@ -97,20 +101,43 @@ public class SpellInfo : MonoBehaviour {
             {
                 info += System.Environment.NewLine + "(Psy.) Damage: " + tmpStat._psychic.damage.GetString();
             }
+
+            if (tmpStat._healthDamagePercent > 0f)
+            {
+                vap hlthdmgperc = new vap(tmpStat._healthDamagePercent * Global.Instance._player._stats._health);
+                info += System.Environment.NewLine + "(Pure) Damage: " + hlthdmgperc.GetString();
+            }
         }
         #endregion
 
+        #region Stun and Lifesteal + Health Damage
         if (tmpStat.hasStun)
         {
             info += System.Environment.NewLine + "Stun Duration: " + tmpStat._stunTime;
         }
 
-        if (tmpStat.hasLifeSteal)
+        if (tmpStat.hasLifeSteal || tmpStat._lifeStealAmount > 0f)
         {
             info += System.Environment.NewLine + "Lifesteal: Yes";
         }
 
+        if (tmpStat._healthDamagePercent > 0f)
+        {
+            info += System.Environment.NewLine + "Damage % from Player Health: Yes";
+        }
+        #endregion
 
+        #region Slow
+        if (tmpStat.hasSlow)
+        {
+            info += System.Environment.NewLine + "Slow time: " + tmpStat._slowTime;
+        }
+        #endregion
+
+        if (spell_._trigger == SpellAttack.SpellTrigger.Click)
+        {
+            info += System.Environment.NewLine + "Activates on Click";
+        }
         //TODO : Read description for a spell
 
 

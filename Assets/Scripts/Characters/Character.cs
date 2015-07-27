@@ -43,6 +43,7 @@ public class Character : MonoBehaviour {
         vap kinetic = ds_._kinetic * (1f - _stats._kinetic.resistance);
 
         vap totalDamage = normal + tech + psychic + kinetic;
+        vap healthDamagePercent = new vap();
 
         if (ds_._healPercent > 0f)
             ds_._heal += _stats._maxHealth * (ds_._healPercent * 0.01f);
@@ -50,6 +51,7 @@ public class Character : MonoBehaviour {
         if (ds_._healthDamagePercent > 0f)
         {
             totalDamage += hitter_.maxHealth * ds_._healthDamagePercent;
+            healthDamagePercent = hitter_.maxHealth * ds_._healthDamagePercent;
         }
 
         _stats._health -= totalDamage;
@@ -71,7 +73,7 @@ public class Character : MonoBehaviour {
             _stats._health = new vap(_stats._maxHealth);
         }
 
-        SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
+        SpawnText(normal, tech, psychic, kinetic, ds_._heal, healthDamagePercent, hitPoint_);
 
         if (_stats._health.GetFloat() < 1f)
         {
@@ -120,7 +122,7 @@ public class Character : MonoBehaviour {
         Global.Instance.UpdateLevel();
     }
 
-    public void SpawnText(vap normal_, vap tech_, vap psychic_, vap kinetic_, vap heal_, Vector3 hitPoint_)
+    public void SpawnText(vap normal_, vap tech_, vap psychic_, vap kinetic_, vap heal_, vap healthDamagePercent_, Vector3 hitPoint_)
     {
         if (normal_.GetFloat() > 0)
         {
@@ -176,6 +178,17 @@ public class Character : MonoBehaviour {
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.healColor;
         }
+
+        if (healthDamagePercent_.GetFloat() > 0)
+        {
+            GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = healthDamagePercent_.GetString();
+            _numbers.transform.position = hitPoint_;
+            Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+            direction.Normalize();
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.orange;
+        }
     }
 
     public virtual void LifeSteal(vap lifeSteal_)
@@ -187,7 +200,7 @@ public class Character : MonoBehaviour {
         }
 
         vap tmp = new vap();
-        SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, transform.position);
+        SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, tmp, transform.position);
     }
 
 }

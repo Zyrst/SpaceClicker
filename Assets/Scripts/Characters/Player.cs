@@ -246,6 +246,12 @@ public class Player : Character {
             vap kinetic = ds_._kinetic * (1f - _combinedStats._kinetic.resistance);
 
             vap totalDamage = normal + tech + psychic + kinetic;
+            vap healthDamagePercent = new vap();
+            if (ds_._healthDamagePercent > 0f)
+            {
+                totalDamage += hitter_.maxHealth * ds_._healthDamagePercent;
+                healthDamagePercent = hitter_.maxHealth * ds_._healthDamagePercent;
+            }
 
             _stats._health -= totalDamage;
             if (ds_._healPercent > 0f)
@@ -275,7 +281,7 @@ public class Player : Character {
             // play hit animation
             Animator.SetTrigger("hit_start");
 
-            SpawnText(normal, tech, psychic, kinetic, ds_._heal, hitPoint_);
+            SpawnText(normal, tech, psychic, kinetic, ds_._heal, healthDamagePercent, hitPoint_);
 
             if (_stats._health._values[0] < 1f)
             {
@@ -436,7 +442,7 @@ public class Player : Character {
         }
 
         vap tmp = new vap();
-        SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, transform.position);
+        SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, tmp, transform.position);
     }
 
     void OnEnable()

@@ -128,7 +128,7 @@ public class Global : MonoBehaviour {
         UpdateLevel();
         UpdateExpBar();
         UpdateGoldText();
-        SwitchScene(GameType.Ship);
+        SwitchScene(GameType.Ship);        
         Starmap.Instance.Generate(1, 100, 9001);
 
         _planet = null;

@@ -28,11 +28,7 @@ public class MouseController {
     {
         get
         {
-            
-            if (Input.touchSupported && Input.GetTouch(0).phase == TouchPhase.Moved)
-                return Input.GetTouch(0).position;
-            else
-                return Input.mousePosition;
+            return Input.mousePosition;
         }
     }
 
@@ -48,10 +44,7 @@ public class MouseController {
     {
         get
         {
-            if (Input.touchSupported)
-                return Input.GetTouch(0).phase == TouchPhase.Began;
-            else
-                return Input.GetMouseButton(0);
+            return Input.GetMouseButton(0);
         }
     }
 
