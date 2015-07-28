@@ -7,38 +7,44 @@ public class HealthPotion : MonoBehaviour {
     [HideInInspector]
     public float _timer = 0f;
 
+    public bool staticPotion = true;
+
 	// Use this for initialization
 	void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        _timer += Time.deltaTime;
-        if( _timer >= _lifeTime)
+        if (!staticPotion)
         {
-            GameObject.Destroy(gameObject);
-        }
-
-        if (MouseController.Instance.buttonDown)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
-            RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit))
+            _timer += Time.deltaTime;
+            if (_timer >= _lifeTime)
             {
-                if (hit.collider.transform == transform)
+                GameObject.Destroy(gameObject);
+            }
+
+            if (MouseController.Instance.buttonDown)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
+                RaycastHit hit = new RaycastHit();
+                if (Physics.Raycast(ray, out hit))
                 {
-                    Collect();
-                }
-                foreach (var item in GetComponentInChildren<Transform>())
-                {
-                    if (hit.collider.transform == item)
+                    if (hit.collider.transform == transform)
                     {
                         Collect();
-                        break;
+                    }
+                    foreach (var item in GetComponentInChildren<Transform>())
+                    {
+                        if (hit.collider.transform == item)
+                        {
+                            Collect();
+                            break;
+                        }
                     }
                 }
             }
         }
+       
 	}
 
     public void Collect()
@@ -56,7 +62,7 @@ public class HealthPotion : MonoBehaviour {
     {
         GameObject potion = GameObject.Instantiate(Global.Instance._prefabs.HealthPotion);
         potion.transform.position = pos_;
-        potion.GetComponent<Rigidbody>().AddForce(force_);
+       // potion.GetComponent<Rigidbody>().AddForce(force_);
         return potion;
 
     }

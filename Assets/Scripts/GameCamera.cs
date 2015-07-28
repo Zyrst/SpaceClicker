@@ -26,7 +26,7 @@ public class GameCamera : MonoBehaviour {
         {
             _shakeTime -= Time.deltaTime;
 
-            transform.position = _originalPos + Random.insideUnitSphere * _shakeTime;
+            transform.position = _originalPos; // +Random.insideUnitSphere * _shakeTime;
             transform.rotation = new Quaternion(
                             _originalRot.x + Random.Range(-_shakeTime, _shakeTime) * _shakeDist * Time.deltaTime,
                             _originalRot.y + Random.Range(-_shakeTime, _shakeTime) * _shakeDist * Time.deltaTime,

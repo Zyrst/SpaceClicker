@@ -157,7 +157,7 @@ public class CharacterScreen : MonoBehaviour {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Sounds.OneShot(Sounds.Instance.uiSounds.navigation.equipGear);
 
-        Debug.Log("EquipLast");
+       // Debug.Log("EquipLast");
         ResetInventorySprite(_lastEquip);
         Global.Instance.player._equipped.Equip(_lastEquip);
         GenerateCharInfo();

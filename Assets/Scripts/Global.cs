@@ -324,7 +324,7 @@ public class Global : MonoBehaviour {
         {
             float value = (float)(player._experience) / (float)(player._experianceToNext);
             _playerGUI.transform.GetComponentsInChildren<Image>(true).FirstOrDefault(x => x.name == "Exp").transform.localScale = new Vector3(value, 1f, 1f);
-            _playerGUI.transform.GetComponentsInChildren<Text>(true).FirstOrDefault(x => x.name == "ExpText").text = player._experience.ToString() + "/" + player._experianceToNext.ToString();
+            _playerGUI.transform.GetComponentsInChildren<Text>(true).FirstOrDefault(x => x.name == "ExpText").text = "Exp: " + player._experience.ToString() + "/" + player._experianceToNext.ToString();
         }
         catch (System.NullReferenceException) { }
     }

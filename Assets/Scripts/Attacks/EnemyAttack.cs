@@ -33,7 +33,7 @@ public class EnemyAttack : MonoBehaviour {
 	void Start () {
         _attackTimer = Random.Range(0f, 2f);
         shield = gameObject.GetComponentInChildren<CharacterGUI>().Shield;
-
+        _cooldownTimer = GetComponent<Enemy>()._stats._baseCooldownTimer;
         Animator anim = GetComponentInChildren<Animator>();
 
         try

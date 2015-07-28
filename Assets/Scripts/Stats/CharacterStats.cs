@@ -45,6 +45,7 @@ public class CharacterStats {
     public float _multiplierDamage;
     public float _constMultiplier;
     public float _valueMultiplier;
+    public float _baseCooldownTimer = 8f;
 
     public float _basePower;
     public float _powerDiv;

@@ -13,11 +13,43 @@ public class Enemy : Character
     [HideInInspector]
     public int _myNumDeath = 0;
 
+    GameObject _myPotion;
+
+    public classType _myClass = classType.assassin;
+
+    public enum classType : int { sage = 0 , tank = 1, assassin = 2}
+
+     
 	// Use this for initialization
     void Start()
     {
         _level = Global.Instance.GetEnemyLevel();
-        //_stats.LevelUp(_level);
+        //_stats.LevelUp(_level)
+        ;
+        _myClass = (classType)Random.Range(0, 3);
+        switch (_myClass)
+        {
+            case classType.sage:
+                _stats._healthStatDist = 0.5f;
+                _stats._damageStatDist = 0.8f;
+                _stats._baseCooldownTimer *= 0.8f;
+               // GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Sage.sprite;
+                break;
+            case classType.tank:
+                _stats._healthStatDist = 0.7f;
+                _stats._damageStatDist = 0.8f;
+                _stats._baseCooldownTimer *= 1f;
+              //  GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Tank.sprite;
+                break;
+            case classType.assassin:
+                _stats._healthStatDist = 0.3f;
+                _stats._damageStatDist = 0.8f;
+                _stats._baseCooldownTimer *= 0.6f;
+            //    GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Assassin.sprite;
+                break;
+            default:
+                break;
+        }
         
         _stats._baseStat._values[0] = (_stats._constMultiplier*_level + ( Mathf.Pow(_stats._basePower,(_level/_stats._powerDiv)))) * _stats._valueMultiplier;
         _stats._baseStat.Checker();
@@ -30,6 +62,10 @@ public class Enemy : Character
 
         Transform tr = transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model");
         tr.LookAt(Global.Instance.player.transform);
+
+        float rnd = Random.Range(0f, 1f);
+        if (rnd >= 1f - Global.Instance._potionDropChans.value)
+            _myPotion = HealthPotion.Create(/*new Vector3(transform.position.x - 5f, transform.position.y,transform.position.z)*/  tr.position - (tr.forward * 3f), Vector3.zero);
        // Quaternion rot = transform.rotation;
         //rot.z = 0f;
 	}
@@ -55,11 +91,14 @@ public class Enemy : Character
 
         // spawn goldcoin
         Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance.player.transform.position);
-        GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = _level;
-        float rnd = Random.Range(0f, 1f);
-        if(rnd >= 1f - Global.Instance._potionDropChans.value)
-            HealthPotion.Create(transform.position + (Vector3.up * 2f), dir * 20f);
-        
+        GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint) (_level/50) + 2 : 1 ;
+
+        //Have a potion behind it , remove cage (not yet available)
+        if (_myPotion != null)
+        {
+            _myPotion.GetComponent<HealthPotion>().staticPotion = false;
+        }
+            
        // Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
         Invoke("Kill", 2f);
         GetComponentInChildren<CharacterGUI>().gameObject.SetActive(false);

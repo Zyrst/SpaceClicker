@@ -104,18 +104,22 @@ public class BuyEquipmentGeneration {
             case 0:
                 ret._rareness = Equipment.Rareness.Green;
                 ITEMSTATMULTIPLIER = 0.075f;
+                ret._cost = 625;
                 break;
             case 1:
                 ret._rareness = Equipment.Rareness.Blue;
                 ITEMSTATMULTIPLIER = 0.15f;
+                ret._cost = 1350;
                 break;
             case 2:
                 ret._rareness = Equipment.Rareness.Purple;
                 ITEMSTATMULTIPLIER = 0.21f;
+                ret._cost = 4500;
                 break;
             case 3:
                 ret._rareness = Equipment.Rareness.Orange;
                 ITEMSTATMULTIPLIER = 0.3f;
+                ret._cost = 17500;
                 break;
 		    default:
                 break;
@@ -261,7 +265,7 @@ public class BuyEquipmentGeneration {
                 break;
         }
 
-        ret._cost = 10;
+        
 
         return ret;
     }

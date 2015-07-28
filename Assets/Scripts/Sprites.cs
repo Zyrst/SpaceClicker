@@ -31,9 +31,17 @@ public class Sprites : MonoBehaviour {
         public SpriteRef Heal;
         public SpriteRef Stun;
     }
+    [System.Serializable]
+    public class ClassIcons
+    {
+        public SpriteRef Assassin;
+        public SpriteRef Sage;
+        public SpriteRef Tank;
+    }
 
     public Spells spells;
     public Equipment equipment;
+    public ClassIcons classIcons;
 
     //public Spells spells;
     //public Equipment equipment;
