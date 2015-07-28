@@ -64,8 +64,15 @@ public class Enemy : Character
         tr.LookAt(Global.Instance.player.transform);
 
         float rnd = Random.Range(0f, 1f);
-        if (rnd >= 1f - Global.Instance._potionDropChans.value)
-            _myPotion = HealthPotion.Create(/*new Vector3(transform.position.x - 5f, transform.position.y,transform.position.z)*/  tr.position - (tr.forward * 3f), Vector3.zero);
+       // if (rnd >= 1f - Global.Instance._potionDropChans.value)
+       // {
+            _myPotion = HealthPotion.Create(tr.position - (tr.forward * 3f), Vector3.zero);
+            GameObject tmp = GameObject.Instantiate(Global.Instance._prefabs.LootCrate);
+            tmp.transform.position = _myPotion.transform.position;
+            tmp.transform.localScale = new Vector3(25, 25, 25);
+            tmp.GetComponent<LootCrate>().Activate(gameObject,_myPotion);
+       // }
+            
        // Quaternion rot = transform.rotation;
         //rot.z = 0f;
 	}
@@ -92,12 +99,6 @@ public class Enemy : Character
         // spawn goldcoin
         Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance.player.transform.position);
         GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint) (_level/50) + 2 : 1 ;
-
-        //Have a potion behind it , remove cage (not yet available)
-        if (_myPotion != null)
-        {
-            _myPotion.GetComponent<HealthPotion>().staticPotion = false;
-        }
             
        // Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
         Invoke("Kill", 2f);

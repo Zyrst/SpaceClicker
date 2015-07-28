@@ -8,6 +8,11 @@ public class EnemySpawner : MonoBehaviour {
         public void newWave()
         {
             Global.Instance.AllEnemiesDied();
+            LootCrate[] lootCrates = Object.FindObjectsOfType<LootCrate>();
+            foreach (var item in lootCrates)
+            {
+                item.UltimateDestroy();
+            }
             int rnd = Random.Range(1, spawns.Count + 1);
             EnemySpawner._enemiesSpawn = rnd;
            // Debug.Log(EnemySpawner._enemiesSpawn);
