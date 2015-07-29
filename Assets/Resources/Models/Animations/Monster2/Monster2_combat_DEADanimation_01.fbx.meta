@@ -1,0 +1,175 @@
+fileFormatVersion: 2
+guid: e556401c00a2fc642820361e7f9dba85
+timeCreated: 1438158840
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Base_joint
+    100002: cluster_01
+    100004: cluster_01_group
+    100006: cluster_02
+    100008: cluster_02_group
+    100010: cluster_03
+    100012: cluster_03_group
+    100014: cluster_04
+    100016: cluster_04_group
+    100018: cluster_05
+    100020: cluster_05_group
+    100022: Full_body_ctrl
+    100024: Head_ctrl
+    100026: Head_ctrl_group
+    100028: head_joint
+    100030: Hip_cril_group
+    100032: Hip_ctrl
+    100034: L_collar_ctrl
+    100036: L_collar_ctrl_group
+    100038: L_collar_joint
+    100040: L_elbow_ctrl
+    100042: L_elbow_ctrl_group
+    100044: L_elbow_joint
+    100046: L_shoulder_ctrl
+    100048: L_shoulder_ctrl_group
+    100050: L_shoulder_joint
+    100052: //RootNode
+    100054: Neck_ctrl
+    100056: Neck_ctrl_group
+    100058: neck_joint
+    100060: polySurface3
+    100062: R_collar_ctrl
+    100064: R_collar_ctrl_group
+    100066: R_collar_joint
+    100068: R_elbow_ctrl
+    100070: R_elbow_ctrl_group
+    100072: R_elbow_joint
+    100074: R_shoulder_ctrl
+    100076: R_shoulder_ctrl_group
+    100078: R_shoulder_joint
+    100080: Shoulder_ctrl
+    100082: Shoulder_ctrl_group
+    100084: spine_1_joint
+    100086: spine_2_joint
+    100088: spine_3_joint
+    100090: spine_4_joint
+    100092: spine_5_joint
+    100094: spine_curve
+    100096: spine_ikHandle
+    100098: tail_1_joint
+    100100: tail_2_joint
+    400000: Base_joint
+    400002: cluster_01
+    400004: cluster_01_group
+    400006: cluster_02
+    400008: cluster_02_group
+    400010: cluster_03
+    400012: cluster_03_group
+    400014: cluster_04
+    400016: cluster_04_group
+    400018: cluster_05
+    400020: cluster_05_group
+    400022: Full_body_ctrl
+    400024: Head_ctrl
+    400026: Head_ctrl_group
+    400028: head_joint
+    400030: Hip_cril_group
+    400032: Hip_ctrl
+    400034: L_collar_ctrl
+    400036: L_collar_ctrl_group
+    400038: L_collar_joint
+    400040: L_elbow_ctrl
+    400042: L_elbow_ctrl_group
+    400044: L_elbow_joint
+    400046: L_shoulder_ctrl
+    400048: L_shoulder_ctrl_group
+    400050: L_shoulder_joint
+    400052: //RootNode
+    400054: Neck_ctrl
+    400056: Neck_ctrl_group
+    400058: neck_joint
+    400060: polySurface3
+    400062: R_collar_ctrl
+    400064: R_collar_ctrl_group
+    400066: R_collar_joint
+    400068: R_elbow_ctrl
+    400070: R_elbow_ctrl_group
+    400072: R_elbow_joint
+    400074: R_shoulder_ctrl
+    400076: R_shoulder_ctrl_group
+    400078: R_shoulder_joint
+    400080: Shoulder_ctrl
+    400082: Shoulder_ctrl_group
+    400084: spine_1_joint
+    400086: spine_2_joint
+    400088: spine_3_joint
+    400090: spine_4_joint
+    400092: spine_5_joint
+    400094: spine_curve
+    400096: spine_ikHandle
+    400098: tail_1_joint
+    400100: tail_2_joint
+    4300000: polySurface3
+    7400000: monster2_combat_animation_04
+    9500000: //RootNode
+    13700000: polySurface3
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

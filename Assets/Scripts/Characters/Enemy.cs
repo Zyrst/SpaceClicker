@@ -14,6 +14,7 @@ public class Enemy : Character
     public int _myNumDeath = 0;
 
     GameObject _myPotion;
+    private FMOD.Studio.EventInstance _takingDamageSoundEvent;
 
     public classType _myClass = classType.assassin;
 
@@ -24,8 +25,8 @@ public class Enemy : Character
     void Start()
     {
         _level = Global.Instance.GetEnemyLevel();
-        //_stats.LevelUp(_level)
-        ;
+        //_stats.LevelUp(_level);
+        
         _myClass = (classType)Random.Range(0, 3);
         switch (_myClass)
         {
@@ -33,18 +34,30 @@ public class Enemy : Character
                 _stats._healthStatDist = 0.5f;
                 _stats._damageStatDist = 0.8f;
                 _stats._baseCooldownTimer *= 0.8f;
+                try {
+                    GetComponentInChildren<Animator>().SetFloat("AttackSpeed", _stats._baseCooldownTimer);
+                }
+                catch (System.NullReferenceException) { }
                 GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Sage.sprite;
                 break;
             case classType.tank:
                 _stats._healthStatDist = 0.7f;
                 _stats._damageStatDist = 0.8f;
                 _stats._baseCooldownTimer *= 1f;
+                try{
+                    GetComponentInChildren<Animator>().SetFloat("AttackSpeed", _stats._baseCooldownTimer);
+                }
+                catch (System.NullReferenceException) { }
                 GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Tank.sprite;
                 break;
             case classType.assassin:
                 _stats._healthStatDist = 0.3f;
                 _stats._damageStatDist = 0.8f;
                 _stats._baseCooldownTimer *= 0.6f;
+                try {
+                    GetComponentInChildren<Animator>().SetFloat("AttackSpeed", _stats._baseCooldownTimer);
+                }
+                catch (System.NullReferenceException) { }
                 GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Assassin.sprite;
                 break;
             default:
@@ -64,12 +77,12 @@ public class Enemy : Character
         tr.LookAt(Global.Instance.player.transform);
 
         float rnd = Random.Range(0f, 1f);
-        if (rnd >= 1f - Global.Instance._potionDropChans.value)
+       // if (rnd >= 1f - Global.Instance._potionDropChans.value)
         {
             _myPotion = HealthPotion.Create(tr.position - (tr.forward * 3f), Vector3.zero);
             GameObject tmp = GameObject.Instantiate(Global.Instance._prefabs.LootCrate);
             tmp.transform.position = _myPotion.transform.position;
-            tmp.transform.localScale = new Vector3(25, 25, 25);
+            tmp.transform.localScale = new Vector3(15, 15, 15);
             tmp.GetComponent<LootCrate>().Activate(gameObject,_myPotion);
         }
             
@@ -154,18 +167,21 @@ public class Enemy : Character
 
                 base.TakeDamage(ds_, hitPoint_, hitter_);
 
-                // play taking damage sound
-                if (vap.GetScale(oldHP, _stats._maxHealth) >= 0.85f && vap.GetScale(_stats._health, _stats._maxHealth) <= 0.85f)
+                // play taking damage sound 
+                if (!_isAlive)
                 {
-                    Sounds.OneShot(Sounds.Instance.enemySounds.damage_light);
+                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_heavy); 
+                    _takingDamageSoundEvent.start();
                 }
                 else if (vap.GetScale(oldHP, _stats._maxHealth) >= 0.35f && vap.GetScale(_stats._health, _stats._maxHealth) <= 0.35f)
                 {
-                    Sounds.OneShot(Sounds.Instance.enemySounds.damage_medium);
+                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_medium); 
+                    _takingDamageSoundEvent.start();
                 }
-                else if (!_isAlive)
+                else if (vap.GetScale(oldHP, _stats._maxHealth) >= 0.85f && vap.GetScale(_stats._health, _stats._maxHealth) <= 0.85f)
                 {
-                    Sounds.OneShot(Sounds.Instance.enemySounds.damage_heavy);
+                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_light); 
+                    _takingDamageSoundEvent.start();
                 }
 
                 if (ds_._stunTime > 0f)
