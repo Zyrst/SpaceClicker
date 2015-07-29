@@ -21,10 +21,9 @@ public class LootCrate : MonoBehaviour {
             {
                 if (hit.collider.transform == transform && !_enemyOwner.GetComponent<Character>()._isAlive)
                 {
-                    _potion.GetComponent<HealthPotion>().staticPotion = false;
                     Vector3 dir = (Vector3.up * 25f) + -(transform.position - Global.Instance.player.transform.position);
                     _potion.GetComponent<Rigidbody>().AddForce(dir * 20f);
-                    Destroy();
+                    Invoke("ActivatePotion", 0.3f);
                 }
             }
         }
@@ -42,17 +41,7 @@ public class LootCrate : MonoBehaviour {
     }
 
     /// <summary>
-    /// Hides the lootcrate
-    /// </summary>
-    public void Destroy()
-    {
-        gameObject.SetActive(false);
-
-        //And spawn effects
-    }
-
-    /// <summary>
-    /// Destroy both lootcrate and potion
+    /// Destroy both lootcrate and potion, used if new wave start
     /// </summary>
     public void UltimateDestroy()
     {
@@ -65,7 +54,7 @@ public class LootCrate : MonoBehaviour {
     /// </summary>
     public void ActivatePotion()
     {
-        
+        _potion.GetComponent<HealthPotion>().staticPotion = false;
         GameObject.Destroy(gameObject);
     }
 }
