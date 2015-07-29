@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 55e8159f7b6d40d48b1aa25ff4130563
-timeCreated: 1438158839
+guid: 282b81faa64b8214788f47a0d0d7284a
+timeCreated: 1438168169
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -108,7 +108,7 @@ ModelImporter:
     400098: tail_1_joint
     400100: tail_2_joint
     4300000: polySurface3
-    7400000: Hit
+    7400000: Shield
     9500000: //RootNode
     13700000: polySurface3
   materials:
@@ -132,10 +132,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Hit
-      takeName: monster2_combat_animation_03
-      firstFrame: 1
-      lastFrame: 8
+      name: Shield
+      takeName: monster2_combat_animation_07_shield
+      firstFrame: 94
+      lastFrame: 138
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

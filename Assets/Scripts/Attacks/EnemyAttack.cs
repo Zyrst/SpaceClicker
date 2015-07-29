@@ -41,18 +41,34 @@ public class EnemyAttack : MonoBehaviour {
             RuntimeAnimatorController ac = anim.runtimeAnimatorController;          // get animator controller
             for (int i = 0; i < ac.animationClips.Length; i++)                      // for each clip in the controller
             {
-                if (ac.animationClips[i].name == "Attack")                          // name of the clip (not state machine)
+                if (gameObject.name == "Enemytres(Clone)")
                 {
-                    float attackSpeed = _cooldownTimer;
-                    anim.SetFloat("AttackSpeed", attackSpeed);                      // set speed of the clip
-                    _startAttackAnimationTime = ac.animationClips[i].length / attackSpeed;      // lenght with speed in mind
+                    if (ac.animationClips[i].name == "Attack")                          // name of the clip (not state machine)
+                    {
+                        float attackSpeed = 2f * _cooldownTimer;
+                        anim.SetFloat("AttackSpeed", attackSpeed);                      // set speed of the clip
+                        _startAttackAnimationTime = ac.animationClips[i].length / attackSpeed;      // lenght with speed in mind
+                    }
+                    else if (ac.animationClips[i].name == "Shield")
+                    {
+                        float shieldSpeed = 2f * _cooldownTimer;
+                        anim.SetFloat("ShieldSpeed", shieldSpeed);
+                        _startShieldAnimationTime = ac.animationClips[i].length / shieldSpeed;
+                    }
                 }
-                else if (ac.animationClips[i].name == "Shield")
+                else if (gameObject.name != "Enemytres(Clone)")
                 {
-                    float shieldSpeed = _cooldownTimer;
-                    anim.SetFloat("ShieldSpeed", shieldSpeed);
-                    _startShieldAnimationTime = ac.animationClips[i].length / shieldSpeed;
+                    if (ac.animationClips[i].name == "Attack")
+                    {
+                        _startAttackAnimationTime = ac.animationClips[i].length;
+                    }
+                    else if (ac.animationClips[i].name == "Shield")
+                    {
+                        _startShieldAnimationTime = ac.animationClips[i].length;
+                    }
                 }
+                
+               
             }
         }
         catch (System.NullReferenceException) { }

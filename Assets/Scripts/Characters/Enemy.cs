@@ -18,7 +18,7 @@ public class Enemy : Character
 
     public classType _myClass = classType.assassin;
 
-    public enum classType : int { sage = 0 , tank = 1, assassin = 2}
+    public enum classType : int { sage = 0 , assassin = 1, tank = 2}
 
      
 	// Use this for initialization
@@ -27,42 +27,38 @@ public class Enemy : Character
         _level = Global.Instance.GetEnemyLevel();
         //_stats.LevelUp(_level);
         
-        _myClass = (classType)Random.Range(0, 3);
-        switch (_myClass)
+        
+        Debug.Log(gameObject.name);
+        if (gameObject.name.Contains("Tank"))
         {
-            case classType.sage:
-                _stats._healthStatDist = 0.5f;
-                _stats._damageStatDist = 0.8f;
-                _stats._baseCooldownTimer *= 0.8f;
-                try {
-                    GetComponentInChildren<Animator>().SetFloat("AttackSpeed", _stats._baseCooldownTimer);
-                }
-                catch (System.NullReferenceException) { }
-                GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Sage.sprite;
-                break;
-            case classType.tank:
-                _stats._healthStatDist = 0.7f;
-                _stats._damageStatDist = 0.8f;
-                _stats._baseCooldownTimer *= 1f;
-                try{
-                    GetComponentInChildren<Animator>().SetFloat("AttackSpeed", _stats._baseCooldownTimer);
-                }
-                catch (System.NullReferenceException) { }
-                GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Tank.sprite;
-                break;
-            case classType.assassin:
-                _stats._healthStatDist = 0.3f;
-                _stats._damageStatDist = 0.8f;
-                _stats._baseCooldownTimer *= 0.6f;
-                try {
-                    GetComponentInChildren<Animator>().SetFloat("AttackSpeed", _stats._baseCooldownTimer);
-                }
-                catch (System.NullReferenceException) { }
-                GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Assassin.sprite;
-                break;
-            default:
-                break;
+            _myClass = classType.tank;
+            _stats._healthStatDist = 0.7f;
+            _stats._damageStatDist = 0.8f;
+            _stats._baseCooldownTimer *= 1f;
+            GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Tank.sprite;
         }
+        else
+        {
+            _myClass = (classType)Random.Range(0, 2);
+            switch (_myClass)
+            {
+                case classType.sage:
+                    _stats._healthStatDist = 0.5f;
+                    _stats._damageStatDist = 0.8f;
+                    _stats._baseCooldownTimer *= 0.8f;
+                    GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Sage.sprite;
+                    break;
+                case classType.assassin:
+                    _stats._healthStatDist = 0.3f;
+                    _stats._damageStatDist = 0.8f;
+                    _stats._baseCooldownTimer *= 0.6f;
+                    GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Assassin.sprite;
+                    break;
+                default:
+                    break;
+            }
+        }
+        
         
         _stats._baseStat._values[0] = (_stats._constMultiplier*_level + ( Mathf.Pow(_stats._basePower,(_level/_stats._powerDiv)))) * _stats._valueMultiplier;
         _stats._baseStat.Checker();
