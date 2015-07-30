@@ -59,6 +59,8 @@ public class Sounds : MonoBehaviour {
         public FMODAsset granadeTake;
         public FMODAsset granadeUse;
         public FMODAsset lightningUse;
+        public FMODAsset lightningReady;
+        public FMODAsset lightningTake;
         public FMODAsset shieldReady;
         public FMODAsset shieldUse;
     }
@@ -66,6 +68,15 @@ public class Sounds : MonoBehaviour {
     [System.Serializable]
     public struct KineticAbilitySounds
     {
+        public FMODAsset siesmicReady;
+        public FMODAsset siesmicTake;
+        public FMODAsset siesmicUse;
+        public FMODAsset supersonicReady;
+        public FMODAsset supersonicTake;
+        public FMODAsset supersonicUse;
+        public FMODAsset tremorReady;
+        public FMODAsset tremorTake;
+        public FMODAsset tremorUse;
 
     }
 
@@ -79,6 +90,24 @@ public class Sounds : MonoBehaviour {
         public FMODAsset mindfrayTake;
         public FMODAsset mindfrayUse;
     }
+
+    [System.Serializable]
+    public struct ExtensionsAbilitySounds
+    {
+        public FMODAsset adrenalineReady;
+        public FMODAsset adrenalineTake;
+        public FMODAsset adrenalineUse;
+        public FMODAsset protShieldReady;
+        public FMODAsset protShieldTake;
+        public FMODAsset protShieldUse;
+        public FMODAsset overpowerReady;
+        public FMODAsset overpowerTake;
+        public FMODAsset overpowerUse;
+        public FMODAsset overloadReady;
+        public FMODAsset overloadTake;
+        public FMODAsset overloadUse;
+
+    }
     
     [System.Serializable]
     public struct AbilitySounds
@@ -87,6 +116,7 @@ public class Sounds : MonoBehaviour {
         public TechAbilitySounds tech;
         public KineticAbilitySounds kinetic;
         public PsychicAbilitySounds psychic;
+        public ExtensionsAbilitySounds extensions;
     }
 
     [System.Serializable]

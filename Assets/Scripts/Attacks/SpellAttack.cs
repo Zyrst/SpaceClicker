@@ -77,22 +77,22 @@ public class SpellAttack : BaseAttack {
         switch (_type)
         {
             case SpellType.Damage:
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.hold);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.ready);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.take);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.use);
+                
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.ready);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.take);
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.use);
                 break;
             case SpellType.Heal:
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.hold);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.ready);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.take);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.use);
+               // _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.hold);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.ready);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.take);
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.heal.use);
                 break;
             case SpellType.Stun:
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.hold);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.ready);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.take);
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.use);
+               // _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.hold);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.ready);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.take);
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.stun.use);
                 break;
             default:
                 break;
@@ -246,7 +246,8 @@ public class SpellAttack : BaseAttack {
                 try
                 {
                     // hit enemy or player
-                    if (hit.collider.transform.parent.parent.tag == "Enemy" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
+                    if (hit.collider.transform.parent.parent.tag == "Enemy" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive 
+                        || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
                         _cd = true;
@@ -319,7 +320,7 @@ public class SpellAttack : BaseAttack {
                     _readySound.start();
                 }
                 catch (System.NullReferenceException)
-                { }
+                {}
             }
         }
        
@@ -380,7 +381,8 @@ public class SpellAttack : BaseAttack {
 
     public void PlayHoldSound()
     {
-        _holdSound.start();
+        try { _holdSound.start(); }
+        catch (System.NullReferenceException) { }
     }
 
     void OnDestroy()
@@ -474,15 +476,17 @@ public class SpellAttack : BaseAttack {
         switch (gameObject.name)
         {
             case "Granade":
-                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeReady);
+               // _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeReady);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeTake);
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeReady);
 
-                Debug.Log("granade ljud");
-
+                //Debug.Log("granade ljud");
                 break;
             case "Lightning Discharge" :
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningUse);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningTake);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningReady);
                 break;
             case "Drain Life":
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.drainReady);
@@ -493,6 +497,34 @@ public class SpellAttack : BaseAttack {
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayReady);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayTake);
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayUse);
+                break;
+            case "Tremor" :
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorUse);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorTake);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorReady);
+                break;
+            case "Adrenaline Rush" :
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.adrenalineUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.adrenalineReady);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.adrenalineTake);
+                break;
+            case "Overload":
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.overloadUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.overloadReady);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.overloadTake);
+                break;
+            case "Overpower" :
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.overpowerUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.overpowerReady);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.overpowerTake);
+                break;
+            case "Protective Shield":
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.protShieldUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.protShieldReady);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.protShieldTake);
+                break;
+            case "Heavy Strike":
+                _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.hold);
                 break;
             default:
                 break;
