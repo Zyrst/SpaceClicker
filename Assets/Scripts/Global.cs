@@ -46,6 +46,13 @@ public class Global : MonoBehaviour {
         public List<SpellAttack> stunSpells = new List<SpellAttack>();
     }
 
+    [System.Serializable]
+    public class Textures
+    {
+        public Texture _hitEffect;
+        public Material _shield;
+    }
+
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }
     public GameType _gameType = GameType.Farm;
 
@@ -79,6 +86,7 @@ public class Global : MonoBehaviour {
     public Colors _colors = new Colors();
     public Spells _lockedSpells = new Spells();
     public Spells _unlockedSpells = new Spells();
+    public Textures _textures = new Textures();
     public float _expVariable = 10f;
     public float _expScale = 1.5f;
     public GameObject _playerGUI;

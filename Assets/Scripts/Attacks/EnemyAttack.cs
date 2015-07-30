@@ -146,7 +146,12 @@ public class EnemyAttack : MonoBehaviour {
             else
             {
                 // do shield
-                shield.gameObject.SetActive(true);
+                //shield.gameObject.SetActive(true);
+                try { 
+                    GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Body").GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_Strength", 3f);
+                }
+                catch (System.NullReferenceException) { Debug.Log("Fuck"); }
+                
                 _shieldUp = true;
                 GetComponent<Enemy>()._shieldUp = true;
 
@@ -195,7 +200,11 @@ public class EnemyAttack : MonoBehaviour {
         }
         Sounds.OneShot(Sounds.Instance.enemySounds.shieldSounds.stop);
 
-        shield.gameObject.SetActive(false);
+        //shield.gameObject.SetActive(false);
+        try { 
+            GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Body").GetComponent<SkinnedMeshRenderer>().materials[1].SetFloat("_Strength", 0f);
+        }
+        catch (System.NullReferenceException) { }
         _shieldUp = false;
         GetComponent<Enemy>()._shieldUp = false;
     }

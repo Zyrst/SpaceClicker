@@ -108,7 +108,7 @@ ModelImporter:
     400098: tail_1_joint
     400100: tail_2_joint
     4300000: polySurface3
-    7400000: monster2_combat_animation_04
+    7400000: Dead
     9500000: //RootNode
     13700000: polySurface3
   materials:
@@ -130,7 +130,135 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Dead
+      takeName: monster2_combat_animation_04
+      firstFrame: 81
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Full_body_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_ctrl_group/L_collar_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_joint/L_shoulder_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_joint/L_shoulder_ctrl_group/L_shoulder_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_joint/L_shoulder_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_joint/L_shoulder_joint/L_elbow_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_joint/L_shoulder_joint/L_elbow_ctrl_group/L_elbow_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/L_collar_joint/L_shoulder_joint/L_elbow_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/Neck_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/Neck_ctrl_group/Neck_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/neck_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/neck_joint/Head_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/neck_joint/Head_ctrl_group/Head_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/neck_joint/head_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_ctrl_group/R_collar_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_joint/R_shoulder_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_joint/R_shoulder_ctrl_group/R_shoulder_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_joint/R_shoulder_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_joint/R_shoulder_joint/R_elbow_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_joint/R_shoulder_joint/R_elbow_ctrl_group/R_elbow_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/spine_1_joint/spine_2_joint/spine_3_joint/spine_4_joint/spine_5_joint/R_collar_joint/R_shoulder_joint/R_elbow_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/tail_1_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Base_joint/tail_1_joint/tail_2_joint
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/cluster_01_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/cluster_01_group/cluster_01
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/cluster_02_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/cluster_02_group/cluster_02
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group/Shoulder_ctrl
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group/Shoulder_ctrl/cluster_03_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group/Shoulder_ctrl/cluster_03_group/cluster_03
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group/Shoulder_ctrl/cluster_04_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group/Shoulder_ctrl/cluster_04_group/cluster_04
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group/Shoulder_ctrl/cluster_05_group
+        weight: 1
+      - path: Full_body_ctrl/Hip_cril_group/Hip_ctrl/Shoulder_ctrl_group/Shoulder_ctrl/cluster_05_group/cluster_05
+        weight: 1
+      - path: polySurface3
+        weight: 1
+      - path: spine_curve
+        weight: 1
+      - path: spine_ikHandle
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

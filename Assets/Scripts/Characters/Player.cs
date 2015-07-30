@@ -141,6 +141,10 @@ public class Player : Character {
 
     public uint _talentPoints = 0;
 
+    public bool _showHit = false;
+    public float _showHitTimer = 0f;
+    public Color _colorLerped;
+
     public static Player Instance = null;
 
     public override vap maxHealth
@@ -186,6 +190,7 @@ public class Player : Character {
                     Lower();
                 }
             }
+            
         }
     }
     public Shield _shield = new Shield();
@@ -216,6 +221,17 @@ public class Player : Character {
         if (_shield.isUp)
         {
             _shield.Update();
+        }
+
+        if (_showHit)
+        {
+            _showHitTimer += Time.deltaTime;
+            
+            if (_showHitTimer >= 0.3f)
+            {
+                _showHit = false;
+                _showHitTimer = 0f;
+            }
         }
 	}
 
@@ -281,6 +297,10 @@ public class Player : Character {
             // play hit animation
             Animator.SetTrigger("hit_start");
 
+            //Draw hit texture on gui
+            _showHit = true;
+            OnGUI();
+            
             SpawnText(normal, tech, psychic, kinetic, ds_._heal, healthDamagePercent, hitPoint_);
 
             if (_stats._health._values[0] < 1f)
@@ -289,6 +309,17 @@ public class Player : Character {
                 Die(hitter_);
             }
         }
+    }
+
+    void OnGUI()
+    {
+        if(_showHit){
+            try{
+                GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Global.Instance._textures._hitEffect);
+            }
+            catch (System.NullReferenceException) { }
+        }
+            
     }
 
     /// <summary>

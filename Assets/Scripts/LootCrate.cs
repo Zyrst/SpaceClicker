@@ -23,6 +23,7 @@ public class LootCrate : MonoBehaviour {
                 {
                     Vector3 dir = (Vector3.up * 25f) + -(transform.position - Global.Instance.player.transform.position);
                     _potion.GetComponent<Rigidbody>().AddForce(dir * 20f);
+                    gameObject.SetActive(false);
                     Invoke("ActivatePotion", 0.3f);
                 }
             }
@@ -56,5 +57,6 @@ public class LootCrate : MonoBehaviour {
     {
         _potion.GetComponent<HealthPotion>().staticPotion = false;
         GameObject.Destroy(gameObject);
+        
     }
 }

@@ -28,7 +28,6 @@ public class Enemy : Character
         //_stats.LevelUp(_level);
         
         
-        Debug.Log(gameObject.name);
         if (gameObject.name.Contains("Tank"))
         {
             _myClass = classType.tank;
@@ -73,7 +72,7 @@ public class Enemy : Character
         tr.LookAt(Global.Instance.player.transform);
 
         float rnd = Random.Range(0f, 1f);
-       // if (rnd >= 1f - Global.Instance._potionDropChans.value)
+        if (rnd >= 1f - Global.Instance._potionDropChans.value)
         {
             _myPotion = HealthPotion.Create(tr.position - (tr.forward * 3f), Vector3.zero);
             GameObject tmp = GameObject.Instantiate(Global.Instance._prefabs.LootCrate);
@@ -110,6 +109,7 @@ public class Enemy : Character
         GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint) (_level/50) + 2 : 1 ;
             
        // Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
+       
         Invoke("Kill", 2f);
         GetComponentInChildren<CharacterGUI>().gameObject.SetActive(false);
     }
