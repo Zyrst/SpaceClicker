@@ -125,8 +125,12 @@ public class Enemy : Character
             Global.Instance._player._miniBoss = false;
             _isBoss = false;
         }
+        else
+        {
+            Vector3 dir = (Vector3.up * 15f) + -(transform.position - Global.Instance.player.transform.position);
+            GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint)(_level / 50) + 2 : 1;
+        }
         
-            
        // Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
        
         Invoke("Kill", 2f);
