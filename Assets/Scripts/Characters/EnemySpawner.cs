@@ -7,18 +7,45 @@ public class EnemySpawner : MonoBehaviour {
     {
         public void newWave()
         {
-            Global.Instance.AllEnemiesDied();
-            LootCrate[] lootCrates = Object.FindObjectsOfType<LootCrate>();
-            foreach (var item in lootCrates)
-            {
-                item.UltimateDestroy();
+            if (Global.Instance._player._miniBoss)
+            {                
+                foreach (var item in spawns)
+                {
+                    try
+                    {
+                        Destroy(((EnemySpawner)item)._enemy.gameObject);
+                    }
+                    catch (System.NullReferenceException) { }
+
+                    ((EnemySpawner)item)._enemy = null;
+                    Global.Instance.AllEnemiesDied();
+                    LootCrate[] lootCrates = Object.FindObjectsOfType<LootCrate>();
+                    foreach (var loot in lootCrates)
+                    {
+                        loot.UltimateDestroy();
+                    }
+
+                    _bossSpawn.Spawn();
+
+                }
             }
-            int rnd = Random.Range(1, spawns.Count + 1);
-            EnemySpawner._enemiesSpawn = rnd;
-           // Debug.Log(EnemySpawner._enemiesSpawn);
-            Spawn(rnd);
+            else
+            {
+                Global.Instance.AllEnemiesDied();
+                LootCrate[] lootCrates = Object.FindObjectsOfType<LootCrate>();
+                foreach (var item in lootCrates)
+                {
+                    item.UltimateDestroy();
+                }
+                int rnd = Random.Range(1, spawns.Count + 1);
+                EnemySpawner._enemiesSpawn = rnd;
+                // Debug.Log(EnemySpawner._enemiesSpawn);
+                Spawn(rnd);
+            }
+            
         }
         public ArrayList spawns = new ArrayList();
+        public EnemySpawner _bossSpawn;
 
         /// <summary>
         /// Spawns new enemies
@@ -50,6 +77,7 @@ public class EnemySpawner : MonoBehaviour {
     
     public Enemy _enemy = null;
     public static int _enemiesSpawn = 3;
+    public bool _isBossSpawn = false;
     
     public bool EnemyIsActive()
     {
@@ -58,8 +86,17 @@ public class EnemySpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        triggers.spawns.Add(this);
-        triggers.newWave();
+        if(gameObject.name == "BossSpawn")
+        {
+            _isBossSpawn = true;
+            triggers._bossSpawn = this;
+        }
+        else
+        {
+            triggers.spawns.Add(this);
+            triggers.newWave();
+        }
+        
 	}
 	
 	// Update is called once per frame

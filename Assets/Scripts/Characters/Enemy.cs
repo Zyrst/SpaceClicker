@@ -15,6 +15,7 @@ public class Enemy : Character
 
     GameObject _myPotion;
     private FMOD.Studio.EventInstance _takingDamageSoundEvent;
+    public bool _isBoss;
 
     public classType _myClass = classType.assassin;
 
@@ -60,6 +61,15 @@ public class Enemy : Character
         
         
         _stats._baseStat._values[0] = (_stats._constMultiplier*_level + ( Mathf.Pow(_stats._basePower,(_level/_stats._powerDiv)))) * _stats._valueMultiplier;
+        if (Global.Instance._player._miniBoss)
+        {
+            _stats._baseStat._values[0] *= 2f;
+            transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").localScale = new Vector3(2f, 2f, 2f);
+            GetComponentInChildren<CharacterGUI>().transform.localPosition = new Vector3(0f, 3f, 0f);
+            _isBoss = true;
+
+        }
+            
         _stats._baseStat.Checker();
         _stats._baseStat = _stats._baseStat * (1f / ((EnemySpawner._enemiesSpawn / 2f) + 0.5f));
         _stats._baseStat.Checker();
@@ -105,8 +115,17 @@ public class Enemy : Character
         _myNumDeath = Global.Instance.EnemiesAlive();
 
         // spawn goldcoin
-        Vector3 dir = (Vector3.up * 10f) + -(transform.position - Global.Instance.player.transform.position);
-        GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint) (_level/50) + 2 : 1 ;
+        if (_isBoss)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Vector3 dir = (Vector3.up * 15f) + -(transform.position - Global.Instance.player.transform.position);
+                GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint)(_level / 50) + 2 : 1;
+            }
+            Global.Instance._player._miniBoss = false;
+            _isBoss = false;
+        }
+        
             
        // Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());
        
@@ -122,6 +141,7 @@ public class Enemy : Character
             //Debug.Log("Triggered new wave");
             EnemySpawner.triggers.newWave();
         }
+        
         gameObject.SetActive(false);
     }
 

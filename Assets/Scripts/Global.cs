@@ -51,6 +51,7 @@ public class Global : MonoBehaviour {
     {
         public Texture _hitEffect;
         public Material _shield;
+        public Material _player;
     }
 
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }

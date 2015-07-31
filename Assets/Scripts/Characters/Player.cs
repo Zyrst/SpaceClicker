@@ -143,8 +143,8 @@ public class Player : Character {
 
     public bool _showHit = false;
     public float _showHitTimer = 0f;
-    public Color _colorLerped;
 
+    public bool _miniBoss = false;
     public static Player Instance = null;
 
     public override vap maxHealth
@@ -332,12 +332,18 @@ public class Player : Character {
 
         // play die animation
         Animator.SetTrigger("die_start");
+        
     }
 
     public override void LevelUp()
     {
         base.LevelUp();
         UpdateCombinedStats();
+
+        if (_level % 3 == 0)
+        {
+            _miniBoss = true;
+        }
     }
     public void Reset(float time_)
     {

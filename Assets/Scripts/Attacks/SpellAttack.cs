@@ -58,6 +58,8 @@ public class SpellAttack : BaseAttack {
     public SpellTarget _target = SpellTarget.Single;
     public SpellTrigger _trigger = SpellTrigger.Drag;
 
+    
+
     private FMOD.Studio.EventInstance _holdSound;
     private FMOD.Studio.EventInstance _readySound;
     private FMOD.Studio.EventInstance _useSound;
