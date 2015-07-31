@@ -25,7 +25,6 @@ public class LootCrate : MonoBehaviour {
                 {
                     Vector3 dir = (Vector3.up * 25f) + -(transform.position - Global.Instance.player.transform.position);
                     _potion.GetComponent<Rigidbody>().AddForce(dir * 20f);
-                    Debug.Log(_crateSound.isValid());
                     _crateSound.start();
                     gameObject.SetActive(false);
                     Invoke("ActivatePotion", 0.3f);
