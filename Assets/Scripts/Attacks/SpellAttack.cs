@@ -212,6 +212,23 @@ public class SpellAttack : BaseAttack {
             _followerDiff = MouseController.Instance.position - _slot.transform.position;
             _clicked = true;
             MouseController.Instance.locked = true;
+            //Reduce color on slot a bit
+            _slotImage.color = new Color(0.7f, 0.7f, 0.7f);
+            //Color the trail renderer depending which type of spell
+            switch (_type)
+            {
+                case SpellType.Damage:
+                    FarmMode.Instance.GetComponentInChildren<TrailRenderer>().material.SetColor("_Color", Color.red);
+                    break;
+                case SpellType.Heal:
+                    FarmMode.Instance.GetComponentInChildren<TrailRenderer>().material.SetColor("_Color", Color.green);
+                    break;
+                case SpellType.Stun:
+                    FarmMode.Instance.GetComponentInChildren<TrailRenderer>().material.SetColor("_Color", Color.blue);
+                    break;
+                default:
+                    break;
+            }
             GetComponentInParent<ClickAttack>().HoldingSpell();
             Invoke("ResetCanDealDamage", 0.1f);
         }
@@ -219,13 +236,15 @@ public class SpellAttack : BaseAttack {
 
     public void FollowMouse()
     {
-        _slot.transform.position = new Vector3(_followerDiff.x + MouseController.Instance.position.x, 
+      /*  _slot.transform.position = new Vector3(_followerDiff.x + MouseController.Instance.position.x, 
             _followerDiff.y + MouseController.Instance.position.y,
-            _slot.transform.position.z);
+            _slot.transform.position.z);*/
+       
+        
         if (!MouseController.Instance.buttonDown)
         {
             ResetGUI();
-
+            _slotImage.color = new Color(1f, 1f, 1f);
             // reset animation 
             Global.Instance.player.Animator.SetTrigger("idle");
             Global.DebugOnScreen("PLAY IDLE");
@@ -293,6 +312,7 @@ public class SpellAttack : BaseAttack {
         MouseController.Instance.locked = false;
         _slot.transform.position = _startGUIPos;
         GetComponentInParent<ClickAttack>().ReleasedSpell();
+        FarmMode.Instance.GetComponentInChildren<TrailRenderer>().material.SetColor("_Color", Color.white);
 
         // stop hold sound
         try

@@ -32,7 +32,7 @@ public class Enemy : Character
         {
             _myClass = classType.tank;
             _stats._healthStatDist = 0.7f;
-            _stats._damageStatDist = 0.8f;
+            _stats._damageStatDist = 0.5f;
             _stats._baseCooldownTimer *= 1f;
             GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Tank.sprite;
         }
@@ -43,13 +43,13 @@ public class Enemy : Character
             {
                 case classType.sage:
                     _stats._healthStatDist = 0.5f;
-                    _stats._damageStatDist = 0.8f;
+                    _stats._damageStatDist = 0.5f;
                     _stats._baseCooldownTimer *= 0.8f;
                     GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Sage.sprite;
                     break;
                 case classType.assassin:
                     _stats._healthStatDist = 0.3f;
-                    _stats._damageStatDist = 0.8f;
+                    _stats._damageStatDist = 0.5f;
                     _stats._baseCooldownTimer *= 0.6f;
                     GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "ClassIcon").sprite = Sprites.Instance.classIcons.Assassin.sprite;
                     break;
@@ -72,7 +72,7 @@ public class Enemy : Character
         tr.LookAt(Global.Instance.player.transform);
 
         float rnd = Random.Range(0f, 1f);
-       // if (rnd >= 1f - Global.Instance._potionDropChans.value)
+        if (rnd >= 1f - Global.Instance._potionDropChans.value)
         {
             _myPotion = HealthPotion.Create(tr.position - (tr.forward * 3f), Vector3.zero);
             GameObject tmp = GameObject.Instantiate(Global.Instance._prefabs.LootCrate);

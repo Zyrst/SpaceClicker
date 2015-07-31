@@ -163,7 +163,8 @@ public class EnemyAttack : MonoBehaviour {
                 Invoke("ResetShield", _shieldTime);                 // stop loop and play stop
             }
         }
-        if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive)     // determine next attack, can never get two shields in a row
+        //Might want to do this to class attack rather than just shield
+        if (!_nextAttackIsShield && GetComponent<Enemy>()._isAlive && GetComponent<Enemy>()._myClass == Enemy.classType.tank)     // determine next attack, can never get two shields in a row
         {
             int result = Random.Range(0, 2);
             if (result == 1)                                            // next attack is shield
