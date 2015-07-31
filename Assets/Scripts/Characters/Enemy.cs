@@ -72,7 +72,7 @@ public class Enemy : Character
         tr.LookAt(Global.Instance.player.transform);
 
         float rnd = Random.Range(0f, 1f);
-        if (rnd >= 1f - Global.Instance._potionDropChans.value)
+       // if (rnd >= 1f - Global.Instance._potionDropChans.value)
         {
             _myPotion = HealthPotion.Create(tr.position - (tr.forward * 3f), Vector3.zero);
             GameObject tmp = GameObject.Instantiate(Global.Instance._prefabs.LootCrate);

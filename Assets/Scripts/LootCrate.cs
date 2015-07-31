@@ -6,9 +6,11 @@ public class LootCrate : MonoBehaviour {
     public GameObject _enemyOwner;
     public GameObject _potion;
 
+    private FMOD.Studio.EventInstance _crateSound;
+
 	// Use this for initialization
 	void Start () {
-	
+        _crateSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.uiSounds.lootcrate);
 	}
 	
 	// Update is called once per frame
@@ -23,6 +25,8 @@ public class LootCrate : MonoBehaviour {
                 {
                     Vector3 dir = (Vector3.up * 25f) + -(transform.position - Global.Instance.player.transform.position);
                     _potion.GetComponent<Rigidbody>().AddForce(dir * 20f);
+                    Debug.Log(_crateSound.isValid());
+                    _crateSound.start();
                     gameObject.SetActive(false);
                     Invoke("ActivatePotion", 0.3f);
                 }

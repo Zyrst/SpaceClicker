@@ -475,6 +475,7 @@ public class SpellAttack : BaseAttack {
     {
         switch (gameObject.name)
         {
+                /*Tech*/
             case "Granade":
                // _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeReady);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeTake);
@@ -488,6 +489,7 @@ public class SpellAttack : BaseAttack {
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningTake);
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningReady);
                 break;
+                /*Psychic*/
             case "Drain Life":
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.drainReady);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.drainTake);
@@ -498,11 +500,23 @@ public class SpellAttack : BaseAttack {
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayTake);
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayUse);
                 break;
+                /*Kinetic*/
             case "Tremor" :
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorUse);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorTake);
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorReady);
                 break;
+            case "Supersonic Throw":
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.supersonicUse);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.supersonicTake);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.supersonicReady);
+                break;
+            case "Seismic Slam":
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.siesmicUse);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.siesmicTake);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.siesmicReady);
+                break;
+                /*Extension*/
             case "Adrenaline Rush" :
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.adrenalineUse);
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.adrenalineReady);
@@ -523,6 +537,12 @@ public class SpellAttack : BaseAttack {
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.protShieldReady);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.protShieldTake);
                 break;
+            case "Shockwave" :
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.shockwaveUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.shockwaveReady);
+                _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.shockwaveTake);
+                break;
+                /*Base*/
             case "Heavy Strike":
                 _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.Base.damage.hold);
                 break;

@@ -106,6 +106,9 @@ public class Sounds : MonoBehaviour {
         public FMODAsset overloadReady;
         public FMODAsset overloadTake;
         public FMODAsset overloadUse;
+        public FMODAsset shockwaveReady;
+        public FMODAsset shockwaveTake;
+        public FMODAsset shockwaveUse;
 
     }
     
@@ -153,6 +156,7 @@ public class Sounds : MonoBehaviour {
         public FMODAsset coinCollect;
         public FMODAsset Button;
         public FMODAsset medpackPickup;
+        public FMODAsset lootcrate;
     }
 
     public PlayerSounds playerSounds;

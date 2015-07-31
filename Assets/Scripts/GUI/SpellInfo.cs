@@ -134,13 +134,26 @@ public class SpellInfo : MonoBehaviour {
         }
         #endregion
 
+        #region Cooldown
+        if (spell_._stats._cooldownModifier > 0f)
+        {
+            if (spell_._stats._cooldownModifier == 1f)
+                info +=System.Environment.NewLine + "Resets all cooldowns";
+            else
+                info += System.Environment.NewLine + "Reduce cooldown on all spells: " + spell_._stats._cooldownModifier * 100f + "%";
+        }
+        
+
         if (spell_._trigger == SpellAttack.SpellTrigger.Click)
         {
             info += System.Environment.NewLine + "Activates on Click";
         }
+
+        info += System.Environment.NewLine + "Cooldown: " + spell_._stats._cooldown;
+        #endregion
         //TODO : Read description for a spell
 
-
+        
         txt.text = info;
     }
 
