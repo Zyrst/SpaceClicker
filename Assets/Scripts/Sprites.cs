@@ -38,10 +38,16 @@ public class Sprites : MonoBehaviour {
         public SpriteRef Sage;
         public SpriteRef Tank;
     }
+    [System.Serializable]
+    public class Galaxy
+    {
+        public SpriteRef GalaxyStar;
+    }
 
     public Spells spells;
     public Equipment equipment;
     public ClassIcons classIcons;
+    public Galaxy galaxy;
 
     //public Spells spells;
     //public Equipment equipment;
