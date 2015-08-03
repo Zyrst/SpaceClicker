@@ -126,6 +126,7 @@ public class Sounds : MonoBehaviour {
     public struct PlayerSounds
     {
         public FMODAsset swipe;
+        public FMODAsset takeDamage;
         public AbilitySounds abilities;
     }
 

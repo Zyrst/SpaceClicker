@@ -144,6 +144,8 @@ public class Player : Character {
     public bool _showHit = false;
     public float _showHitTimer = 0f;
 
+    private FMOD.Studio.EventInstance _takeDamage;
+
     public bool _miniBoss = false;
     public static Player Instance = null;
 
@@ -212,7 +214,7 @@ public class Player : Character {
 	void Start () {
         LevelUp();
         UpdateCombinedStats();
-
+        _takeDamage = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.takeDamage);
         Global.DebugOnScreen("PLAYER START()");
 	}
 	
@@ -300,7 +302,7 @@ public class Player : Character {
             //Draw hit texture on gui
             _showHit = true;
             OnGUI();
-            
+            _takeDamage.start();
             SpawnText(normal, tech, psychic, kinetic, ds_._heal, healthDamagePercent, hitPoint_);
 
             if (_stats._health._values[0] < 1f)

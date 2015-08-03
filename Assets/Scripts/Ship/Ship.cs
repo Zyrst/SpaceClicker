@@ -82,6 +82,20 @@ public class Ship : MonoBehaviour {
         Application.Quit();
     }
 
+    public void CharCreation()
+    {
+        CharacterCreation.Instance.gameObject.SetActive(true);
+        CharacterCreation.Instance.Init();
+        gameObject.SetActive(false);
+
+    }
+
+    public void ExitCharCreation()
+    {
+        CharacterCreation.Instance.gameObject.SetActive(false);
+        gameObject.SetActive(true);
+    }
+
     public void FixPlayerStats()
     {
         Global.Instance.player.gameObject.SetActive(true);

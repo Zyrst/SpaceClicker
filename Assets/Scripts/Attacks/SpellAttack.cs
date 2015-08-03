@@ -271,9 +271,10 @@ public class SpellAttack : BaseAttack {
                         || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
+                        Sprite _spri = GameObject.Instantiate(Sprites.Instance.spells.Cooldown.sprite);
+                      //  _spri.rect = _slotImage.sprite.rect;
                         _cd = true;
                         ResetGUI();
-
                         // do damage
                         UseSpell(hit.collider.transform.parent.parent.gameObject.GetComponent<Character>(), hit.point);
 

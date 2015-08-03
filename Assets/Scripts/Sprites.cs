@@ -30,6 +30,7 @@ public class Sprites : MonoBehaviour {
         public SpriteRef Damage;
         public SpriteRef Heal;
         public SpriteRef Stun;
+        public SpriteRef Cooldown;
     }
     [System.Serializable]
     public class ClassIcons

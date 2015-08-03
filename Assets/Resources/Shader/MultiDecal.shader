@@ -1,15 +1,15 @@
 ﻿Shader "Custom/MultiDecal" {
 	Properties {
 		_BaseTint ("Base Tint", Color) = (1,1,1,1)
-		_Base ("Base (RGB)", 2D) = "white" {}
-		_Layer1Tint ("Decal 1 Tint", Color) = (1,1,1,1)
-		_Layer1 ("Decal 1 (RGB)", 2D) = "white" {}
-		_Layer2Tint ("Decal 2 Tint", Color) = (1,1,1,1)
-		_Layer2 ("Decal 2 (RGB)", 2D) = "white" {}
-		_Layer3Tint ("Decal 3 Tint", Color) = (1,1,1,1)
-		_Layer3 ("Decal 3 (RGB)", 2D) = "white" {}
-		_Layer4Tint ("Decal 4 Tint", Color) = (1,1,1,1)
-		_Layer4 ("Decal 4 (RGB)", 2D) = "white" {}
+		_Base ("Skin (RGB)", 2D) = "white" {}
+		_EyesTint ("Eyes Tint", Color) = (1,1,1,1)
+		_Eyes ("Eyes (RGB)", 2D) = "white" {}
+		_PantsTint ("Pants Tint", Color) = (1,1,1,1)
+		_Pants ("Pants (RGB)", 2D) = "white" {}
+		_ChestTint ("Chest Tint", Color) = (1,1,1,1)
+		_Chest ("Chest (RGB)", 2D) = "white" {}
+		_HandsTint ("Hands Tint", Color) = (1,1,1,1)
+		_Hands ("Hands (RGB)", 2D) = "white" {}
 		_Glossiness ("Smoothness", Range(0,1)) = 0.5
 		_Metallic ("Metallic", Range(0,1)) = 0.0
 	}
@@ -25,10 +25,10 @@
 		#pragma target 3.0
 
 		sampler2D _Base;
-		sampler2D _Layer1;
-		sampler2D _Layer2;
-		sampler2D _Layer3;
-		sampler2D _Layer4;
+		sampler2D _Eyes;
+		sampler2D _Pants;
+		sampler2D _Chest;
+		sampler2D _Hands;
 
 		struct Input {
 			float2 uv_Base;
@@ -37,18 +37,18 @@
 		half _Glossiness;
 		half _Metallic;
 		fixed4 _BaseTint;
-		fixed4 _Layer1Tint;
-		fixed4 _Layer2Tint;
-		fixed4 _Layer3Tint;
-		fixed4 _Layer4Tint;
+		fixed4 _EyesTint;
+		fixed4 _PantsTint;
+		fixed4 _ChestTint;
+		fixed4 _HandsTint;
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
 			// Albedo comes from a texture tinted by color
 			fixed4 ca = tex2D (_Base, IN.uv_Base) * _BaseTint;
-			fixed4 cb = tex2D (_Layer1, IN.uv_Base) * _Layer1Tint;
-			fixed4 cc = tex2D (_Layer2, IN.uv_Base) * _Layer2Tint;
-			fixed4 cd = tex2D (_Layer3, IN.uv_Base) * _Layer3Tint;
-			fixed4 ce = tex2D (_Layer4, IN.uv_Base) * _Layer4Tint;
+			fixed4 cb = tex2D (_Eyes, IN.uv_Base) * _EyesTint;
+			fixed4 cc = tex2D (_Pants, IN.uv_Base) * _PantsTint;
+			fixed4 cd = tex2D (_Chest, IN.uv_Base) * _ChestTint;
+			fixed4 ce = tex2D (_Hands, IN.uv_Base) * _HandsTint;
 			
 			// First layer
 			o.Albedo = cb.rgb * cb.a + ca.rgb * ca.a * (1 - cb.a);
