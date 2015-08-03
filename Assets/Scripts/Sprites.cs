@@ -31,6 +31,7 @@ public class Sprites : MonoBehaviour {
         public SpriteRef Heal;
         public SpriteRef Stun;
         public SpriteRef Cooldown;
+
     }
     [System.Serializable]
     public class ClassIcons
@@ -39,10 +40,16 @@ public class Sprites : MonoBehaviour {
         public SpriteRef Sage;
         public SpriteRef Tank;
     }
+    [System.Serializable]
+    public class Galaxy
+    {
+        public SpriteRef GalaxyStar;
+    }
 
     public Spells spells;
     public Equipment equipment;
     public ClassIcons classIcons;
+    public Galaxy galaxy;
 
     //public Spells spells;
     //public Equipment equipment;
