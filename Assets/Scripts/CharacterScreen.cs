@@ -19,6 +19,7 @@ public class CharacterScreen : MonoBehaviour {
 
     public ArrayList _inventory = new ArrayList();
     public Equipment _lastEquip;
+    Transform _playerModel;
 
     private static CharacterScreen _instance = null;
     public static CharacterScreen Instance
@@ -255,12 +256,12 @@ public class CharacterScreen : MonoBehaviour {
         _playerRot = Global.Instance.player.transform.rotation;
 
         Global.Instance.player.gameObject.SetActive(true);
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
+        _playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
 
-        
-        playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
-        playerModel.LookAt(Global.Instance._uiCamera.transform.position);
-        playerModel.localScale = new Vector3(13, 13, 13);
+
+        _playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
+        _playerModel.LookAt(Global.Instance._uiCamera.transform.position);
+        _playerModel.localScale = new Vector3(13, 13, 13);
 
         Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
         Global.Instance.player.GetComponent<ClickAttack>().enabled = false;
@@ -269,11 +270,10 @@ public class CharacterScreen : MonoBehaviour {
 
     public void ResetModel()
     {
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
 
-        playerModel.position = _playerPos;
-        playerModel.rotation = _playerRot;
-        playerModel.localScale = new Vector3(1, 1, 1);
+        _playerModel.position = _playerPos;
+        _playerModel.rotation = _playerRot;
+        _playerModel.localScale = new Vector3(1, 1, 1);
         Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
         Global.Instance.player.GetComponent<ClickAttack>().enabled = true;
     //    Global.Instance._player.gameObject.SetActive(false);
@@ -580,5 +580,10 @@ public class CharacterScreen : MonoBehaviour {
         Global.Instance.player._equipped._legsSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._legs._sprite.sprite;
         Global.Instance.player._equipped._weaponSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._weapon._sprite.sprite;
         Global.Instance.player._equipped._headSlot.GetComponent<Image>().sprite = Global.Instance.player._equipped._head._sprite.sprite;
+    }
+
+    public void Rotate()
+    {
+        _playerModel.transform.eulerAngles = new Vector3(0, GetComponentInChildren<Slider>().value, 0);
     }
 }

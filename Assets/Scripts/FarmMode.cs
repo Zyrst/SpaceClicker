@@ -38,6 +38,7 @@ public class FarmMode : MonoBehaviour {
     public void playerDied()
     {
         // reset enemies
+        
         foreach (var item in EnemySpawner.triggers.spawns)
         {
             ((EnemySpawner)item).ResetWave();

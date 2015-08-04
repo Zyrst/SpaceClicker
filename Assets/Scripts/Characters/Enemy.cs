@@ -65,7 +65,7 @@ public class Enemy : Character
         {
             _stats._baseStat._values[0] *= 2f;
             transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").localScale = new Vector3(2f, 2f, 2f);
-            GetComponentInChildren<CharacterGUI>().transform.localPosition = new Vector3(0f, 3f, 0f);
+            GetComponentInChildren<CharacterGUI>().transform.localPosition = new Vector3(0f, 4f, 0f);
             _isBoss = true;
 
         }
@@ -82,7 +82,7 @@ public class Enemy : Character
         tr.LookAt(Global.Instance.player.transform);
 
         float rnd = Random.Range(0f, 1f);
-        if (rnd >= 1f - Global.Instance._potionDropChans.value)
+        if (rnd >= 1f - Global.Instance._potionDropChans.value && !_isBoss)
         {
             _myPotion = HealthPotion.Create(tr.position - (tr.forward * 3f), Vector3.zero);
             GameObject tmp = GameObject.Instantiate(Global.Instance._prefabs.LootCrate);
@@ -100,7 +100,7 @@ public class Enemy : Character
        /* Vector3 rot = Vector3.up;
 
         transform.Rotate(rot * 0f * Time.deltaTime);*/
-        
+        base.CheckEffect();
 	}
 
     public override void Die()

@@ -54,21 +54,25 @@ public class EnemySpawner : MonoBehaviour {
         public void Spawn(int number_)
         {
             int count = -1;
-            foreach (var item in spawns)
-	        {
-                count++;
-                if (count >= number_)
+            if (!Global.Instance._player._miniBoss)
+            {
+                foreach (var item in spawns)
                 {
-                    try
+               
+                    count++;
+                    if (count >= number_)
                     {
-                        Destroy(((EnemySpawner)item)._enemy.gameObject);
-                    }
-                    catch (System.NullReferenceException) { }
+                        try
+                        {
+                            Destroy(((EnemySpawner)item)._enemy.gameObject);
+                        }
+                        catch (System.NullReferenceException) { }
 
-                    ((EnemySpawner)item)._enemy = null;
+                        ((EnemySpawner)item)._enemy = null;
+                    }
+                    else
+                        ((EnemySpawner)item).Spawn();
                 }
-                else
-                    ((EnemySpawner)item).Spawn();
 	        }
         }
     }
@@ -90,11 +94,13 @@ public class EnemySpawner : MonoBehaviour {
         {
             _isBossSpawn = true;
             triggers._bossSpawn = this;
+            triggers.newWave();
         }
         else
         {
             triggers.spawns.Add(this);
-            triggers.newWave();
+            if (!Global.Instance._player._miniBoss)
+                triggers.newWave();
         }
         
 	}
@@ -105,6 +111,7 @@ public class EnemySpawner : MonoBehaviour {
 
     public void Spawn()
     {
+
         if(!IsInvoking("spawner"))
             Invoke("spawner", 0.5f);
     }
@@ -127,6 +134,8 @@ public class EnemySpawner : MonoBehaviour {
         {
             if (_enemy != null)
             {
+                if (_enemy.IsInvoking("Kill"))
+                    _enemy.CancelInvoke("Kill");
                 _enemy.gameObject.SetActive(true);
                 _enemy._stats._health = new vap(_enemy._stats._maxHealth);
                 _enemy._isAlive = true;

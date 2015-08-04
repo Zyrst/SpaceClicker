@@ -67,6 +67,9 @@ public class MenuSpellSlotButton : Button {
                 if (Global.Instance.player._spellsArray[_slotNum] != null)
                 {
                     old = Global.Instance.player._spellsArray[_slotNum].gameObject;
+                    Global.Instance.player._spellsArray[_slotNum]._cdDoneImage.gameObject.SetActive(true);
+                    Global.Instance.player._spellsArray[_slotNum]._cdImage.gameObject.SetActive(true);
+
                 }
 
                 // create new instance of selected spell
@@ -80,6 +83,8 @@ public class MenuSpellSlotButton : Button {
                         x => x.name == "Image").sprite = go.GetComponent<SpellAttack>()._spellImage.sprite;
 
                 go.transform.parent = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Spells").transform;
+                if (go.GetComponent<SpellAttack>()._slot != null)
+                    go.GetComponent<SpellAttack>()._slot = null;
 
                 go.GetComponent<SpellAttack>()._slot = Global.Instance.player._spellSlotArray[_slotNum];
                 go.GetComponent<SpellAttack>().Init();

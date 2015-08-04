@@ -15,6 +15,7 @@ public class Global : MonoBehaviour {
         public GameObject GoldCoin;
         public GameObject HealthPotion;
         public GameObject LootCrate;
+        public GameObject[] _effects;
     }
 
     [System.Serializable]
@@ -182,6 +183,10 @@ public class Global : MonoBehaviour {
             else
                 Time.timeScale = 0f;
             DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Gold += 1000;
         }
 
         UpdateBebugMessages();

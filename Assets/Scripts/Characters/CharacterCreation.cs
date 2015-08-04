@@ -120,7 +120,6 @@ public class CharacterCreation : MonoBehaviour {
     public void Rotate()
     {
         Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
-        playerModel.Rotate(new Vector3(0, GetComponentInChildren<Slider>().value, 0));
         playerModel.transform.eulerAngles = new Vector3(0, GetComponentInChildren<Slider>().value, 0);
     }
 

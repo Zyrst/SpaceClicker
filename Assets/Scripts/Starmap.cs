@@ -11,6 +11,7 @@ public class Starmap : MonoBehaviour {
     public int _numberOfPlanets = 0;
 
     public Sprite[] _planetSprites;
+    public Sprite[] _backgrounds;
     public List<Vector4> _planetBounds = new List<Vector4>();
 
     public GameObject _planets;
@@ -88,6 +89,9 @@ public class Starmap : MonoBehaviour {
         _numberOfPlanets = Random.Range(3, 9);
         int level = ((max_ - min_) / _numberOfPlanets) + min_;
         int levelForPlanet = level;
+        gameObject.SetActive(true);
+        gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[Random.Range(0, _backgrounds.Length)];
+        gameObject.SetActive(false);
         for (int i = 0; i < _numberOfPlanets; i++)
         {
             Planet _plan = new Planet();
@@ -129,6 +133,8 @@ public class Starmap : MonoBehaviour {
             _rect.z = planRect.sizeDelta.x;
             _rect.w = planRect.sizeDelta.y;
             _planetBounds.Add(_rect);
+
+            
         }
     }
 

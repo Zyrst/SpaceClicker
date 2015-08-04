@@ -34,6 +34,12 @@ public class SpellAttack : BaseAttack {
     public GameObject _slot;
     [HideInInspector]
     public Image _slotImage;
+    [HideInInspector]
+    public Image _cdImage;
+    [HideInInspector]
+    public Image _cdDoneImage;
+    [HideInInspector]
+    public float _degree;
 
     private bool _clicked = false;
     private bool _cd = false;
@@ -101,13 +107,22 @@ public class SpellAttack : BaseAttack {
         }
 
         CheckSpellSpecificSounds();
+
+       
+        
+
 	}
 
     public void Init()
     {
         _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
         _slotImage.sprite = _spellImage.sprite;
-
+        _cdImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Cooldown");
+        if(_cdImage.IsActive())
+            _cdImage.gameObject.SetActive(false);
+        _cdDoneImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "CooldownDone");
+        if (_cdDoneImage.IsActive())
+            _cdDoneImage.gameObject.SetActive(false);
         _startGUIPos = _slot.transform.position;
     }
 	
@@ -271,8 +286,9 @@ public class SpellAttack : BaseAttack {
                         || hit.collider.transform.parent.parent.tag == "Player" && hit.collider.transform.parent.parent.GetComponent<Character>()._isAlive)
                     {
                         _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
-                        Sprite _spri = GameObject.Instantiate(Sprites.Instance.spells.Cooldown.sprite);
-                      //  _spri.rect = _slotImage.sprite.rect;
+                        _cdImage.gameObject.SetActive(true);
+                        _cdDoneImage.gameObject.SetActive(true);
+                        _degree = 360f / _combinedStats._cooldown;
                         _cd = true;
                         ResetGUI();
                         // do damage
@@ -334,6 +350,11 @@ public class SpellAttack : BaseAttack {
         if (_cd)
         {
             _coolDown += Time.deltaTime;
+            _cdImage.transform.Rotate(0f,0f,-( _degree * Time.deltaTime));
+            if (((_combinedStats._cooldown * (1f - _cooldownModifier)) - _coolDown ) <= 1f)
+            {
+                CooldownDoneIcon();
+            }
             if (_coolDown >= (_combinedStats._cooldown * (1f - _cooldownModifier)))
             {
                 ResetCooldown();
@@ -349,6 +370,13 @@ public class SpellAttack : BaseAttack {
        
     }
 
+    public void CooldownDoneIcon()
+    {
+        if (_cdImage.gameObject.activeInHierarchy)
+            _cdImage.gameObject.SetActive(false);
+        _cdDoneImage.color = Color.Lerp(_cdDoneImage.color, Color.white, (1f * Time.deltaTime) * 2f);
+    }
+
     public void ResetCooldown()
     {
         try
@@ -356,6 +384,10 @@ public class SpellAttack : BaseAttack {
             _cd = false;
             _coolDown = 0f;
             _slotImage.color = new Color(1f, 1f, 1f);
+            
+            _cdDoneImage.color = new Color(1, 1, 1, 0);
+            _cdDoneImage.gameObject.SetActive(false);
+            _cdImage.gameObject.SetActive(false);
         }
         catch (System.NullReferenceException) {}
     }
