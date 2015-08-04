@@ -65,13 +65,14 @@ public class GALAXY : MonoBehaviour {
         _mouseOld = MouseController.Instance.position;
 
         Vector2 screenScale = new Vector2(Screen.width / 1920f, Screen.height / 1080f);
+        //screenScale = new Vector2(1f, 1f);
 
         Vector3 pos = boxes.transform.position;
         if (pos.x < -GalaxyGeneretion.StarBox.width * screenScale.x)
         {
-            pos.x += GalaxyGeneretion.StarBox.width * screenScale.x;
+            pos.x += GalaxyGeneretion.StarBox.width *screenScale.x;
             _galaxyoffsetX++;
-            OffsetBoxes(true);
+            OffsetBoxes(-1,0);
             GenerateNewColumn(true);
             // new collum on the right
         }
@@ -79,7 +80,7 @@ public class GALAXY : MonoBehaviour {
         {
             pos.x -= GalaxyGeneretion.StarBox.width * screenScale.x;
             _galaxyoffsetX--;
-            OffsetBoxes(true);
+            OffsetBoxes(1,0);
             GenerateNewColumn(false);
             // new collum on the left
         }
@@ -87,7 +88,7 @@ public class GALAXY : MonoBehaviour {
         {
             pos.y += GalaxyGeneretion.StarBox.height * screenScale.y;
             _galaxyoffsetY++;
-            OffsetBoxes(false);
+            OffsetBoxes(0,-1);
             GenerateNewLine(false);
             // new line bottom (first)
         }
@@ -95,7 +96,7 @@ public class GALAXY : MonoBehaviour {
         {
             pos.y -= GalaxyGeneretion.StarBox.height * screenScale.y;
             _galaxyoffsetY--;
-            OffsetBoxes(false);
+            OffsetBoxes(0,1);
             GenerateNewLine(true);
             // new line top (last)
         }
@@ -103,20 +104,18 @@ public class GALAXY : MonoBehaviour {
         boxes.transform.position = pos;
 	}
 
-    public void OffsetBoxes(bool x_)
+    public void OffsetBoxes(int dirX_, int dirY_)
     {
         Vector2 screenScale = new Vector2(Screen.width / 1920f, Screen.height / 1080f);
+        //screenScale = new Vector2(1f,1f);
         foreach (var item in boxes.GetComponentsInChildren<Transform>())
         {
             if (item.name != "Boxes")
             {
                 Vector3 pos = item.transform.localPosition;
-                pos.x += boxes.transform.position.x * (x_ ? 1 : 0);
-                pos.y += boxes.transform.position.y * (!x_ ? 1 : 0);
+                pos.x += GalaxyGeneretion.StarBox.width * screenScale.x * dirX_;
+                pos.y += GalaxyGeneretion.StarBox.height * screenScale.y * dirY_;
                 item.transform.localPosition = pos;
-                /*pos.x += GalaxyGeneretion.StarBox.width * screenScale.x * dirX_ + dirX_;
-                pos.y += GalaxyGeneretion.StarBox.height * screenScale.y * dirY_ + dirY_;
-                item.transform.localPosition = pos;*/
             }
         }
     }
@@ -126,8 +125,6 @@ public class GALAXY : MonoBehaviour {
         List<GalaxyGeneretion.StarBox> newLine = null;
         if (top_)
         {
-            Global.DebugOnScreen("lägger till en ny rad under");
-
             // skapar nya raden (lägger skiten på rätt plats i hierarkin av sg sjävt)
             newLine = GalaxyGeneretion.GenerateLineBottom(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
 
@@ -142,7 +139,6 @@ public class GALAXY : MonoBehaviour {
         }
         else
         {
-            Global.DebugOnScreen("lägger till en ny rad ovan");
             newLine = GalaxyGeneretion.GenerateLineTop(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
             for (int i = 0; i < (int)GalaxyGeneretion._boxMaxX; i++)
             {
@@ -158,28 +154,26 @@ public class GALAXY : MonoBehaviour {
         List<GalaxyGeneretion.StarBox> newColumn = null;
         if (right_)
         {
-            Global.DebugOnScreen("lägger till en ny kolonn til höger");
-
             // skapar nya kolonnen
             newColumn = GalaxyGeneretion.GenerateColumnRight(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
 
             // för en hel kolonn
             for (int i = 0; i < (int)GalaxyGeneretion._boxMaxY; i++)
             {
+                // skapa index
                 int delIn = (int)((GalaxyGeneretion._boxMaxX) * i);
                 int addIn = (int)((GalaxyGeneretion._boxMaxX - 1) + ((GalaxyGeneretion._boxMaxX) * i));
 
+                // ta bort gammal
                 GameObject.Destroy(boxList[delIn].gameObject);
                 boxList.Remove(boxList[delIn]);
 
+                // lägg in ny
                 boxList.Insert(addIn, newColumn[i]);
             }
         }
         else
         {
-
-            Global.DebugOnScreen("lägger till en ny kolonn til vänster");
-
             // skapar nya kolonnen
             newColumn = GalaxyGeneretion.GenerateColumnLeft(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
 

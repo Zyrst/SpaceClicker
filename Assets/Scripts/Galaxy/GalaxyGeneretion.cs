@@ -51,7 +51,6 @@ public class GalaxyGeneretion : MonoBehaviour {
             Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_, ulevel_, startX_, startY_));
         }
 
-
         return ret;
     }
 
@@ -91,14 +90,13 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         List<StarBox> ret = new List<StarBox>();
 
-        _boxX = _boxMaxX;
+        _boxX = 0;
         _boxY = 0;
 
         for (int i = 0; i < _boxMaxY; i++)
         {
+            _boxX = _boxMaxX-1;
             Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_, ulevel_, startX_, startY_));
-            _boxY++;
-            _boxX = _boxMaxX;
         }
 
 
@@ -149,10 +147,6 @@ public class GalaxyGeneretion : MonoBehaviour {
             (StarBox.width/2f + (StarBox.width * _boxX) - (StarBox.width * 1.5f)),
             (StarBox.height/2f + (StarBox.height * _boxY) - (StarBox.height * 1.5f)),
             0);
-        if (_boxX == 0 && _boxY == 0)
-        {
-            Debug.Log("x: " + box.transform.localPosition.x + " y: " + box.transform.localPosition.y);
-        }
 
         // set scale of box 
         box.transform.localScale = new Vector3(1f, 1f, 1f);
@@ -187,6 +181,7 @@ public class GalaxyGeneretion : MonoBehaviour {
                     {
                         if (Vector3.Distance(item.transform.localPosition, other.transform.localPosition) < _minStarDist)
                         {
+                            // redo star
                             next = false;
                         }
                     }
