@@ -183,6 +183,10 @@ public class Global : MonoBehaviour {
                 Time.timeScale = 0f;
             DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Gold += 1000;
+        }
 
         UpdateBebugMessages();
     }
