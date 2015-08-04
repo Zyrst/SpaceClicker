@@ -48,7 +48,7 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         while (_boxY < _boxMaxY)
         {
-            Global.Instance.StartCoroutine(GenerateStarBoxLine(ret, llevel_, ulevel_, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_, ulevel_, startX_, startY_));
         }
 
 
@@ -65,7 +65,7 @@ public class GalaxyGeneretion : MonoBehaviour {
         _boxY = 0;
 
         while(_boxY == 0)
-            Global.Instance.StartCoroutine(GenerateStarBoxLine(ret, llevel_, ulevel_, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_, ulevel_, startX_, startY_));
 
         return ret;
     }
@@ -80,12 +80,51 @@ public class GalaxyGeneretion : MonoBehaviour {
         _boxY = _boxMaxY-1;
 
         while (_boxY == _boxMaxY-1)
-            Global.Instance.StartCoroutine(GenerateStarBoxLine(ret, llevel_, ulevel_, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_, ulevel_, startX_, startY_));
 
         return ret;
     }
 
-    private static IEnumerator GenerateStarBoxLine(List<StarBox> starBoxList_, uint llevel_, uint ulevel_, uint startX_, uint startY_)
+    public static List<StarBox> GenerateColumnRight(int seed_, uint llevel_, uint ulevel_, uint startX_, uint startY_)
+    {
+        Random.seed = seed_;
+
+        List<StarBox> ret = new List<StarBox>();
+
+        _boxX = _boxMaxX;
+        _boxY = 0;
+
+        for (int i = 0; i < _boxMaxY; i++)
+        {
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_, ulevel_, startX_, startY_));
+            _boxY++;
+            _boxX = _boxMaxX;
+        }
+
+
+        return ret;
+    }
+
+    public static List<StarBox> GenerateColumnLeft(int seed_, uint llevel_, uint ulevel_, uint startX_, uint startY_)
+    {
+        Random.seed = seed_;
+
+        List<StarBox> ret = new List<StarBox>();
+
+        _boxX = 0;
+        _boxY = 0;
+
+        for (int i = 0; i < _boxMaxY; i++)
+        {
+            _boxX = 0;
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_, ulevel_, startX_, startY_));
+            _boxY++;
+        }
+
+        return ret;
+    }
+
+    private static IEnumerator GenerateStarBox(List<StarBox> starBoxList_, uint llevel_, uint ulevel_, uint startX_, uint startY_)
     {
         GameObject box = new GameObject();
         StarBox ret = box.AddComponent<StarBox>();
@@ -96,14 +135,6 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         box.name = _boxX + " - " + _boxY;
 
-        _boxX += 1;
-
-        if (_boxX == _boxMaxX)
-        {
-            _boxX = 0;
-            _boxY += 1;
-        }
-
         // get random seed
         int seed = (int)(_boxY + startY_) + ((int)(_boxX + startX_) * (int)(_boxY + startY_)) + (int)(_boxX + startX_);
         Random.seed = seed;
@@ -111,11 +142,17 @@ public class GalaxyGeneretion : MonoBehaviour {
         // generate stars
         ret._starSystems = GenerateStarSystems(llevel_, ulevel_);
 
+        Vector2 screenScale = new Vector2(Screen.width/1902f, Screen.height/1080f);
+
         // set position of box
         box.transform.localPosition = new Vector3(
-            StarBox.width/2f + (StarBox.width * _boxX) - StarBox.width * 1.5f, 
-            StarBox.height/2f + (StarBox.height * _boxY) - StarBox.height * 1.5f,
+            (StarBox.width/2f + (StarBox.width * _boxX) - (StarBox.width * 1.5f)),
+            (StarBox.height/2f + (StarBox.height * _boxY) - (StarBox.height * 1.5f)),
             0);
+        if (_boxX == 0 && _boxY == 0)
+        {
+            Debug.Log("x: " + box.transform.localPosition.x + " y: " + box.transform.localPosition.y);
+        }
 
         // set scale of box 
         box.transform.localScale = new Vector3(1f, 1f, 1f);
@@ -158,6 +195,15 @@ public class GalaxyGeneretion : MonoBehaviour {
         }
 
         starBoxList_.Add(ret);
+
+        _boxX += 1;
+
+        if (_boxX == _boxMaxX)
+        {
+            _boxX = 0;
+            _boxY += 1;
+        }
+
         yield return null;
 
         yield break;
