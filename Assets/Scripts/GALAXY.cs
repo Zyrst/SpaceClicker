@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GALAXY : MonoBehaviour {
 
-    public float _float = 54f;
+    public GameObject galaxyStarPrefab;
 
     public GameObject boxes;
+    public List<GalaxyGeneretion.StarBox> boxList;
 
     private bool _mouseDown = false;
     private Vector3 _mouseOld = Vector3.zero;
@@ -33,6 +36,16 @@ public class GALAXY : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            foreach (var item in boxList)
+            {
+                Destroy(item.gameObject);
+            }
+            boxList.Clear();
+            GenerateGalaxy();
+        }
+
         if (MouseController.Instance.buttonDown)
         {
             if (_mouseDown)
@@ -51,8 +64,6 @@ public class GALAXY : MonoBehaviour {
 
         _mouseOld = MouseController.Instance.position;
 
-        bool update = false;
-
         Vector2 screenScale = new Vector2(Screen.width / 1920f, Screen.height / 1080f);
 
         Vector3 pos = boxes.transform.position;
@@ -60,39 +71,84 @@ public class GALAXY : MonoBehaviour {
         {
             pos.x += GalaxyGeneretion.StarBox.width * screenScale.x;
             _galaxyoffsetX++;
-            update = true;
+            OffsetBoxes(-1, 0);
+            //update = true;
+            // new collum on the right
         }
         if (pos.x > GalaxyGeneretion.StarBox.width * screenScale.x)
         {
             pos.x -= GalaxyGeneretion.StarBox.width * screenScale.x;
             _galaxyoffsetX--;
-            update = true;
+            OffsetBoxes(1, 0);
+            //update = true;
+            // new collum on the left
         }
         if (pos.y < -GalaxyGeneretion.StarBox.height * screenScale.y)
         {
             pos.y += GalaxyGeneretion.StarBox.height * screenScale.y;
             _galaxyoffsetY++;
-            update = true;
+            OffsetBoxes(0, -1);
+            GenerateNewLine(false);
+            // new line bottom (first)
         }
         if (pos.y > GalaxyGeneretion.StarBox.height * screenScale.y)
         {
             pos.y -= GalaxyGeneretion.StarBox.height * screenScale.y;
             _galaxyoffsetY--;
-            update = true;
+            OffsetBoxes(0, 1);
+            GenerateNewLine(true);
+            // new line top (last)
         }
 
         boxes.transform.position = pos;
-
-        if (update)
-        {
-            foreach (var item in boxes.GetComponentsInChildren<Transform>())
-            {
-                if (item.name != "Boxes")
-                    GameObject.Destroy(item.gameObject);
-            }
-            GenerateGalaxy();
-        }
 	}
+
+    public void OffsetBoxes(int dirX_, int dirY_)
+    {
+        Vector2 screenScale = new Vector2(Screen.width / 1920f, Screen.height / 1080f);
+        foreach (var item in boxes.GetComponentsInChildren<Transform>())
+        {
+            if (item.name != "Boxes")
+            {
+                Vector3 pos = item.transform.localPosition;
+                pos.x += GalaxyGeneretion.StarBox.width * screenScale.x * dirX_;
+                pos.y += GalaxyGeneretion.StarBox.height * screenScale.y * dirY_;
+                item.transform.localPosition = pos;
+            }
+        }
+    }
+
+    private void GenerateNewLine(bool top_)
+    {
+        List<GalaxyGeneretion.StarBox> newLine = null;
+        if (top_)
+        {
+            Global.DebugOnScreen("lägger till en ny rad under");
+
+            // skapar nya raden (lägger skiten på rätt plats i hierarkin av sg sjävt)
+            newLine = GalaxyGeneretion.GenerateLineBottom(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+
+            // för en hel rad
+            for (int i = 0; i < (int)GalaxyGeneretion._boxMaxX; i++)
+            {
+                // ta bort objektet i listan och hierarkin
+                GameObject.Destroy(boxList[boxList.Count - (int)GalaxyGeneretion._boxMaxX + i].gameObject);
+                boxList.Remove(boxList[boxList.Count - (int)GalaxyGeneretion._boxMaxX + i]);
+            }
+            boxList.InsertRange(0, newLine);
+        }
+        else
+        {
+            Global.DebugOnScreen("lägger till en ny rad ovan");
+            newLine = GalaxyGeneretion.GenerateLineTop(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+            for (int i = 0; i < (int)GalaxyGeneretion._boxMaxX; i++)
+            {
+                GameObject.Destroy(boxList[i].gameObject);
+            }
+            boxList.RemoveRange(0, (int)GalaxyGeneretion._boxMaxX);
+            boxList.InsertRange(boxList.Count, newLine);
+        }
+    }
 
     public void Generate()
     {
@@ -106,7 +162,7 @@ public class GALAXY : MonoBehaviour {
         int seed = (int)Mathf.Pow((float)_galaxyoffsetX, (float)_galaxyoffsetY);
         Random.seed = seed;
 
-        GalaxyGeneretion.GenerateGalaxy(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+        boxList = GalaxyGeneretion.GenerateGalaxy(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
     }
 
     void Awake()
