@@ -235,6 +235,7 @@ public class Player : Character {
                 _showHitTimer = 0f;
             }
         }
+        base.CheckEffect();
 	}
 
     public override void TakeDamage(DamageStats ds_)

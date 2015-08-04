@@ -15,6 +15,7 @@ public class Global : MonoBehaviour {
         public GameObject GoldCoin;
         public GameObject HealthPotion;
         public GameObject LootCrate;
+        public GameObject[] _effects;
     }
 
     [System.Serializable]

@@ -12,6 +12,8 @@ public class Character : MonoBehaviour {
     public uint _level = 0;
     public uint _experience = 1;
     public uint _experianceToNext = 100;
+    [HideInInspector]
+    GameObject _healEffect;
 
     public virtual vap maxHealth
     {
@@ -27,7 +29,7 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+       
 	}
 
     public virtual void TakeDamage(DamageStats ds_)                     {   TakeDamage(ds_, transform.position, null);  }
@@ -53,9 +55,9 @@ public class Character : MonoBehaviour {
             totalDamage += hitter_.maxHealth * ds_._healthDamagePercent;
             healthDamagePercent = hitter_.maxHealth * ds_._healthDamagePercent;
         }
-
         _stats._health -= totalDamage;
         _stats._health += ds_._heal;
+
 
         if (ds_._lifeSteal.GetFloat() > 0f)
         {
@@ -177,6 +179,11 @@ public class Character : MonoBehaviour {
             direction.Normalize();
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.healColor;
+
+            _healEffect = GameObject.Instantiate(Global.Instance._prefabs._effects[0]);
+            _healEffect.transform.position = gameObject.transform.position;
+            _healEffect.transform.parent = gameObject.transform;
+            _healEffect.GetComponent<ParticleSystem>().Play(true);
         }
 
         if (healthDamagePercent_.GetFloat() > 0)
@@ -203,4 +210,16 @@ public class Character : MonoBehaviour {
         SpawnText(tmp, tmp, tmp, tmp, lifeSteal_, tmp, transform.position);
     }
 
+    public void CheckEffect()
+    {
+        if (_healEffect != null)
+        {
+            Debug.Log(_healEffect.GetComponent<ParticleSystem>().isPlaying);
+            if (!_healEffect.GetComponent<ParticleSystem>().isPlaying)
+            {
+                Destroy(_healEffect);
+                _healEffect = null;
+            }
+        }
+    }
 }

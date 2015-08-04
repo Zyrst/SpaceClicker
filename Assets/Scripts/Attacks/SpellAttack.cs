@@ -40,7 +40,6 @@ public class SpellAttack : BaseAttack {
     public Image _cdDoneImage;
     [HideInInspector]
     public float _degree;
-    bool _lerpIn = true;
 
     private bool _clicked = false;
     private bool _cd = false;
@@ -354,9 +353,7 @@ public class SpellAttack : BaseAttack {
             _cdImage.transform.Rotate(0f,0f,-( _degree * Time.deltaTime));
             if (((_combinedStats._cooldown * (1f - _cooldownModifier)) - _coolDown ) <= 1f)
             {
-                if(_cdImage.gameObject.activeInHierarchy)
-                    _cdImage.gameObject.SetActive(false);
-                _cdDoneImage.color = Color.Lerp(_cdDoneImage.color, Color.white, (1f * Time.deltaTime) * 2f);
+                CooldownDoneIcon();
             }
             if (_coolDown >= (_combinedStats._cooldown * (1f - _cooldownModifier)))
             {
@@ -373,6 +370,13 @@ public class SpellAttack : BaseAttack {
        
     }
 
+    public void CooldownDoneIcon()
+    {
+        if (_cdImage.gameObject.activeInHierarchy)
+            _cdImage.gameObject.SetActive(false);
+        _cdDoneImage.color = Color.Lerp(_cdDoneImage.color, Color.white, (1f * Time.deltaTime) * 2f);
+    }
+
     public void ResetCooldown()
     {
         try
@@ -383,6 +387,7 @@ public class SpellAttack : BaseAttack {
             
             _cdDoneImage.color = new Color(1, 1, 1, 0);
             _cdDoneImage.gameObject.SetActive(false);
+            _cdImage.gameObject.SetActive(false);
         }
         catch (System.NullReferenceException) {}
     }

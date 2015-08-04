@@ -55,7 +55,18 @@ public class HealthPotion : MonoBehaviour {
         if ((Global.Instance.player._stats._health) > (Global.Instance.player._combinedStats._maxHealth)) 
             Global.Instance.player._stats._health = new vap(Global.Instance.player._combinedStats._maxHealth);
 
-        GameObject.Destroy(gameObject);
+        GameObject go = GameObject.Instantiate(Global.Instance._prefabs._effects[0]);
+        go.transform.parent = Global.Instance._player.transform;
+        go.transform.position = Global.Instance._player.transform.position;
+        go.GetComponent<ParticleSystem>().Play();
+        foreach (var item in gameObject.GetComponentsInChildren<Transform>())
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        Invoke("DestroyPotion", 1f);
+
+        
     }
 
     public static GameObject Create(Vector3 pos_, Vector3 force_)
@@ -65,5 +76,10 @@ public class HealthPotion : MonoBehaviour {
        // potion.GetComponent<Rigidbody>().AddForce(force_);
         return potion;
 
+    }
+
+    public void DestroyPotion()
+    {
+        GameObject.Destroy(gameObject);
     }
 }
