@@ -29,6 +29,14 @@ public class GALAXY : MonoBehaviour {
         }
     }
 
+    public Vector2 galacticCenterTile
+    {
+        get
+        {
+            return new Vector2(uint.MaxValue / 2 + (int)GalaxyGeneretion._boxMaxX / 2, uint.MaxValue / 2 + (int)GalaxyGeneretion._boxMaxY / 2);
+        }
+    }
+
     private static GALAXY _instance = null;
     public static GALAXY Instance
     {

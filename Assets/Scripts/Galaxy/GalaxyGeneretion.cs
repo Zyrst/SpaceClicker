@@ -128,9 +128,12 @@ public class GalaxyGeneretion : MonoBehaviour {
         screenScale = new Vector2(1, 1);
         GameObject box = new GameObject();
 
-        /*Image img = box.AddComponent<Image>();
-        box.GetComponent<RectTransform>().sizeDelta = new Vector2(480f, 480f);
-        img.color = new Color(0.1f, 0.1f, ((float)(_boxX * _boxY)) / (float)(_boxMaxX * _boxMaxY), 0.6f);*/
+        if (false && startX_ == uint.MaxValue / 2 && _boxX == (int)_boxMaxX / 2 && startY_ == uint.MaxValue / 2 && _boxY == (int)_boxMaxY / 2)
+        {
+            Image img = box.AddComponent<Image>();
+            box.GetComponent<RectTransform>().sizeDelta = new Vector2(480f, 480f);
+            img.color = new Color(0.1f, 0.1f, ((float)(_boxX * _boxY)) / (float)(_boxMaxX * _boxMaxY), 0.6f);
+        }
 
         StarBox ret = box.AddComponent<StarBox>();
         box.transform.parent = GALAXY.Instance.boxes.transform;
