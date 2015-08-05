@@ -107,8 +107,6 @@ public class SpellAttack : BaseAttack {
         }
 
         CheckSpellSpecificSounds();
-
-       
         
 
 	}
@@ -124,6 +122,7 @@ public class SpellAttack : BaseAttack {
         if (_cdDoneImage.IsActive())
             _cdDoneImage.gameObject.SetActive(false);
         _startGUIPos = _slot.transform.position;
+        
     }
 	
 	// Update is called once per frame
@@ -413,7 +412,7 @@ public class SpellAttack : BaseAttack {
 
     public void CombineSpellStats()
     {
-        Global.DebugOnScreen("Combining spellstats");
+        //Global.DebugOnScreen("Combining spellstats");
         _combinedStats = new SpellStats(_stats);
         _combinedStats.AddStats(Global.Instance.player._combinedStats);
     }
@@ -604,5 +603,11 @@ public class SpellAttack : BaseAttack {
             default:
                 break;
         }
+    }
+
+    void OnEnable()
+    {
+        _cooldownModifier = 0f;
+        _cdModifierTimer = 0f;
     }
 }
