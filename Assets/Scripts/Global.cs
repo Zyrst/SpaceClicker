@@ -55,7 +55,7 @@ public class Global : MonoBehaviour {
         public Material _player;
     }
 
-    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4 }
+    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4, Galaxy = 5 }
     public GameType _gameType = GameType.Farm;
 
     public uint _gold = 0;
@@ -140,7 +140,7 @@ public class Global : MonoBehaviour {
         UpdateExpBar();
         UpdateGoldText();
         SwitchScene(GameType.Ship);        
-        Starmap.Instance.Generate(1, 100, 9001);
+        //Starmap.Instance.Generate(1, 100, 9001);
 
         _planet = null;
     }
@@ -207,6 +207,7 @@ public class Global : MonoBehaviour {
                 Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(false);
                 FarmMode.Instance.startFarmMode();
+                GALAXY.Instance.gameObject.SetActive(false);
                 _gameCamera.gameObject.SetActive(true);
                 _uiCamera.gameObject.SetActive(false);
                 _gameCamera.tag = "MainCamera";
@@ -218,6 +219,7 @@ public class Global : MonoBehaviour {
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(true);
                 Starmap.Instance.gameObject.SetActive(false);
+                GALAXY.Instance.gameObject.SetActive(false);
                 try
                 {
                     _gameCamera.gameObject.SetActive(false);
@@ -239,6 +241,15 @@ public class Global : MonoBehaviour {
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(true);
+                GALAXY.Instance.gameObject.SetActive(false);
+                break;
+
+            case GameType.Galaxy:
+                player.gameObject.SetActive(false);
+                FarmMode.Instance.gameObject.SetActive(false);
+                Ship.Instance.gameObject.SetActive(false);
+                Starmap.Instance.gameObject.SetActive(false);
+                GALAXY.Instance.gameObject.SetActive(true);
                 break;
             default:
                 break;

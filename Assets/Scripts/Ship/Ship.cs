@@ -62,7 +62,15 @@ public class Ship : MonoBehaviour {
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Sounds.OneShot(Sounds.Instance.uiSounds.navigation.eterStarmap);
-        Global.Instance.SwitchScene(Global.GameType.Star);
+        if (GALAXY.Instance._lastStar == null)
+        {
+            Global.Instance.SwitchScene(Global.GameType.Galaxy);
+        }
+        else
+        {
+            Global.Instance.SwitchScene(Global.GameType.Star);
+        }
+        
     }
 
     public void ExitCharacter()

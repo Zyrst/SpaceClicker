@@ -33,9 +33,9 @@ public class GalaxyGeneretion : MonoBehaviour {
     public static uint _boxMaxY = 5;
 
     // max number of stars in a box 
-    private static int _starMax = 4;
+    private static int _starMax = 8;
 
-    private static int _minStarDist = 120;
+    private static int _minStarDist = 60;
 
     public static List<StarBox> GenerateGalaxy(int seed_, uint llevel_, uint ulevel_, uint startX_, uint startY_)
     {
@@ -124,7 +124,14 @@ public class GalaxyGeneretion : MonoBehaviour {
 
     private static IEnumerator GenerateStarBox(List<StarBox> starBoxList_, uint llevel_, uint ulevel_, uint startX_, uint startY_)
     {
+        Vector2 screenScale = new Vector2(Screen.width/1902f, Screen.height/1080f);
+        screenScale = new Vector2(1, 1);
         GameObject box = new GameObject();
+
+        /*Image img = box.AddComponent<Image>();
+        box.GetComponent<RectTransform>().sizeDelta = new Vector2(480f, 480f);
+        img.color = new Color(0.1f, 0.1f, ((float)(_boxX * _boxY)) / (float)(_boxMaxX * _boxMaxY), 0.6f);*/
+
         StarBox ret = box.AddComponent<StarBox>();
         box.transform.parent = GALAXY.Instance.boxes.transform;
 
@@ -140,12 +147,11 @@ public class GalaxyGeneretion : MonoBehaviour {
         // generate stars
         ret._starSystems = GenerateStarSystems(llevel_, ulevel_);
 
-        Vector2 screenScale = new Vector2(Screen.width/1902f, Screen.height/1080f);
 
         // set position of box
         box.transform.localPosition = new Vector3(
-            (StarBox.width/2f + (StarBox.width * _boxX) - (StarBox.width * 1.5f)),
-            (StarBox.height/2f + (StarBox.height * _boxY) - (StarBox.height * 1.5f)),
+            (((StarBox.width / 2f) * screenScale.x) + ((StarBox.width * _boxX) * screenScale.x) - ((StarBox.width * 1.5f)) * screenScale.x),
+            (((StarBox.height / 2f) * screenScale.y) + ((StarBox.height * _boxY) * screenScale.y) - ((StarBox.height * 1.5f)) * screenScale.y),
             0);
 
         // set scale of box 
@@ -158,6 +164,7 @@ public class GalaxyGeneretion : MonoBehaviour {
         }
 
         // position for stars 
+        #region MyRegion
         foreach (var item in ret._starSystems)
         {
             bool next = false;
@@ -168,8 +175,8 @@ public class GalaxyGeneretion : MonoBehaviour {
                 // position
                 item.transform.position = Vector3.zero;
                 item.transform.localPosition = new Vector3(
-                    Random.Range(0f, (float)StarBox.width/2f),
-                    Random.Range(0f, (float)StarBox.height/2f),
+                    Random.Range(-(float)StarBox.width / 2f, (float)StarBox.width / 2f),
+                    Random.Range(-(float)StarBox.height / 2f, (float)StarBox.height / 2f),
                     0f);
 
                 // fix scale
@@ -187,6 +194,13 @@ public class GalaxyGeneretion : MonoBehaviour {
                     }
                 }
             }
+        } 
+        #endregion
+
+        // seed for each star
+        for (int i = 0; i < ret._starSystems.Count; i++)
+        {
+            ret._starSystems[i]._seed = seed * i;
         }
 
         starBoxList_.Add(ret);
@@ -225,12 +239,17 @@ public class GalaxyGeneretion : MonoBehaviour {
         Image img = ss.GetComponent<Image>();
 
         img.sprite = Sprites.Instance.galaxy.GalaxyStar.sprite;
-        img.color = Color.yellow;
+
+        ret._starColor = Random.Range(0, StarSystem.StarColor.Length);
+        ret._starBackground = (StarSystem.StarBackgrounds)ret._starColor;
+        img.color = StarSystem.StarColor[ret._starColor];
 
         ss.name = "GalaxyStar";
 
         ret._llevel = llevel_;
         ret._ulevel = ulevel_;
+
+        ret.GenerateRotationAndStuff();
 
         return ret;
     }

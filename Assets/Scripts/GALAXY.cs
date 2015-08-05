@@ -10,11 +10,24 @@ public class GALAXY : MonoBehaviour {
     public GameObject boxes;
     public List<GalaxyGeneretion.StarBox> boxList;
 
+    public GameObject popup;
+    public GameObject selector;
+
     private bool _mouseDown = false;
     private Vector3 _mouseOld = Vector3.zero;
 
-    private uint _galaxyoffsetX = 100;
-    private uint _galaxyoffsetY = 100;
+    public uint _galaxyoffsetX = 0;
+    public uint _galaxyoffsetY = 0;
+
+    public StarSystem _lastStar = null;
+
+    public Vector2 screenScale
+    {
+        get
+        {
+            return new Vector2(Screen.width / 1920f , Screen.height / 1080f);
+        }
+    }
 
     private static GALAXY _instance = null;
     public static GALAXY Instance
@@ -31,6 +44,13 @@ public class GALAXY : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        // middle of the fucking universe
+        _galaxyoffsetX = uint.MaxValue / 2;
+        _galaxyoffsetY = uint.MaxValue / 2;
+
+        GenerateGalaxy();
+
+        popup.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -51,7 +71,7 @@ public class GALAXY : MonoBehaviour {
             if (_mouseDown)
             {
                 Vector3 delta = _mouseOld - MouseController.Instance.position;
-                boxes.transform.position -= delta;
+                boxes.GetComponent<RectTransform>().position -= delta;
             }
             
             _mouseDown = true;
@@ -64,57 +84,78 @@ public class GALAXY : MonoBehaviour {
 
         _mouseOld = MouseController.Instance.position;
 
-        Vector2 screenScale = new Vector2(Screen.width / 1920f, Screen.height / 1080f);
-        //screenScale = new Vector2(1f, 1f);
-
-        Vector3 pos = boxes.transform.position;
-        if (pos.x < -GalaxyGeneretion.StarBox.width * screenScale.x)
+        Vector3 pos = boxes.GetComponent<RectTransform>().position;
+        if (pos.x < -GalaxyGeneretion.StarBox.width / 2f)
         {
-            pos.x += GalaxyGeneretion.StarBox.width *screenScale.x;
-            _galaxyoffsetX++;
-            OffsetBoxes(-1,0);
-            GenerateNewColumn(true);
             // new collum on the right
+            if (_galaxyoffsetX < uint.MaxValue - GalaxyGeneretion._boxMaxX)
+            {
+                //pos.x += GalaxyGeneretion.StarBox.width / 2f;
+                pos.x = 50f;
+                _galaxyoffsetX++;
+                OffsetBoxes(-1, 0);
+                GenerateNewColumn(true);
+            }
         }
-        if (pos.x > GalaxyGeneretion.StarBox.width * screenScale.x)
+        if (pos.x > GalaxyGeneretion.StarBox.width / 2f)
         {
-            pos.x -= GalaxyGeneretion.StarBox.width * screenScale.x;
-            _galaxyoffsetX--;
-            OffsetBoxes(1,0);
-            GenerateNewColumn(false);
             // new collum on the left
+            if (_galaxyoffsetX > 0)
+            {
+                //pos.x -= GalaxyGeneretion.StarBox.width / 2f;
+                pos.x = -50f;
+                _galaxyoffsetX--;
+                OffsetBoxes(1, 0);
+                GenerateNewColumn(false);
+            }
         }
-        if (pos.y < -GalaxyGeneretion.StarBox.height * screenScale.y)
+        if (pos.y < -GalaxyGeneretion.StarBox.height / 2f)
         {
-            pos.y += GalaxyGeneretion.StarBox.height * screenScale.y;
-            _galaxyoffsetY++;
-            OffsetBoxes(0,-1);
-            GenerateNewLine(false);
             // new line bottom (first)
+            if (_galaxyoffsetY < uint.MaxValue - GalaxyGeneretion._boxMaxY)
+            {
+                //pos.y += GalaxyGeneretion.StarBox.height / 2f;
+                pos.y = 50f;
+                _galaxyoffsetY++;
+                OffsetBoxes(0, -1);
+                GenerateNewLine(false);
+            }
         }
-        if (pos.y > GalaxyGeneretion.StarBox.height * screenScale.y)
+        if (pos.y > GalaxyGeneretion.StarBox.height / 2f)
         {
-            pos.y -= GalaxyGeneretion.StarBox.height * screenScale.y;
-            _galaxyoffsetY--;
-            OffsetBoxes(0,1);
-            GenerateNewLine(true);
             // new line top (last)
+            if (_galaxyoffsetY > 0)
+            {
+                //pos.y -= GalaxyGeneretion.StarBox.height / 2f;
+                pos.y = -50f;
+                _galaxyoffsetY--;
+                OffsetBoxes(0, 1);
+                GenerateNewLine(true);
+            }
         }
 
-        boxes.transform.position = pos;
+        boxes.GetComponent<RectTransform>().position = pos;
+
+        if (_lastStar == null && selector.gameObject.activeInHierarchy)
+        {
+            selector.gameObject.SetActive(false);
+            popup.SetActive(false);
+        }
+        if (selector.gameObject.activeInHierarchy)
+        {
+            selector.transform.position = _lastStar.transform.position;
+        }
 	}
 
     public void OffsetBoxes(int dirX_, int dirY_)
     {
-        Vector2 screenScale = new Vector2(Screen.width / 1920f, Screen.height / 1080f);
-        //screenScale = new Vector2(1f,1f);
         foreach (var item in boxes.GetComponentsInChildren<Transform>())
         {
             if (item.name != "Boxes")
             {
                 Vector3 pos = item.transform.localPosition;
-                pos.x += GalaxyGeneretion.StarBox.width * screenScale.x * dirX_;
-                pos.y += GalaxyGeneretion.StarBox.height * screenScale.y * dirY_;
+                pos.x += GalaxyGeneretion.StarBox.width * dirX_ / 2f;
+                pos.y += GalaxyGeneretion.StarBox.height * dirY_ / 2f;
                 item.transform.localPosition = pos;
             }
         }
@@ -194,8 +235,10 @@ public class GALAXY : MonoBehaviour {
     public void Generate()
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
-        Starmap.Instance.Generate(1, 100, 9001);
+        Starmap.Instance.Generate(_lastStar._llevel, _lastStar._ulevel, _lastStar._seed);
         Global.DebugOnScreen("genererar i galaxy");
+
+        Global.Instance.SwitchScene(Global.GameType.Star);
     }
 
     public void GenerateGalaxy()
@@ -208,7 +251,7 @@ public class GALAXY : MonoBehaviour {
 
     void Awake()
     {
-        GenerateGalaxy();
+        //GenerateGalaxy();
         //GenerateNewColumn(true);
     }
 }
