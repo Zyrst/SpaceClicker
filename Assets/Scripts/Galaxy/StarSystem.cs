@@ -17,6 +17,9 @@ public class StarSystem : MonoBehaviour
     public int _starColor = (int)StarBackgrounds.Yellow;
     public StarBackgrounds _starBackground = StarBackgrounds.Yellow;
 
+    private float _rotate = 0.5f;
+    private float _speedBoost = 0f;
+
     /// <summary>
     /// never ever use! (resets the seed)
     /// </summary>
@@ -24,5 +27,18 @@ public class StarSystem : MonoBehaviour
     {
         Random.seed = _seed;
         _numberOfPlanets = Random.Range(3, 9);
+    }
+
+    public void GenerateRotationAndStuff()
+    {
+        _rotate = Random.Range(-1f, 1f);
+        _speedBoost = Random.Range(0f, 0.07f);
+    }
+
+    void Update()
+    {
+        transform.Translate(0, Time.deltaTime * _rotate + (_speedBoost * _rotate), 0);
+        transform.Rotate(0, 0, Time.deltaTime * _rotate + (_speedBoost * _rotate)); 
+
     }
 }

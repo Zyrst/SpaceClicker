@@ -249,6 +249,8 @@ public class GalaxyGeneretion : MonoBehaviour {
         ret._llevel = llevel_;
         ret._ulevel = ulevel_;
 
+        ret.GenerateRotationAndStuff();
+
         return ret;
     }
 
