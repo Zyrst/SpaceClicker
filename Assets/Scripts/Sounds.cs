@@ -159,10 +159,18 @@ public class Sounds : MonoBehaviour {
         public FMODAsset medpackPickup;
         public FMODAsset lootcrate;
     }
+    [System.Serializable]
+    public struct Music
+    {
+        public FMODAsset gameOver;
+        public FMODAsset clearLevel;
+        public FMODAsset levelUp;
+    }
 
     public PlayerSounds playerSounds;
     public EnemySounds enemySounds;
     public UISounds uiSounds;
+    public Music music;
 
 	// Use this for initialization
 	void Start () {

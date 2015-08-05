@@ -17,6 +17,11 @@ public class CharacterCreation : MonoBehaviour {
     public Quaternion _playerRot;
 
     [HideInInspector]
+    bool _firstTouch = false;
+    [HideInInspector]
+    Vector3 _oldPos = Vector3.zero;
+
+    [HideInInspector]
     public int _currentHairStyle = 0;
     [HideInInspector]
     public int _currentHairColor = 0;
@@ -24,6 +29,9 @@ public class CharacterCreation : MonoBehaviour {
     public int _currentSkin = 0;
     [HideInInspector]
     public int _currentEyes = 0;
+
+    Transform _playerModel;
+    Transform _playerCollider;
 
     private static CharacterCreation _instance = null;
     public static CharacterCreation Instance
@@ -45,7 +53,43 @@ public class CharacterCreation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (MouseController.Instance.buttonDown)
+        {
+            Ray ray = Global.Instance._uiCamera.ScreenPointToRay(MouseController.Instance.position);
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(ray, out hit))
+            {
+                try
+                {
+                    if (hit.collider.transform.parent.parent.tag == "Player")
+                    {
+                        if (!_firstTouch)
+                        {
+                            _oldPos = MouseController.Instance.position;
+                            _firstTouch = true;
+                        }
+                    }
+
+                }
+                catch (System.NullReferenceException)
+                {
+                }
+            }
+            if (_firstTouch)
+            {
+                Vector3 delta = _oldPos - MouseController.Instance.position;
+                if (delta.x != 0f)
+                {
+                    _playerModel.Rotate(0f, delta.x, 0f);
+                }
+
+                _oldPos = MouseController.Instance.position;
+            }
+        }
+        else if (!MouseController.Instance.buttonDown && _firstTouch)
+        {
+            _firstTouch = false;
+        }
 	}
 
     public void Init()
@@ -54,17 +98,23 @@ public class CharacterCreation : MonoBehaviour {
         _playerRot = Global.Instance.player.transform.rotation;
 
         Global.Instance.player.gameObject.SetActive(true);
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
 
-
-        playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
+        _playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
+        _playerCollider = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "colliders").transform;
+        _playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
+        _playerCollider.position = _playerModel.position;
         //playerModel.LookAt(Global.Instance._uiCamera.transform.position);
-        playerModel.transform.rotation = new Quaternion(1f, 133f, -2.4f, 0f);
-        playerModel.localScale = new Vector3(20, 20, 20);
+        _playerModel.transform.rotation = new Quaternion(1f, 133f, -2.4f, 0f);
+        _playerModel.localScale = new Vector3(20, 20, 20);
+        _playerCollider.localScale = _playerModel.localScale;
 
         Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = false;
         Global.Instance.player.GetComponent<ClickAttack>().enabled = false;
         Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = false;
+        foreach (var item in _hairMaterials)
+        {
+            item.color = _rainbow[_currentHairColor];
+        }
         
     }
 
@@ -119,8 +169,7 @@ public class CharacterCreation : MonoBehaviour {
 
     public void Rotate()
     {
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
-        playerModel.transform.eulerAngles = new Vector3(0, GetComponentInChildren<Slider>().value, 0);
+        _playerModel.transform.eulerAngles = new Vector3(0, GetComponentInChildren<Slider>().value, 0);
     }
 
    
@@ -131,9 +180,11 @@ public class CharacterCreation : MonoBehaviour {
 
         Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
 
-        playerModel.position = _playerPos;
-        playerModel.rotation = _playerRot;
-        playerModel.localScale = new Vector3(1, 1, 1);
+        _playerModel.position = _playerPos;
+        _playerModel.rotation = _playerRot;
+        _playerModel.localScale = new Vector3(1, 1, 1);
+        _playerCollider.position = _playerModel.position;
+        _playerCollider.localScale = _playerModel.localScale;
 
         Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "GUI").GetComponentInChildren<Canvas>().enabled = true;
         Global.Instance.player.GetComponent<ClickAttack>().enabled = true;

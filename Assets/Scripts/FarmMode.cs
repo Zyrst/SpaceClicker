@@ -32,13 +32,12 @@ public class FarmMode : MonoBehaviour {
     public void allEnemiesDied()
     {
         Global.Instance.player._stats._health = new vap(Global.Instance.player._combinedStats._maxHealth);
-
     }
 
     public void playerDied()
     {
         // reset enemies
-        
+        Sounds.OneShot(Sounds.Instance.music.gameOver);
         foreach (var item in EnemySpawner.triggers.spawns)
         {
             ((EnemySpawner)item).ResetWave();
@@ -46,6 +45,7 @@ public class FarmMode : MonoBehaviour {
 
         // reset player
         Global.Instance.player.Reset(5f);
+        
     }
 
     public void backToShip()
