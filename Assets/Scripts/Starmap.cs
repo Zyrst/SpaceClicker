@@ -57,6 +57,13 @@ public class Starmap : MonoBehaviour {
         Global.Instance.SwitchScene(Global.GameType.Ship);
     }
 
+    public void BackToGalaxy()
+    {
+        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.exitStarmap);
+        Global.Instance.SwitchScene(Global.GameType.Galaxy);
+    }
+
     public void SelectPlanet(Planet planet_)
     {
         _selectedPlanet = planet_;
@@ -80,17 +87,17 @@ public class Starmap : MonoBehaviour {
 	    }
     }
 
-    public void Generate(int min_, int max_, int seed_)
+    public void Generate(uint min_, uint max_, int seed_)
     {
         Clear();
         Random.seed = 0;
         Random.seed = seed_;
 
-        _numberOfPlanets = Random.Range(3, 9);
-        int level = ((max_ - min_) / _numberOfPlanets) + min_;
+        _numberOfPlanets = GALAXY.Instance._lastStar._numberOfPlanets;
+        int level = (int)(((max_ - min_) / _numberOfPlanets) + min_);
         int levelForPlanet = level;
         gameObject.SetActive(true);
-        gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[Random.Range(0, _backgrounds.Length)];
+        gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[(int)GALAXY.Instance._lastStar._starBackground];
         gameObject.SetActive(false);
         for (int i = 0; i < _numberOfPlanets; i++)
         {
@@ -133,8 +140,6 @@ public class Starmap : MonoBehaviour {
             _rect.z = planRect.sizeDelta.x;
             _rect.w = planRect.sizeDelta.y;
             _planetBounds.Add(_rect);
-
-            
         }
     }
 
