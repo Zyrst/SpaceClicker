@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: eafce2f05ed2042409a4007b1f86d137
-timeCreated: 1435318238
+guid: 745f66640c2d4d2418e30c35d0c572f0
+timeCreated: 1438776618
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -213,7 +213,7 @@ ModelImporter:
     4300026: ChestPetal6
     4300028: ChestPetal2
     4300030: ChestPetal5
-    7400000: Take 001
+    7400000: Shield
     9500000: //RootNode
     13700000: polySurface3
   materials:
@@ -237,10 +237,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
+      name: Shield
+      takeName: Monster1_combat_SheildAnimation_prelim01
       firstFrame: 1
-      lastFrame: 20
+      lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

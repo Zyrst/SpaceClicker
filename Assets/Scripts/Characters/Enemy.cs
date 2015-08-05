@@ -143,6 +143,7 @@ public class Enemy : Character
         if (Global.Instance.EnemiesAlive() == 0 && _myNumDeath == 0)
         {
             //Debug.Log("Triggered new wave");
+            Sounds.OneShot(Sounds.Instance.music.clearLevel);
             EnemySpawner.triggers.newWave();
         }
         

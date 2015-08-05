@@ -342,10 +342,14 @@ public class Player : Character {
     {
         base.LevelUp();
         UpdateCombinedStats();
-
+        
         if (_level % 3 == 0)
         {
             _miniBoss = true;
+        }
+        if (_level != 1)
+        {
+            Sounds.OneShot(Sounds.Instance.music.levelUp);
         }
     }
     public void Reset(float time_)
