@@ -409,7 +409,7 @@ public class Player : Character {
     /// </summary>
     public void UpdateCombinedStats()
     {
-        Global.DebugOnScreen("kör combine stats");
+        //Global.DebugOnScreen("kör combine stats");
         _combinedStats = new CharacterStats(_stats);
 
         // equipment
