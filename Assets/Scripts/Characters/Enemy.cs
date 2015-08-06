@@ -13,6 +13,8 @@ public class Enemy : Character
     [HideInInspector]
     public int _myNumDeath = 0;
 
+    public Texture[] _skins;
+
     GameObject _myPotion;
     private FMOD.Studio.EventInstance _takingDamageSoundEvent;
     public bool _isBoss;
@@ -90,7 +92,12 @@ public class Enemy : Character
             tmp.transform.localScale = new Vector3(15, 15, 15);
             tmp.GetComponent<LootCrate>().Activate(gameObject,_myPotion);
         }
-            
+
+        //More than one texture for the enemy
+        if (_skins.Length != 0)
+        {
+            GetComponentsInChildren<SkinnedMeshRenderer>().FirstOrDefault(x => x.name == "Body").material.mainTexture = _skins[Random.Range(0, _skins.Length)];
+        }
        // Quaternion rot = transform.rotation;
         //rot.z = 0f;
 	}
