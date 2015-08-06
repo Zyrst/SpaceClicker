@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class StarSystem : MonoBehaviour
 {
     public uint _llevel = 0;
-    public uint _ulevel = 0;
 
     // for ze planetz
     public int _seed;
@@ -19,6 +19,10 @@ public class StarSystem : MonoBehaviour
 
     private float _rotate = 0.5f;
     private float _speedBoost = 0f;
+
+    private bool _move = false;
+
+    private Vector3 lastframepos = Vector3.zero;
 
     /// <summary>
     /// never ever use! (resets the seed)
@@ -37,8 +41,21 @@ public class StarSystem : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(0, Time.deltaTime * _rotate + (_speedBoost * _rotate), 0);
-        transform.Rotate(0, 0, Time.deltaTime * _rotate + (_speedBoost * _rotate)); 
+        if (_move)
+        {
 
+            transform.Translate(0, Time.deltaTime * _rotate + (_speedBoost * _rotate), 0);
+            transform.Rotate(0, 0, Time.deltaTime * _rotate + (_speedBoost * _rotate));
+
+        }
+
+        RectTransform rect = GetComponentInChildren<Text>().GetComponent<RectTransform>();
+        if (lastframepos != Vector3.zero)
+        {
+            Vector3 pos = rect.localPosition;
+            rect.localPosition = lastframepos;
+        }
+
+        lastframepos = rect.localPosition;
     }
 }

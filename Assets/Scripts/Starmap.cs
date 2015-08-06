@@ -87,14 +87,14 @@ public class Starmap : MonoBehaviour {
 	    }
     }
 
-    public void Generate(uint min_, uint max_, int seed_)
+    public void Generate(uint min_, int seed_)
     {
         Clear();
         Random.seed = 0;
         Random.seed = seed_;
 
         _numberOfPlanets = GALAXY.Instance._lastStar._numberOfPlanets;
-        int level = (int)(((max_ - min_) / _numberOfPlanets) + min_);
+        int level = (int)(((/*max_ - */min_) / _numberOfPlanets) + min_); //////////////    <---------------------------------
         int levelForPlanet = level;
         gameObject.SetActive(true);
         gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[(int)GALAXY.Instance._lastStar._starBackground];

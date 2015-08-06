@@ -30,6 +30,6 @@ public class StarSystemButton : Button {
         GetComponent<StarSystem>().GenerateNumberOfPlanets();
 
         GALAXY.Instance.popup.GetComponent<GalaxyPopup>().planetInfo.text = GetComponent<StarSystem>()._numberOfPlanets.ToString();
-        GALAXY.Instance.popup.GetComponent<GalaxyPopup>().levelRange.text = GetComponent<StarSystem>()._llevel + " - " + GetComponent<StarSystem>()._ulevel;
+        GALAXY.Instance.popup.GetComponent<GalaxyPopup>().levelRange.text = GetComponent<StarSystem>()._llevel + " - "/* + GetComponent<StarSystem>()._ulevel*/;
     }
 }
