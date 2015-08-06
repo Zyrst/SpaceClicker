@@ -18,34 +18,13 @@ public class TextureTracker : MonoBehaviour {
     }
 
     [System.Serializable]
-    public class SkinTexture
+    public class Arena
     {
-        public Texture _skin0;
-        public Texture _skin1;
-        public Texture _skin2;
-        public Texture _skin3;
-        public Texture _skin4;
-        public Texture _skin5;
-        public Texture _skin6;
+        public Texture[] _postAp;
+        public Texture[] _mech;
     }
 
-    [System.Serializable]
-    public class EyeTextures
-    {
-        public Texture _eye0;
-        public Texture _eye1;
-        public Texture _eye2;
-        public Texture _eye3;
-        public Texture _eye4;
-        public Texture _eye5;
-        public Texture _eye6;
-        public Texture _eye7;
-    }
-
-    public SkinTexture _skins = new SkinTexture();
-    public EyeTextures _eyes = new EyeTextures();
-
-
+    public Arena _arena;
 
 	// Use this for initialization
 	void Start () {

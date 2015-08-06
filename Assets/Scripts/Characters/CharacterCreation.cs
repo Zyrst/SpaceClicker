@@ -178,8 +178,6 @@ public class CharacterCreation : MonoBehaviour {
     public void Accept()
     {
 
-        Transform playerModel = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "maincharacter_combat_animation_idle_01Slow").transform;
-
         _playerModel.position = _playerPos;
         _playerModel.rotation = _playerRot;
         _playerModel.localScale = new Vector3(1, 1, 1);
