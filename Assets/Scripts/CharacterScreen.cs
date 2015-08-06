@@ -19,7 +19,10 @@ public class CharacterScreen : MonoBehaviour {
 
     public ArrayList _inventory = new ArrayList();
     public Equipment _lastEquip;
+
+    [HideInInspector]
     Transform _playerModel;
+    [HideInInspector]
     Transform _playerCollider;
 
     [HideInInspector]

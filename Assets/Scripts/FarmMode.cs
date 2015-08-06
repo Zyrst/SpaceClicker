@@ -26,6 +26,7 @@ public class FarmMode : MonoBehaviour {
     public void startFarmMode()
     {
         _arena = (GameObject.Instantiate(arenaPrefab) as GameObject);
+        _arena.GetComponent<MeshRenderer>().material.mainTexture = TextureTracker.Instance._arena._postAp[Random.Range(0, TextureTracker.Instance._arena._postAp.Length)];
         Global.Instance.player.transform.position = _arena.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "PlayerSpawnPoint").position;
     }
 

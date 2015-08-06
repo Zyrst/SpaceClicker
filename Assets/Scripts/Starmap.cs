@@ -99,6 +99,7 @@ public class Starmap : MonoBehaviour {
         gameObject.SetActive(true);
         gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[(int)GALAXY.Instance._lastStar._starBackground];
         gameObject.SetActive(false);
+        float planetPosX = 1400 / _numberOfPlanets;
         for (int i = 0; i < _numberOfPlanets; i++)
         {
             Planet _plan = new Planet();
@@ -124,8 +125,8 @@ public class Starmap : MonoBehaviour {
             do
             {
                 looping = false;
-                float x = Random.Range(0f, 1040f);
-                planBut.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(x, Random.Range(0f, 350f), 0f);
+                float x = Random.Range(planetPosX * i, planetPosX * (i + 1));
+                planBut.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(x, Random.Range(0f, 750f), 0f);
                 Vector4 rect = new Vector4();
                 rect.x = planRect.position.x - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x / 2);
                 rect.y = planRect.position.y - (planRect.sizeDelta.y / 2);

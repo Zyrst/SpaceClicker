@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Companions : MonoBehaviour {
 
-    [HideInInspector]
-    System.DateTime _timeStamp;
+   // [HideInInspector]
+    //System.DateTime _timeStamp;
 
 
 	// Use this for initialization
@@ -40,6 +40,6 @@ public class Companions : MonoBehaviour {
     /// </summary>
     public void SaveTime()
     {
-        _timeStamp = System.DateTime.Now;
+        //_timeStamp = System.DateTime.Now;
     }
 }
