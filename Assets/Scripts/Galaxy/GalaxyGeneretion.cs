@@ -37,6 +37,23 @@ public class GalaxyGeneretion : MonoBehaviour {
 
     private static int _minStarDist = 60;
 
+    private static uint Level(uint startX_, uint startY_)
+    {
+
+        long tileX = uint.MaxValue / 2;
+        tileX -= startX_ + _boxX;
+
+        long tileY = uint.MaxValue / 2;
+        tileY -= startY_ + _boxY;
+
+        tileX = tileX > 0 ? tileX : -tileX;
+        tileY = tileY > 0 ? tileY : -tileY;
+
+        uint d = tileX > tileY ? (uint)tileX : (uint)tileY;
+
+        return d;
+    }
+
     public static List<StarBox> GenerateGalaxy(int seed_, uint llevel_, uint startX_, uint startY_)
     {
         Random.seed = seed_;
@@ -48,18 +65,8 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         while (_boxY < _boxMaxY)
         {
-            long tileX = uint.MaxValue/2;
-            tileX -= startX_ + _boxX;
 
-            long tileY = uint.MaxValue/2;
-            tileY -= startY_ + _boxY;
-
-            tileX = tileX > 0 ? tileX : -tileX;
-            tileY = tileY > 0 ? tileY : -tileY;
-
-            uint d = tileX > tileY ? (uint)tileX : (uint)tileY;
-
-            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_ + d, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_ + Level(startX_, startY_), startX_, startY_));
         }
 
         return ret;
@@ -76,18 +83,7 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         while (_boxY == 0)
         {
-            long tileX = uint.MaxValue / 2;
-            tileX -= startX_ + _boxX;
-
-            long tileY = uint.MaxValue / 2;
-            tileY -= startY_ + _boxY;
-
-            tileX = tileX > 0 ? tileX : -tileX;
-            tileY = tileY > 0 ? tileY : -tileY;
-
-            uint d = tileX > tileY ? (uint)tileX : (uint)tileY;
-
-            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_+d, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_ + Level(startX_, startY_), startX_, startY_));
         }
 
         return ret;
@@ -104,18 +100,7 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         while (_boxY == _boxMaxY - 1)
         {
-            long tileX = uint.MaxValue / 2;
-            tileX -= startX_ + _boxX;
-
-            long tileY = uint.MaxValue / 2;
-            tileY -= startY_ + _boxY;
-
-            tileX = tileX > 0 ? tileX : -tileX;
-            tileY = tileY > 0 ? tileY : -tileY;
-
-            uint d = tileX > tileY ? (uint)tileX : (uint)tileY;
-
-            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_+d, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_ + Level(startX_, startY_), startX_, startY_));
         }
 
         return ret;
@@ -132,20 +117,8 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         for (int i = 0; i < _boxMaxY; i++)
         {
-
-            long tileX = uint.MaxValue / 2;
-            tileX -= startX_ + _boxX + (_boxMaxX-1);
-
-            long tileY = uint.MaxValue / 2;
-            tileY -= startY_ + _boxY;
-
-            tileX = tileX > 0 ? tileX : -tileX;
-            tileY = tileY > 0 ? tileY : -tileY;
-
-            uint d = tileX > tileY ? (uint)tileX : (uint)tileY;
-
             _boxX = _boxMaxX-1;
-            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_+d, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_ + Level(startX_, startY_), startX_, startY_));
         }
 
 
@@ -163,20 +136,8 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         for (int i = 0; i < _boxMaxY; i++)
         {
-
-            long tileX = uint.MaxValue / 2;
-            tileX -= startX_ + _boxX -1;
-
-            long tileY = uint.MaxValue / 2;
-            tileY -= startY_ + _boxY;
-
-            tileX = tileX > 0 ? tileX : -tileX;
-            tileY = tileY > 0 ? tileY : -tileY;
-
-            uint d = tileX > tileY ? (uint)tileX : (uint)tileY;
-
             _boxX = 0;
-            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_+d, startX_, startY_));
+            Global.Instance.StartCoroutine(GenerateStarBox(ret, llevel_ + Level(startX_, startY_), startX_, startY_));
             _boxY++;
         }
 
@@ -205,7 +166,7 @@ public class GalaxyGeneretion : MonoBehaviour {
         box.name = _boxX + " - " + _boxY;
 
         // get random seed
-        int seed = (int)(_boxY + startY_) + ((int)(_boxX + startX_) * (int)(_boxY + startY_)) + (int)(_boxX + startX_);
+        int seed = (int)((uint)(_boxY + startY_) + ((uint)(_boxX + startX_) * (uint)(_boxY + startY_)) + (uint)(_boxX + startX_));
         Random.seed = seed;
 
         // generate stars
@@ -295,7 +256,6 @@ public class GalaxyGeneretion : MonoBehaviour {
         return ret;
     }
 
-
     private static StarSystem GenerateStarSystem(uint llevel_)
     {
         GameObject ss = GameObject.Instantiate(GALAXY.Instance.galaxyStarPrefab);
@@ -310,9 +270,12 @@ public class GalaxyGeneretion : MonoBehaviour {
 
         ss.name = "GalaxyStar";
 
-        ret._llevel = llevel_;
-
-        ret.GetComponentInChildren<Text>().text = llevel_.ToString();
+        ret._llevel = llevel_ + (uint)Random.Range((int)0, (int)Global.Instance._galaxy._starLevelRangePerTile);
+        if (llevel_ < 1)
+        {
+            ret._llevel = 1;
+        }
+        ret.GetComponentInChildren<Text>().text = ret._llevel.ToString();
 
         ret.GenerateRotationAndStuff();
 

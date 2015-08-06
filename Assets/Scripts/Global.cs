@@ -60,6 +60,9 @@ public class Global : MonoBehaviour {
     {
         public uint _galaxyoffsetX = 0;
         public uint _galaxyoffsetY = 0;
+
+        public uint _starLevelRangePerTile = 3;
+        public uint _increasePerPlanet = 3;
     }
 
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4, Galaxy = 5 }

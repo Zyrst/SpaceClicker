@@ -249,7 +249,7 @@ public class GALAXY : MonoBehaviour {
     public void Generate()
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
-        Starmap.Instance.Generate(_lastStar._llevel, _lastStar._seed);
+        Starmap.Instance.Generate(_lastStar._llevel, _lastStar._ulevel, _lastStar._seed);
         Global.DebugOnScreen("genererar i galaxy");
 
         Global.Instance.SwitchScene(Global.GameType.Star);

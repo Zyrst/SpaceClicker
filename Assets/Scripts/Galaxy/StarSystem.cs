@@ -5,6 +5,7 @@ using System.Collections;
 public class StarSystem : MonoBehaviour
 {
     public uint _llevel = 0;
+    public uint _ulevel = 0;
 
     // for ze planetz
     public int _seed;
@@ -50,12 +51,6 @@ public class StarSystem : MonoBehaviour
         }
 
         RectTransform rect = GetComponentInChildren<Text>().GetComponent<RectTransform>();
-        if (lastframepos != Vector3.zero)
-        {
-            Vector3 pos = rect.localPosition;
-            rect.localPosition = lastframepos;
-        }
-
-        lastframepos = rect.localPosition;
+        rect.localPosition = new Vector3(140f, 23f, 0f);
     }
 }
