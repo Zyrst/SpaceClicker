@@ -108,6 +108,7 @@ public class Global : MonoBehaviour {
 
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
+    bool _doOnce = true;
 
 
     public TalentStats.Percent _potionDropChans = new TalentStats.Percent(1.05f);
@@ -115,6 +116,12 @@ public class Global : MonoBehaviour {
 
     public TalentStats.Percent _potionChansIncrease = new TalentStats.Percent(0.01f);
     public TalentStats.Percent _PotionHealingIncrease = new TalentStats.Percent(0.01f);
+
+    public vap[] _prevLevels = new vap[50];
+    public List<vap> _refLevels = new List<vap>();
+    [HideInInspector]
+    vap _refVap = new vap();
+    public float _levelModifier;
 
     public Camera _gameCamera;
     public Camera _uiCamera;
@@ -154,6 +161,8 @@ public class Global : MonoBehaviour {
         //Starmap.Instance.Generate(1, 100, 9001);
 
         _planet = null;
+        StartCoroutine(LevelFiller());
+        Music.Instance.StartMenuTheme();
     }
     void Update()
     {
@@ -231,6 +240,7 @@ public class Global : MonoBehaviour {
                 Ship.Instance.gameObject.SetActive(true);
                 Starmap.Instance.gameObject.SetActive(false);
                 GALAXY.Instance.gameObject.SetActive(false);
+                Music.Instance.StartMenuTheme();
                 try
                 {
                     _gameCamera.gameObject.SetActive(false);
@@ -440,4 +450,75 @@ public class Global : MonoBehaviour {
     {
         GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spells").gameObject.SetActive(false);
     }
+
+    IEnumerator LevelFiller()
+    {
+        /*if (_prevLevels.Length == 0)
+        {
+            _prevLevels = new vap[50];
+            vap first = new vap();
+            first._values[0] = _levelModifier;
+            first.Checker();
+            _prevLevels[0] = new vap(first);
+        }
+
+       for (int i = 1; i < 50; i++)
+        {
+            
+            vap tmpVap = new vap();
+            tmpVap =  (Global.Instance._prevLevels[i - 1] * _levelModifier);
+            tmpVap.Checker();
+            _prevLevels[i] = new vap(tmpVap);
+           yield return null; 
+        }*/
+        _refVap._values[0] = _levelModifier;
+        _refVap.Checker();
+        _refLevels.Add(new vap(_refVap));
+        for (int i = 1; i <= 600; i++)
+        {
+            vap tmpVap = new vap();
+            tmpVap = _refVap * _levelModifier;
+            tmpVap.Checker();
+            if (i % 50 == 0)
+            {
+                _refLevels.Add(new vap(tmpVap));
+            }
+            _refVap = new vap(tmpVap);
+        }
+
+            yield break;
+    }
+
+    IEnumerator SecondLevelFiller(uint lowLvl_, uint maxLvl_)
+    {
+        vap[] tmpArray = new vap[maxLvl_ - lowLvl_ + 1];
+        vap[] evenTmp = new vap[50];
+
+        evenTmp[0] = new vap(_refLevels[Mathf.FloorToInt(lowLvl_ / 50f)]);
+        for (int x = 1; x < lowLvl_ % 50; x++)
+        {
+            vap tmp = new vap();
+            tmp = evenTmp[x - 1] * _levelModifier;
+            evenTmp[x] = new vap(tmp);
+
+        }
+        
+        tmpArray[0] = new vap(evenTmp[(lowLvl_ % 50) - 1]);
+        for (int i = 1; i < tmpArray.Length; i++)
+        {
+            vap tmpVap = new vap();
+            tmpVap = (tmpArray[i - 1] * _levelModifier);
+            tmpVap.Checker();
+            tmpArray[i] = new vap(tmpVap);
+            yield return null;
+        }
+        _prevLevels = tmpArray;
+        yield break;
+    }
+
+    public void StartLevelFill(uint lowLvl_ , uint maxLvl_)
+    {
+        StartCoroutine(SecondLevelFiller(lowLvl_, maxLvl_));
+    }
+
 }
