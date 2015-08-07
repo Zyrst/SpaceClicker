@@ -64,21 +64,22 @@ public class Enemy : Character
         vap tmpVap = new vap();
         tmpVap._values[0] = _stats._constMultiplier * _level;
         tmpVap.Checker();
-        _stats._baseStat = (tmpVap + Global.Instance._prevLevels[_level - 1]) * _stats._valueMultiplier;
+        Debug.Log(Global.Instance._prevLevels[_level - Starmap.Instance._minLevel].GetFloat());
+        _stats._baseStat = (tmpVap + Global.Instance._prevLevels[ _level - Starmap.Instance._minLevel ]) * _stats._valueMultiplier;
+       
         _stats._baseStat.Checker();
-        //Global.Instance._prevLevels[_level] = _stats._baseStat;
         
         
         if (Global.Instance._player._miniBoss)
         {
             _stats._baseStat._values[0] *= 2f;
+            _stats._baseStat.Checker();
             transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").localScale = new Vector3(2f, 2f, 2f);
             GetComponentInChildren<CharacterGUI>().transform.localPosition = new Vector3(0f, 4f, 0f);
             _isBoss = true;
 
         }
             
-        _stats._baseStat.Checker();
         _stats._baseStat = _stats._baseStat * (1f / ((EnemySpawner._enemiesSpawn / 2f) + 0.5f));
         _stats._baseStat.Checker();
 

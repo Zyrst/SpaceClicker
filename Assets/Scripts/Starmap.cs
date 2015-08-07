@@ -9,6 +9,8 @@ public class Starmap : MonoBehaviour {
     public Planet _selectedPlanet = null;
     public GameObject _planetInfoBox;
     public int _numberOfPlanets = 0;
+    public uint _minLevel = 0;
+    public uint _maxLevel = 0;
 
     public Sprite[] _planetSprites;
     public Sprite[] _backgrounds;
@@ -98,6 +100,10 @@ public class Starmap : MonoBehaviour {
 
         /*int level = (int)max_ - (int)Global.Instance._galaxy._increasePerPlanet + (int)min_;// (int)(((max_ - min_) / _numberOfPlanets) + min_); //////////////    <---------------------------------
         int levelForPlanet = level;*/
+        if (!Global.Instance.IsInvoking("SecondLevelFiller"))
+            Global.Instance.StartLevelFill(min_, max_);
+        _minLevel = min_;
+        _maxLevel = max_;
 
         int llevel = (int)min_;
         int ulevel = (int)llevel + (int)Global.Instance._galaxy._increasePerPlanet-1;

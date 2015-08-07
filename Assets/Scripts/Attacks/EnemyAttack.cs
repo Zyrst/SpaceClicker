@@ -41,11 +41,11 @@ public class EnemyAttack : MonoBehaviour {
             RuntimeAnimatorController ac = anim.runtimeAnimatorController;          // get animator controller
             for (int i = 0; i < ac.animationClips.Length; i++)                      // for each clip in the controller
             {
-                if (gameObject.name == "Enemytres(Clone)")
+                if (gameObject.name == "PostAp Enemy(Clone)")
                 {
                     if (ac.animationClips[i].name == "Attack")                          // name of the clip (not state machine)
                     {
-                        float attackSpeed = 2f * _cooldownTimer;
+                        float attackSpeed = 1.5f * _cooldownTimer;
                         anim.SetFloat("AttackSpeed", attackSpeed);                      // set speed of the clip
                         _startAttackAnimationTime = ac.animationClips[i].length / attackSpeed;      // lenght with speed in mind
                     }

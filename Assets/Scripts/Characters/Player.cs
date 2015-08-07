@@ -347,6 +347,7 @@ public class Player : Character {
         {
             _miniBoss = true;
         }
+        
         if (_level != 1)
         {
             Sounds.OneShot(Sounds.Instance.music.levelUp);
