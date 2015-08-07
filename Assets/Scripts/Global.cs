@@ -162,6 +162,7 @@ public class Global : MonoBehaviour {
 
         _planet = null;
         StartCoroutine(LevelFiller());
+        Music.Instance.StartMenuTheme();
     }
     void Update()
     {
@@ -239,6 +240,7 @@ public class Global : MonoBehaviour {
                 Ship.Instance.gameObject.SetActive(true);
                 Starmap.Instance.gameObject.SetActive(false);
                 GALAXY.Instance.gameObject.SetActive(false);
+                Music.Instance.StartMenuTheme();
                 try
                 {
                     _gameCamera.gameObject.SetActive(false);
@@ -472,7 +474,7 @@ public class Global : MonoBehaviour {
         _refVap._values[0] = _levelModifier;
         _refVap.Checker();
         _refLevels.Add(new vap(_refVap));
-        for (int i = 1; i < 500; i++)
+        for (int i = 1; i <= 600; i++)
         {
             vap tmpVap = new vap();
             tmpVap = _refVap * _levelModifier;

@@ -25,5 +25,6 @@ public class GalaxyPopup : MonoBehaviour {
     public void Visit()
     {
         GALAXY.Instance.Generate();
+
     }
 }

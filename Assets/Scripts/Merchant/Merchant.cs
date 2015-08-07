@@ -45,11 +45,14 @@ public class Merchant : MonoBehaviour {
 
         GetComponentsInChildren<BuyTab>(true)[0].GenerateNewEquipment();
         GetComponentsInChildren<MysteryTab>(true)[0].GenerateNewItem();
+
+        Music.Instance._menuTheme.StartMerchant();
     }
 
     public void Close()
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        Music.Instance._menuTheme.ExitMerchant();
         gameObject.SetActive(false);
     }
 }

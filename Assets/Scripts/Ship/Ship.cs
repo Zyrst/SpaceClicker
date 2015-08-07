@@ -42,6 +42,7 @@ public class Ship : MonoBehaviour {
             Global.Instance.SwitchScene(Global.GameType.Farm);
 
         Global.Instance.player.UpdateCombinedStats();
+        Music.Instance.EnterCombatFromMenu();
     }
 
     public void Character()
@@ -62,6 +63,8 @@ public class Ship : MonoBehaviour {
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Sounds.OneShot(Sounds.Instance.uiSounds.navigation.eterStarmap);
+        Music.Instance._menuTheme.StartStarmap();
+
         if (GALAXY.Instance._lastStar == null)
         {
             Global.Instance.SwitchScene(Global.GameType.Galaxy);

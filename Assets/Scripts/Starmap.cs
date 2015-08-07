@@ -58,6 +58,7 @@ public class Starmap : MonoBehaviour {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Sounds.OneShot(Sounds.Instance.uiSounds.navigation.exitStarmap);
         Global.Instance.SwitchScene(Global.GameType.Ship);
+        Music.Instance._menuTheme.ExitStarmap();
     }
 
     public void BackToGalaxy()
