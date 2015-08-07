@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour {
                 }
                 int rnd = Random.Range(1, spawns.Count + 1);
                 EnemySpawner._enemiesSpawn = rnd;
-                // Debug.Log(EnemySpawner._enemiesSpawn);
+                Debug.Log(EnemySpawner._enemiesSpawn);
                 Spawn(rnd);
             }
             
@@ -106,9 +106,12 @@ public class EnemySpawner : MonoBehaviour {
         else
         {
             triggers.spawns.Add(this);
-            
+
+            if (transform.parent.GetComponentsInChildren<EnemySpawner>().Count()-1 == triggers.spawns.Count)
+            {
             if (!Global.Instance._player._miniBoss)
                 triggers.newWave();
+            }
         }
         
 	}

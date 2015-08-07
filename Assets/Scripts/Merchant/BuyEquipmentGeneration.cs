@@ -180,7 +180,7 @@ public class BuyEquipmentGeneration {
                     break;
             }
         }
-        else if (rand == 3)
+        else if (rand == 2)
         {
             // båda
             switch (ret._element)
