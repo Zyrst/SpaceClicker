@@ -105,6 +105,9 @@ public class Global : MonoBehaviour {
     public TalentStats.Percent _potionChansIncrease = new TalentStats.Percent(0.01f);
     public TalentStats.Percent _PotionHealingIncrease = new TalentStats.Percent(0.01f);
 
+    public vap[] _prevLevels = new vap[50];
+    public float _levelModifier;
+
     public Camera _gameCamera;
     public Camera _uiCamera;
 
@@ -143,6 +146,7 @@ public class Global : MonoBehaviour {
         //Starmap.Instance.Generate(1, 100, 9001);
 
         _planet = null;
+        StartCoroutine(LevelFiller());
     }
     void Update()
     {
@@ -428,5 +432,33 @@ public class Global : MonoBehaviour {
     public void PostIO()
     {
         GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spells").gameObject.SetActive(false);
+    }
+
+    IEnumerator LevelFiller()
+    {
+        if (_prevLevels.Length == 0)
+        {
+            _prevLevels = new vap[50];
+            vap first = new vap();
+            first._values[0] = _levelModifier;
+            first.Checker();
+            _prevLevels[0] = new vap(first);
+        }
+
+       for (int i = 1; i < 50; i++)
+        {
+            
+            vap tmpVap = new vap();
+            tmpVap =  (Global.Instance._prevLevels[i - 1] * _levelModifier);
+            tmpVap.Checker();
+            _prevLevels[i] = new vap(tmpVap);
+            /*vap first = new vap();
+            first._values[0] = (constMulti * i + (Mathf.Pow(basePower, (i / powerDiv)))) * valueMulti;
+            first.Checker();
+            _prevLevels[i] = new vap(first);*/
+           yield return null; 
+        }
+
+        yield break;
     }
 }

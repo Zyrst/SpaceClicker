@@ -60,9 +60,15 @@ public class Enemy : Character
                     break;
             }
         }
+
+        vap tmpVap = new vap();
+        tmpVap._values[0] = _stats._constMultiplier * _level;
+        tmpVap.Checker();
+        _stats._baseStat = (tmpVap + Global.Instance._prevLevels[_level - 1]) * _stats._valueMultiplier;
+        _stats._baseStat.Checker();
+        //Global.Instance._prevLevels[_level] = _stats._baseStat;
         
         
-        _stats._baseStat._values[0] = (_stats._constMultiplier*_level + ( Mathf.Pow(_stats._basePower,(_level/_stats._powerDiv)))) * _stats._valueMultiplier;
         if (Global.Instance._player._miniBoss)
         {
             _stats._baseStat._values[0] *= 2f;
@@ -89,6 +95,7 @@ public class Enemy : Character
             _myPotion = HealthPotion.Create(tr.position - (tr.forward * 3f), Vector3.zero);
             GameObject tmp = GameObject.Instantiate(Global.Instance._prefabs.LootCrate);
             tmp.transform.position = _myPotion.transform.position;
+            tmp.transform.position += new Vector3(0f, 0.5f, 0f);
             tmp.transform.localScale = new Vector3(15, 15, 15);
             tmp.GetComponent<LootCrate>().Activate(gameObject,_myPotion);
         }

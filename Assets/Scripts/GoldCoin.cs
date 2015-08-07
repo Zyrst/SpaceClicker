@@ -56,9 +56,10 @@ public class GoldCoin : MonoBehaviour {
     {
         GameObject _gold = GameObject.Instantiate(Global.Instance._prefabs.GoldCoin);
 
+        pos_ += new Vector3(0f, 1f, 0f);
         _gold.transform.position = pos_;
 
-        _gold.GetComponent<Rigidbody>().AddForce(force_ * 2);
+        _gold.GetComponent<Rigidbody>().AddForce(force_ * 4);
 
         return _gold;
     }
