@@ -55,6 +55,16 @@ public class Global : MonoBehaviour {
         public Material _player;
     }
 
+    [System.Serializable]
+    public class GalaxyShizz
+    {
+        public uint _galaxyoffsetX = 0;
+        public uint _galaxyoffsetY = 0;
+
+        public uint _starLevelRangePerTile = 3;
+        public uint _increasePerPlanet = 3;
+    }
+
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4, Galaxy = 5 }
     public GameType _gameType = GameType.Farm;
 
@@ -89,6 +99,7 @@ public class Global : MonoBehaviour {
     public Spells _lockedSpells = new Spells();
     public Spells _unlockedSpells = new Spells();
     public Textures _textures = new Textures();
+    public GalaxyShizz _galaxy = new GalaxyShizz();
     public float _expVariable = 10f;
     public float _expScale = 1.5f;
     public GameObject _playerGUI;

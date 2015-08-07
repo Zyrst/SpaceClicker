@@ -48,6 +48,7 @@ public class Starmap : MonoBehaviour {
                 Destroy(item.gameObject);
         }
         _planetBounds.Clear();
+        _planetInfoBox.gameObject.SetActive(false);
     }
 
     public void BackToShip()
@@ -94,8 +95,13 @@ public class Starmap : MonoBehaviour {
         Random.seed = seed_;
 
         _numberOfPlanets = GALAXY.Instance._lastStar._numberOfPlanets;
-        int level = (int)(((max_ - min_) / _numberOfPlanets) + min_);
-        int levelForPlanet = level;
+
+        /*int level = (int)max_ - (int)Global.Instance._galaxy._increasePerPlanet + (int)min_;// (int)(((max_ - min_) / _numberOfPlanets) + min_); //////////////    <---------------------------------
+        int levelForPlanet = level;*/
+
+        int llevel = (int)min_;
+        int ulevel = (int)llevel + (int)Global.Instance._galaxy._increasePerPlanet-1;
+
         gameObject.SetActive(true);
         gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[(int)GALAXY.Instance._lastStar._starBackground];
         gameObject.SetActive(false);
@@ -111,9 +117,11 @@ public class Starmap : MonoBehaviour {
 
             _plan._name = (Random.value.ToString());
 
-            _plan._minLevel = levelForPlanet - level + 1;
-            _plan._maxLevel = levelForPlanet;
-            levelForPlanet += level;
+            _plan._minLevel = llevel;
+            _plan._maxLevel = ulevel;
+            //levelForPlanet += level; // <-----------------
+            llevel += (int)Global.Instance._galaxy._increasePerPlanet;
+            ulevel = (int)llevel + (int)Global.Instance._galaxy._increasePerPlanet - 1;
 
             PlanetButton planBut = GameObject.Instantiate(_planetButtonPrefab as GameObject).GetComponent<PlanetButton>();
             RectTransform planRect = planBut.gameObject.GetComponent<RectTransform>();

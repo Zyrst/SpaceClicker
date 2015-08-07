@@ -16,9 +16,6 @@ public class GALAXY : MonoBehaviour {
     private bool _mouseDown = false;
     private Vector3 _mouseOld = Vector3.zero;
 
-    public uint _galaxyoffsetX = 0;
-    public uint _galaxyoffsetY = 0;
-
     public StarSystem _lastStar = null;
 
     public Vector2 screenScale
@@ -29,11 +26,19 @@ public class GALAXY : MonoBehaviour {
         }
     }
 
-    public Vector2 galacticCenterTile
+    public static uint galacticCenterTileX
     {
         get
         {
-            return new Vector2(uint.MaxValue / 2 + (int)GalaxyGeneretion._boxMaxX / 2, uint.MaxValue / 2 + (int)GalaxyGeneretion._boxMaxY / 2);
+            return (uint.MaxValue / 2) + (GalaxyGeneretion._boxMaxX / 2);
+        }
+    }
+
+    public static uint galacticCenterTileY
+    {
+        get
+        {
+            return (uint.MaxValue / 2) + (GalaxyGeneretion._boxMaxY / 2);
         }
     }
 
@@ -53,12 +58,13 @@ public class GALAXY : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // middle of the fucking universe
-        _galaxyoffsetX = uint.MaxValue / 2;
-        _galaxyoffsetY = uint.MaxValue / 2;
+        Global.Instance._galaxy._galaxyoffsetX = (uint.MaxValue / 2) - 2;
+        Global.Instance._galaxy._galaxyoffsetY = (uint.MaxValue / 2) - 2;
 
         GenerateGalaxy();
 
         popup.gameObject.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
@@ -96,11 +102,11 @@ public class GALAXY : MonoBehaviour {
         if (pos.x < -GalaxyGeneretion.StarBox.width / 2f)
         {
             // new collum on the right
-            if (_galaxyoffsetX < uint.MaxValue - GalaxyGeneretion._boxMaxX)
+            if (Global.Instance._galaxy._galaxyoffsetX < uint.MaxValue - GalaxyGeneretion._boxMaxX)
             {
                 //pos.x += GalaxyGeneretion.StarBox.width / 2f;
                 pos.x = 50f;
-                _galaxyoffsetX++;
+                Global.Instance._galaxy._galaxyoffsetX++;
                 OffsetBoxes(-1, 0);
                 GenerateNewColumn(true);
             }
@@ -108,11 +114,11 @@ public class GALAXY : MonoBehaviour {
         if (pos.x > GalaxyGeneretion.StarBox.width / 2f)
         {
             // new collum on the left
-            if (_galaxyoffsetX > 0)
+            if (Global.Instance._galaxy._galaxyoffsetX > 0)
             {
                 //pos.x -= GalaxyGeneretion.StarBox.width / 2f;
                 pos.x = -50f;
-                _galaxyoffsetX--;
+                Global.Instance._galaxy._galaxyoffsetX--;
                 OffsetBoxes(1, 0);
                 GenerateNewColumn(false);
             }
@@ -120,11 +126,11 @@ public class GALAXY : MonoBehaviour {
         if (pos.y < -GalaxyGeneretion.StarBox.height / 2f)
         {
             // new line bottom (first)
-            if (_galaxyoffsetY < uint.MaxValue - GalaxyGeneretion._boxMaxY)
+            if (Global.Instance._galaxy._galaxyoffsetY < uint.MaxValue - GalaxyGeneretion._boxMaxY)
             {
                 //pos.y += GalaxyGeneretion.StarBox.height / 2f;
                 pos.y = 50f;
-                _galaxyoffsetY++;
+                Global.Instance._galaxy._galaxyoffsetY++;
                 OffsetBoxes(0, -1);
                 GenerateNewLine(false);
             }
@@ -132,11 +138,11 @@ public class GALAXY : MonoBehaviour {
         if (pos.y > GalaxyGeneretion.StarBox.height / 2f)
         {
             // new line top (last)
-            if (_galaxyoffsetY > 0)
+            if (Global.Instance._galaxy._galaxyoffsetY > 0)
             {
                 //pos.y -= GalaxyGeneretion.StarBox.height / 2f;
                 pos.y = -50f;
-                _galaxyoffsetY--;
+                Global.Instance._galaxy._galaxyoffsetY--;
                 OffsetBoxes(0, 1);
                 GenerateNewLine(true);
             }
@@ -175,7 +181,7 @@ public class GALAXY : MonoBehaviour {
         if (top_)
         {
             // skapar nya raden (lägger skiten på rätt plats i hierarkin av sg sjävt)
-            newLine = GalaxyGeneretion.GenerateLineBottom(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+            newLine = GalaxyGeneretion.GenerateLineBottom(Random.Range((int)0, int.MaxValue), 0, Global.Instance._galaxy._galaxyoffsetX, Global.Instance._galaxy._galaxyoffsetY);
 
             // för en hel rad
             for (int i = 0; i < (int)GalaxyGeneretion._boxMaxX; i++)
@@ -188,7 +194,7 @@ public class GALAXY : MonoBehaviour {
         }
         else
         {
-            newLine = GalaxyGeneretion.GenerateLineTop(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+            newLine = GalaxyGeneretion.GenerateLineTop(Random.Range((int)0, int.MaxValue), 0, Global.Instance._galaxy._galaxyoffsetX, Global.Instance._galaxy._galaxyoffsetY);
             for (int i = 0; i < (int)GalaxyGeneretion._boxMaxX; i++)
             {
                 GameObject.Destroy(boxList[i].gameObject);
@@ -204,7 +210,7 @@ public class GALAXY : MonoBehaviour {
         if (right_)
         {
             // skapar nya kolonnen
-            newColumn = GalaxyGeneretion.GenerateColumnRight(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+            newColumn = GalaxyGeneretion.GenerateColumnRight(Random.Range((int)0, int.MaxValue), 0, Global.Instance._galaxy._galaxyoffsetX, Global.Instance._galaxy._galaxyoffsetY);
 
             // för en hel kolonn
             for (int i = 0; i < (int)GalaxyGeneretion._boxMaxY; i++)
@@ -224,7 +230,7 @@ public class GALAXY : MonoBehaviour {
         else
         {
             // skapar nya kolonnen
-            newColumn = GalaxyGeneretion.GenerateColumnLeft(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+            newColumn = GalaxyGeneretion.GenerateColumnLeft(Random.Range((int)0, int.MaxValue), 0, Global.Instance._galaxy._galaxyoffsetX, Global.Instance._galaxy._galaxyoffsetY);
 
             // för en hel kolonn
             for (int i = 0; i < (int)GalaxyGeneretion._boxMaxY; i++)
@@ -251,10 +257,10 @@ public class GALAXY : MonoBehaviour {
 
     public void GenerateGalaxy()
     {
-        int seed = (int)Mathf.Pow((float)_galaxyoffsetX, (float)_galaxyoffsetY);
+        int seed = (int)Mathf.Pow((float)Global.Instance._galaxy._galaxyoffsetX, (float)Global.Instance._galaxy._galaxyoffsetY);
         Random.seed = seed;
 
-        boxList = GalaxyGeneretion.GenerateGalaxy(Random.Range((int)0, int.MaxValue), 1, 400, _galaxyoffsetX, _galaxyoffsetY);
+        boxList = GalaxyGeneretion.GenerateGalaxy(Random.Range((int)0, int.MaxValue), 0, Global.Instance._galaxy._galaxyoffsetX, Global.Instance._galaxy._galaxyoffsetY);
     }
 
     void Awake()

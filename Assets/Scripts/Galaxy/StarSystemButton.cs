@@ -27,9 +27,11 @@ public class StarSystemButton : Button {
         selector.gameObject.SetActive(true);
         selector.transform.position = gameObject.transform.position;
 
-        GetComponent<StarSystem>().GenerateNumberOfPlanets();
+        StarSystem ss = GetComponent<StarSystem>();
+        ss.GenerateNumberOfPlanets();
 
         GALAXY.Instance.popup.GetComponent<GalaxyPopup>().planetInfo.text = GetComponent<StarSystem>()._numberOfPlanets.ToString();
+        ss._ulevel = ss._llevel + ((uint)ss._numberOfPlanets * (Global.Instance._galaxy._increasePerPlanet));
         GALAXY.Instance.popup.GetComponent<GalaxyPopup>().levelRange.text = GetComponent<StarSystem>()._llevel + " - " + GetComponent<StarSystem>()._ulevel;
     }
 }

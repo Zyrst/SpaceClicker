@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class StarSystem : MonoBehaviour
@@ -20,6 +21,10 @@ public class StarSystem : MonoBehaviour
     private float _rotate = 0.5f;
     private float _speedBoost = 0f;
 
+    private bool _move = false;
+
+    private Vector3 lastframepos = Vector3.zero;
+
     /// <summary>
     /// never ever use! (resets the seed)
     /// </summary>
@@ -37,8 +42,15 @@ public class StarSystem : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(0, Time.deltaTime * _rotate + (_speedBoost * _rotate), 0);
-        transform.Rotate(0, 0, Time.deltaTime * _rotate + (_speedBoost * _rotate)); 
+        if (_move)
+        {
 
+            transform.Translate(0, Time.deltaTime * _rotate + (_speedBoost * _rotate), 0);
+            transform.Rotate(0, 0, Time.deltaTime * _rotate + (_speedBoost * _rotate));
+
+        }
+
+        RectTransform rect = GetComponentInChildren<Text>().GetComponent<RectTransform>();
+        rect.localPosition = new Vector3(140f, 23f, 0f);
     }
 }
