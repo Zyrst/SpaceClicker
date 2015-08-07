@@ -53,6 +53,10 @@ public class FarmMode : MonoBehaviour {
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Global.Instance.SwitchScene(Global.GameType.Ship);
+        foreach (var item in EnemySpawner.triggers.spawns)
+        {
+            ((EnemySpawner)item)._enemy.KillIt();
+        }
         Destroy(_arena);
     }
 

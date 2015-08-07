@@ -5,8 +5,15 @@ using System.Linq;
 public class EnemySpawner : MonoBehaviour {
     public class Triggers
     {
+        private float dontCallNewWaveToOftenTrigger = 0f;
         public void newWave()
         {
+            if (dontCallNewWaveToOftenTrigger > Time.time)
+            {
+                return;
+            }
+            dontCallNewWaveToOftenTrigger = Time.time + 0.1f;
+
             if (Global.Instance._player._miniBoss)
             {                
                 foreach (var item in spawns)
@@ -99,6 +106,7 @@ public class EnemySpawner : MonoBehaviour {
         else
         {
             triggers.spawns.Add(this);
+            
             if (!Global.Instance._player._miniBoss)
                 triggers.newWave();
         }
@@ -107,11 +115,14 @@ public class EnemySpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            triggers.newWave();
+        }
 	}
 
     public void Spawn()
     {
-
         if(!IsInvoking("spawner"))
             Invoke("spawner", 0.5f);
     }

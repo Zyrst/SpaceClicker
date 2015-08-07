@@ -144,9 +144,11 @@ public class Enemy : Character
         GetComponentInChildren<CharacterGUI>().gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// never ever call
+    /// </summary>
     public void Kill()
     {
-
         if (Global.Instance.EnemiesAlive() == 0 && _myNumDeath == 0)
         {
             //Debug.Log("Triggered new wave");
@@ -154,6 +156,22 @@ public class Enemy : Character
             EnemySpawner.triggers.newWave();
         }
         
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// kills it now
+    /// </summary>
+    public void KillIt()
+    {
+        _isAlive = false;
+        _myNumDeath = Global.Instance.EnemiesAlive();
+
+        if (Global.Instance.EnemiesAlive() == 0 && _myNumDeath == 0)
+        {
+            EnemySpawner.triggers.newWave();
+        }
+
         gameObject.SetActive(false);
     }
 
