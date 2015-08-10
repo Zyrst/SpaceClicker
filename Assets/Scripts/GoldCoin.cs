@@ -59,7 +59,7 @@ public class GoldCoin : MonoBehaviour {
         pos_ += new Vector3(0f, 1f, 0f);
         _gold.transform.position = pos_;
 
-        _gold.GetComponent<Rigidbody>().AddForce(force_ * 4);
+        _gold.GetComponent<Rigidbody>().AddForce(force_);
 
         return _gold;
     }

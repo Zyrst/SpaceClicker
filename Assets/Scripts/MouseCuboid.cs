@@ -9,13 +9,10 @@ public class MouseCuboid : MonoBehaviour
     private static int twoFrames = 2;
     private static MouseCuboid midPoint = null;
     private Vector3 lastPoint;
-
-    private static  int ID = 0;
-    private int id = 0;
+    private bool mayUpdate = true;
 
     public MouseCuboid()
     {
-        id = ID++;
     }
 
 	// Use this for initialization
@@ -25,7 +22,7 @@ public class MouseCuboid : MonoBehaviour
 	// Update is called once per frame
     void Update()
     {
-        if (id == 1)
+        if (mayUpdate)
         {
             lastPoint = transform.position;
 
@@ -42,6 +39,7 @@ public class MouseCuboid : MonoBehaviour
             {
                 midPoint = GameObject.Instantiate(this as MouseCuboid);
                 midPoint.transform.parent = transform;
+                midPoint.mayUpdate = false;
             }
 
 

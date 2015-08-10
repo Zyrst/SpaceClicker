@@ -124,13 +124,14 @@ public class Music : MonoBehaviour {
 
     public Music()
     {
-        _instance = this;
     }
 
     public MenuTheme _menuTheme;
 
 	// Use this for initialization
-	void Start () {
+    void Start()
+    {
+        _instance = this;
         _menuTheme._instance = FMOD_StudioSystem.instance.GetEvent(_menuTheme._theme);
         _menuTheme._instance.getParameter("Merchant", out _menuTheme._merchantParameter);
         _menuTheme._instance.getParameter("Starmap", out _menuTheme._starmapParameter);

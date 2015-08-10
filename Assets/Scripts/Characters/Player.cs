@@ -216,6 +216,16 @@ public class Player : Character {
         UpdateCombinedStats();
         _takeDamage = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.takeDamage);
         Global.DebugOnScreen("PLAYER START()");
+
+        foreach (var item in _spellsArray)
+        {
+            if (item != null)
+            {
+                item.Init();
+                item._slotImage.sprite = item._spellImage.sprite;
+            }
+        }
+        
 	}
 	
 	// Update is called once per frame
@@ -495,10 +505,17 @@ public class Player : Character {
         try
         {
             GetComponentInChildren<CharacterGUI>().ResetDir();
+            Animator.ResetTrigger("die_start");
         }
         catch (System.NullReferenceException)
         {
-        }
+        }        
+        
+    }
+
+    void OnDisable()
+    {
+        Animator.ResetTrigger("die_start");
     }
 
     public void PreSave()
