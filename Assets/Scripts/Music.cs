@@ -118,6 +118,11 @@ public class Music : MonoBehaviour {
     {
         get
         {
+            if (_instance == null)
+            {
+                _instance = GameObject.Find("MUSIC").GetComponent<Music>();
+                _instance.Init();
+            }
             return _instance;
         }
     }
@@ -128,14 +133,22 @@ public class Music : MonoBehaviour {
 
     public MenuTheme _menuTheme;
 
-	// Use this for initialization
-    void Start()
+    private void Init()
     {
-        _instance = this;
         _menuTheme._instance = FMOD_StudioSystem.instance.GetEvent(_menuTheme._theme);
         _menuTheme._instance.getParameter("Merchant", out _menuTheme._merchantParameter);
         _menuTheme._instance.getParameter("Starmap", out _menuTheme._starmapParameter);
         _menuTheme._instance.getParameter("Enter Combat", out _menuTheme._combatParameter);
+    }
+
+	// Use this for initialization
+    void Start()
+    {
+        _instance = this;
+
+        Init();
+
+        StartMenuTheme();
 	}
 	
 	// Update is called once per frame
