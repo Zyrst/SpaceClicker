@@ -27,10 +27,14 @@ public class Global : MonoBehaviour {
         public Color psychicAttackColor;
         public Color healColor;
 
+        public Color pausColor;
+
         public Color green;
         public Color blue;
         public Color purple;
         public Color orange;
+
+        public Color[] levelColors;
     }
     [System.Serializable]
     public class Enemies
@@ -63,6 +67,18 @@ public class Global : MonoBehaviour {
 
         public uint _starLevelRangePerTile = 3;
         public uint _increasePerPlanet = 3;
+    }
+
+    public class Effects
+    {
+        public class LevelUp
+        {
+            public void Start()
+            {
+            }
+        }
+
+        public LevelUp levelUp = new LevelUp();
     }
 
     public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4, Galaxy = 5 }
@@ -105,6 +121,7 @@ public class Global : MonoBehaviour {
     public GameObject _playerGUI;
     public Planet _planet = null;
     public GameObject _spellsObject;
+    public Effects effects = new Effects();
 
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
@@ -125,6 +142,8 @@ public class Global : MonoBehaviour {
 
     public Camera _gameCamera;
     public Camera _uiCamera;
+
+    private bool _paused = false;
 
     private class DebugMessage
     {
@@ -449,6 +468,24 @@ public class Global : MonoBehaviour {
     public void PostIO()
     {
         GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spells").gameObject.SetActive(false);
+    }
+
+    public void PausGame()
+    {
+        if (!_paused)
+        {
+            _paused = true;
+            Time.timeScale = 0f;
+
+            FarmMode.Instance.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "OverLayImage").color = _colors.pausColor;
+        }
+        else
+        {
+            _paused = false;
+            Time.timeScale = 1f;
+
+            FarmMode.Instance.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "OverLayImage").color = new Color(0f,0f,0f,0f);
+        }
     }
 
     IEnumerator LevelFiller()

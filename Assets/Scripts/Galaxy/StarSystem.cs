@@ -12,8 +12,7 @@ public class StarSystem : MonoBehaviour
 
     public int _numberOfPlanets;
 
-    public enum StarBackgrounds : int { Yellow = 0, Green = 1, Red = 2, Blue = 3 };
-    public static Color[] StarColor = { Color.yellow, Color.green, Color.red, Color.blue };
+    public enum StarBackgrounds : int { White = 0, Blue = 1, Green = 2, Yellow = 3, Orange = 4, Red = 5, Maroon = 6, Death = 7 };
 
     public int _starColor = (int)StarBackgrounds.Yellow;
     public StarBackgrounds _starBackground = StarBackgrounds.Yellow;

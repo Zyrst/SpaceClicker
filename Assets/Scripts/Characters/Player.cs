@@ -362,6 +362,8 @@ public class Player : Character {
         {
             Sounds.OneShot(Sounds.Instance.music.levelUp);
         }
+
+        Global.Instance.effects.levelUp.Start();
     }
     public void Reset(float time_)
     {

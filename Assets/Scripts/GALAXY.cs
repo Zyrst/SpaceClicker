@@ -66,18 +66,23 @@ public class GALAXY : MonoBehaviour {
         popup.gameObject.SetActive(false);
 
 	}
+
+    public void DoAnew()
+    {
+        foreach (var item in boxList)
+        {
+            Destroy(item.gameObject);
+        }
+        boxList.Clear();
+        GenerateGalaxy();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            foreach (var item in boxList)
-            {
-                Destroy(item.gameObject);
-            }
-            boxList.Clear();
-            GenerateGalaxy();
+            DoAnew();
         }
 
         if (MouseController.Instance.buttonDown)
