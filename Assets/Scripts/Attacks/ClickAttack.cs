@@ -42,20 +42,22 @@ public class ClickAttack : BaseAttack {
             // mouseon the ground
             Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit))
+            if (MouseCuboid.hit)//Physics.Raycast(ray, out hit))
             {
                 try
                 {
                     //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.blue,10f);
                     // hit enemy
-                    _hitPoint = hit.point;
-                    if (hit.collider.transform.parent.parent.tag == "Enemy")
+                    //_hitPoint = hit.point;
+                    _hitPoint = MouseCuboid.collider.transform.position;
+                    if (MouseCuboid.collider.transform.parent.parent.tag == "Enemy")
                     {
-                       
-                        if ((_canDealDamage || (_lastTarget != null && _lastTarget != hit.collider.gameObject.transform.parent.parent.gameObject))
-                            && hit.collider.gameObject.GetComponentInParent<Character>()._isAlive)
+
+                        Debug.Log("hit yo!");
+                        if ((_canDealDamage || (_lastTarget != null && _lastTarget != MouseCuboid.collider.gameObject.transform.parent.parent.gameObject))
+                            && MouseCuboid.collider.gameObject.GetComponentInParent<Character>()._isAlive)
                         {
-                            if (_lastTarget == hit.collider.gameObject.transform.parent.parent.gameObject)
+                            if (_lastTarget == MouseCuboid.collider.gameObject.transform.parent.parent.gameObject)
                                 _hitCount++;
                             else
                             {
@@ -69,7 +71,7 @@ public class ClickAttack : BaseAttack {
                             //Debug.Log("Hit count: " + _hitCount);
                             _canDealDamage = false;
                             //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 10f);
-                            _lastTarget = hit.collider.transform.parent.parent.gameObject;
+                            _lastTarget = MouseCuboid.collider.transform.parent.parent.gameObject;
 
                             CharacterStats cs = GetComponent<Player>()._combinedStats;
                             // play sound, fix crit later
@@ -109,12 +111,12 @@ public class ClickAttack : BaseAttack {
                                 }
                                 //else
                                  //   audio.PlayOneShot(_tempHitSounds[0]);
-                                hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), hit.point, Global.Instance.player);
+                                MouseCuboid.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), _hitPoint, Global.Instance.player);
                             }
                                 
                             else if (_hitCount == _critHitCount)
                             {
-                                hit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, true), hit.point, Global.Instance.player);
+                                MouseCuboid.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, true), _hitPoint, Global.Instance.player);
                                 //audio.PlayOneShot(_tempHitSounds[5]);
                                 _hitSound = 0;
                                 _hitCount = 0;
@@ -133,7 +135,7 @@ public class ClickAttack : BaseAttack {
                 _canDealDamage = true;
             }
             //Try to see if we missed a target
-            if (_lastRay != _hitPoint)
+            if (false && _lastRay != _hitPoint)
             {
                 RaycastHit lineHit = new RaycastHit();
                 if (Physics.Linecast(_hitPoint, _lastRay, out lineHit))
