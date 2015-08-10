@@ -12,8 +12,7 @@ public class Character : MonoBehaviour {
     public uint _level = 0;
     public uint _experience = 1;
     public uint _experianceToNext = 100;
-    [HideInInspector]
-    GameObject _healEffect;
+    public GameObject _healEffect;
 
     public virtual vap maxHealth
     {
@@ -126,7 +125,8 @@ public class Character : MonoBehaviour {
 
     public void SpawnText(vap normal_, vap tech_, vap psychic_, vap kinetic_, vap heal_, vap healthDamagePercent_, Vector3 hitPoint_)
     {
-        if (normal_.GetFloat() > 0)
+        #region Old
+        /*if (normal_.GetFloat() > 0)
         {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = normal_.GetString();
@@ -169,9 +169,45 @@ public class Character : MonoBehaviour {
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.kineticAttackColor;
         }
+        */
+        #endregion
+        vap total = normal_ + tech_ + kinetic_ + psychic_;
+        if (total.GetFloat() > 0f)
+        {
+            GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = total.GetString();
+            _numbers.transform.position = hitPoint_;
+            Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+            direction.Normalize();
+            _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
 
+            if (normal_ > tech_ && normal_ > psychic_ && normal_ > kinetic_)
+            {
+                _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.normalAttackColor;
+            }
+            else if (tech_ > normal_ && tech_ > psychic_ && tech_ > kinetic_)
+            {
+                _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.techAttackColor;
+            }
+            else if (kinetic_ > normal_ && kinetic_ > tech_ && kinetic_ > psychic_)
+            {
+                _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.kineticAttackColor;
+            }
+            else if (psychic_ > normal_ && psychic_ > tech_ && psychic_ > kinetic_)
+            {
+                _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.psychicAttackColor;
+            }
+            else
+            {
+                _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.normalAttackColor;
+            }
+
+            
+
+        }
         if (heal_.GetFloat() > 0)
         {
+            //Numbers
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = heal_.GetString();
             _numbers.transform.position = hitPoint_;
@@ -179,7 +215,7 @@ public class Character : MonoBehaviour {
             direction.Normalize();
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().color = Global.Instance._colors.healColor;
-
+            //Particle effect
             _healEffect = GameObject.Instantiate(Global.Instance._prefabs._effects[0]);
             _healEffect.transform.position = gameObject.transform.position;
             _healEffect.transform.parent = gameObject.transform;
@@ -214,7 +250,7 @@ public class Character : MonoBehaviour {
     {
         if (_healEffect != null)
         {
-            Debug.Log(_healEffect.GetComponent<ParticleSystem>().isPlaying);
+            //Debug.Log(_healEffect.GetComponent<ParticleSystem>().isPlaying);
             if (!_healEffect.GetComponent<ParticleSystem>().isPlaying)
             {
                 Destroy(_healEffect);

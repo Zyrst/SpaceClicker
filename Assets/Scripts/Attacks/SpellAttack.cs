@@ -224,8 +224,8 @@ public class SpellAttack : BaseAttack {
                     break;
             }
 
-            _startGUIPos = _slot.transform.position;
-            _followerDiff = MouseController.Instance.position - _slot.transform.position;
+            //_startGUIPos = _slot.transform.position;
+            //_followerDiff = MouseController.Instance.position - _slot.transform.position;
             _clicked = true;
             MouseController.Instance.locked = true;
             //Reduce color on slot a bit
@@ -328,7 +328,7 @@ public class SpellAttack : BaseAttack {
     {
         _clicked = false;
         MouseController.Instance.locked = false;
-        _slot.transform.position = _startGUIPos;
+        //_slot.transform.position = _startGUIPos;
         GetComponentInParent<ClickAttack>().ReleasedSpell();
         FarmMode.Instance.GetComponentInChildren<TrailRenderer>().material.SetColor("_Color", Color.white);
 
