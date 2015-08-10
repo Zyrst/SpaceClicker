@@ -123,7 +123,11 @@ public class EnemyAttack : MonoBehaviour {
             {
                 _stunTime -= Time.deltaTime;
                 if (_stunTime <= 0f)
+                {
                     _stunned = false;
+                   Destroy(GetComponentInChildren<StunEffect>().gameObject);
+                }
+                    
             }
 
             if (_slowed)

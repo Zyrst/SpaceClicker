@@ -59,11 +59,12 @@ public class HealthPotion : MonoBehaviour {
         go.transform.parent = Global.Instance._player.transform;
         go.transform.position = Global.Instance._player.transform.position;
         go.GetComponent<ParticleSystem>().Play();
+        Global.Instance._player._healEffect = go;
         foreach (var item in gameObject.GetComponentsInChildren<Transform>())
         {
             item.gameObject.SetActive(false);
         }
-
+        
         Invoke("DestroyPotion", 1f);
 
         

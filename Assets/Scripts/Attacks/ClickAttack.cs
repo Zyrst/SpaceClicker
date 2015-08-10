@@ -53,7 +53,7 @@ public class ClickAttack : BaseAttack {
                     if (MouseCuboid.collider.transform.parent.parent.tag == "Enemy")
                     {
 
-                        Debug.Log("hit yo!");
+                        //Debug.Log("hit yo!");
                         if ((_canDealDamage || (_lastTarget != null && _lastTarget != MouseCuboid.collider.gameObject.transform.parent.parent.gameObject))
                             && MouseCuboid.collider.gameObject.GetComponentInParent<Character>()._isAlive)
                         {

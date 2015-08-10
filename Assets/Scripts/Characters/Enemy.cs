@@ -245,6 +245,9 @@ public class Enemy : Character
                     GetComponent<EnemyAttack>().Stunned(ds_._stunTime);
                     GetComponentInChildren<Animator>().SetTrigger("StunTrigger");
                     GetComponentInChildren<Animator>().SetInteger("Hit", 0);
+                    GameObject go = GameObject.Instantiate(Global.Instance._prefabs._effects[1]);
+                    go.transform.parent = transform;
+                    go.transform.position = new Vector3(transform.position.x, transform.position.y + 3f, transform.position.z);
                 }
                 if (ds_._slowTime > 0f)
                 {

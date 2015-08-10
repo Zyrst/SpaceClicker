@@ -149,6 +149,7 @@ public class Player : Character {
     public bool _miniBoss = false;
     public static Player Instance = null;
 
+
     public override vap maxHealth
     {
         get
@@ -212,6 +213,7 @@ public class Player : Character {
 
 	// Use this for initialization
 	void Start () {
+        Animator.SetTrigger("idle");
         LevelUp();
         UpdateCombinedStats();
         _takeDamage = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.takeDamage);
@@ -507,7 +509,6 @@ public class Player : Character {
         try
         {
             GetComponentInChildren<CharacterGUI>().ResetDir();
-            Animator.ResetTrigger("die_start");
         }
         catch (System.NullReferenceException)
         {
@@ -517,7 +518,7 @@ public class Player : Character {
 
     void OnDisable()
     {
-        Animator.ResetTrigger("die_start");
+       
     }
 
     public void PreSave()

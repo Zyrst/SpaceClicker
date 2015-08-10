@@ -51,6 +51,31 @@ public class FarmMode : MonoBehaviour {
 
     public void backToShip()
     {
+        
+        if(!Global.Instance.PlayerAlive())
+        {
+            Global.Instance.player.Reset(0f);
+            //Let it reset , animation will not glitch the fuck out
+            StartCoroutine(WaitForPlayerReset());
+
+        }
+        else
+        {
+            Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+            Global.Instance.SwitchScene(Global.GameType.Ship);
+            foreach (var item in EnemySpawner.triggers.spawns)
+            {
+                ((EnemySpawner)item)._enemy.KillIt();
+            }
+            Destroy(_arena);
+        }
+        
+        
+    }
+
+    IEnumerator WaitForPlayerReset()
+    {
+        yield return new WaitForSeconds(0.1f);
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Global.Instance.SwitchScene(Global.GameType.Ship);
         foreach (var item in EnemySpawner.triggers.spawns)
@@ -58,8 +83,8 @@ public class FarmMode : MonoBehaviour {
             ((EnemySpawner)item)._enemy.KillIt();
         }
         Destroy(_arena);
+       
     }
-
     public ArrayList GetAllEnemies()
     {
         ArrayList ret = new ArrayList();
