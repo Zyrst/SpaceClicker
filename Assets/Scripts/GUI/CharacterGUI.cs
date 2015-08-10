@@ -45,7 +45,7 @@ public class CharacterGUI : MonoBehaviour {
 
         if (character is Enemy)
         {
-            LevelText.GetComponent<Text>().text = character._level.ToString();
+            //LevelText.GetComponent<Text>().text = character._level.ToString();
             HealthText.GetComponent<Text>().text = character._stats._health.GetString();
             CooldownBar.GetComponent<Image>().transform.localScale = new Vector3(GetComponentInParent<EnemyAttack>()._attackTimer / GetComponentInParent<EnemyAttack>()._cooldownTimer, 1, 1);
         }

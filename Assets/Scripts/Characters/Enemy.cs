@@ -64,7 +64,7 @@ public class Enemy : Character
         vap tmpVap = new vap();
         tmpVap._values[0] = _stats._constMultiplier * _level;
         tmpVap.Checker();
-        Debug.Log(Global.Instance._prevLevels[_level - Starmap.Instance._minLevel].GetFloat());
+     //   Debug.Log(Global.Instance._prevLevels[_level - Starmap.Instance._minLevel].GetFloat());
         _stats._baseStat = (tmpVap + Global.Instance._prevLevels[ _level - Starmap.Instance._minLevel ]) * _stats._valueMultiplier;
        
         _stats._baseStat.Checker();
@@ -134,11 +134,13 @@ public class Enemy : Character
         {
             for (int i = 0; i < 5; i++)
             {
-                Vector3 dir = (Vector3.up * 15f) + -(transform.position - Global.Instance.player.transform.position);
-                GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint)(_level / 50) + 2 : 1;
+                Vector3 dir = (Vector3.up * 15f ) + -(transform.position - Global.Instance.player.transform.position);
+                GoldCoin.Create(new Vector3(transform.position.x, transform.position.y + (0.5f * i), transform.position.z), dir * 5f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint)(_level / 50) + 2 : 1;
             }
             Global.Instance._player._miniBoss = false;
             _isBoss = false;
+            //Doesn't sit on top of the boss
+            GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "colliders").gameObject.SetActive(false);
         }
         else
         {
