@@ -122,6 +122,8 @@ public class Global : MonoBehaviour {
     public Planet _planet = null;
     public GameObject _spellsObject;
     public Effects effects = new Effects();
+    public Text _FPS;
+    public bool _showFPS = true;
 
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
@@ -234,6 +236,11 @@ public class Global : MonoBehaviour {
     void LateUpdate()
     {
         MouseController.Instance.LateUpdate();
+
+        if (_showFPS)
+        {
+            _FPS.text = (1f / Time.deltaTime).ToString();
+        }
     }
     public void SwitchScene(GameType gt_)
     {

@@ -6,7 +6,6 @@ public class MouseCuboid : MonoBehaviour
     public static Collider collider = null;
     public static bool hit = false;
 
-    private static int twoFrames = 2;
     private static MouseCuboid midPoint = null;
     private Vector3 lastPoint;
     private bool mayUpdate = true;
@@ -29,19 +28,12 @@ public class MouseCuboid : MonoBehaviour
             transform.forward = Camera.main.transform.forward;
             transform.position = MouseController.Instance.worldPosition;
 
-            twoFrames--;
-            if (twoFrames == 0)
-            {
-                hit = false;
-            }
-
             if (midPoint == null)
             {
                 midPoint = GameObject.Instantiate(this as MouseCuboid);
                 midPoint.transform.parent = transform;
                 midPoint.mayUpdate = false;
             }
-
 
             midPoint.transform.forward = transform.forward;
             Vector3 pos = midPoint.transform.position;
@@ -51,6 +43,9 @@ public class MouseCuboid : MonoBehaviour
 
             Vector3 scale = midPoint.transform.localScale;
             scale.x *= Vector3.Distance(lastPoint, transform.position) > scale.x ? Vector3.Distance(lastPoint, transform.position) : scale.x;
+
+            if (scale.x <= 0.5f)    scale.x = 0.5f;
+            
             midPoint.transform.localScale = scale;
 
             midPoint.GetComponent<Collider>().enabled = false;
@@ -64,7 +59,6 @@ public class MouseCuboid : MonoBehaviour
         collider = col_;
 
         hit = true;
-        twoFrames = 2;
     }
 
     void OnTriggerStay(Collider col_)
@@ -72,6 +66,10 @@ public class MouseCuboid : MonoBehaviour
         collider = col_;
 
         hit = true;
-        twoFrames = 2;
+    }
+
+    void OnTriggerExit(Collider col_)
+    {
+        hit = false;
     }
 }
