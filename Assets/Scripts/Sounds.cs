@@ -146,6 +146,8 @@ public class Sounds : MonoBehaviour {
         public FMODAsset equipGear;
         public FMODAsset unequipGear;
         public FMODAsset selectWorld;
+        public FMODAsset enterBattle;
+        public FMODAsset exitBattle;
 
     }
 
@@ -158,6 +160,7 @@ public class Sounds : MonoBehaviour {
         public FMODAsset Button;
         public FMODAsset medpackPickup;
         public FMODAsset lootcrate;
+        public FMODAsset changeAbility;
     }
     [System.Serializable]
     public struct Music

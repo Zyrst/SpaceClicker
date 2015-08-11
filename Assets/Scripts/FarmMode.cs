@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Linq;
 
-public class FarmMode : MonoBehaviour {
+public class FarmMode : MonoBehaviour
+{
     public GameObject arenaPrefab;
     public GameObject _arena;
+    public GameObject _bossSpawn;
 
     private static FarmMode _instance = null;
     public static FarmMode Instance
@@ -39,20 +41,27 @@ public class FarmMode : MonoBehaviour {
     {
         // reset enemies
         Sounds.OneShot(Sounds.Instance.music.gameOver);
-        foreach (var item in EnemySpawner.triggers.spawns)
+        if (Global.Instance.player._miniBoss)
         {
-            ((EnemySpawner)item).ResetWave();
+            _bossSpawn.GetComponent<EnemySpawner>().ResetWave();
+        }
+        else
+        {
+            foreach (var item in EnemySpawner.triggers.spawns)
+            {
+                ((EnemySpawner)item).ResetWave();
+            }
         }
 
         // reset player
         Global.Instance.player.Reset(5f);
-        
+
     }
 
     public void backToShip()
     {
-        
-        if(!Global.Instance.PlayerAlive())
+
+        if (!Global.Instance.PlayerAlive())
         {
             Global.Instance.player.Reset(0f);
             //Let it reset , animation will not glitch the fuck out
@@ -69,8 +78,8 @@ public class FarmMode : MonoBehaviour {
             }
             Destroy(_arena);
         }
-        
-        
+
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.exitBattle);
     }
 
     IEnumerator WaitForPlayerReset()
@@ -83,7 +92,7 @@ public class FarmMode : MonoBehaviour {
             ((EnemySpawner)item)._enemy.KillIt();
         }
         Destroy(_arena);
-       
+
     }
     public ArrayList GetAllEnemies()
     {
@@ -98,4 +107,5 @@ public class FarmMode : MonoBehaviour {
 
         return ret;
     }
+
 }

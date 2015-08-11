@@ -102,6 +102,7 @@ public class EnemySpawner : MonoBehaviour {
             _isBossSpawn = true;
             triggers._bossSpawn = this;
             triggers.newWave();
+            FarmMode.Instance._bossSpawn = gameObject;
         }
         else
         {

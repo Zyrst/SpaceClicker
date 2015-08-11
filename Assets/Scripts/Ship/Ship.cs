@@ -33,7 +33,8 @@ public class Ship : MonoBehaviour {
 
     public void Farm()
     {
-        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        //Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.enterBattle);
         if (Global.Instance._planet == null)
         {
             Global.DebugOnScreen("Please select a planet");

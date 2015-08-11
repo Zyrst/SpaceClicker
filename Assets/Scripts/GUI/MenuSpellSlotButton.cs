@@ -93,6 +93,7 @@ public class MenuSpellSlotButton : Button {
                 {
                     Destroy(old);
                 }
+                Sounds.OneShot(Sounds.Instance.uiSounds.changeAbility);
 
             }
 
