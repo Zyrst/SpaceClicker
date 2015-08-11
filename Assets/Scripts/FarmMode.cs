@@ -5,6 +5,7 @@ using System.Linq;
 public class FarmMode : MonoBehaviour {
     public GameObject arenaPrefab;
     public GameObject _arena;
+    public UIDeath _uiDeath;
 
     private static FarmMode _instance = null;
     public static FarmMode Instance
@@ -28,6 +29,8 @@ public class FarmMode : MonoBehaviour {
         _arena = (GameObject.Instantiate(arenaPrefab) as GameObject);
         _arena.GetComponent<MeshRenderer>().material.mainTexture = TextureTracker.Instance._arena._postAp[Random.Range(0, TextureTracker.Instance._arena._postAp.Length)];
         Global.Instance.player.transform.position = _arena.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "PlayerSpawnPoint").position;
+
+        _uiDeath.gameObject.SetActive(false);
     }
 
     public void allEnemiesDied()
@@ -45,8 +48,9 @@ public class FarmMode : MonoBehaviour {
         }
 
         // reset player
-        Global.Instance.player.Reset(5f);
-        
+        Global.Instance.player.Reset(2f);
+        _uiDeath.gameObject.SetActive(true);
+        _uiDeath.Died(2f);
     }
 
     public void backToShip()
