@@ -40,20 +40,16 @@ public class ClickAttack : BaseAttack {
         if (MouseController.Instance.clickButtonDown && !_stunned && !_holdingSpell && GetComponentInParent<Character>()._isAlive)
         {
             // mouseon the ground
-            Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
-            RaycastHit hit = new RaycastHit();
+            //Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
+            //RaycastHit hit = new RaycastHit();
             if (MouseCuboid.hit)//Physics.Raycast(ray, out hit))
             {
                 try
                 {
-                    //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.blue,10f);
-                    // hit enemy
-                    //_hitPoint = hit.point;
                     _hitPoint = MouseCuboid.collider.transform.position;
-                    if (MouseCuboid.collider.transform.parent.parent.tag == "Enemy")
+                    if (MouseCuboid.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                     {
-
-                        //Debug.Log("hit yo!");
+                        //if (MouseCuboid.collider.gameObject.GetComponentInParent<Character>()._isAlive) Global.DebugOnScreen(_canDealDamage ? "får slå" : "får inte slå");
                         if ((_canDealDamage || (_lastTarget != null && _lastTarget != MouseCuboid.collider.gameObject.transform.parent.parent.gameObject))
                             && MouseCuboid.collider.gameObject.GetComponentInParent<Character>()._isAlive)
                         {
@@ -68,9 +64,7 @@ public class ClickAttack : BaseAttack {
                             GetComponent<Player>().Animator.SetInteger("attack", Random.Range(0,2));
                             GetComponent<Player>().Animator.SetTrigger("attack_start");
                                 
-                            //Debug.Log("Hit count: " + _hitCount);
                             _canDealDamage = false;
-                            //Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.red, 10f);
                             _lastTarget = MouseCuboid.collider.transform.parent.parent.gameObject;
 
                             CharacterStats cs = GetComponent<Player>()._combinedStats;
@@ -128,36 +122,35 @@ public class ClickAttack : BaseAttack {
                         _canDealDamage = true;
                     }
                 }
-                catch (System.NullReferenceException) { _canDealDamage = true; }
+                catch (System.Exception) { _canDealDamage = true; }
             }
             else if(!_holdingSpell)
             {
+                //Global.DebugOnScreen("HOLDINGSPELL");
                 _canDealDamage = true;
             }
             //Try to see if we missed a target
-            if (false && _lastRay != _hitPoint)
-            {
-                RaycastHit lineHit = new RaycastHit();
-                if (Physics.Linecast(_hitPoint, _lastRay, out lineHit))
-                {
-                    Debug.DrawLine(_hitPoint ,_lastRay, Color.green,5f);
-                    try
-                    {
-                        if (lineHit.collider.transform.parent.parent.tag == "Enemy")
-                        {
-                            if (_lastTarget != lineHit.collider.gameObject.transform.parent.parent.gameObject && _canDealDamage)
-                            {
-                                CharacterStats cs = GetComponent<Player>()._combinedStats;
-                                lineHit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), hit.point, Global.Instance.player);
-                            }
-                        }
+            //if (_lastRay != _hitPoint)
+            //{
+            //    RaycastHit lineHit = new RaycastHit();
+            //    if (Physics.Linecast(_hitPoint, _lastRay, out lineHit))
+            //    {
+            //        Debug.DrawLine(_hitPoint ,_lastRay, Color.green,5f);
+            //        try
+            //        {
+            //            if (lineHit.collider.transform.parent.parent.tag == "Enemy")
+            //            {
+            //                if (_lastTarget != lineHit.collider.gameObject.transform.parent.parent.gameObject && _canDealDamage)
+            //                {
+            //                    CharacterStats cs = GetComponent<Player>()._combinedStats;
+            //                    lineHit.collider.transform.parent.parent.gameObject.GetComponent<Enemy>().TakeDamage(DamageStats.GenerateFromCharacterStats(cs, false), hit.point, Global.Instance.player);
+            //                }
+            //            }
                            
-                    }
-                    catch (System.NullReferenceException) { }
-                        
-                 }
-            }
-            _lastRay = hit.point;
+            //        }
+            //        catch (System.NullReferenceException) { }
+            //     }
+            //}
         }
         else if(_stunned)
         {

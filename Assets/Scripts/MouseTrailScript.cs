@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MouseTrailScript : MonoBehaviour {
+public class MouseTrailScript : MonoBehaviour
+{
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
