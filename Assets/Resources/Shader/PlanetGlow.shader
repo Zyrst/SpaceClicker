@@ -43,7 +43,7 @@
          Pass
          {
          CGPROGRAM
-             #pragma vertex vert
+             #pragma vertex vert alpha
              #pragma fragment frag
              #include "UnityCG.cginc"
              
@@ -81,9 +81,22 @@
              fixed4 frag(v2f IN) : SV_Target
              {
                  half4 color = IN.color;
-                 clip (color.a - 0.01);
 
-				 color.a = IN.texcoord.x * IN.texcoord.y;
+				 half2 xy = IN.texcoord.xy;
+
+				 half co = length(xy - 0.5);
+
+				 if (co <= 0.5)
+					co = (co * co);
+				else 
+					co = 0;
+
+				if (co != 0)
+					color.a = (1 - co - 0.8) * 2;
+				else color.a = 0;
+
+				 if (color.a > 1)
+					color.a = 1;
 
                  return color;
              }

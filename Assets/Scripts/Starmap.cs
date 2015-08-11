@@ -35,6 +35,7 @@ public class Starmap : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 	}
 	
 	// Update is called once per frame
@@ -100,15 +101,13 @@ public class Starmap : MonoBehaviour {
 
         _numberOfPlanets = GALAXY.Instance._lastStar._numberOfPlanets;
 
-        /*int level = (int)max_ - (int)Global.Instance._galaxy._increasePerPlanet + (int)min_;// (int)(((max_ - min_) / _numberOfPlanets) + min_); //////////////    <---------------------------------
-        int levelForPlanet = level;*/
         if (!Global.Instance.IsInvoking("SecondLevelFiller"))
             Global.Instance.StartLevelFill(min_, max_);
         _minLevel = min_;
         _maxLevel = max_;
 
-        int llevel = (int)min_;
-        int ulevel = (int)llevel + (int)Global.Instance._galaxy._increasePerPlanet-1;
+        uint llevel = min_;
+        uint ulevel = llevel + Global.Instance._galaxy._increasePerPlanet-1;
 
         gameObject.SetActive(true);
         gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[(int)GALAXY.Instance._lastStar._starBackground];
@@ -128,13 +127,16 @@ public class Starmap : MonoBehaviour {
             _plan._minLevel = llevel;
             _plan._maxLevel = ulevel;
             //levelForPlanet += level; // <-----------------
-            llevel += (int)Global.Instance._galaxy._increasePerPlanet;
-            ulevel = (int)llevel + (int)Global.Instance._galaxy._increasePerPlanet - 1;
+            llevel += Global.Instance._galaxy._increasePerPlanet;
+            ulevel = llevel + Global.Instance._galaxy._increasePerPlanet - 1;
 
-            PlanetButton planBut = GameObject.Instantiate(_planetButtonPrefab as GameObject).GetComponent<PlanetButton>();
+            GameObject plent = GameObject.Instantiate(_planetButtonPrefab as GameObject);
+            plent.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackGlow").GetComponent<Image>().color =
+                Global.Instance._colors.levelColors[Global.DetermineLevelColor(_plan._minLevel, Player.Instance._level)];
+            PlanetButton planBut = plent.GetComponentInChildren<PlanetButton>();
             RectTransform planRect = planBut.gameObject.GetComponent<RectTransform>();
-            planRect.SetParent(_planets.GetComponent<RectTransform>());
-            planRect.localScale = new Vector3(1f, 1f, 1f);
+            plent.transform.parent = (_planets.GetComponent<RectTransform>());
+            plent.transform.localScale = new Vector3(1f, 1f, 1f);
             planBut.gameObject.GetComponent<Image>().sprite = _plan._sprite;
             planBut._planet = _plan;
             bool looping = false;
@@ -142,7 +144,7 @@ public class Starmap : MonoBehaviour {
             {
                 looping = false;
                 float x = Random.Range(planetPosX * i, planetPosX * (i + 1));
-                planBut.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(x, Random.Range(0f, 750f), 0f);
+                plent.transform.localPosition = new Vector3(x, Random.Range(0f, 750f), 0f);
                 Vector4 rect = new Vector4();
                 rect.x = planRect.position.x - (planBut.gameObject.GetComponent<RectTransform>().sizeDelta.x / 2);
                 rect.y = planRect.position.y - (planRect.sizeDelta.y / 2);
