@@ -151,6 +151,8 @@ public class Player : Character {
 
     public string _levelUpMessage = "";
 
+    public bool _isHoldingSpell = false;
+
 
     public override vap maxHealth
     {
@@ -221,10 +223,12 @@ public class Player : Character {
         _takeDamage = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.takeDamage);
         Global.DebugOnScreen("PLAYER START()");
 
+        int ii = 0;
         foreach (var item in _spellsArray)
         {
             if (item != null)
             {
+                item._slot = _spellSlotArray[ii++];
                 item.Init();
                 item._slotImage.sprite = item._spellImage.sprite;
             }

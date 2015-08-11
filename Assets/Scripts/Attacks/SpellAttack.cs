@@ -30,7 +30,7 @@ public class SpellAttack : BaseAttack {
     public SpellStats _combinedStats = new SpellStats();
     public SpriteRef _spellImage;
 
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject _slot;
     [HideInInspector]
     public Image _slotImage;
@@ -113,6 +113,11 @@ public class SpellAttack : BaseAttack {
 
     public void Init()
     {
+        Debug.Log("name: " + name);
+        if (_slot == null)
+        {
+            Debug.Log("slot är null");
+        }
         _slotImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Image");
         _slotImage.sprite = _spellImage.sprite;
         _cdImage = _slot.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "Cooldown");
@@ -273,6 +278,11 @@ public class SpellAttack : BaseAttack {
 
     public void CheckHit()
     {
+        if (!Player.Instance._isAlive)
+        {
+            ResetGUI();
+            return;
+        }
             // mouse on the ground
             Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
@@ -331,6 +341,7 @@ public class SpellAttack : BaseAttack {
         //_slot.transform.position = _startGUIPos;
         GetComponentInParent<ClickAttack>().ReleasedSpell();
         FarmMode.Instance.GetComponentInChildren<TrailRenderer>().material.SetColor("_Color", Color.white);
+        Player.Instance._isHoldingSpell = false;
 
         // stop hold sound
         try
