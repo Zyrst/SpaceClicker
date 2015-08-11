@@ -162,7 +162,10 @@ public class GALAXY : MonoBehaviour {
         }
         if (selector.gameObject.activeInHierarchy)
         {
-            selector.transform.position = _lastStar.transform.position;
+            try
+            {
+                selector.transform.position = _lastStar.transform.position;
+            } catch(System.Exception) {}
         }
 	}
 
