@@ -38,6 +38,11 @@ public class Equipment : MonoBehaviour {
         CharacterScreen.Instance.PopItUp(this);
     }
 
+    public void EqupipedPop()
+    {
+        CharacterScreen.Instance.EquipedPop(this);
+    }
+
     public string GetRarity()
     {
         string ret = "";

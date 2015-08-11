@@ -9,6 +9,7 @@ public class CharacterScreen : MonoBehaviour {
     public GameObject CharacterBackground;
     public GameObject CharacterStatsBackground;
     public GameObject _EquipPopup;
+    public GameObject _EquipedPopup;
 
     public Vector2 _offSet;
     public Vector2 _numInventorySlot;
@@ -225,6 +226,54 @@ public class CharacterScreen : MonoBehaviour {
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         _EquipPopup.gameObject.SetActive(false);
+    }
+
+    public void EquipedPop(Equipment equi_)
+    {
+        _EquipedPopup.gameObject.SetActive(true);
+        string info = equi_._stats._name;
+        switch (equi_._element)
+        {
+            case Equipment.ElementType.Tech:
+                if (equi_._stats._tech.damage.GetFloat() > 0f)
+                {
+                    info += System.Environment.NewLine + "(Tec.) Damage: " + equi_._stats._tech.damage.GetString();
+                }
+                break;
+            case Equipment.ElementType.Kinetic:
+                if (equi_._stats._kinetic.damage.GetFloat() > 0f)
+                {
+                    info += System.Environment.NewLine + "(Kin.) Damage: " + equi_._stats._kinetic.damage.GetString();
+                }
+                break;
+            case Equipment.ElementType.Pshycic:
+                if (equi_._stats._psychic.damage.GetFloat() > 0f)
+                {
+                    info += System.Environment.NewLine + "(Psy.) Damage: " + equi_._stats._psychic.damage.GetString();
+                }
+                break;
+            case Equipment.ElementType.Normal:
+                if (equi_._stats._normal.damage.GetFloat() > 0f)
+                {
+                    info += System.Environment.NewLine + "(Nor.) Damage: " + equi_._stats._normal.damage.GetString();
+                }
+                break;
+            default:
+                break;
+        }
+
+        if (equi_._stats._health.GetFloat() > 0f)
+        {
+            info += System.Environment.NewLine + "Healh Upgrade : " + equi_._stats._health.GetString();
+        }
+
+        _EquipedPopup.GetComponentInChildren<Text>().text = info;
+        
+    }
+
+    public void EquipedPopClose()
+    {
+        _EquipedPopup.gameObject.SetActive(false);
     }
 
     public void Sell()

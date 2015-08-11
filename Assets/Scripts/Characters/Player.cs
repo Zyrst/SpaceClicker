@@ -149,6 +149,8 @@ public class Player : Character {
     public bool _miniBoss = false;
     public static Player Instance = null;
 
+    public string _levelUpMessage = "";
+
 
     public override vap maxHealth
     {
@@ -363,9 +365,18 @@ public class Player : Character {
         if (_level != 1)
         {
             Sounds.OneShot(Sounds.Instance.music.levelUp);
+            GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Ding").text = _levelUpMessage;
+            StartCoroutine(RemoveDing());
         }
 
         Global.Instance.effects.levelUp.Start();
+            
+    }
+
+    IEnumerator RemoveDing()
+    {
+        yield return new WaitForSeconds(1);
+        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Ding").text = "";
     }
     public void Reset(float time_)
     {
