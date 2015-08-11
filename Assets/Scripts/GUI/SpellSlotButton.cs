@@ -11,8 +11,28 @@ public class SpellSlotButton : Button
 
     }
 
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        daThing();
+    }
     public override void OnPointerDown(PointerEventData eventData)
     {
+        daThing();
+    }
+
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        base.OnPointerUp(eventData);
+    }
+
+    private void daThing()
+    {
+        if (Player.Instance._isHoldingSpell || !Player.Instance._isAlive)
+        {
+            return;
+        }
+        Player.Instance._isHoldingSpell = true;
+
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         int index = 0;
         switch (transform.parent.name)
@@ -38,10 +58,5 @@ public class SpellSlotButton : Button
             Global.Instance.player._spellsArray[index].Clicked();
         }
         catch (System.NullReferenceException) { }
-    }
-
-    public override void OnPointerUp(PointerEventData eventData)
-    {
-        base.OnPointerUp(eventData);
     }
 }

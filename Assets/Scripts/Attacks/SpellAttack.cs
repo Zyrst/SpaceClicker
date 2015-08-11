@@ -273,6 +273,11 @@ public class SpellAttack : BaseAttack {
 
     public void CheckHit()
     {
+        if (!Player.Instance._isAlive)
+        {
+            ResetGUI();
+            return;
+        }
             // mouse on the ground
             Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
@@ -331,6 +336,7 @@ public class SpellAttack : BaseAttack {
         //_slot.transform.position = _startGUIPos;
         GetComponentInParent<ClickAttack>().ReleasedSpell();
         FarmMode.Instance.GetComponentInChildren<TrailRenderer>().material.SetColor("_Color", Color.white);
+        Player.Instance._isHoldingSpell = false;
 
         // stop hold sound
         try

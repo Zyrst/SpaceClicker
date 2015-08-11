@@ -151,6 +151,8 @@ public class Player : Character {
 
     public string _levelUpMessage = "";
 
+    public bool _isHoldingSpell = false;
+
 
     public override vap maxHealth
     {
