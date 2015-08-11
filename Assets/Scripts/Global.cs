@@ -470,6 +470,62 @@ public class Global : MonoBehaviour {
         GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spells").gameObject.SetActive(false);
     }
 
+    public static int DetermineLevelColor(uint otherLevel_, uint playerLevel_)
+    {
+        int ret = 0;
+
+        int p = (int)playerLevel_;
+        int s = (int)otherLevel_;
+
+        if (playerLevel_ > uint.MaxValue / 2)
+        {
+            p = (int)(playerLevel_ - uint.MaxValue / 2);
+            s = (int)(otherLevel_ - uint.MaxValue / 2);
+        }
+
+        if (p - 9 >= s)
+        {
+            ret = 0;
+            return 0;
+        }
+        if (p - 6 >= s)
+        {
+            ret = 1;
+            return 1;
+        }
+        if (p - 3 >= s)
+        {
+            ret = 2;
+            return 2;
+        }
+        if (p - 3 <= s && p + 3 >= s)
+        {
+            return 2;
+        }
+        if (p + 3 <= s)
+        {
+            ret = 3;
+        }
+        if (p + 6 <= s)
+        {
+            ret = 4;
+        }
+        if (p + 9 <= s)
+        {
+            ret = 5;
+        }
+        if (p + 12 <= s)
+        {
+            ret = 6;
+        }
+        if (p + 15 <= s)
+        {
+            ret = 7;
+        }
+
+        return ret;
+    }
+
     public void PausGame()
     {
         if (!_paused)

@@ -272,7 +272,7 @@ public class GalaxyGeneretion : MonoBehaviour {
             ret._llevel = 1;
         }
 
-        ret._starColor = determineLevelColor(ret._llevel, Player.Instance._level);
+        ret._starColor = Global.DetermineLevelColor(ret._llevel, Player.Instance._level);
         ret._starBackground = (StarSystem.StarBackgrounds)ret._starColor;
         img.color = Global.Instance._colors.levelColors[ret._starColor];
 
@@ -294,56 +294,4 @@ public class GalaxyGeneretion : MonoBehaviour {
 	void Update () {
 	
 	}
-
-    private static int determineLevelColor(uint starLevel_, uint playerLevel_)
-    {
-        int ret = 0;
-
-        if (playerLevel_ < uint.MaxValue / 2) // safe att göra (int)
-        {
-            int p = (int)playerLevel_;
-            int s = (int)starLevel_;
-            if (p - 9 >= s)
-            {
-                ret = 0;
-                return 0;
-            }
-            if (p - 6 >= s)
-            {
-                ret = 1;
-                return 1;
-            }
-            if (p - 3 >= s)
-            {
-                ret = 2;
-                return 2;
-            }
-            if (p - 3 <= s && p + 3 >= s)
-            {
-                return 2;   
-            }
-            if (p + 3 <= s)
-            {
-                ret = 3;
-            }
-            if (p + 6 <= s)
-            {
-                ret = 4;
-            }
-            if (p + 9 <= s)
-            {
-                ret = 5;
-            }
-            if (p + 12 <= s)
-            {
-                ret = 6;
-            }
-            if (p + 15 <= s)
-            {
-                ret = 7;
-            }
-        }
-
-        return ret;
-    }
 }
