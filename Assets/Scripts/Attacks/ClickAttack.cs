@@ -67,31 +67,38 @@ public class ClickAttack : BaseAttack {
                             _canDealDamage = false;
                             _lastTarget = MouseCuboid.collider.transform.parent.parent.gameObject;
 
+                            _swipeSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.swipe);
+                            _swipeSoundEvent.getParameter("Spec", out _swipeSoundVariable);
+
                             CharacterStats cs = GetComponent<Player>()._combinedStats;
                             // play sound, fix crit later
                             if (cs._tech.damage > cs._psychic.damage && cs._tech.damage > cs._kinetic.damage)               // tech is störst
                             {
                                 _swipeSoundVariable.setValue(Swipes.tech);
-                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                //_swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                                 _swipeSoundEvent.start();
+                                _swipeSoundEvent.release();
                             }
                             else if (cs._kinetic.damage > cs._psychic.damage && cs._kinetic.damage > cs._tech.damage)       // kinetic is störst
                             {
                                 _swipeSoundVariable.setValue(Swipes.kinetic);
-                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                //_swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                                 _swipeSoundEvent.start();
+                                _swipeSoundEvent.release();
                             }
                             else if (cs._psychic.damage > cs._kinetic.damage && cs._psychic.damage > cs._tech.damage)       // pshycic is störst
                             {
                                 _swipeSoundVariable.setValue(Swipes.pshycic);
-                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                //_swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                                 _swipeSoundEvent.start();
+                                _swipeSoundEvent.release();
                             }
                             else
                             {
                                 _swipeSoundVariable.setValue(Swipes.pshycic);
-                                _swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                                //_swipeSoundEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                                 _swipeSoundEvent.start();
+                                _swipeSoundEvent.release();
                             }
 
 
