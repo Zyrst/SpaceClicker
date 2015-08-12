@@ -13,6 +13,7 @@ public class Character : MonoBehaviour {
     public uint _experience = 1;
     public uint _experianceToNext = 100;
     public GameObject _healEffect;
+    public ArrayList _healEffects = new ArrayList();
 
     public virtual vap maxHealth
     {
@@ -257,5 +258,17 @@ public class Character : MonoBehaviour {
                 _healEffect = null;
             }
         }
+
+       /* if (_healEffects.Count != 0)
+        {
+            foreach (var item in _healEffects)
+            {
+                if(!((GameObject)item).GetComponent<ParticleSystem>().isPlaying)
+                {
+                    Destroy((GameObject)item);
+                    _healEffects.Remove(item);
+                }
+            }
+        }*/
     }
 }
