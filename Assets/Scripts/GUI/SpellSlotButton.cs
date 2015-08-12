@@ -27,9 +27,9 @@ public class SpellSlotButton : Button
 
     private void daThing()
     {
-        if (Player.Instance._isHoldingSpell || !Player.Instance._isAlive)
+        if ((Player.Instance._isHoldingSpell || !Player.Instance._isAlive) || !MouseController.Instance.buttonDown)
         {
-            return;
+            goto sist;
         }
         Player.Instance._isHoldingSpell = true;
 
@@ -58,5 +58,7 @@ public class SpellSlotButton : Button
             Global.Instance.player._spellsArray[index].Clicked();
         }
         catch (System.NullReferenceException) { }
+    sist: ;
     }
+
 }
