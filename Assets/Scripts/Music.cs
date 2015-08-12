@@ -16,7 +16,7 @@ public class Music : MonoBehaviour {
         private int _dir;
         private float _fade;
 
-        public enum Events { Merchant, Starmap, NoEvent, Combat };
+        public enum Events { NoEvent, Merchant, Starmap, Combat };
         private Events _event;
 
         public void Update()
@@ -115,7 +115,7 @@ public class Music : MonoBehaviour {
     }
 
     static Music _instance = null;
-    
+    bool _init = false;
 
 
     public static Music Instance
@@ -139,13 +139,18 @@ public class Music : MonoBehaviour {
 
     private void Init()
     {
-        _menuTheme._instance = FMOD_StudioSystem.instance.GetEvent(_menuTheme._theme);
-        _menuTheme._instance.getParameter("Merchant", out _menuTheme._merchantParameter);
-        _menuTheme._instance.getParameter("Starmap", out _menuTheme._starmapParameter);
-        _menuTheme._instance.getParameter("Enter Combat", out _menuTheme._combatParameter);
-        _menuTheme._isRunning = false;
+        if (!_init)
+        {
+            _menuTheme._instance = FMOD_StudioSystem.instance.GetEvent(_menuTheme._theme);
+            _menuTheme._instance.getParameter("Merchant", out _menuTheme._merchantParameter);
+            _menuTheme._instance.getParameter("Starmap", out _menuTheme._starmapParameter);
+            _menuTheme._instance.getParameter("Enter Combat", out _menuTheme._combatParameter);
+            _menuTheme._isRunning = false;
+            Global.DebugOnScreen(_menuTheme._instance.isValid() ? "är valid efter init" : "är inte valid i init", 60);
+            _init = true;
 
-        Global.DebugOnScreen(_menuTheme._instance.isValid() ? "är valid efter init" : "är inte valid i init", 60);
+        }
+        
     }
 
 	// Use this for initialization
@@ -153,7 +158,7 @@ public class Music : MonoBehaviour {
     {
         _instance = this;
 
-        //Init();
+        Init();
 
         //StartMenuTheme();
 	}
