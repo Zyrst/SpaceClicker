@@ -11,6 +11,8 @@ public class Music : MonoBehaviour {
         public FMOD.Studio.ParameterInstance _starmapParameter;
         public FMOD.Studio.ParameterInstance _combatParameter;
         public FMODAsset _theme;
+        public bool _isRunning;
+
         private int _dir;
         private float _fade;
 
@@ -71,6 +73,7 @@ public class Music : MonoBehaviour {
                             Global.DebugOnScreen("Done with combat event");
                             _event = Events.NoEvent;
                             _instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                            _isRunning = false;
                         }
                             
                     }
@@ -140,6 +143,7 @@ public class Music : MonoBehaviour {
         _menuTheme._instance.getParameter("Merchant", out _menuTheme._merchantParameter);
         _menuTheme._instance.getParameter("Starmap", out _menuTheme._starmapParameter);
         _menuTheme._instance.getParameter("Enter Combat", out _menuTheme._combatParameter);
+        _menuTheme._isRunning = false; 
     }
 
 	// Use this for initialization
@@ -149,20 +153,30 @@ public class Music : MonoBehaviour {
 
         Init();
 
-        StartMenuTheme();
+        //StartMenuTheme();
 	}
+
+    void Awake()
+    {
+    }
 	
 	// Update is called once per frame
 	void Update () {
         _menuTheme.Update();
 	}
 
+    static int iiu = 0;
     public void StartMenuTheme()
     {
+        if (_menuTheme._isRunning)
+            _menuTheme._instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+
+        Global.DebugOnScreen("SMT: " + iiu++);
         _menuTheme._merchantParameter.setValue(0f);
         _menuTheme._starmapParameter.setValue(0f);
         _menuTheme._combatParameter.setValue(0f);
         _menuTheme._instance.start();
+        _menuTheme._isRunning = true;
     }
 
     public void EnterCombatFromMenu()

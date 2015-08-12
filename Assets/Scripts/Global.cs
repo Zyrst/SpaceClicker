@@ -183,7 +183,7 @@ public class Global : MonoBehaviour {
 
         _planet = null;
         StartCoroutine(LevelFiller());
-        Music.Instance.StartMenuTheme();
+        //Music.Instance.StartMenuTheme();
     }
     void Update()
     {
