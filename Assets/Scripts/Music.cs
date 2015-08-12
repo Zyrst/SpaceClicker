@@ -143,7 +143,9 @@ public class Music : MonoBehaviour {
         _menuTheme._instance.getParameter("Merchant", out _menuTheme._merchantParameter);
         _menuTheme._instance.getParameter("Starmap", out _menuTheme._starmapParameter);
         _menuTheme._instance.getParameter("Enter Combat", out _menuTheme._combatParameter);
-        _menuTheme._isRunning = false; 
+        _menuTheme._isRunning = false;
+
+        Global.DebugOnScreen(_menuTheme._instance.isValid() ? "är valid efter init" : "är inte valid i init", 60);
     }
 
 	// Use this for initialization
@@ -151,7 +153,7 @@ public class Music : MonoBehaviour {
     {
         _instance = this;
 
-        Init();
+        //Init();
 
         //StartMenuTheme();
 	}
@@ -171,7 +173,7 @@ public class Music : MonoBehaviour {
         if (_menuTheme._isRunning)
             _menuTheme._instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
 
-        Global.DebugOnScreen("SMT: " + iiu++);
+        Global.DebugOnScreen("SMT: " + iiu++, 60);
         _menuTheme._merchantParameter.setValue(0f);
         _menuTheme._starmapParameter.setValue(0f);
         _menuTheme._combatParameter.setValue(0f);

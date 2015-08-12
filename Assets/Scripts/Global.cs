@@ -437,7 +437,7 @@ public class Global : MonoBehaviour {
     {
         DebugMessage newMess = new DebugMessage();
         newMess.message = message_;
-        newMess.time = 5f;
+        newMess.time = time_;
 
         _debugMessages.Add(newMess);
     }
