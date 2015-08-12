@@ -6,11 +6,8 @@ public class FarmMode : MonoBehaviour
 {
     public GameObject arenaPrefab;
     public GameObject _arena;
-<<<<<<< HEAD
     public GameObject _bossSpawn;
-=======
     public UIDeath _uiDeath;
->>>>>>> d5f1cc9670345d8198871c616433cc61089db489
 
     private static FarmMode _instance = null;
     public static FarmMode Instance
@@ -60,14 +57,9 @@ public class FarmMode : MonoBehaviour
         }
 
         // reset player
-<<<<<<< HEAD
-        Global.Instance.player.Reset(5f);
-
-=======
         Global.Instance.player.Reset(2f);
         _uiDeath.gameObject.SetActive(true);
         _uiDeath.Died(2f);
->>>>>>> d5f1cc9670345d8198871c616433cc61089db489
     }
 
     public void backToShip()

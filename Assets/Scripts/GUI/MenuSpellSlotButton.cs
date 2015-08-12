@@ -84,7 +84,6 @@ public class MenuSpellSlotButton : Button {
 
                 go.transform.parent = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Spells").transform;
                 if (go.GetComponent<SpellAttack>()._slot != null)
-<<<<<<< HEAD
                     go.GetComponent<SpellAttack>()._slot = null;
 
                 go.GetComponent<SpellAttack>()._slot = Global.Instance.player._spellSlotArray[_slotNum];
@@ -95,19 +94,6 @@ public class MenuSpellSlotButton : Button {
                     Destroy(old);
                 }
                 Sounds.OneShot(Sounds.Instance.uiSounds.changeAbility);
-
-=======
-                    go.GetComponent<SpellAttack>()._slot = null;
-
-                go.GetComponent<SpellAttack>()._slot = Global.Instance.player._spellSlotArray[_slotNum];
-                go.GetComponent<SpellAttack>().Init();
-
-                if (old != null)
-                {
-                    Destroy(old);
-                }
-
->>>>>>> d5f1cc9670345d8198871c616433cc61089db489
             }
 
             

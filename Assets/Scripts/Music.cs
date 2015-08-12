@@ -70,7 +70,7 @@ public class Music : MonoBehaviour {
                         {
                             Global.DebugOnScreen("Done with combat event");
                             _event = Events.NoEvent;
-                            _instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                            _instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                         }
                             
                     }
