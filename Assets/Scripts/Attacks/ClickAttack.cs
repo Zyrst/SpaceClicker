@@ -166,6 +166,7 @@ public class ClickAttack : BaseAttack {
             {
                 _stunned = false;
                 _canDealDamage = true;
+                Global.Instance.player._isHoldingSpell = false;
             }
         }
         else if(!_holdingSpell)

@@ -27,12 +27,12 @@ public class SpellSlotButton : Button
 
     private void daThing()
     {
+
         if ((Player.Instance._isHoldingSpell || !Player.Instance._isAlive) || !MouseController.Instance.buttonDown)
         {
             goto sist;
         }
         Player.Instance._isHoldingSpell = true;
-
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         int index = 0;
         switch (transform.parent.name)

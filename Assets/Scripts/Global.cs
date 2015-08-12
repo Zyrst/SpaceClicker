@@ -127,7 +127,6 @@ public class Global : MonoBehaviour {
 
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
-    bool _doOnce = true;
 
 
     public TalentStats.Percent _potionDropChans = new TalentStats.Percent(1.05f);
