@@ -140,6 +140,7 @@ public class Global : MonoBehaviour {
     [HideInInspector]
     vap _refVap = new vap();
     public float _levelModifier;
+    public float _playerLevelModifier;
 
     public Camera _gameCamera;
     public Camera _uiCamera;

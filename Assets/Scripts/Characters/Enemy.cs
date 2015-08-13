@@ -102,9 +102,14 @@ public class Enemy : Character
         }
 
         //More than one texture for the enemy
+        //Find the skin meshed renderer on Body
         if (_skins.Length != 0)
         {
-            GetComponentsInChildren<SkinnedMeshRenderer>().FirstOrDefault(x => x.name == "Body").material.mainTexture = _skins[Random.Range(0, _skins.Length)];
+            try
+            {
+                GetComponentsInChildren<SkinnedMeshRenderer>().FirstOrDefault(x => x.name == "Body").material.mainTexture = _skins[Random.Range(0, _skins.Length)];
+            }
+            catch (System.NullReferenceException) { }
         }
        // Quaternion rot = transform.rotation;
         //rot.z = 0f;
@@ -145,7 +150,7 @@ public class Enemy : Character
         else
         {
             Vector3 dir = (Vector3.up * 15f) + -(transform.position - Global.Instance.player.transform.position);
-            GoldCoin.Create(transform.position, dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint)(_level / 50) + 2 : 1;
+            GoldCoin.Create(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), dir * 20f).GetComponent<GoldCoin>()._value = Global.Instance._player._level >= 19 ? (uint)(_level / 50) + 2 : 1;
         }
         
        // Debug.Log("EnemisAlive: " + Global.Instance.EnemiesAlive());

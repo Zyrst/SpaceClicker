@@ -37,9 +37,9 @@ public class CharacterStats {
     }
 
     public vap _baseStat = new vap();
-
     public vap _health = new vap();
     public vap _maxHealth = new vap();
+    public vap _prevLevel = new vap();
 
     public float _multiplierHealth;
     public float _multiplierDamage;
@@ -58,6 +58,8 @@ public class CharacterStats {
     public Element _kinetic;
     public Element _psychic;
 
+    
+
     /// <summary>
     /// Calculate stats according to level 
     /// </summary>
@@ -66,7 +68,11 @@ public class CharacterStats {
     {
         _baseStat = new vap();
 
-        _baseStat._values[0] = ((_constMultiplier * level_) + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
+       // _baseStat._values[0] = ((_constMultiplier * level_) + (Mathf.Pow(_basePower, (level_ / _powerDiv)))) * _valueMultiplier;
+        vap tmpVap = new vap();
+        tmpVap._values[0] = _constMultiplier * level_;
+        tmpVap.Checker();
+        _baseStat = (tmpVap + _prevLevel ) * _valueMultiplier;
 
         _baseStat.Checker();
 
@@ -74,6 +80,7 @@ public class CharacterStats {
         _maxHealth.Checker();
         _normal.damage = (_baseStat * _multiplierDamage) * _damageStatDist;
         _normal.damage.Checker();
+        _prevLevel *= Global.Instance._playerLevelModifier;
     }
 
     public CharacterStats(CharacterStats stats_)
