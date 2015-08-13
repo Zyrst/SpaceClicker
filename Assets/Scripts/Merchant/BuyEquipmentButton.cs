@@ -40,10 +40,13 @@ public class BuyEquipmentButton : MonoBehaviour {
             {
                 if (Global.Instance.player._inventoryArray[i] == null)
                 {
-                    Global.Instance.player._inventoryArray[i] = GetComponentInChildren<Equipment>().gameObject;
-                    GetComponentInChildren<Equipment>().gameObject.transform.parent = Global.Instance.player._inventoryObject.transform;
+                    Equipment equi = GetComponentInChildren<Equipment>();
+                    Global.Instance.player._inventoryArray[i] = equi.gameObject;
+                    equi.transform.parent = Global.Instance.player._inventoryObject.transform;
 
                     GetComponent<Button>().interactable = false;
+
+                    Global.Instance.player._equipped.Equip(equi);
                     
                     set = true;
                     break;

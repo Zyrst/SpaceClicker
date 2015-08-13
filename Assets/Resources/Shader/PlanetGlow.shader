@@ -11,6 +11,9 @@
          _StencilReadMask ("Stencil Read Mask", Float) = 255
  
          _ColorMask ("Color Mask", Float) = 15
+
+		 _Noise ("Noise", Range(0.0,1.0) ) = 0
+		 _Noise2 ("Noise2", Range(0.0,1.0) ) = 0
      }
  
      SubShader
@@ -59,9 +62,13 @@
                  float4 vertex   : SV_POSITION;
                  fixed4 color    : COLOR;
                  half2 texcoord  : TEXCOORD0;
+				 float noise	 : NOISE;
+				 float noise2	 : NOISE2;
              };
              
              fixed4 _Color;
+			 float _Noise;
+			 float _Noise2;
  
              v2f vert(appdata_t IN)
              {
@@ -73,32 +80,33 @@
                  OUT.vertex.xy += (_ScreenParams.zw-1.0)*float2(-1,1);
  #endif
                  OUT.color = IN.color * _Color;
+				 OUT.noise = _Noise;
+				 OUT.noise2 = _Noise2;
                  return OUT;
              }
  
              sampler2D _MainTex;
+
+			 float rand(half2 co){
+				return frac(sin(dot(co.xy ,half2(12.9898,78.233))) * 43758.5453);
+			}	
  
              fixed4 frag(v2f IN) : SV_Target
              {
-                 half4 color = IN.color;
+				half4 color = IN.color;
 
-				 half2 xy = IN.texcoord.xy;
+				half2 xy = IN.texcoord.xy;
 
-				 half co = length(xy - 0.5);
+				half co = length(xy - (0.5));
 
-				 if (co <= 0.5)
-					co = (co * co);
-				else 
-					co = 0;
+								// ↓↓↓↓ inga hopp här inte 
+				co = (co * co) * step(co, 0.5);
+				
+				color.a = (1 - co - 0.8) * 2 * step(0.0000001, co);
 
-				if (co != 0)
-					color.a = (1 - co - 0.8) * 2;
-				else color.a = 0;
+				color.a *= abs(fmod(IN.noise2, 2) - 1) * 2;
 
-				 if (color.a > 1)
-					color.a = 1;
-
-                 return color;
+				return color;
              }
          ENDCG
 	}

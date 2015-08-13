@@ -119,7 +119,11 @@ public class Player : Character {
                     break;
             }
             CharacterScreen.Instance.RemoveInventorySlots();
-            CharacterScreen.Instance.GenerateInventorySlots();
+            try
+            {
+                CharacterScreen.Instance.GenerateInventorySlots();
+            }
+            catch (System.Exception) { Debug.Log("inte inne i char. screen"); }
             Global.Instance.player.UpdateCombinedStats();
         }
 
