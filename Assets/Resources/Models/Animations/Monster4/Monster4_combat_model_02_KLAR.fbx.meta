@@ -1,0 +1,148 @@
+fileFormatVersion: 2
+guid: 092cb5317f54a6f47a6a960eb4f65630
+timeCreated: 1439476465
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Body
+    100002: Character1_Head
+    100004: Character1_Hips
+    100006: Character1_LeftArm
+    100008: Character1_LeftFoot
+    100010: Character1_LeftForeArm
+    100012: Character1_LeftHand
+    100014: Character1_LeftLeg
+    100016: Character1_LeftShoulder
+    100018: Character1_LeftToeBase
+    100020: Character1_LeftUpLeg
+    100022: Character1_Reference
+    100024: Character1_RightArm
+    100026: Character1_RightFoot
+    100028: Character1_RightForeArm
+    100030: Character1_RightHand
+    100032: Character1_RightLeg
+    100034: Character1_RightShoulder
+    100036: Character1_RightToeBase
+    100038: Character1_RightUpLeg
+    100040: Character1_Spine
+    100042: Character1_Spine1
+    100044: Kamm
+    100046: LeftGun
+    100048: LeftWheel
+    100050: LeftWheel1
+    100052: //RootNode
+    100054: Monster4Group
+    100056: polySurface1
+    100058: RightGun
+    100060: transform1
+    100062: transform2
+    400000: Body
+    400002: Character1_Head
+    400004: Character1_Hips
+    400006: Character1_LeftArm
+    400008: Character1_LeftFoot
+    400010: Character1_LeftForeArm
+    400012: Character1_LeftHand
+    400014: Character1_LeftLeg
+    400016: Character1_LeftShoulder
+    400018: Character1_LeftToeBase
+    400020: Character1_LeftUpLeg
+    400022: Character1_Reference
+    400024: Character1_RightArm
+    400026: Character1_RightFoot
+    400028: Character1_RightForeArm
+    400030: Character1_RightHand
+    400032: Character1_RightLeg
+    400034: Character1_RightShoulder
+    400036: Character1_RightToeBase
+    400038: Character1_RightUpLeg
+    400040: Character1_Spine
+    400042: Character1_Spine1
+    400044: Kamm
+    400046: LeftGun
+    400048: LeftWheel
+    400050: LeftWheel1
+    400052: //RootNode
+    400054: Monster4Group
+    400056: polySurface1
+    400058: RightGun
+    400060: transform1
+    400062: transform2
+    2300000: LeftGun
+    2300002: LeftWheel
+    2300004: LeftWheel1
+    2300006: RightGun
+    3300000: LeftGun
+    3300002: LeftWheel
+    3300004: LeftWheel1
+    3300006: RightGun
+    4300000: LeftWheel
+    4300002: LeftWheel1
+    4300004: LeftGun
+    4300006: RightGun
+    4300008: polySurface1
+    9500000: //RootNode
+    13700000: polySurface1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
