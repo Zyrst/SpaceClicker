@@ -218,10 +218,12 @@ public class Player : Character {
 	// Use this for initialization
 	void Start () {
         Animator.SetTrigger("idle");
+        _stats._prevLevel._values[0] = Global.Instance._playerLevelModifier;
         LevelUp();
         UpdateCombinedStats();
         _takeDamage = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.takeDamage);
         Global.DebugOnScreen("PLAYER START()");
+       
 
         int ii = 0;
         foreach (var item in _spellsArray)

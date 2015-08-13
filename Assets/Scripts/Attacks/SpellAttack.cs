@@ -541,19 +541,22 @@ public class SpellAttack : BaseAttack {
         switch (gameObject.name)
         {
                 /*Tech*/
-            case "Granade":
+            case "Grenade":
                // _holdSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeReady);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeTake);
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeUse);
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.granadeReady);
-
-                //Debug.Log("granade ljud");
                 break;
             case "Lightning Discharge" :
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningUse);
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningTake);
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.lightningReady);
                 break;
+            case "Reactive Armor":
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.shieldUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.tech.shieldReady);
+                break;
+
                 /*Psychic*/
             case "Drain Life":
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.drainReady);
@@ -565,6 +568,7 @@ public class SpellAttack : BaseAttack {
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayTake);
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayUse);
                 break;
+
                 /*Kinetic*/
             case "Tremor" :
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorUse);
@@ -581,6 +585,7 @@ public class SpellAttack : BaseAttack {
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.siesmicTake);
                 _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.siesmicReady);
                 break;
+
                 /*Extension*/
             case "Adrenaline Rush" :
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.extensions.adrenalineUse);
