@@ -148,7 +148,6 @@ public class Player : Character {
     public bool _showHit = false;
     public float _showHitTimer = 0f;
 
-    private FMOD.Studio.EventInstance _takeDamage;
 
     public bool _miniBoss = false;
     public static Player Instance = null;
@@ -225,7 +224,6 @@ public class Player : Character {
         _stats._prevLevel._values[0] = Global.Instance._playerLevelModifier;
         LevelUp();
         UpdateCombinedStats();
-        _takeDamage = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.takeDamage);
         Global.DebugOnScreen("PLAYER START()");
        
 
@@ -327,7 +325,7 @@ public class Player : Character {
             //Draw hit texture on gui
             _showHit = true;
             OnGUI();
-            _takeDamage.start();
+            Sounds.OneShot(Sounds.Instance.playerSounds.takeDamage);
             SpawnText(normal, tech, psychic, kinetic, ds_._heal, healthDamagePercent, hitPoint_);
 
             if (_stats._health._values[0] < 1f)
@@ -356,7 +354,7 @@ public class Player : Character {
     {
         base.Die();
         Global.Instance.PlayerDied();
-
+        Sounds.OneShot(Sounds.Instance.playerSounds.dies);
         // play die animation
         Animator.SetTrigger("die_start");
         

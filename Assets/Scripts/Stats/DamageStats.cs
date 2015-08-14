@@ -33,7 +33,7 @@ public class DamageStats {
             }
 
             crit = Random.Range(0f, 1f);
-            if (crit <= stats_._tech.crit)
+            if (crit <= stats_._normal.crit)
             {
                 ds._tech = new vap(stats_._tech.critDamage);
                 if (stats_._tech.critDamage > stats_._tech.damage)
@@ -41,7 +41,7 @@ public class DamageStats {
             }
 
             crit = Random.Range(0f, 1f);
-            if (crit <= stats_._psychic.crit)
+            if (crit <= stats_._normal.crit)
             {
                 ds._psychic = new vap(stats_._psychic.critDamage);
                 if (stats_._psychic.critDamage > stats_._psychic.damage)
@@ -49,7 +49,7 @@ public class DamageStats {
             }
 
             crit = Random.Range(0f, 1f);
-            if (crit <= stats_._kinetic.crit)
+            if (crit <= stats_._normal.crit)
             {
                 ds._kinetic = new vap(stats_._kinetic.critDamage);
                 if (stats_._kinetic.critDamage > stats_._kinetic.damage)

@@ -75,6 +75,7 @@ public class Enemy : Character
             _stats._baseStat._values[0] *= 2f;
             _stats._baseStat.Checker();
             transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Model").localScale = new Vector3(2f, 2f, 2f);
+            transform.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "colliders").localScale = new Vector3(2f, 2f, 2f);
             GetComponentInChildren<CharacterGUI>().transform.localPosition = new Vector3(0f, 4f, 0f);
             _isBoss = true;
 

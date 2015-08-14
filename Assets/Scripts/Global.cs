@@ -539,6 +539,7 @@ public class Global : MonoBehaviour {
         {
             _paused = true;
             Time.timeScale = 0f;
+            Sounds.OneShot(Sounds.Instance.uiSounds.pauseGame);
 
             FarmMode.Instance.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "OverLayImage").color = _colors.pausColor;
         }
@@ -546,7 +547,7 @@ public class Global : MonoBehaviour {
         {
             _paused = false;
             Time.timeScale = 1f;
-
+            Sounds.OneShot(Sounds.Instance.uiSounds.unPauseGame);
             FarmMode.Instance.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "OverLayImage").color = new Color(0f,0f,0f,0f);
         }
     }

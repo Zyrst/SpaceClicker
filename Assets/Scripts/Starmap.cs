@@ -66,6 +66,7 @@ public class Starmap : MonoBehaviour {
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         Sounds.OneShot(Sounds.Instance.uiSounds.navigation.exitStarmap);
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.enterGalaxy);
         Global.Instance.SwitchScene(Global.GameType.Galaxy);
         GALAXY.Instance.DoAnew();
     }

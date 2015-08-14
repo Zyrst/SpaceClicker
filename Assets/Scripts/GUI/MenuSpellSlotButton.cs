@@ -11,6 +11,7 @@ public class MenuSpellSlotButton : Button {
     private Vector2 _mouseDelta;
     private GameObject _slot;
     private int _slotNum = 0;
+    public bool _firstClick = true;
 	
 	// Update is called once per frame
 	void Update () {
@@ -53,11 +54,18 @@ public class MenuSpellSlotButton : Button {
             _mouseDelta = GetComponent<RectTransform>().position - MouseController.Instance.position;
             _held = true;
         }
+        if (_firstClick)
+        {
+            Sounds.OneShot(Sounds.Instance.uiSounds.pickUpAbility);
+            _firstClick = false;
+        }
     }
 
+    
     public override void OnPointerUp(UnityEngine.EventSystems.PointerEventData eventData)
     {
         base.OnPointerUp(eventData);
+        _firstClick = true;
         if (transform.parent.name == "SpellsList")
         {
             if (_slot != null)

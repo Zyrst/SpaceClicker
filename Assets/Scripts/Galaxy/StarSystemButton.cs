@@ -17,6 +17,7 @@ public class StarSystemButton : Button {
     public override void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {
         base.OnPointerClick(eventData);
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.selectGalaxy);
 
         GALAXY.Instance._lastStar = gameObject.GetComponent<StarSystem>();
 

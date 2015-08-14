@@ -28,9 +28,62 @@ public class Sounds : MonoBehaviour {
     [System.Serializable]
     public struct EnemySounds
     {
-        public FMODAsset damage_heavy;
-        public FMODAsset damage_medium;
-        public FMODAsset damage_light;
+
+        public FMODAsset damage_heavy_mech;
+        public FMODAsset damage_heavy_postAp;
+        public FMODAsset damage_medium_mech;
+        public FMODAsset damage_medium_postAp;
+        public FMODAsset damage_light_mech;
+        public FMODAsset damage_light_postAp;
+
+        public FMODAsset damage_heavy
+        {
+            get
+            {
+                switch (Global.Instance._planet._type)
+                {
+                    case Planet.PlanetType.PostApc:
+                        return damage_heavy_postAp;
+                    case Planet.PlanetType.Mech:
+                        return damage_heavy_mech;
+                    default:
+                        break;
+                }
+                return null;
+            }
+        }
+        public FMODAsset damage_medium
+        {
+            get
+            {
+                switch (Global.Instance._planet._type)
+                {
+                    case Planet.PlanetType.PostApc:
+                        return damage_medium_postAp;
+                    case Planet.PlanetType.Mech:
+                        return damage_medium_mech;
+                    default:
+                        break;
+                }
+                return null;
+            }
+        }
+        public FMODAsset damage_light
+        {
+            get
+            {
+                switch (Global.Instance._planet._type)
+                {
+                    case Planet.PlanetType.PostApc:
+                        return damage_light_postAp;
+                    case Planet.PlanetType.Mech:
+                        return damage_light_mech;
+                    default:
+                        break;
+                }
+                return null;
+            }
+        }
 
         public ShieldSounds shieldSounds;
     }
@@ -126,7 +179,24 @@ public class Sounds : MonoBehaviour {
     public struct PlayerSounds
     {
         public FMODAsset swipe;
-        public FMODAsset takeDamage;
+        public FMODAsset takeDamage_postAp;
+        public FMODAsset takeDamage_mech;
+        public FMODAsset takeDamage {
+            get
+            {
+                switch (Global.Instance._planet._type)
+                {
+                    case Planet.PlanetType.PostApc:
+                        return takeDamage_postAp;
+                    case Planet.PlanetType.Mech:
+                        return takeDamage_mech;
+                    default:
+                        break;
+                }
+                return null;
+            } 
+        }
+        public FMODAsset dies;
         public AbilitySounds abilities;
     }
 
@@ -148,7 +218,8 @@ public class Sounds : MonoBehaviour {
         public FMODAsset selectWorld;
         public FMODAsset enterBattle;
         public FMODAsset exitBattle;
-
+        public FMODAsset enterGalaxy;
+        public FMODAsset selectGalaxy;
     }
 
     [System.Serializable]
@@ -161,6 +232,9 @@ public class Sounds : MonoBehaviour {
         public FMODAsset medpackPickup;
         public FMODAsset lootcrate;
         public FMODAsset changeAbility;
+        public FMODAsset pickUpAbility;
+        public FMODAsset pauseGame;
+        public FMODAsset unPauseGame;
     }
     [System.Serializable]
     public struct Music

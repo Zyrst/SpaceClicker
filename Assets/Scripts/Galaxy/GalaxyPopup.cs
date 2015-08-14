@@ -24,6 +24,7 @@ public class GalaxyPopup : MonoBehaviour {
 
     public void Visit()
     {
+        Sounds.OneShot(Sounds.Instance.uiSounds.navigation.enterGalaxy);
         GALAXY.Instance.Generate();
 
     }

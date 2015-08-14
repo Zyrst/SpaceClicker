@@ -192,6 +192,10 @@ public class SpellAttack : BaseAttack {
             _coolDown = 0f;
             _slotImage.color = new Color(0.5f, 0.5f, 0.5f);
 
+            _cdImage.gameObject.SetActive(true);
+            _cdDoneImage.gameObject.SetActive(true);
+            _degree = 360f / _combinedStats._cooldown;
+
             ResetGUI();
 
             UseSpell(Global.Instance.GetAllEnemies().ToArray()[0] as Character, transform.position);

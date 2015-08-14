@@ -1,0 +1,254 @@
+fileFormatVersion: 2
+guid: 540942d96a2db1947ae0bed4317a69b7
+timeCreated: 1439561189
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Armone
+    100002: Armone_1_ctrl
+    100004: Armone_1_joint
+    100006: Armone_2_ctrl
+    100008: Armone_2_joint
+    100010: Armone_3_ctrl
+    100012: Armone_3_joint
+    100014: Armone_4_ctrl
+    100016: Armone_4_joint
+    100018: Armone_5_ctrl
+    100020: Armone_5_joint
+    100022: Armone_ctrl_group
+    100024: Armone_curve
+    100026: Armone_IkHandle
+    100028: Armtre_1_ctrl
+    100030: Armtre_2_ctrl
+    100032: Armtre_3_ctrl
+    100034: Armtre_4_ctrl
+    100036: Armtre_5_ctrl
+    100038: Armtre_ctrl_group
+    100040: Armtre_curve
+    100042: Armtre_IkHandle
+    100044: Armtree
+    100046: Armtree_1_joint
+    100048: Armtree_2_joint
+    100050: Armtree_3_joint
+    100052: Armtree_4_joint
+    100054: Armtree_5_joint
+    100056: Armtwo
+    100058: Armtwo_1_ctrl
+    100060: Armtwo_1_joint
+    100062: Armtwo_2_ctrl
+    100064: Armtwo_2_joint
+    100066: Armtwo_3_ctrl
+    100068: Armtwo_3_joint
+    100070: Armtwo_4_ctrl
+    100072: Armtwo_4_joint
+    100074: Armtwo_5_ctrl
+    100076: Armtwo_5_joint
+    100078: Armtwo_ctrl_group
+    100080: Armtwo_curve
+    100082: Armtwo_IkHandle
+    100084: cluster_01
+    100086: cluster_01 1
+    100088: cluster_01 2
+    100090: cluster_01_group
+    100092: cluster_01_group 1
+    100094: cluster_01_group 2
+    100096: cluster_02
+    100098: cluster_02 1
+    100100: cluster_02 2
+    100102: cluster_02_group
+    100104: cluster_02_group 1
+    100106: cluster_02_group 2
+    100108: cluster_03
+    100110: cluster_03 1
+    100112: cluster_03 2
+    100114: cluster_03_group
+    100116: cluster_03_group 1
+    100118: cluster_03_group 2
+    100120: cluster_04
+    100122: cluster_04 1
+    100124: cluster_04 2
+    100126: cluster_04_group
+    100128: cluster_04_group 1
+    100130: cluster_04_group 2
+    100132: cluster_05
+    100134: cluster_05 1
+    100136: cluster_05 2
+    100138: cluster_05_group
+    100140: cluster_05_group 1
+    100142: cluster_05_group 2
+    100144: Full_body_ctrl
+    100146: Head
+    100148: Head_ctrl
+    100150: Head_ctrl_group
+    100152: Lamp
+    100154: LeftPlate
+    100156: //RootNode
+    100158: pCube1
+    100160: polySurface1
+    100162: RightPlate
+    100164: transform1
+    100166: transform2
+    100168: transform3
+    100170: transform4
+    400000: Armone
+    400002: Armone_1_ctrl
+    400004: Armone_1_joint
+    400006: Armone_2_ctrl
+    400008: Armone_2_joint
+    400010: Armone_3_ctrl
+    400012: Armone_3_joint
+    400014: Armone_4_ctrl
+    400016: Armone_4_joint
+    400018: Armone_5_ctrl
+    400020: Armone_5_joint
+    400022: Armone_ctrl_group
+    400024: Armone_curve
+    400026: Armone_IkHandle
+    400028: Armtre_1_ctrl
+    400030: Armtre_2_ctrl
+    400032: Armtre_3_ctrl
+    400034: Armtre_4_ctrl
+    400036: Armtre_5_ctrl
+    400038: Armtre_ctrl_group
+    400040: Armtre_curve
+    400042: Armtre_IkHandle
+    400044: Armtree
+    400046: Armtree_1_joint
+    400048: Armtree_2_joint
+    400050: Armtree_3_joint
+    400052: Armtree_4_joint
+    400054: Armtree_5_joint
+    400056: Armtwo
+    400058: Armtwo_1_ctrl
+    400060: Armtwo_1_joint
+    400062: Armtwo_2_ctrl
+    400064: Armtwo_2_joint
+    400066: Armtwo_3_ctrl
+    400068: Armtwo_3_joint
+    400070: Armtwo_4_ctrl
+    400072: Armtwo_4_joint
+    400074: Armtwo_5_ctrl
+    400076: Armtwo_5_joint
+    400078: Armtwo_ctrl_group
+    400080: Armtwo_curve
+    400082: Armtwo_IkHandle
+    400084: cluster_01
+    400086: cluster_01 1
+    400088: cluster_01 2
+    400090: cluster_01_group
+    400092: cluster_01_group 1
+    400094: cluster_01_group 2
+    400096: cluster_02
+    400098: cluster_02 1
+    400100: cluster_02 2
+    400102: cluster_02_group
+    400104: cluster_02_group 1
+    400106: cluster_02_group 2
+    400108: cluster_03
+    400110: cluster_03 1
+    400112: cluster_03 2
+    400114: cluster_03_group
+    400116: cluster_03_group 1
+    400118: cluster_03_group 2
+    400120: cluster_04
+    400122: cluster_04 1
+    400124: cluster_04 2
+    400126: cluster_04_group
+    400128: cluster_04_group 1
+    400130: cluster_04_group 2
+    400132: cluster_05
+    400134: cluster_05 1
+    400136: cluster_05 2
+    400138: cluster_05_group
+    400140: cluster_05_group 1
+    400142: cluster_05_group 2
+    400144: Full_body_ctrl
+    400146: Head
+    400148: Head_ctrl
+    400150: Head_ctrl_group
+    400152: Lamp
+    400154: LeftPlate
+    400156: //RootNode
+    400158: pCube1
+    400160: polySurface1
+    400162: RightPlate
+    400164: transform1
+    400166: transform2
+    400168: transform3
+    400170: transform4
+    2300000: Lamp
+    2300002: LeftPlate
+    2300004: RightPlate
+    3300000: Lamp
+    3300002: LeftPlate
+    3300004: RightPlate
+    4300000: polySurface1
+    4300002: Lamp
+    4300004: RightPlate
+    4300006: LeftPlate
+    7400000: monster6_animation_05_hit
+    9500000: //RootNode
+    13700000: polySurface1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
