@@ -113,7 +113,7 @@ public class Starmap : MonoBehaviour {
         gameObject.SetActive(true);
         gameObject.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "BackgroundPanel").sprite = _backgrounds[(int)GALAXY.Instance._lastStar._starBackground];
         gameObject.SetActive(false);
-        float planetPosX = 1400 / _numberOfPlanets;
+        float planetPosX = 1200 / _numberOfPlanets;
         for (int i = 0; i < _numberOfPlanets; i++)
         {
             Planet _plan = new Planet();

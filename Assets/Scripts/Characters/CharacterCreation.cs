@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Linq;
+using System.IO;
 
 public class CharacterCreation : MonoBehaviour {
     
@@ -47,7 +48,7 @@ public class CharacterCreation : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-        Instance.gameObject.SetActive(false);
+        //Instance.gameObject.SetActive(false);
         
 	}
 	
@@ -173,8 +174,6 @@ public class CharacterCreation : MonoBehaviour {
     }
 
    
-
-
     public void Accept()
     {
 
@@ -188,6 +187,16 @@ public class CharacterCreation : MonoBehaviour {
         Global.Instance.player.GetComponent<ClickAttack>().enabled = true;
         Global.Instance._playerGUI.GetComponentInChildren<Canvas>().enabled = true;
         Global.Instance.player.gameObject.SetActive(false);
+
+        string fileName = "Save.txt";
+        if (File.Exists(fileName))
+        {
+            StreamWriter sw = File.CreateText("Save.txt");
+            sw.WriteLine("CharCreation: 1");
+            sw.Close();
+           
+        }
+
 
         Ship.Instance.ExitCharCreation();
     }

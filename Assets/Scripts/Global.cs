@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 [System.Serializable]
 public class Global : MonoBehaviour {
@@ -81,7 +82,7 @@ public class Global : MonoBehaviour {
         public LevelUp levelUp = new LevelUp();
     }
 
-    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4, Galaxy = 5 }
+    public enum GameType : int { Farm = 0, Quest = 1 , Ship = 3, Star = 4, Galaxy = 5, CharCreation = 6 }
     public GameType _gameType = GameType.Farm;
 
     public uint _gold = 0;
@@ -178,7 +179,31 @@ public class Global : MonoBehaviour {
         UpdateLevel();
         UpdateExpBar();
         UpdateGoldText();
-        SwitchScene(GameType.Ship);        
+        string fileName = "Save.txt";
+        if (File.Exists(fileName))
+        {
+            StreamReader sr = File.OpenText(fileName);
+            string result = sr.ReadLine();
+            if (result == "CharCreation: 0")
+            {
+                SwitchScene(GameType.CharCreation);
+            }
+            else
+            {
+                SwitchScene(GameType.Ship);
+                sr.Close();
+            }
+        }
+        else
+        {
+            StreamWriter sw = File.CreateText("Save.txt");
+            sw.WriteLine("CharCreation: 0");
+            sw.Close();
+            SwitchScene(GameType.CharCreation);
+        }
+
+        
+              
         //Starmap.Instance.Generate(1, 100, 9001);
 
         _planet = null;
@@ -254,6 +279,7 @@ public class Global : MonoBehaviour {
                 Starmap.Instance.gameObject.SetActive(false);
                 FarmMode.Instance.startFarmMode();
                 GALAXY.Instance.gameObject.SetActive(false);
+               // CharacterCreation.Instance.gameObject.SetActive(false);
                 _gameCamera.gameObject.SetActive(true);
                 _uiCamera.gameObject.SetActive(false);
                 _gameCamera.tag = "MainCamera";
@@ -266,6 +292,7 @@ public class Global : MonoBehaviour {
                 Ship.Instance.gameObject.SetActive(true);
                 Starmap.Instance.gameObject.SetActive(false);
                 GALAXY.Instance.gameObject.SetActive(false);
+                CharacterCreation.Instance.gameObject.SetActive(false);
                 Music.Instance.StartMenuTheme();
                 try
                 {
@@ -297,6 +324,23 @@ public class Global : MonoBehaviour {
                 Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(false);
                 GALAXY.Instance.gameObject.SetActive(true);
+              //  CharacterCreation.Instance.gameObject.SetActive(false);
+                break;
+            case GameType.CharCreation:
+                FarmMode.Instance.gameObject.SetActive(false);
+                Ship.Instance.gameObject.SetActive(false);
+                Starmap.Instance.gameObject.SetActive(false);
+                GALAXY.Instance.gameObject.SetActive(false);
+                CharacterCreation.Instance.gameObject.SetActive(true);
+                CharacterCreation.Instance.Init();
+                Music.Instance.StartMenuTheme();
+                try
+                {
+                    _gameCamera.gameObject.SetActive(false);
+                    _uiCamera.gameObject.SetActive(true);
+                    _uiCamera.tag = "MainCamera";
+                }
+                catch (System.NullReferenceException) { }
                 break;
             default:
                 break;
