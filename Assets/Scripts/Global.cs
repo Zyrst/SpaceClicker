@@ -179,11 +179,14 @@ public class Global : MonoBehaviour {
         UpdateLevel();
         UpdateExpBar();
         UpdateGoldText();
+        //See if a Save.txt files exists
         string fileName = "Save.txt";
         if (File.Exists(fileName))
         {
+            //Read first line
             StreamReader sr = File.OpenText(fileName);
             string result = sr.ReadLine();
+            //If CharCreate is 0 , go to CharCreate
             if (result == "CharCreation: 0")
             {
                 SwitchScene(GameType.CharCreation);
@@ -196,14 +199,13 @@ public class Global : MonoBehaviour {
         }
         else
         {
-            StreamWriter sw = File.CreateText("Save.txt");
+            //File doesn't exist, create it and add line
+            StreamWriter sw = File.CreateText(fileName);
             sw.WriteLine("CharCreation: 0");
             sw.Close();
             SwitchScene(GameType.CharCreation);
         }
 
-        
-              
         //Starmap.Instance.Generate(1, 100, 9001);
 
         _planet = null;

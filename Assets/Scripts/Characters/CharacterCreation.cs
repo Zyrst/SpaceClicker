@@ -34,6 +34,11 @@ public class CharacterCreation : MonoBehaviour {
     Transform _playerModel;
     Transform _playerCollider;
 
+    public GameObject _hairColorText;
+    public GameObject _hairText;
+    public GameObject _skinText;
+    public GameObject _eyesText;
+
     private static CharacterCreation _instance = null;
     public static CharacterCreation Instance
     {
@@ -93,6 +98,9 @@ public class CharacterCreation : MonoBehaviour {
         }
 	}
 
+    /// <summary>
+    /// Initialize player to right place and set to "standard" hair combo
+    /// </summary>
     public void Init()
     {
         _playerPos = Global.Instance.player.transform.position;
@@ -104,7 +112,6 @@ public class CharacterCreation : MonoBehaviour {
         _playerCollider = Global.Instance.player.GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "colliders").transform;
         _playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
         _playerCollider.position = _playerModel.position;
-        //playerModel.LookAt(Global.Instance._uiCamera.transform.position);
         _playerModel.transform.rotation = new Quaternion(1f, 133f, -2.4f, 0f);
         _playerModel.localScale = new Vector3(20, 20, 20);
         _playerCollider.localScale = _playerModel.localScale;
@@ -116,7 +123,14 @@ public class CharacterCreation : MonoBehaviour {
         {
             item.color = _rainbow[_currentHairColor];
         }
-        
+        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Base", _skinColor[_currentSkin]);
+        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Eyes", _eyes[_currentEyes]);
+
+
+        _hairColorText.GetComponentInChildren<Text>().text = "Hair Color " + (_currentHairColor + 1);
+        _hairText.GetComponentInChildren<Text>().text = "Hair " + (_currentHairStyle + 1);
+        _skinText.GetComponentInChildren<Text>().text = "Skin " + (_currentSkin + 1);
+        _eyesText.GetComponentInChildren<Text>().text = "Eyes " + (_currentEyes + 1);
     }
 
     /// <summary>
@@ -131,8 +145,19 @@ public class CharacterCreation : MonoBehaviour {
             _currentHairStyle = 0;
         _hairStyles[_currentHairStyle].SetActive(true);
         _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
-
+        _hairText.GetComponentInChildren<Text>().text = "Hair " + (_currentHairStyle + 1); 
         
+    }
+
+    public void ChangeHairMinus()
+    {
+        _hairStyles[_currentHairStyle].SetActive(false);
+        _currentHairStyle--;
+        if (_currentHairStyle < 0)
+            _currentHairStyle = _hairStyles.Length - 1;
+        _hairStyles[_currentHairStyle].SetActive(true);
+        _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
+        _hairText.GetComponentInChildren<Text>().text = "Hair " + (_currentHairStyle + 1); 
     }
 
     /// <summary>
@@ -144,6 +169,16 @@ public class CharacterCreation : MonoBehaviour {
         if (_currentHairColor >= _rainbow.Length)
             _currentHairColor = 0;
         _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
+        _hairColorText.GetComponentInChildren<Text>().text = "Hair Color " + (_currentHairColor + 1); 
+    }
+
+    public void ChangeHairColorMinus()
+    {
+        _currentHairColor--;
+        if (_currentHairColor < 0 )
+            _currentHairColor = _rainbow.Length - 1;
+        _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
+        _hairColorText.GetComponentInChildren<Text>().text = "Hair Color " + (_currentHairColor + 1); 
     }
 
     /// <summary>
@@ -155,6 +190,16 @@ public class CharacterCreation : MonoBehaviour {
         if (_currentSkin >= _skinColor.Length)
             _currentSkin = 0;
         Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Base", _skinColor[_currentSkin]);
+        _skinText.GetComponentInChildren<Text>().text = "Skin " + (_currentSkin + 1);
+    }
+
+    public void ChangeSkinMinus()
+    {
+        _currentSkin--;
+        if (_currentSkin < 0 )
+            _currentSkin = _skinColor.Length - 1;
+        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Base", _skinColor[_currentSkin]);
+        _skinText.GetComponentInChildren<Text>().text = "Skin " + (_currentSkin + 1);
     }
 
     /// <summary>
@@ -166,6 +211,16 @@ public class CharacterCreation : MonoBehaviour {
         if (_currentEyes >= _eyes.Length)
             _currentEyes = 0;
         Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Eyes", _eyes[_currentEyes]);
+        _eyesText.GetComponentInChildren<Text>().text = "Eyes " + (_currentEyes  + 1);
+    }
+
+    public void ChangeEyesMinus()
+    {
+        _currentEyes--;
+        if (_currentEyes < 0 )
+            _currentEyes = _eyes.Length;
+        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Eyes", _eyes[_currentEyes]);
+        _eyesText.GetComponentInChildren<Text>().text = "Eyes " + (_currentEyes + 1);
     }
 
     public void Rotate()
@@ -174,6 +229,9 @@ public class CharacterCreation : MonoBehaviour {
     }
 
    
+    /// <summary>
+    /// Presses accept button, resets everything and writes to file that you have done charcreate
+    /// </summary>
     public void Accept()
     {
 
