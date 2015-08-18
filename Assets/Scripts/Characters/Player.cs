@@ -417,9 +417,9 @@ public class Player : Character {
         }
         return null;
     }
-    public override void SetExperience(uint level_)
+    public override void SetExperience(uint level_, Character killer_)
     {
-        base.SetExperience(level_);
+        base.SetExperience(level_, killer_);
         Global.Instance.UpdateExpBar();
     }
 

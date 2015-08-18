@@ -113,7 +113,6 @@ public class SpellAttack : BaseAttack {
 
     public void Init()
     {
-        Debug.Log("name: " + name);
         if (_slot == null)
         {
             Debug.Log("slot är null");

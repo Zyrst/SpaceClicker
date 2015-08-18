@@ -16,6 +16,7 @@ public class Global : MonoBehaviour {
         public GameObject GoldCoin;
         public GameObject HealthPotion;
         public GameObject LootCrate;
+        public GameObject ExpBall;
         public GameObject[] _effects;
     }
 
@@ -218,7 +219,7 @@ public class Global : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.G))
         {
-            player.SetExperience((uint)(player._experianceToNext * 0.1f));
+            player.SetExperience((uint)(player._experianceToNext * 0.1f), Global.Instance.player);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {

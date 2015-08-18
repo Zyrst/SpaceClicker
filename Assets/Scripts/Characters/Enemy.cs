@@ -70,7 +70,7 @@ public class Enemy : Character
         _stats._baseStat.Checker();
         
         
-        if (Global.Instance._player._miniBoss)
+        if (Global.Instance._player._miniBoss && EnemySpawner.triggers._bossSpawn._enemy == this)
         {
             _stats._baseStat._values[0] *= 2f;
             _stats._baseStat.Checker();

@@ -23,15 +23,24 @@ public class LootCrate : MonoBehaviour {
             {
                 if (hit.collider.transform == transform && !_enemyOwner.GetComponent<Character>()._isAlive)
                 {
-                    Vector3 dir = (Vector3.up * 25f) + -(transform.position - Global.Instance.player.transform.position);
-                    _potion.GetComponent<Rigidbody>().AddForce(dir * 20f);
-                    _crateSound.start();
-                    gameObject.SetActive(false);
-                    Invoke("ActivatePotion", 0.3f);
+                    Click();
                 }
             }
         }
 	}
+
+    public void Click()
+    {
+        Vector3 dir = (Vector3.up * 25f) + (-(transform.position - Global.Instance.player.transform.position));
+        _potion.GetComponent<Rigidbody>().AddForce(dir * 20f);
+        _crateSound.start();
+
+        for (int i = 0; i < 10; i++)
+            GoldCoin.Create(transform.position, dir + ((-(transform.position - Global.Instance.player.transform.position)) * 15));
+
+        gameObject.SetActive(false);
+        Invoke("ActivatePotion", 0.3f);
+    }
 
     /// <summary>
     /// Associate a potion and enemy with loot crate
@@ -49,8 +58,9 @@ public class LootCrate : MonoBehaviour {
     /// </summary>
     public void UltimateDestroy()
     {
-        GameObject.Destroy(gameObject);
-        GameObject.Destroy(_potion.gameObject);
+        Click();
+        //GameObject.Destroy(gameObject);
+        //GameObject.Destroy(_potion.gameObject);
     }
 
     /// <summary>

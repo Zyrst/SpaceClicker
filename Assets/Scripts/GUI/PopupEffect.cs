@@ -8,7 +8,6 @@ public class PopupEffect : MonoBehaviour {
 
     private bool _doIt = true;
     private Vector3 _original = new Vector3(1, 1, 1);
-    private Vector3 _delta = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +16,6 @@ public class PopupEffect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (_doIt)
         {
             _timer -= Time.deltaTime;

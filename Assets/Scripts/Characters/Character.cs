@@ -88,7 +88,7 @@ public class Character : MonoBehaviour {
     {
         if (killer_ != null)
         {
-            killer_.SetExperience(_level);
+            killer_.SetExperience(_level, this);
         }
         Die();
     }
@@ -98,18 +98,29 @@ public class Character : MonoBehaviour {
         _isAlive = false;
     }
 
-    public virtual void SetExperience(uint level_)
+    public virtual void SetExperience(uint level_, Character killer_)
     {
+        if (this as Player == null)
+        {
+            return;
+        }
+
         uint exp = 0;
         exp = (uint)(level_ / _level * Global.Instance._expVariable) + level_;
-        _experience += exp;
-        if (_experience >= _experianceToNext)
+        RectTransform playerTrans = Global.Instance._playerGUI.GetComponentInChildren<Canvas>().GetComponent<RectTransform>();
+
+        int rr = Mathf.CeilToInt(exp / 10);
+        for (int i = 0; i < rr+1; i++)
         {
-            LevelUp();
-            if (this is Player)
-            {
-                ((Player)this)._talentPoints++;
-            }
+            GameObject go = GameObject.Instantiate(Global.Instance._prefabs.ExpBall);
+
+            uint xp = (exp > 10 ? 10 : exp);
+            exp -= 10;
+
+            go.GetComponent<ExpBall>()._exp = xp;
+
+            go.GetComponent<RectTransform>().SetParent(playerTrans);
+            go.transform.position = Global.Instance._gameCamera.WorldToScreenPoint(killer_.transform.position);
         }
     }
 

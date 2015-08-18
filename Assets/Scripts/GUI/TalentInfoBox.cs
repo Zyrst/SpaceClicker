@@ -42,10 +42,12 @@ public class TalentInfoBox : MonoBehaviour {
     {
         get
         {
+            Global.DebugOnScreen(gameObject.activeSelf ? "true" : "false" , 60);
             return gameObject.activeSelf;
         }
         set
         {
+            Global.DebugOnScreen(value ? "true" : "false", 60);
             if (value)
             {
                 gameObject.SetActive(true);
@@ -64,8 +66,6 @@ public class TalentInfoBox : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         _instance = instance;
-
-        IsUp = false;
 	}
 	
 	// Update is called once per frame
