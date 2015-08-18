@@ -134,91 +134,61 @@ public class CharacterCreation : MonoBehaviour {
     }
 
     /// <summary>
-    /// Changes hairstyle
+    /// Change hairstyle
     /// </summary>
-    public void ChangeHair()
+    /// <param name="val_">Right or left in array</param>
+    public void ChangeHair(int val_)
     {
-
         _hairStyles[_currentHairStyle].SetActive(false);
-        _currentHairStyle++;
-        if (_currentHairStyle >= _hairStyles.Length)
+        _currentHairStyle += val_;
+        if (_currentHairStyle < 0)
+            _currentHairStyle = _hairStyles.Length - 1;
+        else if (_currentHairStyle >= _hairStyles.Length)
             _currentHairStyle = 0;
         _hairStyles[_currentHairStyle].SetActive(true);
         _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
         _hairText.GetComponentInChildren<Text>().text = "Hair " + (_currentHairStyle + 1); 
-        
     }
-
-    public void ChangeHairMinus()
-    {
-        _hairStyles[_currentHairStyle].SetActive(false);
-        _currentHairStyle--;
-        if (_currentHairStyle < 0)
-            _currentHairStyle = _hairStyles.Length - 1;
-        _hairStyles[_currentHairStyle].SetActive(true);
-        _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
-        _hairText.GetComponentInChildren<Text>().text = "Hair " + (_currentHairStyle + 1); 
-    }
-
+    
     /// <summary>
-    /// Changes hair color
+    /// Change hair color
     /// </summary>
-    public void ChangeHairColor()
+    /// <param name="val_">Right or left in array</param>
+    public void ChangeHairColor(int val_)
     {
-        _currentHairColor++;
-        if (_currentHairColor >= _rainbow.Length)
+        _currentHairColor += val_;
+        if (_currentHairColor < 0)
+            _currentHairColor = _rainbow.Length - 1;
+        else if (_currentHairColor >= _rainbow.Length)
             _currentHairColor = 0;
         _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
         _hairColorText.GetComponentInChildren<Text>().text = "Hair Color " + (_currentHairColor + 1); 
     }
-
-    public void ChangeHairColorMinus()
-    {
-        _currentHairColor--;
-        if (_currentHairColor < 0 )
-            _currentHairColor = _rainbow.Length - 1;
-        _hairMaterials[_currentHairStyle].color = _rainbow[_currentHairColor];
-        _hairColorText.GetComponentInChildren<Text>().text = "Hair Color " + (_currentHairColor + 1); 
-    }
-
     /// <summary>
     /// Change skin
     /// </summary>
-    public void ChangeSkin()
+    /// <param name="val_">Right or left in array</param>
+    public void ChangeSkin(int val_)
     {
-        _currentSkin++;
-        if (_currentSkin >= _skinColor.Length)
+        _currentSkin += val_;
+        if (_currentSkin < 0)
+            _currentSkin = _skinColor.Length - 1;
+        else if (_currentSkin >= _skinColor.Length)
             _currentSkin = 0;
         Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Base", _skinColor[_currentSkin]);
         _skinText.GetComponentInChildren<Text>().text = "Skin " + (_currentSkin + 1);
     }
-
-    public void ChangeSkinMinus()
-    {
-        _currentSkin--;
-        if (_currentSkin < 0 )
-            _currentSkin = _skinColor.Length - 1;
-        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Base", _skinColor[_currentSkin]);
-        _skinText.GetComponentInChildren<Text>().text = "Skin " + (_currentSkin + 1);
-    }
-
     /// <summary>
     /// Change eyes
     /// </summary>
-    public void ChangeEyes()
+    /// <param name="val_">Right or left in array</param>
+    public void ChangeEyes(int val_)
     {
-        _currentEyes++;
-        if (_currentEyes >= _eyes.Length)
+        _currentEyes += val_;
+        if(_currentEyes < 0 )
+            _currentEyes = _eyes.Length - 1;
+        else if(_currentEyes >= _eyes.Length)
             _currentEyes = 0;
-        Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Eyes", _eyes[_currentEyes]);
-        _eyesText.GetComponentInChildren<Text>().text = "Eyes " + (_currentEyes  + 1);
-    }
-
-    public void ChangeEyesMinus()
-    {
-        _currentEyes--;
-        if (_currentEyes < 0 )
-            _currentEyes = _eyes.Length;
         Global.Instance.player.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "MainC").GetComponent<SkinnedMeshRenderer>().material.SetTexture("_Eyes", _eyes[_currentEyes]);
         _eyesText.GetComponentInChildren<Text>().text = "Eyes " + (_currentEyes + 1);
     }
