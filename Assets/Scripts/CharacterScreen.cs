@@ -357,7 +357,7 @@ public class CharacterScreen : MonoBehaviour {
 
         _playerModel.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
         _playerCollider.position = GetComponentsInChildren<RectTransform>().FirstOrDefault(x => x.name == "CharPos").transform.position;
-        _playerModel.LookAt(Global.Instance._uiCamera.transform.position);
+        _playerModel.LookAt(Global.Instance._uiCamera.transform.position + new Vector3(0,-20,0));
         _playerModel.localScale = new Vector3(13, 13, 13);
         _playerCollider.localScale = new Vector3(13, 13, 13);
 
