@@ -48,10 +48,9 @@ public class Ship : MonoBehaviour {
 
     public void Character()
     {
-        CharacterScreen.Instance.gameObject.SetActive(true);
-        //Global.Instance._player.gameObject.SetActive(true);
         Global.Instance.player.SortInventory();
         Global.Instance.player.UpdateCombinedStats();
+        CharacterScreen.Instance.gameObject.SetActive(true);
         CharacterScreen.Instance.Activate();
         gameObject.SetActive(false);
 

@@ -20,14 +20,7 @@ public class GoldCoin : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-        RectTransform rekt = Global.Instance._playerGUI.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "GoldCoin").rectTransform;
-        Vector3 tmp = Camera.main.ScreenToWorldPoint(rekt.position);
-        _target = tmp;
-        
-        //_target = rekt.rect.max * rekt.localScale.x;
-        //_target.x *= Screen.width / 1920f;
-        //_target.y *= Screen.height / 1080f;
+        _target = Camera.main.ScreenToWorldPoint(Global.Instance._playerGUI.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "GoldCoin").rectTransform.position);
 
     }
 
@@ -66,7 +59,6 @@ public class GoldCoin : MonoBehaviour
             Vector3 calc = (_target - transform.position) * (_speed * Time.deltaTime);
             transform.position += calc;
 
-            //transform.localScale -= transform.localScale * (Time.deltaTime);
             transform.Rotate(Random.Range(0f, 20f), Random.Range(0f, 20f), Random.Range(0f, 20f));
             if (Vector3.Distance(_target, transform.position) <= 3f)
             {
@@ -85,9 +77,6 @@ public class GoldCoin : MonoBehaviour
         body.angularVelocity = Vector3.zero;
         body.useGravity = false;
         GetComponent<BoxCollider>().enabled = false;
-        //Global.Instance.Gold += _value;
-        //Sounds.OneShot(Sounds.Instance.uiSounds.coinCollect);
-        //GameObject.Destroy(gameObject);
 
         /*Flyg till guldikonen*/
     }

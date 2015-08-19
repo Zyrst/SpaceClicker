@@ -28,6 +28,7 @@ public class Starmap : MonoBehaviour {
             if (_instance == null)
             {
                 _instance = GameObject.Find("STARMAP").GetComponent<Starmap>();
+                //_instance = Resources.FindObjectsOfTypeAll<Starmap>()[0];
             }
             return _instance;
         }

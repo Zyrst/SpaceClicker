@@ -47,16 +47,16 @@ public class CharacterCreation : MonoBehaviour {
             if (_instance == null)
             {
                 _instance = GameObject.Find("CharCreate").GetComponent<CharacterCreation>();
+                //_instance = Resources.FindObjectsOfTypeAll<CharacterCreation>()[0];
             }
             return _instance;
         }
     }
 	// Use this for initialization
 	void Start () {
-        //Instance.gameObject.SetActive(false);
-        
+       
 	}
-	
+ 
 	// Update is called once per frame
 	void Update () {
         if (MouseController.Instance.buttonDown)
@@ -228,4 +228,5 @@ public class CharacterCreation : MonoBehaviour {
 
         Ship.Instance.ExitCharCreation();
     }
+
 }

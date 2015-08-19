@@ -50,6 +50,7 @@ public class GALAXY : MonoBehaviour {
             if (_instance == null)
             {
                 _instance = GameObject.Find("GALAXY").GetComponent<GALAXY>();
+                //_instance = Resources.FindObjectsOfTypeAll<GALAXY>()[0];
             }
             return _instance;
         }

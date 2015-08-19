@@ -211,7 +211,6 @@ public class Global : MonoBehaviour {
 
         _planet = null;
         StartCoroutine(LevelFiller());
-        //Music.Instance.StartMenuTheme();
     }
     void Update()
     {
@@ -278,11 +277,10 @@ public class Global : MonoBehaviour {
             case GameType.Farm:
                 player.gameObject.SetActive(true);
                 FarmMode.Instance.gameObject.SetActive(true);
-                Ship.Instance.gameObject.SetActive(false);
+               // Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(false);
                 FarmMode.Instance.startFarmMode();
-                GALAXY.Instance.gameObject.SetActive(false);
-               // CharacterCreation.Instance.gameObject.SetActive(false);
+              //  GALAXY.Instance.gameObject.SetActive(false);
                 _gameCamera.gameObject.SetActive(true);
                 _uiCamera.gameObject.SetActive(false);
                 _gameCamera.tag = "MainCamera";
@@ -314,26 +312,25 @@ public class Global : MonoBehaviour {
                 }
                 break;
             case GameType.Star:
-                player.gameObject.SetActive(false);
-                FarmMode.Instance.gameObject.SetActive(false);
-                Ship.Instance.gameObject.SetActive(false);
+              //  player.gameObject.SetActive(false);
+               // FarmMode.Instance.gameObject.SetActive(false);
+              //  Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(true);
                 GALAXY.Instance.gameObject.SetActive(false);
                 break;
 
             case GameType.Galaxy:
-                player.gameObject.SetActive(false);
-                FarmMode.Instance.gameObject.SetActive(false);
+              //  player.gameObject.SetActive(false);
+              //  FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(false);
                 Starmap.Instance.gameObject.SetActive(false);
                 GALAXY.Instance.gameObject.SetActive(true);
-              //  CharacterCreation.Instance.gameObject.SetActive(false);
                 break;
             case GameType.CharCreation:
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(false);
-                Starmap.Instance.gameObject.SetActive(false);
-                GALAXY.Instance.gameObject.SetActive(false);
+                //Starmap.Instance.gameObject.SetActive(false);
+                //GALAXY.Instance.gameObject.SetActive(false);
                 CharacterCreation.Instance.gameObject.SetActive(true);
                 CharacterCreation.Instance.Init();
                 Music.Instance.StartMenuTheme();
@@ -632,6 +629,7 @@ public class Global : MonoBehaviour {
                 _refLevels.Add(new vap(tmpVap));
             }
             _refVap = new vap(tmpVap);
+            yield return null;
         }
 
             yield break;
