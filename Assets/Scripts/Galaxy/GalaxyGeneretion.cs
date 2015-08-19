@@ -29,7 +29,7 @@ public class GalaxyGeneretion : MonoBehaviour {
     private static uint _boxY = 0;
 
     // max boxes
-    public static uint _boxMaxX = 8;
+    public static uint _boxMaxX = 9;
     public static uint _boxMaxY = 6;
 
     // max number of stars in a box 

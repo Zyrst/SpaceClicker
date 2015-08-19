@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Linq;
 
-public class GoldCoin : MonoBehaviour {
+public class GoldCoin : MonoBehaviour
+{
 
     public uint _value = 0;
     public float _lifetime = 15f;
@@ -9,13 +12,28 @@ public class GoldCoin : MonoBehaviour {
     [HideInInspector]
     public float _timer = 0f;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public Vector3 _target;
+    public float _speed;
+    public bool _collect = false;
+
+
+    // Use this for initialization
+    void Start()
+    {
+
+        RectTransform rekt = Global.Instance._playerGUI.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "GoldCoin").rectTransform;
+        Vector3 tmp = Camera.main.ScreenToWorldPoint(rekt.position);
+        _target = tmp;
+        
+        //_target = rekt.rect.max * rekt.localScale.x;
+        //_target.x *= Screen.width / 1920f;
+        //_target.y *= Screen.height / 1080f;
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         _timer += Time.deltaTime;
         if (_timer >= _lifetime)
         {
@@ -23,7 +41,7 @@ public class GoldCoin : MonoBehaviour {
         }
         else
         {
-            
+
             //Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
             Ray ray = Global.Instance._gameCamera.ScreenPointToRay(MouseController.Instance.position);
             RaycastHit hit = new RaycastHit();
@@ -43,13 +61,35 @@ public class GoldCoin : MonoBehaviour {
                 }
             }
         }
-	}
+        if (_collect)
+        {
+            Vector3 calc = (_target - transform.position) * (_speed * Time.deltaTime);
+            transform.position += calc;
+
+            //transform.localScale -= transform.localScale * (Time.deltaTime);
+            transform.Rotate(Random.Range(0f, 20f), Random.Range(0f, 20f), Random.Range(0f, 20f));
+            if (Vector3.Distance(_target, transform.position) <= 3f)
+            {
+                Global.Instance.Gold += _value;
+                Sounds.OneShot(Sounds.Instance.uiSounds.coinCollect);
+                GameObject.Destroy(gameObject);
+            }
+        }
+    }
 
     public void Collect()
     {
-        Global.Instance.Gold += _value;
-        Sounds.OneShot(Sounds.Instance.uiSounds.coinCollect);
-        GameObject.Destroy(gameObject);
+        _collect = true;
+        Rigidbody body = GetComponent<Rigidbody>();
+        body.velocity = Vector3.zero;
+        body.angularVelocity = Vector3.zero;
+        body.useGravity = false;
+        GetComponent<BoxCollider>().enabled = false;
+        //Global.Instance.Gold += _value;
+        //Sounds.OneShot(Sounds.Instance.uiSounds.coinCollect);
+        //GameObject.Destroy(gameObject);
+
+        /*Flyg till guldikonen*/
     }
 
     public static GameObject Create(Vector3 pos_, Vector3 force_)
@@ -63,4 +103,5 @@ public class GoldCoin : MonoBehaviour {
 
         return _gold;
     }
+
 }
