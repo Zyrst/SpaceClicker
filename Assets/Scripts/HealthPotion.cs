@@ -33,14 +33,14 @@ public class HealthPotion : MonoBehaviour {
                     {
                         Collect();
                     }
-                    foreach (var item in GetComponentInChildren<Transform>())
+                    /*foreach (var item in GetComponentInChildren<Transform>())
                     {
                         if (hit.collider.transform == item)
                         {
                             Collect();
                             break;
                         }
-                    }
+                    }*/
                 }
             }
         }

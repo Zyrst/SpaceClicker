@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -203,11 +203,12 @@ public class Global : MonoBehaviour {
         }
         else
         {
+            SwitchScene(GameType.CharCreation);
             //File doesn't exist, create it and add line
             StreamWriter sw = File.CreateText(fileName);
             sw.WriteLine("CharCreation: 0");
             sw.Close();
-            SwitchScene(GameType.CharCreation);
+           
         }
 
         //Starmap.Instance.Generate(1, 100, 9001);
@@ -332,8 +333,8 @@ public class Global : MonoBehaviour {
             case GameType.CharCreation:
                 FarmMode.Instance.gameObject.SetActive(false);
                 Ship.Instance.gameObject.SetActive(false);
-                //Starmap.Instance.gameObject.SetActive(false);
-                //GALAXY.Instance.gameObject.SetActive(false);
+                Starmap.Instance.gameObject.SetActive(false);
+                GALAXY.Instance.gameObject.SetActive(false);
                 CharacterCreation.Instance.gameObject.SetActive(true);
                 CharacterCreation.Instance.Init();
                 Music.Instance.StartMenuTheme();

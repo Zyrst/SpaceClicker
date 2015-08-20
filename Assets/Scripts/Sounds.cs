@@ -142,6 +142,8 @@ public class Sounds : MonoBehaviour {
         public FMODAsset mindfrayReady;
         public FMODAsset mindfrayTake;
         public FMODAsset mindfrayUse;
+        public FMODAsset quickenmindReady;
+        public FMODAsset quickenmindUse;
     }
 
     [System.Serializable]

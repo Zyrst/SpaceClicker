@@ -196,7 +196,7 @@ public class SpellAttack : BaseAttack {
             _degree = 360f / _combinedStats._cooldown;
 
             ResetGUI();
-
+            _useSound.start();
             UseSpell(Global.Instance.GetAllEnemies().ToArray()[0] as Character, transform.position);
         }
         else if (!_clicked && !_cd && !_stunned)
@@ -571,7 +571,10 @@ public class SpellAttack : BaseAttack {
                 _takeSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayTake);
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.mindfrayUse);
                 break;
-
+            case "Quicken Mind":
+                _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.quickenmindUse);
+                _readySound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.psychic.quickenmindReady);
+                break;
                 /*Kinetic*/
             case "Tremor" :
                 _useSound = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.playerSounds.abilities.kinetic.tremorUse);
