@@ -77,6 +77,8 @@ public class Global : MonoBehaviour {
         {
             public void Start()
             {
+				GameObject go = GameObject.Instantiate (Instance._prefabs._effects [2]);
+				go.transform.position = Instance._player.transform.position;
             }
         }
 
