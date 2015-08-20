@@ -26,7 +26,7 @@ public class BuyEquipmentGeneration {
     public static void ConnectEquipmentToTheButton(BuyEquipmentButton slot_, Equipment equipment_)
     {
         slot_._equipmentImage.sprite = equipment_._sprite.sprite;
-        slot_._levelText.text = equipment_._stats._level.ToString();
+        slot_._levelText.text = "Level "+equipment_._stats._level.ToString();
         slot_._nameText.text = equipment_._stats._name;
         slot_._typeText.text = System.Enum.GetName(typeof(Equipment.EquipmentType), equipment_._type);
 
@@ -99,31 +99,52 @@ public class BuyEquipmentGeneration {
 
         ret._rareness = Equipment.Rareness.Green;
         float ITEMSTATMULTIPLIER = 0f;
-        switch (Random.Range(0, 4))
+
+		var tmp = Random.Range (0f, 1f);
+		if (tmp < 0.8f) {
+			ret._rareness = Equipment.Rareness.Green;
+			ITEMSTATMULTIPLIER = 0.075f * 3f;
+			ret._cost = 75;
+		} else if (tmp < 0.95f) {
+			ret._rareness = Equipment.Rareness.Blue;
+			ITEMSTATMULTIPLIER = 0.15f * 3f;
+			ret._cost = 160;
+		} else if (tmp < 0.99f) {
+			ret._rareness = Equipment.Rareness.Purple;
+			ITEMSTATMULTIPLIER = 0.21f * 3f;
+			ret._cost = 540;
+		} else {
+			ret._rareness = Equipment.Rareness.Orange;
+			ITEMSTATMULTIPLIER = 0.3f * 3f;
+			ret._cost = 2100;
+		}
+
+		/*
+        switch (Random.Range(0f, 4f))
 	    {
             case 0:
                 ret._rareness = Equipment.Rareness.Green;
                 ITEMSTATMULTIPLIER = 0.075f * 3f;
-                ret._cost = 625;
+                ret._cost = 75;
                 break;
             case 1:
                 ret._rareness = Equipment.Rareness.Blue;
                 ITEMSTATMULTIPLIER = 0.15f * 3f;
-                ret._cost = 1350;
+                ret._cost = 160;
                 break;
             case 2:
                 ret._rareness = Equipment.Rareness.Purple;
                 ITEMSTATMULTIPLIER = 0.21f * 3f;
-                ret._cost = 4500;
+                ret._cost = 540;
                 break;
             case 3:
                 ret._rareness = Equipment.Rareness.Orange;
                 ITEMSTATMULTIPLIER = 0.3f * 3f;
-                ret._cost = 17500;
+                ret._cost = 2100;
                 break;
 		    default:
                 break;
-	    }
+	    }*/
 
         ret._stats._level = Global.Instance.player._level;                                                         // level
                                                                                                                     // base

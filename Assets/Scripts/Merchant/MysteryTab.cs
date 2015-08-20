@@ -29,6 +29,7 @@ public class MysteryTab : Tabs {
 
             item._equipmentImage.sprite = equi._sprite.sprite;
 
+			equi._cost = 100;
             item._goldText.text = equi._cost.ToString();
         }
         Debug.Log("New Mystery Item has been generated");

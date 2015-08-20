@@ -35,8 +35,8 @@ public class LootCrate : MonoBehaviour {
         _potion.GetComponent<Rigidbody>().AddForce(dir * 20f);
         _crateSound.start();
 
-        for (int i = 0; i < 10; i++)
-            GoldCoin.Create(transform.position, dir + ((-(transform.position - Global.Instance.player.transform.position)) * 15));
+        for (int i = 0; i < 4; i++)
+            GoldCoin.Create(new Vector3(transform.position.x,transform.position.y+(i*0.5f),transform.position.z), dir + ((-(transform.position - Global.Instance.player.transform.position)) * 5));
 
         gameObject.SetActive(false);
         Invoke("ActivatePotion", 0.3f);
