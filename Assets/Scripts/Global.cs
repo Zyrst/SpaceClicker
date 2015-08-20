@@ -193,6 +193,7 @@ public class Global : MonoBehaviour {
             if (result == "CharCreation: 0")
             {
                 SwitchScene(GameType.CharCreation);
+				sr.Close();
             }
             else
             {

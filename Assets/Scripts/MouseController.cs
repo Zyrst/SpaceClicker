@@ -6,8 +6,9 @@ public class MouseController {
     /// <summary>
     /// lock the clicks
     /// </summary>
-    public bool _setLocked = false;
+	public bool _setLocked = false;
     public bool _locked = false;
+	public Vector2 _lastPosition;
     public bool locked
     {
         get { return _locked; }
@@ -59,6 +60,7 @@ public class MouseController {
 
     public void Update()
     {
+
     }
 
     public void LateUpdate()
@@ -68,6 +70,7 @@ public class MouseController {
             _locked = false;
             _setLocked = false;
         }
+		_lastPosition = position;
     }
 
     private static MouseController _instance = null;
@@ -81,4 +84,9 @@ public class MouseController {
             return _instance;
         }
     }
+	public Vector2 LastPosition{
+		get{
+			return _lastPosition;
+		}
+	}
 }

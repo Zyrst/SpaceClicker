@@ -197,6 +197,10 @@ public class Enemy : Character
         {
             if (!_shieldUp)
             {
+
+				GameObject he = GameObject.Instantiate(Global.Instance._prefabs._effects[3]);
+				he.transform.position = transform.position;
+
                 try
                 {
                     int rnd = Random.Range(1,3);

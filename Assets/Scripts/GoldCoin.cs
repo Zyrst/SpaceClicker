@@ -21,18 +21,18 @@ public class GoldCoin : MonoBehaviour
     void Start()
     {
         _target = Camera.main.ScreenToWorldPoint(Global.Instance._playerGUI.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "GoldCoin").rectTransform.position);
-
+		_lifetime = Random.Range (14f, 16f);
     }
 
     // Update is called once per frame
     void Update()
     {
         _timer += Time.deltaTime;
-        if (_timer >= _lifetime)
+        if (_timer >= _lifetime && _collect == false)
         {
             Collect();
         }
-        else
+        else if(_collect == false) //HAR INTE TESTAT ÄN.
         {
 
             //Ray ray = Camera.main.ScreenPointToRay(MouseController.Instance.position);
@@ -62,8 +62,7 @@ public class GoldCoin : MonoBehaviour
             transform.Rotate(Random.Range(0f, 20f), Random.Range(0f, 20f), Random.Range(0f, 20f));
             if (Vector3.Distance(_target, transform.position) <= 3f)
             {
-                Global.Instance.Gold += _value;
-                Sounds.OneShot(Sounds.Instance.uiSounds.coinCollect);
+				Global.Instance.Gold += _value;
                 GameObject.Destroy(gameObject);
             }
         }
@@ -77,6 +76,7 @@ public class GoldCoin : MonoBehaviour
         body.angularVelocity = Vector3.zero;
         body.useGravity = false;
         GetComponent<BoxCollider>().enabled = false;
+		Sounds.OneShot(Sounds.Instance.uiSounds.coinCollect);
 
         /*Flyg till guldikonen*/
     }
