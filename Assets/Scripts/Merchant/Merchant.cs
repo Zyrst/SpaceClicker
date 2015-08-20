@@ -39,6 +39,28 @@ public class Merchant : MonoBehaviour {
 
     public void Open()
     {
+
+        switch (Global.Instance._gameType)
+        {
+            case Global.GameType.Farm:
+                Global.Instance.PausGame();
+                break;
+            case Global.GameType.Quest:
+                break;
+            case Global.GameType.Ship:
+                Music.Instance._menuTheme.StartMerchant();
+                break;
+            case Global.GameType.Star:
+                break;
+            case Global.GameType.Galaxy:
+                break;
+            case Global.GameType.CharCreation:
+                break;
+            default:
+                break;
+        }
+
+
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         gameObject.SetActive(true);
         tabs.GetComponent<Tabs>().OpenTab(Tabs.TabType.Buy);
@@ -46,13 +68,35 @@ public class Merchant : MonoBehaviour {
         GetComponentsInChildren<BuyTab>(true)[0].GenerateNewEquipment();
         GetComponentsInChildren<MysteryTab>(true)[0].GenerateNewItem();
 
-        Music.Instance._menuTheme.StartMerchant();
+        
     }
 
     public void Close()
     {
-        Sounds.OneShot(Sounds.Instance.uiSounds.Button);
-        Music.Instance._menuTheme.ExitMerchant();
-        gameObject.SetActive(false);
+        switch (Global.Instance._gameType)
+        {
+            case Global.GameType.Farm:
+                Global.Instance.PausGame();
+                gameObject.SetActive(false);
+                break;
+            case Global.GameType.Quest:
+                break;
+            case Global.GameType.Ship:
+                Sounds.OneShot(Sounds.Instance.uiSounds.Button);
+                Music.Instance._menuTheme.ExitMerchant();
+                gameObject.SetActive(false);
+                break;
+            case Global.GameType.Star:
+                break;
+            case Global.GameType.Galaxy:
+                break;
+            case Global.GameType.CharCreation:
+                break;
+            default:
+                break;
+        }
+        
     }
+
+   
 }

@@ -275,6 +275,7 @@ public class Global : MonoBehaviour {
     }
     public void SwitchScene(GameType gt_)
     {
+        _gameType = gt_;
         EnemySpawner.Reset();
         switch (gt_)
         {
@@ -299,13 +300,15 @@ public class Global : MonoBehaviour {
                 GALAXY.Instance.gameObject.SetActive(false);
                 CharacterCreation.Instance.gameObject.SetActive(false);
                 Music.Instance.StartMenuTheme();
+                Time.timeScale = 1f;
+                
                 try
                 {
                     _gameCamera.gameObject.SetActive(false);
                     _uiCamera.gameObject.SetActive(true);
                     _uiCamera.tag = "MainCamera";
                 }
-                catch (System.NullReferenceException) { Debug.Log("kamera i switch scene"); }
+                catch (System.NullReferenceException) {  }
 
                 foreach (var item in player.gameObject.GetComponentsInChildren<SpellAttack>(true))
                 {
