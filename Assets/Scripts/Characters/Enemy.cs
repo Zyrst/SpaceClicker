@@ -232,17 +232,23 @@ public class Enemy : Character
                 // play taking damage sound 
                 if (!_isAlive)
                 {
-                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_heavy); 
+                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_heavy);
+                    if (Global.Instance.player._miniBoss)
+                        _takingDamageSoundEvent.setParameterValue("Boss", 1f);
                     _takingDamageSoundEvent.start();
                 }
                 else if (vap.GetScale(oldHP, _stats._maxHealth) >= 0.35f && vap.GetScale(_stats._health, _stats._maxHealth) <= 0.35f)
                 {
-                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_medium); 
+                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_medium);
+                    if(Global.Instance.player._miniBoss)
+                        _takingDamageSoundEvent.setParameterValue("Boss", 1f);
                     _takingDamageSoundEvent.start();
                 }
                 else if (vap.GetScale(oldHP, _stats._maxHealth) >= 0.85f && vap.GetScale(_stats._health, _stats._maxHealth) <= 0.85f)
                 {
-                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_light); 
+                    _takingDamageSoundEvent = FMOD_StudioSystem.instance.GetEvent(Sounds.Instance.enemySounds.damage_light);
+                    if (Global.Instance.player._miniBoss)
+                        _takingDamageSoundEvent.setParameterValue("Boss", 1f);
                     _takingDamageSoundEvent.start();
                 }
 
