@@ -7,6 +7,7 @@ using System.Linq;
 public class Starmap : MonoBehaviour {
 
     public Planet _selectedPlanet = null;
+    public List<Planet> _planetList = new List<Planet>();
     public GameObject _planetInfoBox;
     public int _numberOfPlanets = 0;
     public uint _minLevel = 0;
@@ -53,6 +54,7 @@ public class Starmap : MonoBehaviour {
         }
         _planetBounds.Clear();
         _planetInfoBox.gameObject.SetActive(false);
+        _planetList.Clear();
     }
 
     public void BackToShip()
@@ -118,6 +120,7 @@ public class Starmap : MonoBehaviour {
         for (int i = 0; i < _numberOfPlanets; i++)
         {
             Planet _plan = new Planet();
+            _planetList.Add(_plan);
 
             int planetTypes = System.Enum.GetNames(typeof(Planet.PlanetType)).Length;
             _plan._type = (Planet.PlanetType)Random.Range(0, planetTypes);

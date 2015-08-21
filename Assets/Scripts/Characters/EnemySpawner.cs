@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour {
         private float dontCallNewWaveToOftenTrigger = 0f;
         public void newWave()
         {
+            Player.Instance.CheckPlanetLevel();
             if (dontCallNewWaveToOftenTrigger > Time.time)
             {
                 return;

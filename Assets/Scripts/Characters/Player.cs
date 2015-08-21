@@ -336,6 +336,25 @@ public class Player : Character {
         }
     }
 
+    public void CheckPlanetLevel()
+    {
+        if (Global.Instance._gameType != Global.GameType.Farm)
+        {
+            return;
+        }
+        if (Global.Instance._planet._maxLevel + 3 <= _level)
+        {
+            for (int i = 0; i < Starmap.Instance._planetList.Count; i++)
+            {
+                if (Starmap.Instance._planetList[i] == Starmap.Instance._selectedPlanet && i != Starmap.Instance._planetList.Count-1)
+                {
+                    FarmMode.Instance._nextPlanetButton.SetActive(true);
+                    FarmMode.Instance._nextPlanetButton.GetComponent<NextPlanetButton>()._nextPlanet = Starmap.Instance._planetList[i + 1];
+                }
+            }
+        }
+    }
+
     void OnGUI()
     {
         if(_showHit){
@@ -379,6 +398,8 @@ public class Player : Character {
 
         Global.Instance.effects.levelUp.Start();
             
+        // see if player is 3 levels higher than enemies on planet
+        CheckPlanetLevel();
     }
 
     IEnumerator RemoveDing()

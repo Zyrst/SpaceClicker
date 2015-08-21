@@ -9,6 +9,7 @@ public class FarmMode : MonoBehaviour
     public GameObject _arena;
     public GameObject _bossSpawn;
     public UIDeath _uiDeath;
+    public GameObject _nextPlanetButton;
 
     private static FarmMode _instance = null;
     public static FarmMode Instance
@@ -29,6 +30,7 @@ public class FarmMode : MonoBehaviour
 
     public void startFarmMode()
     {
+        _nextPlanetButton.SetActive(false);
         _arena = (GameObject.Instantiate(arenaPrefab) as GameObject);
         _arena.GetComponent<MeshRenderer>().material.mainTexture = TextureTracker.Instance._arena._postAp[Random.Range(0, TextureTracker.Instance._arena._postAp.Length)];
         Global.Instance.player.transform.position = _arena.GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "PlayerSpawnPoint").position;
