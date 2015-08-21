@@ -132,7 +132,7 @@ public class PreviewTab : Tabs {
 
     private BuyEquipmentButton makeAButton(Vector3 pos_)
     {
-        Global.DebugOnScreen("trying to make the button\tx: " + pos_.x + " y: " + pos_.y);
+        //Global.DebugOnScreen("trying to make the button\tx: " + pos_.x + " y: " + pos_.y);
         // generate button
         Object button = (GetComponentsInChildren<BuyEquipmentButton>()[0].gameObject);
         GameObject go = (GameObject)GameObject.Instantiate(button, Vector3.zero, ((GameObject)button).transform.rotation);
@@ -154,7 +154,7 @@ public class PreviewTab : Tabs {
         {
             if (!first)
             {
-                Global.DebugOnScreen("Remove ONE BUTTON FROM PREVIEW TAB");
+                //Global.DebugOnScreen("Remove ONE BUTTON FROM PREVIEW TAB");
                 Destroy(item.gameObject);
             }
             first = false;

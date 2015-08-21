@@ -224,7 +224,7 @@ public class Player : Character {
         _stats._prevLevel._values[0] = Global.Instance._playerLevelModifier;
         LevelUp();
         UpdateCombinedStats();
-        Global.DebugOnScreen("PLAYER START()");
+        //Global.DebugOnScreen("PLAYER START()");
        
 
         int ii = 0;

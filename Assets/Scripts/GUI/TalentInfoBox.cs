@@ -42,12 +42,12 @@ public class TalentInfoBox : MonoBehaviour {
     {
         get
         {
-            Global.DebugOnScreen(gameObject.activeSelf ? "true" : "false" , 60);
+            //Global.DebugOnScreen(gameObject.activeSelf ? "true" : "false" , 60);
             return gameObject.activeSelf;
         }
         set
         {
-            Global.DebugOnScreen(value ? "true" : "false", 60);
+            //Global.DebugOnScreen(value ? "true" : "false", 60);
             if (value)
             {
                 gameObject.SetActive(true);

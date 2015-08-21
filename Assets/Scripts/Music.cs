@@ -70,7 +70,7 @@ public class Music : MonoBehaviour {
                         }
                         else
                         {
-                            Global.DebugOnScreen("Done with combat event");
+                            //Global.DebugOnScreen("Done with combat event");
                             _event = Events.NoEvent;
                             _instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                             _isRunning = false;
@@ -171,7 +171,6 @@ public class Music : MonoBehaviour {
         _menuTheme.Update();
 	}
 
-    static int iiu = 0;
     public void StartMenuTheme()
     {
         if (_menuTheme._isRunning)

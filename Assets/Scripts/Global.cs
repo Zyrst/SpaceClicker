@@ -250,7 +250,7 @@ public class Global : MonoBehaviour {
                 else
                     Time.timeScale = 100;
             }
-            DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
+            //DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
         }
         if (Input.GetKeyDown(KeyCode.Minus) || Input.GetKeyDown(KeyCode.KeypadMinus))
         {
@@ -258,7 +258,7 @@ public class Global : MonoBehaviour {
                 Time.timeScale -= 2f;
             else
                 Time.timeScale = 0f;
-            DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
+            //DebugOnScreen("new timescale is: " + Time.timeScale.ToString());
         }
         if (Input.GetKeyDown(KeyCode.T))
         {

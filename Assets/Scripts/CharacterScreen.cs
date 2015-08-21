@@ -155,6 +155,7 @@ public class CharacterScreen : MonoBehaviour {
     {
         Sounds.OneShot(Sounds.Instance.uiSounds.Button);
         GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "SpellsMap").GetComponent<SpellsMap>().Close();
+        GenerateCharInfo();
     }
 
     public void GenerateInventorySlots()
@@ -335,12 +336,12 @@ public class CharacterScreen : MonoBehaviour {
 
         info += System.Environment.NewLine + System.Environment.NewLine + "Cooldown Reduction : " + cooldown;
 
-        GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "CharInfo").text = info;
+        GetComponentsInChildren<Text>(true).FirstOrDefault(x => x.name == "CharInfo").text = info;
 
         for (int i = 0; i < Global.Instance.player._spellsArray.Length; i++)
         {
             if (Global.Instance.player._spellsArray[i] != null)
-                GetComponentsInChildren<Transform>().FirstOrDefault(x => x.name == "Spell" + i).GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage.sprite;
+                GetComponentsInChildren<Transform>(true).FirstOrDefault(x => x.name == "Spell" + i).GetComponent<Image>().sprite = Global.Instance.player._spellsArray[i]._spellImage.sprite;
         }
     }
 

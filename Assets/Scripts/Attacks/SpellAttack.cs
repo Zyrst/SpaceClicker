@@ -271,7 +271,7 @@ public class SpellAttack : BaseAttack {
             _slotImage.color = new Color(1f, 1f, 1f);
             // reset animation 
             Global.Instance.player.Animator.SetTrigger("idle");
-            Global.DebugOnScreen("PLAY IDLE");
+            //Global.DebugOnScreen("PLAY IDLE");
         }
         else
         {
@@ -329,7 +329,7 @@ public class SpellAttack : BaseAttack {
 
                         // reset animation 
                         Global.Instance.player.Animator.SetTrigger("ability_throw");
-                        Global.DebugOnScreen("PLAY IDLE");
+                        //Global.DebugOnScreen("PLAY IDLE");
                     }
                    
                 }

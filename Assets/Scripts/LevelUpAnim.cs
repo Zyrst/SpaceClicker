@@ -2,11 +2,10 @@
 using System.Collections;
 
 public class LevelUpAnim : MonoBehaviour {
-    SpriteRenderer _spriteRen;
-    float _timer;
+    public float _timer;
+
 	// Use this for initialization
 	void Start () {
-        _spriteRen = GetComponent<SpriteRenderer>();
         _timer = GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length;
         
 	}
