@@ -17,6 +17,7 @@ public class Global : MonoBehaviour {
         public GameObject HealthPotion;
         public GameObject LootCrate;
         public GameObject ExpBall;
+        public GameObject LevelUp;
         public GameObject[] _effects;
     }
 
@@ -79,6 +80,9 @@ public class Global : MonoBehaviour {
             {
 				GameObject go = GameObject.Instantiate (Instance._prefabs._effects [2]);
 				go.transform.position = Instance._player.transform.position;
+                GameObject go2 = GameObject.Instantiate(Instance._prefabs.LevelUp);
+                go2.transform.position = Instance.player.transform.position + new Vector3(0, 5f, 0);
+                go2.transform.forward = Camera.main.transform.forward;
             }
         }
 

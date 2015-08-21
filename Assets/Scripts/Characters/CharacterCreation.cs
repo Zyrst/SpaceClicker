@@ -52,6 +52,11 @@ public class CharacterCreation : MonoBehaviour {
             return _instance;
         }
     }
+
+    void Awake()
+    {
+        _instance = this;
+    }
 	// Use this for initialization
 	void Start () {
        

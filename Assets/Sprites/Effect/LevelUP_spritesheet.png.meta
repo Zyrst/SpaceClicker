@@ -1,0 +1,264 @@
+fileFormatVersion: 2
+guid: 659822d4b5a18e64aa729242c3bcb184
+timeCreated: 1440147696
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: LevelUP_spritesheet_0
+    21300002: LevelUP_spritesheet_1
+    21300004: LevelUP_spritesheet_2
+    21300006: LevelUP_spritesheet_3
+    21300008: LevelUP_spritesheet_4
+    21300010: LevelUP_spritesheet_5
+    21300012: LevelUP_spritesheet_6
+    21300014: LevelUP_spritesheet_7
+    21300016: LevelUP_spritesheet_8
+    21300018: LevelUP_spritesheet_9
+    21300020: LevelUP_spritesheet_10
+    21300022: LevelUP_spritesheet_11
+    21300024: LevelUP_spritesheet_12
+    21300026: LevelUP_spritesheet_13
+    21300028: LevelUP_spritesheet_14
+    21300030: LevelUP_spritesheet_15
+    21300032: LevelUP_spritesheet_16
+    21300034: LevelUP_spritesheet_17
+    21300036: LevelUP_spritesheet_18
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: LevelUP_spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 2400
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 2400
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 2400
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1800
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1800
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 1800
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 1800
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1200
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 1200
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 1200
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 1200
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 600
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 600
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 600
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LevelUP_spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 0
+        width: 800
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

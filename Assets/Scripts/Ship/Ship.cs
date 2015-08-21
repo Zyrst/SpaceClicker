@@ -73,6 +73,7 @@ public class Ship : MonoBehaviour {
         {
             Sounds.OneShot(Sounds.Instance.uiSounds.navigation.eterStarmap);
             Global.Instance.SwitchScene(Global.GameType.Star);
+            GALAXY.Instance.Generate();
         }
         
     }
