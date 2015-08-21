@@ -32,6 +32,6 @@ public class MysteryTab : Tabs {
 			equi._cost = 100;
             item._goldText.text = equi._cost.ToString();
         }
-        Debug.Log("New Mystery Item has been generated");
+        //Debug.Log("New Mystery Item has been generated");
     }
 }
