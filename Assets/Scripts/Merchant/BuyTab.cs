@@ -26,6 +26,6 @@ public class BuyTab : Tabs {
             item.GetComponent<Button>().interactable = true;
             BuyEquipmentGeneration.SetEquipmentOnSlot(item);
         }
-        Debug.Log("New equipment has been generated");
+        //Debug.Log("New equipment has been generated");
     }
 }

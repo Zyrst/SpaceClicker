@@ -11,7 +11,7 @@ public class Merchant : MonoBehaviour {
         {
             if (instance == null)
             {
-                Debug.Log("<color=red>Merchant är null</color>");
+                //Debug.Log("<color=red>Merchant är null</color>");
                 instance = GameObject.Find("Merchant").GetComponent<Merchant>();
             }
 
