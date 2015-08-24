@@ -6,7 +6,7 @@ public class LevelUpAnim : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _timer = GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length;
+        _timer = GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length/2;
         
 	}
 	

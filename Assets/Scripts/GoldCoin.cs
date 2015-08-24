@@ -63,6 +63,7 @@ public class GoldCoin : MonoBehaviour
             if (Vector3.Distance(_target, transform.position) <= 3f)
             {
 				Global.Instance.Gold += _value;
+                GoldCoinUI.Instance.Check(Global.Instance.Gold);
                 GameObject.Destroy(gameObject);
             }
         }
