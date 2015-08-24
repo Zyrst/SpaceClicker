@@ -100,7 +100,7 @@ public class CharacterScreen : MonoBehaviour {
     {
         if (_lastFrameClick && !MouseController.Instance.buttonDown)
         {
-            _EquipPopup.transform.gameObject.SetActive(false);
+            ClosePopup();
         }
         if (MouseController.Instance.buttonDown && _EquipPopup.activeSelf)
         {
@@ -302,29 +302,30 @@ public class CharacterScreen : MonoBehaviour {
     public void GenerateCharInfo()
     {
 
-        string info = "Level : " + Global.Instance.player._level.ToString();
-        info += System.Environment.NewLine + "Health: " +  Global.Instance.player._combinedStats._maxHealth.GetString();
-        
-        info+= System.Environment.NewLine + System.Environment.NewLine + "Click";
+        string info = "<size=40>Level : " + Global.Instance.player._level.ToString();
+        info += System.Environment.NewLine + "Health: " +  Global.Instance.player._combinedStats._maxHealth.GetString() + "</size>";
+
+        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35>Click</size>";
         info += System.Environment.NewLine + "Click Damage : " + Global.Instance.player._combinedStats._normal.damage.GetString();
         info += System.Environment.NewLine + "Click Crit Chance " + (Global.Instance.player._combinedStats._normal.crit * 100) + "%";
         info += System.Environment.NewLine + "Click Crit multiplier : " + Global.Instance.player._combinedStats._normal.critMultiplier;
 
-        info += System.Environment.NewLine + System.Environment.NewLine + "<color=blue>Tech</color>";
+        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35><color=blue>Tech</color></size>";
         info += System.Environment.NewLine + "Tech Damage : "  + Global.Instance.player._combinedStats._tech.damage.GetString();
         info += System.Environment.NewLine + "Tech Crit Chance : " + (Global.Instance.player._combinedStats._tech.crit * 100) + "%";
         info += System.Environment.NewLine + "Tech Crit multiplier : " + Global.Instance.player._combinedStats._tech.critMultiplier;
 
-        info += System.Environment.NewLine + System.Environment.NewLine + "<color=yellow>Kinetic</color>";
+        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35><color=yellow>Kinetic</color></size>";
         info += System.Environment.NewLine + "Kinetic Damage : " + Global.Instance.player._combinedStats._kinetic.damage.GetString();
         info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance.player._combinedStats._kinetic.crit * 100) + "%";
         info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance.player._combinedStats._kinetic.critMultiplier;
 
-        info += System.Environment.NewLine + System.Environment.NewLine + "<color=purple>Psychic</color>";
+        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35><color=purple>Psychic</color></size>";
         info += System.Environment.NewLine + "Psychic Damage : " + Global.Instance.player._combinedStats._psychic.damage.GetString();
         info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance.player._combinedStats._psychic.crit * 100) + "%";
         info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance.player._combinedStats._psychic.critMultiplier;
 
+        info += System.Environment.NewLine;
         info += System.Environment.NewLine + System.Environment.NewLine + "Resistance";
         info += System.Environment.NewLine + "Normal Resistance : " + Global.Instance.player._combinedStats._normal.resistance;
         info += System.Environment.NewLine + "Tech Resistance : " + Global.Instance.player._combinedStats._tech.resistance;
@@ -388,7 +389,7 @@ public class CharacterScreen : MonoBehaviour {
     /// <param name="equip_">Equipment</param>
     public void EquipmentStatsPopUp(Equipment equip_)
     {
-        string info = equip_._stats._name;
+        string info = "<size=50>" + equip_._stats._name + "</size>";
         info += System.Environment.NewLine + "Rarity: " + equip_.GetRarity();
         #region NothingEquipped
         if (Global.Instance.player._equipped._chest == null && equip_._type == Equipment.EquipmentType.Chest || Global.Instance.player._equipped._head == null && equip_._type == Equipment.EquipmentType.Head || 
@@ -447,10 +448,10 @@ public class CharacterScreen : MonoBehaviour {
             info += "   ";
             if (calcN.GetFloat() > 0f)
             {
-                info += "+" + calcN.GetString();
+                info += "<color=green>+" + calcN.GetString() + "</color>";
             }
             else
-                info += calcN.GetString();
+                info += "<color=red>" + calcN.GetString() + "</color>";
         }
 
         if (calcT.GetFloat() > 0f || calcT.GetFloat() < 0f)
@@ -459,10 +460,10 @@ public class CharacterScreen : MonoBehaviour {
             info += "   ";
             if (calcT.GetFloat() > 0f)
             {
-                info += "+" + calcT.GetString();
+                info += "<color=green>+" + calcT.GetString() + "</color>";
             }
             else
-                info += calcT.GetString();
+                info += "<color=red>" + calcT.GetString() + "</color>";
         }
 
         if (calcK.GetFloat() > 0f || calcK.GetFloat() < 0f)
@@ -471,10 +472,10 @@ public class CharacterScreen : MonoBehaviour {
             info += "   ";
             if (calcK.GetFloat() > 0f)
             {
-                info += "+" + calcK.GetString();
+                info += "<color=green>+" + calcK.GetString() + "</color>";
             }
             else
-                info += calcK.GetString();
+                info += "<color=red>" + calcK.GetString() + "</color>";
         }
 
         if (calcP.GetFloat() > 0f || calcP.GetFloat() < 0f)
@@ -483,10 +484,10 @@ public class CharacterScreen : MonoBehaviour {
             info += "   ";
             if (calcP.GetFloat() > 0f)
             {
-                info += "+" + calcP.GetString();
+                info += "<color=green>+" + calcP.GetString() + "</color>";
             }
             else
-                info += calcP.GetString();
+                info += "<color=red>" + calcP.GetString() + "</color>";
         }
         #endregion
         #region CalcCritChance
@@ -529,9 +530,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Nor.)Crit. Chance: " + (equip_._stats._normal.crit * 100f) + "%";
             info += "    ";
             if (calcNC > 0f)
-                info += "+" + (calcNC * 100f).ToString() + "%";
+                info += "<color=green>+" + (calcNC * 100f).ToString() + "%</color>";
             else
-                info += (calcNC * 100f).ToString() + "%";
+                info += "<color=red>" + (calcNC * 100f).ToString() + "%</color>";
         }
 
         if (calcTC > 0f || calcTC < 0f)
@@ -539,9 +540,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Tech)Crit. Chance: " + (equip_._stats._tech.crit * 100f) + "%";
             info += "    ";
             if (calcTC > 0f)
-                info += "+" + (calcTC * 100f).ToString() + "%";
+                info += "<color=green>+" + (calcTC * 100f).ToString() + "%</color>";
             else
-                info += (calcTC * 100f).ToString() + "%";
+                info += "<color=red>" + (calcTC * 100f).ToString() + "%</color>";
         }
 
         if (calcKC > 0f || calcKC < 0f)
@@ -549,9 +550,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Kin.)Crit. Chance: " + (equip_._stats._kinetic.crit * 100f) + "%";
             info += "    ";
             if (calcKC > 0f)
-                info += "+" + (calcKC * 100f).ToString() + "%";
+                info += "<color=green>+" + (calcKC * 100f).ToString() + "%</color>";
             else
-                info += (calcKC * 100f).ToString() + "%";
+                info += "<color=red>" + (calcKC * 100f).ToString() + "%</color>";
         }
 
         if (calcPC > 0f || calcPC < 0f)
@@ -559,9 +560,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Psy.)Crit. Chans: " + (equip_._stats._psychic.crit * 100f) + "%";
             info += "    ";
             if (calcPC > 0f)
-                info += "+" + (calcPC * 100f).ToString() + "%";
+                info += "<color=green>+" + (calcPC * 100f).ToString() + "%</color>";
             else
-                info += (calcPC * 100f).ToString() + "%";
+                info += "<color=red>" + (calcPC * 100f).ToString() + "%</color>";
         }
         #endregion
         #region CalcCritMulti
@@ -604,9 +605,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Nor.)Crit. Damage: " + equip_._stats._normal.critMultiplier;
             info += "    ";
             if (calcNC > 0)
-                info += "+" + calcNC.ToString();
+                info += "<color=green>+" + calcNC.ToString() + "</color>";
             else
-                info += calcNC.ToString();
+                info += "<color=red>" + calcNC.ToString() + "</color>";
         }
 
         if (calcTC > 0f || calcTC < 0f)
@@ -614,9 +615,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Tech)Crit. Damage: " + equip_._stats._tech.critMultiplier;
             info += "    ";
             if (calcTC > 0)
-                info += "+" + calcTC.ToString();
+                info += "<color=green>+" + calcTC.ToString() + "</color>";
             else
-                info += calcTC.ToString();
+                info += "<color=red>" + calcTC.ToString() + "</color>";
         }
 
         if (calcKC > 0f || calcKC < 0f)
@@ -624,9 +625,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Kin.)Crit. Damage: " + equip_._stats._kinetic.critMultiplier;
             info += "    ";
             if (calcKC > 0)
-                info += "+" + calcKC.ToString();
+                info += "<color=green>+" + calcKC.ToString() + "</color>";
             else
-                info += calcKC.ToString();
+                info += "<color=red>" + calcKC.ToString() + "</color>";
         }
 
         if (calcPC > 0f || calcPC < 0f)
@@ -634,9 +635,9 @@ public class CharacterScreen : MonoBehaviour {
             info += System.Environment.NewLine + "(Psy.)Crit. Damage: " + equip_._stats._psychic.critMultiplier;
             info += "    ";
             if (calcPC > 0)
-                info += "+" + calcPC.ToString();
+                info += "<color=green>+" + calcPC.ToString() + "</color>";
             else
-                info += calcPC.ToString();
+                info += "<color=red>" + calcPC.ToString() + "</color>";
         }
 #endregion
         #region CalcHealth
@@ -666,10 +667,10 @@ public class CharacterScreen : MonoBehaviour {
             info += "   ";
             if (health.GetFloat() > 0f)
             {
-                info += "+" + health.GetString();
+                info += "<color=green>+" + health.GetString() + "</color>";
             }
             else
-                info += health.GetString();
+                info += "<color=red>" +health.GetString() + "</color>";
         }
         #endregion
         GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "StatsText").text = info;

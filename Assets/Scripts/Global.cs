@@ -219,6 +219,7 @@ public class Global : MonoBehaviour {
 
         _planet = null;
         StartCoroutine(LevelFiller());
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
     void Update()
     {

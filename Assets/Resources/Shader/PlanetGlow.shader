@@ -12,7 +12,7 @@
  
          _ColorMask ("Color Mask", Float) = 15
 
-		 _Noise ("Noise", Range(0.0,1.0) ) = 0
+		 _Noise1 ("Noise1", Range(0.0,1.0) ) = 0
 		 _Noise2 ("Noise2", Range(0.0,1.0) ) = 0
      }
  
@@ -20,7 +20,7 @@
      {
          Tags
          { 
-             "Queue"="Overlay" 
+             "Queue"="Transparent" 
              "IgnoreProjector"="True" 
              "RenderType"="Transparent" 
              "PreviewType"="Plane"
@@ -39,9 +39,7 @@
          Cull Off
          Lighting Off
          ZWrite Off
-         ZTest Off
          Blend SrcAlpha OneMinusSrcAlpha
-         ColorMask [_ColorMask]
  
          Pass
          {
@@ -62,12 +60,12 @@
                  float4 vertex   : SV_POSITION;
                  fixed4 color    : COLOR;
                  half2 texcoord  : TEXCOORD0;
-				 float noise	 : NOISE;
+				 float noise1	 : NOISE1;
 				 float noise2	 : NOISE2;
              };
              
              fixed4 _Color;
-			 float _Noise;
+			 float _Noise1;
 			 float _Noise2;
  
              v2f vert(appdata_t IN)
@@ -80,26 +78,22 @@
                  OUT.vertex.xy += (_ScreenParams.zw-1.0)*float2(-1,1);
  #endif
                  OUT.color = IN.color * _Color;
-				 OUT.noise = _Noise;
+				 OUT.noise1 = _Noise1;
 				 OUT.noise2 = _Noise2;
                  return OUT;
              }
  
              sampler2D _MainTex;
-
-			 float rand(half2 co){
-				return frac(sin(dot(co.xy ,half2(12.9898,78.233))) * 43758.5453);
-			}	
  
              fixed4 frag(v2f IN) : SV_Target
              {
 				half4 color = IN.color;
-
+				
 				half2 xy = IN.texcoord.xy;
 
 				half co = length(xy - (0.5));
 
-								// ↓↓↓↓ inga hopp här inte 
+								// inga hopp här inte 
 				co = (co * co) * step(co, 0.5);
 				
 				color.a = (1 - co - 0.8) * 2 * step(0.0000001, co);

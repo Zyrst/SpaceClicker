@@ -4,17 +4,6 @@ using System.Collections;
 
 public class EquipedPopup : Button {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
     public override void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
     {
         switch (this.targetGraphic.name)

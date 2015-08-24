@@ -22,7 +22,7 @@ public class SpellInfo : MonoBehaviour {
             gameObject.SetActive(true);
             SpellStats tmpStat = spell_.GetTempSpellStats();
             Text txt = gameObject.GetComponentInChildren<Text>();
-            string info = spell_.gameObject.name;
+            string info = "<size=50>" +spell_.gameObject.name + "</size>";
 
             #region SpellTargets
             switch (spell_._target)

@@ -7,7 +7,7 @@ public class EnemyAttack : MonoBehaviour {
     [HideInInspector]
     public float _attackTimer;
     [HideInInspector]
-    GameObject shield;
+    GameObject shield = null;
 
     public float _cooldownTimer;
 

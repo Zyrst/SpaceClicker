@@ -22,8 +22,6 @@ public class StarSystem : MonoBehaviour
 
     private bool _move = false;
 
-    private Vector3 lastframepos = Vector3.zero;
-
     /// <summary>
     /// never ever use! (resets the seed)
     /// </summary>

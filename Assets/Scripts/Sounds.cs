@@ -244,6 +244,7 @@ public class Sounds : MonoBehaviour {
         public FMODAsset gameOver;
         public FMODAsset clearLevel;
         public FMODAsset levelUp;
+        public FMODAsset questDone;
     }
 
     public PlayerSounds playerSounds;

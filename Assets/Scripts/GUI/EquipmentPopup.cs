@@ -6,6 +6,7 @@ public class EquipmentPopup : Button {
 
     public static int _count = -1;
     public int _myCount;
+    public static bool _poped;
 	// Use this for initialization
 
 	protected override void Start () {
@@ -21,14 +22,26 @@ public class EquipmentPopup : Button {
     public static void reset()
     {
         _count = -1;
+        _poped = false;
     }
 
-    public override void OnPointerClick(UnityEngine.EventSystems.PointerEventData eventData)
+    public override void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
     {
-        try
+        if (!_poped)
         {
-            Global.Instance.player._inventoryArray[_myCount].GetComponent<Equipment>().Popup();
+            try
+            {
+                _poped = true;
+                Global.Instance.player._inventoryArray[_myCount].GetComponent<Equipment>().Popup();
+
+            }
+            catch (System.NullReferenceException) { }
         }
-        catch (System.NullReferenceException) { }
+    }
+
+    public override void OnPointerUp(UnityEngine.EventSystems.PointerEventData eventData)
+    {
+        _poped = false;
+        CharacterScreen.Instance._lastFrameClick = false;
     }
 }
