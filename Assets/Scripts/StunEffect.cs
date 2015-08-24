@@ -10,6 +10,6 @@ public class StunEffect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(new Vector3(0, 0, 3f));
+        transform.Rotate(new Vector3(0, 0, 300f * Time.deltaTime));
 	}
 }
