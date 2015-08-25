@@ -40,7 +40,7 @@ public class FarmMode : MonoBehaviour
 
     public void allEnemiesDied()
     {
-        Global.Instance.player._stats._health = new vap(Global.Instance.player._combinedStats._maxHealth);
+        //Global.Instance.player._stats._health = new vap(Global.Instance.player._combinedStats._maxHealth);
     }
 
     public void playerDied()

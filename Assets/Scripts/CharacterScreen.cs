@@ -310,7 +310,7 @@ public class CharacterScreen : MonoBehaviour {
         info += System.Environment.NewLine + "Click Crit Chance " + (Global.Instance.player._combinedStats._normal.crit * 100) + "%";
         info += System.Environment.NewLine + "Click Crit multiplier : " + Global.Instance.player._combinedStats._normal.critMultiplier;
 
-        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35><color=blue>Tech</color></size>";
+        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35><color=#12A8F5FF>Tech</color></size>";
         info += System.Environment.NewLine + "Tech Damage : "  + Global.Instance.player._combinedStats._tech.damage.GetString();
         info += System.Environment.NewLine + "Tech Crit Chance : " + (Global.Instance.player._combinedStats._tech.crit * 100) + "%";
         info += System.Environment.NewLine + "Tech Crit multiplier : " + Global.Instance.player._combinedStats._tech.critMultiplier;
@@ -320,7 +320,7 @@ public class CharacterScreen : MonoBehaviour {
         info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance.player._combinedStats._kinetic.crit * 100) + "%";
         info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance.player._combinedStats._kinetic.critMultiplier;
 
-        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35><color=purple>Psychic</color></size>";
+        info += System.Environment.NewLine + System.Environment.NewLine + "<size=35><color=#E212C0FF>Psychic</color></size>";
         info += System.Environment.NewLine + "Psychic Damage : " + Global.Instance.player._combinedStats._psychic.damage.GetString();
         info += System.Environment.NewLine + "Kinetic Crit Chance : " + (Global.Instance.player._combinedStats._psychic.crit * 100) + "%";
         info += System.Environment.NewLine + "Kinetic Crit multiplier : " + Global.Instance.player._combinedStats._psychic.critMultiplier;

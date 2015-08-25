@@ -342,7 +342,7 @@ public class Player : Character {
         {
             return;
         }
-        if (Global.Instance._planet._maxLevel + 3 <= _level)
+        if (Global.Instance._planet._maxLevel + 1 <= _level)
         {
             for (int i = 0; i < Starmap.Instance._planetList.Count; i++)
             {
@@ -392,8 +392,14 @@ public class Player : Character {
         if (_level != 1)
         {
             Sounds.OneShot(Sounds.Instance.music.levelUp);
-            GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Ding").text = _levelUpMessage;
-            StartCoroutine(RemoveDing());
+            try
+            {
+                GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "Ding").text = _levelUpMessage;
+                StartCoroutine(RemoveDing());
+            }
+            catch(System.NullReferenceException){}
+           
+            
         }
 
         Global.Instance.effects.levelUp.Start();

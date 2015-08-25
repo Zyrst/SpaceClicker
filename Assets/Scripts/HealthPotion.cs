@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HealthPotion : MonoBehaviour {
 
-    public float _lifeTime = 5f;
+    public float _lifeTime = 20f;
     [HideInInspector]
     public float _timer = 0f;
 

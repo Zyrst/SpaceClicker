@@ -132,6 +132,7 @@ public class Global : MonoBehaviour {
     public Effects effects = new Effects();
     public Text _FPS;
     public bool _showFPS = true;
+    public GameObject _goldCoinUI;
 
     public float _damageScale = 1.2f;
     public float _healthScale = 1.5f;
@@ -294,6 +295,7 @@ public class Global : MonoBehaviour {
                 _gameCamera.gameObject.SetActive(true);
                 _uiCamera.gameObject.SetActive(false);
                 _gameCamera.tag = "MainCamera";
+                UpdateGoldPosition();
                 break;
             case GameType.Quest:
                 break;
@@ -322,6 +324,7 @@ public class Global : MonoBehaviour {
 
                     item.ResetCooldown();
                 }
+                UpdateGoldPosition();
                 break;
             case GameType.Star:
               //  player.gameObject.SetActive(false);
@@ -470,6 +473,33 @@ public class Global : MonoBehaviour {
     public void UpdateGoldText()
     {
         _playerGUI.GetComponentsInChildren<Text>().FirstOrDefault(x => x.name == "GoldText").text = _gold.ToString();
+    }
+
+    public void UpdateGoldPosition()
+    {
+        
+        _goldCoinUI.transform.forward = Camera.main.transform.forward;
+        switch (_gameType)
+        {
+            case GameType.Farm:
+                _goldCoinUI.transform.position = Camera.main.ScreenToWorldPoint(_playerGUI.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "GoldCoin").transform.position);
+                _goldCoinUI.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                break;
+            case GameType.Quest:
+                break;
+            case GameType.Ship:
+                _goldCoinUI.transform.position = new Vector3(879f, 186f, -424f);
+                _goldCoinUI.transform.localScale = new Vector3(10f, 10f, 1f);
+                break;
+            case GameType.Star:
+                break;
+            case GameType.Galaxy:
+                break;
+            case GameType.CharCreation:
+                break;
+            default:
+                break;
+        }
     }
 
     public void ShakeCamera()

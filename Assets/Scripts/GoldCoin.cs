@@ -7,7 +7,7 @@ public class GoldCoin : MonoBehaviour
 {
 
     public uint _value = 0;
-    public float _lifetime = 15f;
+    public float _lifetime = 7f;
 
     [HideInInspector]
     public float _timer = 0f;
@@ -21,7 +21,7 @@ public class GoldCoin : MonoBehaviour
     void Start()
     {
         _target = Camera.main.ScreenToWorldPoint(Global.Instance._playerGUI.GetComponentsInChildren<Image>().FirstOrDefault(x => x.name == "GoldCoin").rectTransform.position);
-		_lifetime = Random.Range (14f, 16f);
+        _lifetime = Random.Range(_lifetime, _lifetime + 1f);
     }
 
     // Update is called once per frame

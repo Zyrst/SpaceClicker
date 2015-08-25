@@ -188,8 +188,7 @@ public class Character : MonoBehaviour {
             GameObject _numbers = GameObject.Instantiate(Global.Instance._prefabs.Number);
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().text = total.GetString();
             _numbers.transform.position = hitPoint_;
-            Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-            direction.Normalize();
+            Vector3 direction = new Vector3(Random.Range(-1f, 1f), Random.Range(2f, 3f), Random.Range(-1f, 1f));
             _numbers.GetComponentsInChildren<Text>().FirstOrDefault().GetComponent<Rigidbody>().AddForce(direction * 1f);
 
             if (normal_ > tech_ && normal_ > psychic_ && normal_ > kinetic_)

@@ -173,14 +173,19 @@ public class Music : MonoBehaviour {
 
     public void StartMenuTheme()
     {
-        if (_menuTheme._isRunning)
-            _menuTheme._instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-
-        _menuTheme._merchantParameter.setValue(0f);
-        _menuTheme._starmapParameter.setValue(0f);
-        _menuTheme._combatParameter.setValue(0f);
-        _menuTheme._instance.start();
-        _menuTheme._isRunning = true;
+        float val = 0f;
+        _menuTheme._starmapParameter.getValue(out val);
+        if (_menuTheme._isRunning && val != 0f)
+            _menuTheme.ExitStarmap();
+        else
+        {
+            _menuTheme._merchantParameter.setValue(0f);
+            _menuTheme._starmapParameter.setValue(0f);
+            _menuTheme._combatParameter.setValue(0f);
+            _menuTheme._instance.start();
+            _menuTheme._isRunning = true;
+        }
+       
     }
 
     public void EnterCombatFromMenu()

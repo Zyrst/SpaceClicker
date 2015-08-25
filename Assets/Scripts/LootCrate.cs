@@ -69,7 +69,7 @@ public class LootCrate : MonoBehaviour {
     public void ActivatePotion()
     {
         _potion.GetComponent<HealthPotion>().staticPotion = false;
-        GameObject.Destroy(gameObject);
+        //GameObject.Destroy(gameObject);
         
     }
 }
