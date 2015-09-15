@@ -188,38 +188,39 @@ public class Global : MonoBehaviour {
         UpdateExpBar();
         UpdateGoldText();
         //See if a Save.txt files exists
-        string fileName = "Save.txt";
-        if (File.Exists(fileName))
-        {
-            //Read first line
-            StreamReader sr = File.OpenText(fileName);
-            string result = sr.ReadLine();
-            //If CharCreate is 0 , go to CharCreate
-            if (result == "CharCreation: 0")
-            {
-                SwitchScene(GameType.CharCreation);
-				sr.Close();
-            }
-            else
-            {
-                SwitchScene(GameType.Ship);
-                sr.Close();
-            }
-        }
-        else
-        {
-            SwitchScene(GameType.CharCreation);
-            //File doesn't exist, create it and add line
-            StreamWriter sw = File.CreateText(fileName);
-            sw.WriteLine("CharCreation: 0");
-            sw.Close();
-           
-        }
+        //string fileName = "Save.txt";
+        //if (File.Exists(fileName))
+        //{
+        //    //Read first line
+        //    StreamReader sr = File.OpenText(fileName);
+        //    string result = sr.ReadLine();
+        //    //If CharCreate is 0 , go to CharCreate
+        //    if (result == "CharCreation: 0")
+        //    {
+        //        SwitchScene(GameType.CharCreation);
+        //        sr.Close();
+        //    }
+        //    else
+        //    {
+        //        SwitchScene(GameType.Ship);
+        //        sr.Close();
+        //    }
+        //}
+        //else
+        //{
+        //    SwitchScene(GameType.CharCreation);
+        //    //File doesn't exist, create it and add line
+        //    StreamWriter sw = File.CreateText(fileName);
+        //    sw.WriteLine("CharCreation: 0");
+        //    sw.Close();
+
+        //}
 
         //Starmap.Instance.Generate(1, 100, 9001);
-
+        SwitchScene(GameType.Ship);
         _planet = null;
         StartCoroutine(LevelFiller());
+        StartLevelFill(1, 100);
         Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
     void Update()
@@ -298,6 +299,7 @@ public class Global : MonoBehaviour {
                 UpdateGoldPosition();
                 break;
             case GameType.Quest:
+                StartGameJolt();
                 break;
             case GameType.Ship:
                 player.gameObject.SetActive(false);
@@ -707,6 +709,36 @@ public class Global : MonoBehaviour {
     public void StartLevelFill(uint lowLvl_ , uint maxLvl_)
     {
         StartCoroutine(SecondLevelFiller(lowLvl_, maxLvl_));
+    }
+
+    public void StartGameJolt()
+    {
+            Planet plan = new Planet();
+            plan._minLevel = 1;
+            plan._maxLevel = 100;
+            plan._type = Planet.PlanetType.Mech;
+            Instance._planet = plan;
+            Instance._enemies._currentEnemies = Instance._enemies._mech;
+            Starmap.Instance._minLevel = 1;
+            Starmap.Instance._maxLevel = 100;
+            if(!isRunning)
+            {
+                StartCoroutine(FightStart());
+            }
+        
+        
+    }
+    bool isRunning = false;
+    IEnumerator FightStart()
+    {
+        isRunning = true;
+        while(_prevLevels.Length < 100)
+        {
+            
+            yield return null;
+        }
+        isRunning = false;
+        SwitchScene(GameType.Farm);
     }
 
 }
