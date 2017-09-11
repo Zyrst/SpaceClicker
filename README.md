@@ -1,5 +1,7 @@
 # SpaceClicker
 
+Publik för jag kan inte ha privates
+
 	class KlassNamn
 	{
 		public int _variabelNamn
